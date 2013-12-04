@@ -43,7 +43,7 @@ public class SampleServlet implements Servlet {
 		out.println("<head>");
 		out.println("<title>Sample Servlet interface implementation</title>");
 		out.println("</head>");
-		out.println("<body><b>Hello Buddy!</b></body>");
+		out.println("<body><b>Hello Buddy and r!</b></body>");
 		out.println("</html>");
 		out.close();
 	}
