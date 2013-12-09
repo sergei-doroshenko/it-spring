@@ -2,15 +2,13 @@ package org.training.issuetracker.controllers;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+
 import javax.servlet.Servlet;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 
-/**
- * Sample Servlet interface implementation.
- */
 public class SampleServlet implements Servlet {
 
 	private ServletConfig servletConfig;
@@ -43,7 +41,7 @@ public class SampleServlet implements Servlet {
 		out.println("<head>");
 		out.println("<title>Sample Servlet interface implementation</title>");
 		out.println("</head>");
-		out.println("<body><b>Hello Buddy and right!</b></body>");
+		out.println("<body><b>Yesss! This servlet is working!!!</b></body>");
 		out.println("</html>");
 		out.close();
 	}

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tns:roles xmlns:tns="http://www.example.org/Role" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.example.org/Role ../../../target/classes/Role.xsd ">
+	<tns:role>
+		<tns:id>1</tns:id>
+		<tns:name>ADMINISTRATOR</tns:name>
+	</tns:role>
+	<tns:role>
+		<tns:id>2</tns:id>
+		<tns:name>USER</tns:name>
+	</tns:role>
+	<tns:role>
+		<tns:id>3</tns:id>
+		<tns:name>GUEST</tns:name>
+	</tns:role>  
+</tns:roles>
