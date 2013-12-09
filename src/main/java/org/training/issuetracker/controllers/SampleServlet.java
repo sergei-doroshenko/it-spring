@@ -1,4 +1,4 @@
-package org.training.issuetracker;
+package org.training.issuetracker.controllers;
 
 import java.io.IOException;
 import java.io.PrintWriter;
