@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<p:roles xmlns:p="http://www.w3schools.com" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://www.w3schools.com ../../../../target/classes/xml/role.xsd ">
+      <p:role>
+         <p:id>1</p:id>
+         <p:name>ADMINISTRATOR</p:name>
+	  </p:role>
+	  <p:role>
+	  	<p:id>2</p:id>
+	  	<p:name>USER</p:name>
+	  </p:role>
+	  <p:role>
+	  	<p:id>3</p:id>
+	  	<p:name>GUEST</p:name>
+	  </p:role>
+</p:roles>
