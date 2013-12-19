@@ -3,6 +3,7 @@ package org.training.issuetracker.controllers;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.Servlet;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -35,14 +36,22 @@ public class SampleServlet implements Servlet {
 	@Override
 	public void service(ServletRequest request, ServletResponse response)
 			throws ServletException, IOException {
-
+		
+		int i = 0;
+		i++;
+		RequestDispatcher rd = getServletConfig().getServletContext().getRequestDispatcher("/Main.do");
+		rd.forward(request, response);
+		
 		PrintWriter out = response.getWriter();
 		out.println("<html>");
 		out.println("<head>");
 		out.println("<title>Sample Servlet interface implementation</title>");
-		out.println("</head>");
-		out.println("<body><b>Yesss! This servlet is working!!!</b></body>");
-		out.println("</html>");
+		out.println("</head><body>");
+		out.println("<b>Yesss! This servlet is working!!!</b>");
 		out.close();
+		
+		
+		
+		
 	}
 }

@@ -3,13 +3,16 @@ package org.training.issuetracker.factories;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.training.issuetracker.model.ifaces.IRoleDAO;
+import org.training.issuetracker.model.impl.RoleImpXML;
+
 public class DAOFactory {
 	private static Map<Class<?>, Object> factories = new HashMap<Class<?>, Object>();
 	
 	public DAOFactory() {}
 	
 	static{
-//		factories.put(IUserDAO.class, new UserImplDB());
+		factories.put(IRoleDAO.class, new RoleImpXML());
 //		factories.put(ICategoryDAO.class, new CategoryImplXML());
 //		factories.put(IPlayDAO.class, new PlayImplDB());
 //		factories.put(IOrderDAO.class, new OrderImplDB());
