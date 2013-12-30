@@ -37,7 +37,7 @@ public class Main extends AbstractBaseController {
 		
 		data.printDataMap(out, data.getRolesMap());
 		data.printDataMap(out, data.getTypesMap());
-		
+		data.printDataMap(out, data.getPrioritiesMap());
 		out.println("</body></html>");
 		
 		//out.println(realPath);

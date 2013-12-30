@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<p:resolutions xmlns:p="http://www.w3schools.com" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://www.w3schools.com ../../../../target/classes/xml/resolution.xsd ">
+  <p:resolution>
+    <p:id>1</p:id>
+    <p:name>FIXED</p:name>
+  </p:resolution>
+  <p:resolution>
+    <p:id>2</p:id>
+    <p:name>INVALID</p:name>
+  </p:resolution>
+  <p:resolution>
+    <p:id>3</p:id>
+    <p:name>WONTFIX</p:name>
+  </p:resolution>
+  <p:resolution>
+    <p:id>4</p:id>
+    <p:name>WORKSFORME</p:name>
+  </p:resolution>
+</p:resolutions>
