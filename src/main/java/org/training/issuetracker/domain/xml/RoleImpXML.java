@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.training.issuetracker.domain.Role;
+import org.training.issuetracker.domain.Type;
 import org.training.issuetracker.domain.DAO.RoleDAO;
 import org.training.issuetracker.exceptions.DaoException;
 import org.training.issuetracker.exceptions.ValidationException;
@@ -22,31 +23,6 @@ public class RoleImpXML implements RoleDAO {
 	public RoleImpXML() {	}
 	
 	@Override
-	public List<Role> getRolesList() throws DaoException {
-		
-		List<Role> roles = null;
-		XMLValidator validator = new XMLValidator();
-		try {
-			validator.validateXML(schemaUrl, xmlUrl);
-			System.out.println ("xml file is valid!");
-			XMLReader reader = XMLReaderFactory.createXMLReader();
-			RoleHandler handler = new RoleHandler();
-			reader.setContentHandler(handler);
-			reader.parse(xmlUrl);
-			roles = handler.getRoles();
-			
-		} catch (ValidationException e) {
-			throw new DaoException(e);	
-		} catch (SAXException e) {
-			throw new DaoException(e);
-		} catch (IOException e) {
-			throw new DaoException(e);
-		}
-		
-		return roles;
-	}
-
-	@Override
 	public Map<Long, Role> getRolesMap() throws DaoException {
 		
 		Map<Long, Role> roles = null;
@@ -55,10 +31,10 @@ public class RoleImpXML implements RoleDAO {
 			validator.validateXML(schemaUrl, xmlUrl);
 			System.out.println ("xml is valid");
 			XMLReader reader = XMLReaderFactory.createXMLReader();
-			RoleHandler handler = new RoleHandler();
+			PersistObjDefaultHandler<Role> handler = new PersistObjDefaultHandler<Role>(Role.class, "p:roles", "p:role");
 			reader.setContentHandler(handler);
 			reader.parse(xmlUrl);
-			roles = handler.getRols();
+			roles = handler.getObjMap();
 			
 		} catch (ValidationException e) {
 			throw new DaoException(e);	

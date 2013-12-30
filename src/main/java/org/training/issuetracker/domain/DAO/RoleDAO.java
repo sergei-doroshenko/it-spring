@@ -14,6 +14,6 @@ public interface RoleDAO {
 	 * @throws DaoException 
 	 */
 	
-	public List<Role> getRolesList() throws DaoException;
+	//public List<Role> getRolesList() throws DaoException;
 	public Map<Long, Role> getRolesMap() throws DaoException;
 }
