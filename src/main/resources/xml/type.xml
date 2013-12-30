@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<p:types xmlns:p="http://www.w3schools.com" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://www.w3schools.com ../../../../target/classes/xml/type.xsd ">
+  <p:type>
+    <p:id>1</p:id>
+    <p:name>COSMETIC</p:name>
+  </p:type>
+  <p:type>
+    <p:id>2</p:id>
+    <p:name>BUG</p:name>
+  </p:type>
+  <p:type>
+    <p:id>3</p:id>
+    <p:name>FEATURE</p:name>
+  </p:type>
+  <p:type>
+    <p:id>4</p:id>
+    <p:name>PERFOMANCE</p:name>
+  </p:type>
+</p:types>

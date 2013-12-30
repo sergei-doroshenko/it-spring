@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<p:priorities xmlns:p="http://www.w3schools.com" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://www.w3schools.com ../../../../target/classes/xml/priority.xsd ">
+  <p:priority>
+    <p:id>1</p:id>
+    <p:name>CRITICAL</p:name>
+  </p:priority>
+  <p:priority>
+    <p:id>2</p:id>
+    <p:name>MAJOR</p:name>
+  </p:priority>
+  <p:priority>
+    <p:id>3</p:id>
+    <p:name>IMPORTANT</p:name>
+  </p:priority>
+  <p:priority>
+    <p:id>4</p:id>
+    <p:name>MINOR</p:name>
+  </p:priority>
+</p:priorities>

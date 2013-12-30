@@ -1,10 +1,10 @@
-package org.training.issuetracker.factories;
+package org.training.issuetracker.domain.DAO;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import org.training.issuetracker.model.ifaces.IRoleDAO;
-import org.training.issuetracker.model.impl.RoleImpXML;
+import org.training.issuetracker.domain.xml.RoleImpXML;
+import org.training.issuetracker.domain.xml.TypeImplXML;
 
 public class DAOFactory {
 	private static Map<Class<?>, Object> factories = new HashMap<Class<?>, Object>();
@@ -12,7 +12,8 @@ public class DAOFactory {
 	public DAOFactory() {}
 	
 	static{
-		factories.put(IRoleDAO.class, new RoleImpXML());
+		factories.put(RoleDAO.class, new RoleImpXML());
+		factories.put(TypeDAO.class, new TypeImplXML());
 //		factories.put(ICategoryDAO.class, new CategoryImplXML());
 //		factories.put(IPlayDAO.class, new PlayImplDB());
 //		factories.put(IOrderDAO.class, new OrderImplDB());

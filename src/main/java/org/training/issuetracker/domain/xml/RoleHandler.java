@@ -1,18 +1,24 @@
-package org.training.issuetracker.utils;
+package org.training.issuetracker.domain.xml;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-import org.training.issuetracker.model.beans.Role;
+import org.training.issuetracker.domain.Role;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 public class RoleHandler extends DefaultHandler {
-	
 	private String currEl;
 	private Role currRole;
 	private List<Role> roles = new ArrayList<Role>();
+	private Map<Long, Role> rols = new HashMap<Long, Role>();
+	
+	public Map<Long, Role> getRols() {
+		return rols;
+	}
 	
 	public List<Role> getRoles() {
 		return roles;
@@ -46,6 +52,7 @@ public class RoleHandler extends DefaultHandler {
     public void endElement(String uri, String localName, String qName) throws SAXException {
 		if (qName.equals("p:role")) {
 			roles.add(currRole);
+			rols.put(currRole.getId(), currRole);
 		}
         System.out.println("end element      : " + qName);
     }
@@ -61,7 +68,7 @@ public class RoleHandler extends DefaultHandler {
 		System.out.println(currEl + "=" + str);
 		switch (currEl) {
 			case "p:id" : 
-				currRole.setId(Integer.parseInt(str));
+				currRole.setId(Long.parseLong(str));
 				break;
 			case "p:name" :
 				currRole.setName(str);
