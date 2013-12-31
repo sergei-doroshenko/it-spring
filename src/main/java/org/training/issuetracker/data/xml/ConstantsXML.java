@@ -1,4 +1,4 @@
-package org.training.issuetracker.domain.xml;
+package org.training.issuetracker.data.xml;
 
 public class ConstantsXML {
 	public static String RESOURCE_REAL_PATH;

@@ -1,4 +1,4 @@
-package org.training.issuetracker.domain.xml;
+package org.training.issuetracker.data.xml;
 
 import java.io.IOException;
 import java.util.Map;
@@ -15,7 +15,7 @@ import org.xml.sax.helpers.XMLReaderFactory;
 public class TypeImplXML implements TypeDAO {
 	public static String resourceRealPath = ConstantsXML.RESOURCE_REAL_PATH + ConstantsXML.XML_RESOURCE_PATH;
 	public static String schemaUrl = resourceRealPath + "type.xsd";
-	private static String xmlUrl = resourceRealPath + "type.xml";
+	private static String xmlUrl = resourceRealPath + "types.xml";
 	
 	public TypeImplXML() { }
 

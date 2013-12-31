@@ -3,18 +3,22 @@
 	targetNamespace="http://www.w3schools.com"
 	xmlns="http://www.w3schools.com"
 	elementFormDefault="qualified">
-	<xs:element name="priorities">
+	<xs:element name="users">
 		<xs:complexType>
 			<xs:sequence>
-				<xs:element name="priority" type="prioritytype" maxOccurs="unbounded"/>
+				<xs:element name="user" type="usertype" maxOccurs="unbounded"/>
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
 	
-	<xs:complexType name="prioritytype">
+	<xs:complexType name="usertype">
 		<xs:sequence>
 			<xs:element name="id" type="xs:long"/>
-			<xs:element name="name" type="xs:string"/>
+			<xs:element name="firstname" type="xs:string"/>
+			<xs:element name="lastname" type="xs:string"/>
+			<xs:element name="email" type="xs:string"/>
+			<xs:element name="roleid" type="xs:long"/>
+			<xs:element name="password" type="xs:string"/>
 		</xs:sequence>
 	</xs:complexType>
 </xs:schema>

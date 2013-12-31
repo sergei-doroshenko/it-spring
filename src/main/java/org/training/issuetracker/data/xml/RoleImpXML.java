@@ -1,4 +1,4 @@
-package org.training.issuetracker.domain.xml;
+package org.training.issuetracker.data.xml;
 
 import java.io.IOException;
 import java.util.List;
@@ -18,7 +18,7 @@ public class RoleImpXML implements RoleDAO {
 	
 	public static String resourceRealPath = ConstantsXML.RESOURCE_REAL_PATH + ConstantsXML.XML_RESOURCE_PATH;
 	public static String schemaUrl = resourceRealPath + "role.xsd";
-	private static String xmlUrl = resourceRealPath + "role.xml";
+	private static String xmlUrl = resourceRealPath + "roles.xml";
 	
 	public RoleImpXML() {	}
 	

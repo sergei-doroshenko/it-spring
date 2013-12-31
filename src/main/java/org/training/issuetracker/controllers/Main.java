@@ -8,9 +8,10 @@ import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import org.training.issuetracker.constants.Constants;
-import org.training.issuetracker.domain.xml.ConstantsXML;
-import org.training.issuetracker.utils.DataStorage;
+import org.training.issuetracker.data.xml.ConstantsXML;
+import org.training.issuetracker.data.xml.DataStorage;
 
 /**
  * Servlet implementation class Main
@@ -38,6 +39,8 @@ public class Main extends AbstractBaseController {
 		data.printDataMap(out, data.getRolesMap());
 		data.printDataMap(out, data.getTypesMap());
 		data.printDataMap(out, data.getPrioritiesMap());
+		data.printDataMap(out, data.getResolutionsMap());
+		data.printDataMap(out, data.getUsersMap());
 		out.println("</body></html>");
 		
 		//out.println(realPath);

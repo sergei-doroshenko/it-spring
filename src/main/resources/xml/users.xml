@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<p:users xmlns:p="http://www.w3schools.com" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://www.w3schools.com ../../../../target/classes/xml/user.xsd ">
+  <p:user>
+    <p:id>1</p:id>
+    <p:firstname>Sergei</p:firstname>
+    <p:lastname>Doroshenko</p:lastname>
+    <p:email>6823298@gmail.com</p:email>
+    <p:roleid>1</p:roleid>
+    <p:password>11111</p:password>
+  </p:user>
+  <p:user>
+    <p:id>2</p:id>
+    <p:firstname>Angelina</p:firstname>
+    <p:lastname>Jolie</p:lastname>
+    <p:email>ajolie@gmail.com</p:email>
+    <p:roleid>2</p:roleid>
+    <p:password>11111</p:password>
+  </p:user>
+  <p:user>
+    <p:id>3</p:id>
+    <p:firstname>Jennifer</p:firstname>
+    <p:lastname>Lopez</p:lastname>
+    <p:email>jlo@gmail.com</p:email>
+    <p:roleid>2</p:roleid>
+    <p:password>11111</p:password>
+  </p:user>
+</p:users>

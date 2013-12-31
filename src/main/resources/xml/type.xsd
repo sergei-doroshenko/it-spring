@@ -13,7 +13,7 @@
 	
 	<xs:complexType name="issuetype">
 		<xs:sequence>
-			<xs:element name="id" type="xs:integer"/>
+			<xs:element name="id" type="xs:long"/>
 			<xs:element name="name" type="xs:string"/>
 		</xs:sequence>
 	</xs:complexType>

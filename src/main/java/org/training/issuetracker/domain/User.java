@@ -49,6 +49,10 @@ public class User extends AbstractPersistentObj {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
-	
+
+	@Override
+	public String toString() {
+		return "[" + firstName + " " + lastName + " " + role.getName() + ", p="
+				+ password + "]";
+	}
 }

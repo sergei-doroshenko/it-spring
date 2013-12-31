@@ -1,27 +1,28 @@
-package org.training.issuetracker.domain.xml;
+package org.training.issuetracker.data.xml;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import org.training.issuetracker.domain.PersistentObj;
+import org.training.issuetracker.domain.AbstractPersistentObj;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
-public class PersistObjDefaultHandler <T> extends DefaultHandler {
+public class PersistObjDefaultHandler <T extends AbstractPersistentObj> extends DefaultHandler {
 	private String currEl;
 	private String rootTag;
 	private String itemTag;
 	private T currObj;
-	private Class<T> cl;
-	private Map<Long, T> objMap = new HashMap<Long,T>();
 	
-	public PersistObjDefaultHandler(Class<T> cl, String rootTag, String itemTag) {
-		super();
-		this.cl = cl;
-		this.rootTag = rootTag;
-		this.itemTag = itemTag;
-	}
+	private Class<T> cl;
+    private Map<Long, T> objMap = new HashMap<Long,T>();
+    
+    public PersistObjDefaultHandler(Class<T> cl, String rootTag, String itemTag) {
+            super();
+            this.cl = cl;
+            this.rootTag = rootTag;
+            this.itemTag = itemTag;
+    }
 
 	public Map<Long, T> getObjMap() {
 		return objMap;
@@ -32,7 +33,7 @@ public class PersistObjDefaultHandler <T> extends DefaultHandler {
         String qName, Attributes attributes) throws SAXException {
 		if (qName.equals(itemTag)) {
 			try {
-				currObj = (T) cl.newInstance();
+				currObj = cl.newInstance();
 			} catch (InstantiationException | IllegalAccessException e) {
 				e.printStackTrace();
 			}
@@ -48,7 +49,7 @@ public class PersistObjDefaultHandler <T> extends DefaultHandler {
 	@Override
     public void endElement(String uri, String localName, String qName) throws SAXException {
 		if (qName.equals(itemTag)) {
-			objMap.put(((PersistentObj) currObj).getId(), currObj);
+			objMap.put(currObj.getId(), currObj);
 		}
         System.out.println("end-element      : " + qName);
     }
@@ -63,10 +64,10 @@ public class PersistObjDefaultHandler <T> extends DefaultHandler {
 		System.out.println(currEl + "=" + str);
 		switch (currEl) {
 			case "p:id" : 
-				((PersistentObj) currObj).setId(Long.parseLong(str));
+				currObj.setId(Long.parseLong(str));
 				break;
 			case "p:name" :
-				((PersistentObj) currObj).setName(str);
+				currObj.setName(str);
 				break;
 		}
     }

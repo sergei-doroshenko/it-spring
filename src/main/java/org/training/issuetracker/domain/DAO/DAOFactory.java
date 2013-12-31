@@ -3,9 +3,11 @@ package org.training.issuetracker.domain.DAO;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.training.issuetracker.domain.xml.PriorityImplXML;
-import org.training.issuetracker.domain.xml.RoleImpXML;
-import org.training.issuetracker.domain.xml.TypeImplXML;
+import org.training.issuetracker.data.xml.PriorityImplXML;
+import org.training.issuetracker.data.xml.ResolutionImplXML;
+import org.training.issuetracker.data.xml.RoleImpXML;
+import org.training.issuetracker.data.xml.TypeImplXML;
+import org.training.issuetracker.data.xml.UserImplXML;
 
 public class DAOFactory {
 	private static Map<Class<?>, Object> factories = new HashMap<Class<?>, Object>();
@@ -16,9 +18,9 @@ public class DAOFactory {
 		factories.put(RoleDAO.class, new RoleImpXML());
 		factories.put(TypeDAO.class, new TypeImplXML());
 		factories.put(PriorityDAO.class, new PriorityImplXML());
+		factories.put(ResolutionDAO.class, new ResolutionImplXML());
+		factories.put(UserDAO.class, new UserImplXML());
 //		factories.put(IPlayDAO.class, new PlayImplDB());
-//		factories.put(IOrderDAO.class, new OrderImplDB());
-//		factories.put(IReportDAO.class, new ReportImplDB());
 //		factories.put(IPlayDAO.class, new PlayImplXML());
 	}
 	

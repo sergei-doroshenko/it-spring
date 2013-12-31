@@ -1,47 +1,33 @@
 package org.training.issuetracker.data.xml;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.training.issuetracker.domain.Role;
+import org.training.issuetracker.domain.User;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
-public class RoleHandler extends DefaultHandler {
+public class UserHandler extends DefaultHandler {
 	private String currEl;
-	private Role currRole;
-	private List<Role> roles = new ArrayList<Role>();
-	private Map<Long, Role> rols = new HashMap<Long, Role>();
+	private User currUser;
+	private Map<String, User> users = new HashMap<String, User>();
 	
-	public Map<Long, Role> getRols() {
-		return rols;
-	}
-	
-	public List<Role> getRoles() {
-		return roles;
-	}
+	public UserHandler() { }
 
-	@Override
-	public void startDocument() throws SAXException {
-        System.out.println("start document   : ");
-    }
-	
-	@Override
-    public void endDocument() throws SAXException {
-        System.out.println("end document     : ");
-    }
+	public Map<String, User> getUsersMap() {
+		return users;
+	}
 	
 	@Override
     public void startElement(String uri, String localName,
         String qName, Attributes attributes) throws SAXException {
-		if (qName.equals("p:role")) {
-			currRole = new Role();
+		if (qName.equals("p:user")) {
+			currUser = new User();
 		}
 		
-		if (!qName.equals("p:role") && !qName.equals("p:roles")) {
+		if (!qName.equals("p:user") && !qName.equals("p:users")) {
 			currEl = qName;
 		}
 		
@@ -50,9 +36,8 @@ public class RoleHandler extends DefaultHandler {
 
 	@Override
     public void endElement(String uri, String localName, String qName) throws SAXException {
-		if (qName.equals("p:role")) {
-			roles.add(currRole);
-			rols.put(currRole.getId(), currRole);
+		if (qName.equals("p:user")) {
+			users.put(currUser.getEmail(), currUser);
 		}
         System.out.println("end element      : " + qName);
     }
@@ -61,19 +46,31 @@ public class RoleHandler extends DefaultHandler {
     public void characters(char ch[], int start, int length) throws SAXException {
 		String str = new String(ch, start, length);
 		str = str.trim();
-		//str = str.replace("\n", "").replace("\r", "").replace(" ", "").trim();
-        //System.out.println("ch =" + str + "=" + str.length());
+		
 		if (null == currEl || str.isEmpty()) return;
 		
 		System.out.println(currEl + "=" + str);
 		switch (currEl) {
 			case "p:id" : 
-				currRole.setId(Long.parseLong(str));
+				currUser.setId(Long.parseLong(str));
 				break;
-			case "p:name" :
-				currRole.setName(str);
+			case "p:firstname" :
+				currUser.setFirstName(str);
 				break;
+			case "p:lastname" :
+				currUser.setLastName(str);
+				break;
+			case "p:email" :
+				currUser.setEmail(str);
+				break;
+			case "p:roleid" :
+				DataStorage data = DataStorage.getInstance();
+				Role role = data.getRole(Long.parseLong(str));
+				currUser.setRole(role);
+				break;
+			case "p:password" :
+				currUser.setPassword(str);
+				break;	
 		}
     }
-
 }
