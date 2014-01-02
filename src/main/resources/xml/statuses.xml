@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<p:statuses xmlns:p="http://www.w3schools.com" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://www.w3schools.com ../../../../target/classes/xml/status.xsd ">
+  <p:status>
+    <p:id>1</p:id>
+    <p:name>NEW</p:name>
+  </p:status>
+  <p:status>
+    <p:id>2</p:id>
+    <p:name>ASSIGNED</p:name>
+  </p:status>
+  <p:status>
+    <p:id>3</p:id>
+    <p:name>IN PROGRESS</p:name>
+  </p:status>
+  <p:status>
+    <p:id>4</p:id>
+    <p:name>RESOLVED</p:name>
+  </p:status>
+  <p:status>
+    <p:id>5</p:id>
+    <p:name>CLOSED</p:name>
+  </p:status>
+  <p:status>
+    <p:id>6</p:id>
+    <p:name>REOPENED</p:name>
+  </p:status>
+</p:statuses>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.w3schools.com"
+	xmlns="http://www.w3schools.com"
+	elementFormDefault="qualified">
+	<xs:element name="issues">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="issue" type="issuetype" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:complexType name="issuetype">
+		<xs:sequence>
+			<xs:element name="createdate" type="xs:date"/>
+			<xs:element name="createby" type="xs:string"/>
+			<xs:element name="modifydate" type="xs:date"/>
+			<xs:element name="modifyby" type="xs:string"/>
+			<xs:element name="summary" type="xs:string"/>
+			<xs:element name="description" type="xs:string"/>
+			<xs:element name="status" type="xs:long"/>
+			<xs:element name="resolution" type="xs:long" minOccurs="0"/>
+			<xs:element name="type" type="xs:long"/>
+			<xs:element name="priority" type="xs:long"/>
+			<xs:element name="project" type="xs:long"/>
+			<xs:element name="assignee" type="xs:string"/>
+		</xs:sequence>
+		<xs:attribute name="id" type="xs:long" use="required"/>
+		<xs:attribute name="name" type="xs:string"/>
+	</xs:complexType>
+</xs:schema>

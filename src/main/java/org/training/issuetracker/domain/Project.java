@@ -1,10 +1,11 @@
 package org.training.issuetracker.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Project extends AbstractPersistentObj {
 	private String description;
-	private List<ProjectBuild> buids;
+	private List<String> builds = new ArrayList<String>();
 	private User manager;
 	
 	public Project() { }
@@ -21,12 +22,12 @@ public class Project extends AbstractPersistentObj {
 		this.description = description;
 	}
 
-	public List<ProjectBuild> getBuids() {
-		return buids;
+	public List<String> getBuilds() {
+		return builds;
 	}
 
-	public void setBuids(List<ProjectBuild> buids) {
-		this.buids = buids;
+	public void setBuilds(List<String> builds) {
+		this.builds = builds;
 	}
 
 	public User getManager() {
@@ -35,6 +36,12 @@ public class Project extends AbstractPersistentObj {
 
 	public void setManager(User manager) {
 		this.manager = manager;
+	}
+
+	@Override
+	public String toString() {
+		return "Project [" + description + ", builds=" + builds
+				+ ", manager=" + manager.getFirstName() + manager.getLastName() + "]";
 	}
 	
 }

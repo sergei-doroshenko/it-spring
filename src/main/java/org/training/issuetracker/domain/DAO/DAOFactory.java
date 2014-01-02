@@ -4,8 +4,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.training.issuetracker.data.xml.PriorityImplXML;
+import org.training.issuetracker.data.xml.ProjectImplXML;
 import org.training.issuetracker.data.xml.ResolutionImplXML;
 import org.training.issuetracker.data.xml.RoleImpXML;
+import org.training.issuetracker.data.xml.StatusImplXML;
 import org.training.issuetracker.data.xml.TypeImplXML;
 import org.training.issuetracker.data.xml.UserImplXML;
 
@@ -19,7 +21,10 @@ public class DAOFactory {
 		factories.put(TypeDAO.class, new TypeImplXML());
 		factories.put(PriorityDAO.class, new PriorityImplXML());
 		factories.put(ResolutionDAO.class, new ResolutionImplXML());
+		factories.put(StatusDAO.class, new StatusImplXML());
 		factories.put(UserDAO.class, new UserImplXML());
+		factories.put(ProjectDAO.class, new ProjectImplXML());
+		factories.put(IssueDAO.class, new IssueImplXML());
 //		factories.put(IPlayDAO.class, new PlayImplDB());
 //		factories.put(IPlayDAO.class, new PlayImplXML());
 	}

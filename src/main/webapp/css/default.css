@@ -1,0 +1,48 @@
+/* css reset */
+html, body {
+	margin: 0;
+	padding: 0;
+	font-size: 100%;
+	font-family: "Myriad Pro", Myriad, "Liberation Sans", "Nimbus Sans L", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.page-wrapper {
+	width: 1200px;
+	text-align: center;
+	margin: 0 auto;
+}
+
+.header {
+	height: 70px;
+	background-color: grey;
+}
+
+.logo {
+	height: 50px;
+	width: 200px;
+	float: left;
+}
+
+.user-info {
+	height: 50px;
+	width: 300px;
+	border: 1px solid black;
+	float: right;
+}
+.menu-bar {
+	height: 20px;
+	background-color: orange;
+}
+
+.content {
+	height: 300px;
+}
+.table-container {
+	height: 200px;
+	float: left;
+	margin: 10px;
+}
+.footer {
+	height: 20px;
+	background-color: grey;
+}

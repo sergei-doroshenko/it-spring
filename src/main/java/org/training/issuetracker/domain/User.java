@@ -52,7 +52,6 @@ public class User extends AbstractPersistentObj {
 
 	@Override
 	public String toString() {
-		return "[" + firstName + " " + lastName + " " + role.getName() + ", p="
-				+ password + "]";
+		return firstName + " " + lastName;
 	}
 }
