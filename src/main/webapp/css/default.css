@@ -24,11 +24,42 @@ html, body {
 }
 
 .user-info {
-	height: 50px;
-	width: 300px;
-	border: 1px solid black;
+	/*height: 50px;
+	width: 450px;
+	border: 1px solid black;*/
 	float: right;
+    margin-top: 10px;
 }
+
+#error {
+	height: 20px;
+	color: red;
+	font-size: 9pt;
+}
+
+div.user-info label {
+    font-size: 10pt;
+    color: white;
+}
+
+.login, .password {
+    width: 120px;
+}
+
+.logout {
+	margin-left: 10px;
+	text-decoration: none;
+	color: white;
+}
+
+.logout:hover {
+	text-decoration: underline;
+}
+
+.authsubmit {
+    width: 100px;
+}
+
 .menu-bar {
 	height: 20px;
 	background-color: orange;

@@ -1,6 +1,5 @@
 package org.training.issuetracker.utils;
 
-
 import java.io.File;
 import java.io.IOException;
 

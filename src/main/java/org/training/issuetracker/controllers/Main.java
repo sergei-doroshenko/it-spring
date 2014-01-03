@@ -22,7 +22,7 @@ import org.training.issuetracker.utils.JSONCreator;
 /**
  * Servlet implementation class Main
  */
-@WebServlet("/Main")
+@WebServlet(value="/Main.do", loadOnStartup=1)
 public class Main extends AbstractBaseController {
 	private static final long serialVersionUID = 1L;
 	

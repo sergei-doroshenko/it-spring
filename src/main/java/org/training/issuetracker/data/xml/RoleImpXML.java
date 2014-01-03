@@ -1,11 +1,9 @@
 package org.training.issuetracker.data.xml;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.Map;
 
 import org.training.issuetracker.domain.Role;
-import org.training.issuetracker.domain.Type;
 import org.training.issuetracker.domain.DAO.RoleDAO;
 import org.training.issuetracker.exceptions.DaoException;
 import org.training.issuetracker.exceptions.ValidationException;

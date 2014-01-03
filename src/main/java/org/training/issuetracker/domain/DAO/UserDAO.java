@@ -7,4 +7,6 @@ import org.training.issuetracker.exceptions.DaoException;
 
 public interface UserDAO {
 	Map<String, User> getUsersMap() throws DaoException;
+
+	User getUser(String login, String password) throws DaoException;
 }

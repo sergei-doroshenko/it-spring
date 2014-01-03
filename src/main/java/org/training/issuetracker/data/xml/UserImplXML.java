@@ -16,30 +16,44 @@ public class UserImplXML implements UserDAO {
 	public static String resourceRealPath = ConstantsXML.RESOURCE_REAL_PATH + ConstantsXML.XML_RESOURCE_PATH;
 	public static String schemaUrl = resourceRealPath + "user.xsd";
 	private static String xmlUrl = resourceRealPath + "users.xml";
+	private Map<String, User> users = null;
 	
 	public UserImplXML() { }
 
 	@Override
 	public Map<String, User> getUsersMap() throws DaoException {
-		Map<String, User> users = null;
-		XMLValidator validator = new XMLValidator();
-		try {
-			validator.validateXML(schemaUrl, xmlUrl);
-			System.out.println ("xml is valid-------------------------------");
-			XMLReader reader = XMLReaderFactory.createXMLReader();
-			UserHandler handler = new UserHandler();
-			reader.setContentHandler(handler);
-			reader.parse(xmlUrl);
-			users = handler.getUsersMap();
-			
-		} catch (ValidationException e) {
-			throw new DaoException(e);	
-		} catch (SAXException e) {
-			throw new DaoException(e);
-		} catch (IOException e) {
-			throw new DaoException(e);
+		if(null == users) {
+			XMLValidator validator = new XMLValidator();
+			try {
+				validator.validateXML(schemaUrl, xmlUrl);
+				System.out.println ("xml is valid-------------------------------");
+				XMLReader reader = XMLReaderFactory.createXMLReader();
+				UserHandler handler = new UserHandler();
+				reader.setContentHandler(handler);
+				reader.parse(xmlUrl);
+				users = handler.getUsersMap();
+				
+			} catch (ValidationException e) {
+				throw new DaoException(e);	
+			} catch (SAXException e) {
+				throw new DaoException(e);
+			} catch (IOException e) {
+				throw new DaoException(e);
+			}
 		}
 		
 		return users;
+	}
+
+	@Override
+	public User getUser(String login, String password) throws DaoException {
+		User user = getUsersMap().get(login);
+		if (!(null == user)) {
+			if (!user.getPassword().equals(password)) {
+				user = null;
+			}
+		}
+		
+		return user;
 	}
 }
