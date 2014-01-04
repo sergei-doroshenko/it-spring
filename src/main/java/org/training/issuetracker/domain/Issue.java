@@ -135,6 +135,28 @@ public class Issue extends AbstractPersistentObj {
 		return issueJson;
 	}
 	
+	public JsonObject toJsonObj () {
+		JsonObject issueJson = Json.createObjectBuilder()
+							.add("id", getId())
+							.add("createdate", getCreateDate().toString())
+							.add("createby", getCreateBy().toString())
+							.add("modifydate", getModifyDate().toString())
+							.add("modifyby", getModifyBy().toString())
+							.add("summary", getSummary())
+							.add("description", getDescription())
+							.add("status", getStatus().getName())
+							.add("resolution", 
+								(null == getResolution() ? "UNRESOLVED" : getResolution().getName())	
+							)
+							.add("type", getType().getName())
+							.add("priority", getPriority().getName())
+							.add("project", getProject().getName())
+							.add("projectbuild", getProject().getBuilds().get(0))
+							.add("assignee", getAssignee().toString())
+						.build();
+		return issueJson;
+	}
+	
 	@Override
 	public String toString() {
 		return "Issue [id=" + super.getId() + ", name=" + super.getName() 

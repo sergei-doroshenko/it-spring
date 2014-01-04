@@ -12,12 +12,23 @@ import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.training.issuetracker.constants.Constants;
 import org.training.issuetracker.data.xml.ConstantsXML;
 import org.training.issuetracker.data.xml.DataStorage;
 import org.training.issuetracker.domain.Issue;
+import org.training.issuetracker.domain.User;
+import org.training.issuetracker.domain.DAO.DAOFactory;
+import org.training.issuetracker.domain.DAO.UserDAO;
+import org.training.issuetracker.exceptions.DaoException;
+import org.training.issuetracker.exceptions.ParameterNotFoundException;
+import org.training.issuetracker.exceptions.ValidationException;
 import org.training.issuetracker.utils.JSONCreator;
+import org.training.issuetracker.utils.ParameterInspector;
+import org.training.issuetracker.utils.ParameterParser;
+
+import com.google.gson.Gson;
 
 /**
  * Servlet implementation class Main
@@ -34,34 +45,40 @@ public class Main extends AbstractBaseController {
 	void performTask(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		
+		HttpSession session = request.getSession();
+		User user = (User) session.getAttribute(Constants.KEY_USER);
 		DataStorage data = DataStorage.getInstance();
-		JsonObject json = JSONCreator.createBulkIssueJson(data.getIssuesMap());
+		//JsonObject json = null;
 		
 		response.setContentType("application/json");
 		PrintWriter out = response.getWriter();
-		out.print(json);
-		out.flush();
+		
+		//if(null == user) {
+			String idStr = request.getParameter("id");
+			
+			if (null == idStr) {
+				JsonObject json = JSONCreator.createBulkIssueJson(data.getIssuesMap());
+				out.print(json);
+			} else {
+				long id = Long.parseLong(idStr);
+				JsonObject json = data.getIssue(id).toJsonObj();
+				//Gson gson = new Gson();
+				//String jsons = gson.toJson(data.getIssue(id));
+				System.out.println(json);
+				out.print(json);
+			}
 
+//		} else {
+//			session.removeAttribute(Constants.KEY_USER);
+//			response.sendRedirect("http://localhost:8080/issuetracker/");
+//			return;
+//		}
 		
-//		out.println("<html>");
-//		out.println("<head>");
-//		out.println("<title>Sample Servlet interface implementation</title>");
-//		out.println("</head><body>");
-//		out.println(json.toString() + "<br>");
-//		data.printDataMap(out, data.getRolesMap());
-//		data.printDataMap(out, data.getTypesMap());
-//		data.printDataMap(out, data.getPrioritiesMap());
-//		data.printDataMap(out, data.getResolutionsMap());
-//		data.printDataMap(out, data.getStatusesMap());
-//		data.printDataMap(out, data.getUsersMap());
-//		data.printDataMap(out, data.getProjectsMap());
-//		data.printDataMap(out, data.getIssuesMap());
-//		out.println("</body></html>");
 		
+		
+		out.flush();
 		out.close();
-//		out.println(realPath);
-//		out.println(ConstantsXML.RESOURCE_REAL_PATH);
-		
+
 	}
 	
 }

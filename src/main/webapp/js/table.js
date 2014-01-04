@@ -1,4 +1,6 @@
-$( document ).ready(function() {    
+$( document ).ready(createTable);
+
+function createTable () {    
     $("#list").jqGrid({
         url: "http://localhost:8080/issuetracker/Main.do",
         datatype: "json",
@@ -14,7 +16,8 @@ $( document ).ready(function() {
             subgrid: {root:"rows", 
                 repeatitems: true, 
                cell:"cell"
-            }
+            },
+            ondblClickRow: function(rowid,iRow,iCol,e){alert('double clicked');}
         },
         mtype: "GET",
         colNames: ["Id", "Create Date", "Create By", "Modify Date", "Modify By",
@@ -42,5 +45,40 @@ $( document ).ready(function() {
         autoencode: true,
         caption: "Issues",
         height: $(".table-container").height()
-    }); 
-});    
+    });
+ 
+    $("#list").jqGrid('setGridParam', {
+    	ondblClickRow: function(rowid,iRow,iCol,e) {
+    		var rowData = $(this).getRowData(rowid);
+    		var issueId = rowData['id'];
+    		//alert('double clicked' + issueId);
+    		$.ajax({
+    		    url: 'Main.do',
+    		    data: 'id=' + issueId,
+    		    type: 'GET',
+    		    dataType : "json",                     
+    		    success: function (data, textStatus) { 
+    		        $('.table-container').empty();
+    		        var templ = $('.issue-container').clone();
+    		        $(templ).find('#id').append(data.id);
+    		        $(templ).find('#createdate').append(data.createdate);
+    		        $(templ).find('#createby').append(data.createby);
+    		        $(templ).find('#modifydate').append(data.modifydate);
+    		        $(templ).find('#modifyby').append(data.modifyby);
+    		        $(templ).find('#summary').append(data.summary);
+    		        $(templ).find('#description').append(data.description);
+    		        $(templ).find('#status').append(data.status);
+    		        $(templ).find('#resolution').append(data.resolution);
+    		        $(templ).find('#type').append(data.type);
+    		        $(templ).find('#priority').append(data.priority);
+    		        $(templ).find('#project').append(data.project);
+    		        $(templ).find('#projectbuild').append(data.projectbuild);
+    		        $(templ).find('#assignee').append(data.assignee);
+    		        templ.appendTo('.content');
+    		        $('.menu-obj').append('<li class="menu-obj-item"><a>Back</a></li>');
+    		        
+    		    } 
+    		});
+    	}
+    });
+}
