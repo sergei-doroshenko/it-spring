@@ -51,9 +51,10 @@ function createTable () {
     	ondblClickRow: function(rowid,iRow,iCol,e) {
     		var rowData = $(this).getRowData(rowid);
     		var issueId = rowData['id'];
+    		document.location.href = 'http://localhost:8080/issuetracker/error.html' + '?id=' + issueId;
     		//alert('double clicked' + issueId);
     		$.ajax({
-    		    url: 'Main.do',
+    		    url: 'http://localhost:8080/issuetracker/error.html',
     		    data: 'id=' + issueId,
     		    type: 'GET',
     		    dataType : "json",                     
