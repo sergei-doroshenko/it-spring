@@ -23,7 +23,7 @@ function createTable () {
         colNames: ["Id", "Create Date", "Create By", "Modify Date", "Modify By",
                    "Summary", "Status", "Resolution", "Type", "Priority", "Project"],
         colModel: [
-            { name: "id", width: 55},
+            { name: "id", width: 55, formatter:'showlink', formatoptions:{ baseLinkUrl:'issuedetails.html', addParam: '&action=openDocument', idName:'issueId'}},
             { name: "createdate", width: 90,sortable:true},
             { name: "createby", width: 80},
             { name: "modifydate", width: 80},

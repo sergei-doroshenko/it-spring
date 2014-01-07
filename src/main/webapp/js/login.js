@@ -1,4 +1,5 @@
 $(document).ready(function(){
+	
 	var options = {
 		cache: false,
 		target: "#authform",
@@ -37,6 +38,7 @@ function showResponse(responseText, statusText) {
 		href:'Login.do',
 		class: 'logout'
 	}).appendTo("#authform");
+	
 }
                                 
 function handleError (response, status, err) {
