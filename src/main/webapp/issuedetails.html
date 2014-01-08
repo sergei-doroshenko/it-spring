@@ -15,7 +15,13 @@
 				</div><!--end logo-->
 				<div id="user-info" class="user-info">
 					<div id="error"></div>
-                    <form id="authform">
+                    <form id="auth-form">
+                        <label>Name:</label>
+                        <input name="login" id="login" class="login" type="text" value="My name"/>
+                        <label>Password:</label>
+                        <input name="password" id="password" class="password" type="password" />
+                        <input id="authsubmit" class="authsubmit" type="submit" value="Log in" />
+                    </form>
 				</div><!--end user-info-->
 			</div><!--end header-->
 			<div id="menu-bar" class="menu-bar">
@@ -74,7 +80,25 @@
 				var issueId = searchString.split('=')[1];
 				getIssue(issueId);	
 			});
-		
+			
+			$('#auth-form').submit(function () {
+				console.log('You submit the form!');
+				var formdata = 'login=' + $('#login').val() + '&password=' + $('#password').val();
+				console.log(formdata);
+				var jqxhr = $.ajax({
+					url: 'Login.do',
+					data: formdata,
+					type: 'get',
+					success: function (data) {
+						console.log('data=' + data);
+						handleUserData(data);
+						console.log('Status: ' + jqxhr.getAllResponseHeaders());
+					},
+					error: handleError
+				});
+				return false;
+			})
+			
 			function getIssue (id) {
 				$.ajax({
 	    		    url: 'Main.do',
@@ -102,24 +126,24 @@
 	    		        templ.appendTo('.content');
 	    		        
 	    		        var userdata = data.userdata;
-	    		        	$("#authform").append(userdata.name);
-	    	    			$("#authform:first").css("color", "white");
-	    	    			if('guest' != userdata.role) {
-	    	    				$('<a>',{
-		    	    				text: 'log out',
-		    	    				href:'Login.do',
-		    	    				class: 'logout'
-		    	    			}).appendTo("#authform");
-	    	    			} else {
-	    	    				$('<a>',{
-		    	    				text: 'log in',
-		    	    				href:'http://localhost:8080/issuetracker/',
-		    	    				class: 'logout'
-		    	    			}).appendTo("#authform");
-	    	    			}
+    	    			if('guest' != userdata.role) {
+    	    				handleUserData(userdata.name);
+    	    			} 
 	    		        $('.menu-obj').empty().append('<li class="menu-obj-item"><a href="http://localhost:8080/issuetracker/">Main</a></li>');
-	    		    } 
+	    		    }
+	    		    
 	    		});
+			}
+			
+			function handleUserData (data) {
+				$("#auth-form").empty().append(data);
+				$("#auth-form:first").css("color", "white");
+				$('#error').empty();
+				$('<a>',{
+					text:'log out',
+					href:'Login.do',
+					class: 'logout'
+				}).appendTo("#auth-form");
 			}
 		</script>
 		

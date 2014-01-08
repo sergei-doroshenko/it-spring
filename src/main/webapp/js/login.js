@@ -18,8 +18,8 @@ function bindSubmit () {
 		};
 
 		$('#authform').submit(function() {
-			$('elem #password').css('border','none');
-			$('elem #login').css('border','none');
+			$('#password').css('border','none');
+			$('#login').css('border','none');
 			$(this).ajaxSubmit(options);
 			return false;
 		});
@@ -27,7 +27,7 @@ function bindSubmit () {
 
 function showRequest(formData, jqForm, options) {
 	var queryString = $.param(formData);
-	alert('We send this: \n\n' + queryString + options.url);
+	//alert('We send this: \n\n' + queryString + options.url);
 	return true;
 }
                                 
