@@ -131,6 +131,7 @@ public class Issue extends AbstractPersistentObj {
 							)
 							.add(getType().getName()).add(getPriority().getName())
 							.add(getProject().getName())
+							.add(getAssignee().toString())
 						).build();
 		return issueJson;
 	}

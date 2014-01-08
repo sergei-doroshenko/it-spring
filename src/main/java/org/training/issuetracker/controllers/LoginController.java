@@ -17,6 +17,7 @@ import org.training.issuetracker.domain.DAO.UserDAO;
 import org.training.issuetracker.exceptions.DaoException;
 import org.training.issuetracker.exceptions.ParameterNotFoundException;
 import org.training.issuetracker.exceptions.ValidationException;
+import org.training.issuetracker.utils.JSONCreator;
 import org.training.issuetracker.utils.ParameterInspector;
 import org.training.issuetracker.utils.ParameterParser;
 
@@ -58,7 +59,7 @@ public class LoginController extends AbstractBaseController {
 				}
 				
 				session.setAttribute(Constants.KEY_USER, user);
-				
+				System.out.println(JSONCreator.createUserData(user));
 				out.print(user.getFirstName() + " " + user.getLastName());
 				
 				
@@ -82,6 +83,7 @@ public class LoginController extends AbstractBaseController {
 			} finally {
 				out.flush();
 				out.close();
+				
 			}
 		} else {
 			session.removeAttribute(Constants.KEY_USER);

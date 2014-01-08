@@ -1,32 +1,33 @@
-$(document).ready(function(){
-	
+$(document).ready(bindSubmit);
+		
+function bindSubmit () {
 	var options = {
-		cache: false,
-		target: "#authform",
-		url: "Login.do",
-		type: "POST",
-		beforeSubmit: showRequest,
-		success: showResponse,
-		timeout: 3000,
-		clearForm: true,
-		resetForm: true,
-		complete: function(xhr, statusText) {
-			//alert(xhr.statusText);
-			},
-		error: handleError
-	};
+			cache: false,
+			target: "#authform",
+			url: "Login.do",
+			type: "POST",
+			beforeSubmit: showRequest,
+			success: showResponse,
+			timeout: 3000,
+			clearForm: true,
+			resetForm: true,
+			complete: function(xhr, statusText) {
+				//alert(xhr.statusText);
+				},
+			error: handleError
+		};
 
-	$("#authform").submit(function() {
-		$('#password').css('border','none');
-		$('#login').css('border','none');
-		$(this).ajaxSubmit(options);
-		return false;
-	});
-});
-             
+		$('#authform').submit(function() {
+			$('elem #password').css('border','none');
+			$('elem #login').css('border','none');
+			$(this).ajaxSubmit(options);
+			return false;
+		});
+}
+
 function showRequest(formData, jqForm, options) {
 	var queryString = $.param(formData);
-	alert('We send this: \n\n' + queryString);
+	alert('We send this: \n\n' + queryString + options.url);
 	return true;
 }
                                 
@@ -38,7 +39,7 @@ function showResponse(responseText, statusText) {
 		href:'Login.do',
 		class: 'logout'
 	}).appendTo("#authform");
-	
+	location.reload();
 }
                                 
 function handleError (response, status, err) {

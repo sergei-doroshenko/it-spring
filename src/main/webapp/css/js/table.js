@@ -1,6 +1,4 @@
-$( document ).ready(createTable);
-var data;
-function createTable () {    
+$( document ).ready(function() {    
     $("#list").jqGrid({
         url: "http://localhost:8080/issuetracker/Main.do",
         datatype: "json",
@@ -16,27 +14,13 @@ function createTable () {
             subgrid: {root:"rows", 
                 repeatitems: true, 
                cell:"cell"
-            },
-        },
-        ondblClickRow: function(rowid,iRow,iCol,e){alert('double clicked');},
-        loadComplete: function () {
-        	var data = $("#list").getGridParam('userData');
-        	if ('guest' != data.role) {
-    			$("#authform").empty().append(data.name);
-    			$("#authform:first").css("color", "white");
-    			$('#error').empty();
-    			$('<a>',{
-    				text:'log out',
-    				href:'Login.do',
-    				class: 'logout'
-    			}).appendTo("#authform");
-        	}
+            }
         },
         mtype: "GET",
         colNames: ["Id", "Create Date", "Create By", "Modify Date", "Modify By",
-                   "Summary", "Status", "Resolution", "Type", "Priority", "Project", "Assignee"],
+                   "Summary", "Status", "Resolution", "Type", "Priority", "Project"],
         colModel: [
-            { name: "id", width: 55, formatter:'showlink', formatoptions:{ baseLinkUrl:'issuedetails.html', addParam: '&action=openDocument', idName:'issueId'}},
+            { name: "id", width: 55},
             { name: "createdate", width: 90,sortable:true},
             { name: "createby", width: 80},
             { name: "modifydate", width: 80},
@@ -47,7 +31,6 @@ function createTable () {
             { name: "type", width: 100},
             { name: "priority", width: 100},
             { name: "project", width: 100},
-            { name: "assignee", width: 100}
         ],
         pager: "#pager",
         rowNum: 10,
@@ -59,5 +42,5 @@ function createTable () {
         autoencode: true,
         caption: "Issues",
         height: $(".table-container").height()
-    });
-}
+    }); 
+});    
