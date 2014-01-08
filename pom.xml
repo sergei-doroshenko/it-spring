@@ -13,13 +13,6 @@
 	        <version>3.0.1</version>
 	        <scope>provided</scope>
 		</dependency>
-		
-		<!-- dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>servlet-api</artifactId>
-			<version>2.5</version>
-			<scope>provided</scope>
-		</dependency-->
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
@@ -70,6 +63,18 @@
 					</execution>
 				</executions -->
 			</plugin>
+			<plugin>
+		        <groupId>org.apache.maven.plugins</groupId>
+		        <artifactId>maven-war-plugin</artifactId>
+		        <version>2.4</version>
+		        <configuration>
+		          <archive>
+		            <manifest>
+		              <addClasspath>true</addClasspath>
+		            </manifest>
+		          </archive>
+		        </configuration>
+		     </plugin>
 		</plugins>
 	</build>
 	<dependencyManagement>
