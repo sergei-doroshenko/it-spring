@@ -1,8 +1,7 @@
-$( document ).ready(createTable);
-var data;
-function createTable () {    
+function createIssueTable () {    
     $("#list").jqGrid({
         url: "Main.do",
+		mtype: "GET",
         datatype: "json",
         jsonReader : {
             root: "rows",
@@ -18,21 +17,6 @@ function createTable () {
                cell:"cell"
             },
         },
-        ondblClickRow: function(rowid,iRow,iCol,e){alert('double clicked');},
-        loadComplete: function () {
-        	var data = $("#list").getGridParam('userData');
-        	if ('guest' != data.role) {
-    			$("#authform").empty().append(data.name);
-    			$("#authform:first").css("color", "white");
-    			$('#error').empty();
-    			$('<a>',{
-    				text:'log out',
-    				href:'Login.do',
-    				class: 'logout'
-    			}).appendTo("#authform");
-        	}
-        },
-        mtype: "GET",
         colNames: ["Id", "Create Date", "Create By", "Modify Date", "Modify By",
                    "Summary", "Status", "Resolution", "Type", "Priority", "Project", "Assignee"],
         colModel: [
@@ -58,6 +42,27 @@ function createTable () {
         gridview: true,
         autoencode: true,
         caption: "Issues",
-        height: $(".table-container").height()
+        height: $(".table-container").height(),
+		ondblClickRow: handleDoubleClick,
+        loadComplete: handleLoadComplete
     });
 }
+
+function handleDoubleClick (rowid,iRow,iCol,e) {
+	alert('double click was made');
+}
+
+function handleLoadComplete () {
+	var data = $("#list").getGridParam('userData');
+		if ('guest' != data.role) {
+			$("#authform").empty().append(data.name);
+			$("#authform:first").css("color", "white");
+			$('#error').empty();
+			$('<a>',{
+				text:'log out',
+				href:'Login.do',
+				class: 'logout'
+			}).appendTo("#authform");
+		}
+}
+

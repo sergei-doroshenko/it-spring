@@ -1,5 +1,3 @@
-$(document).ready(bindSubmit);
-		
 function bindSubmit () {
 	var options = {
 			cache: false,
