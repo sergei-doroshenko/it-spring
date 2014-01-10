@@ -10,11 +10,9 @@
     <servlet-name>Main.do</servlet-name>
     <servlet-class>org.training.issuetracker.controllers.Main</servlet-class>
   </servlet>
-  
   <welcome-file-list>
     <welcome-file>/index.html</welcome-file>
   </welcome-file-list>
-  
   <error-page>
     <exception-type>java.lang.Exception</exception-type>
     <location>/error.html</location>

@@ -2,7 +2,7 @@ $( document ).ready(createTable);
 var data;
 function createTable () {    
     $("#list").jqGrid({
-        url: "http://localhost:8080/issuetracker/Main.do",
+        url: "Main.do",
         datatype: "json",
         jsonReader : {
             root: "rows",

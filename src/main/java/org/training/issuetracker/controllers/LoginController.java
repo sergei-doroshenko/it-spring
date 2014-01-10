@@ -87,7 +87,8 @@ public class LoginController extends AbstractBaseController {
 			}
 		} else {
 			session.removeAttribute(Constants.KEY_USER);
-			response.sendRedirect("http://localhost:8080/issuetracker/");
+			session.invalidate();
+			response.sendRedirect("/issuetracker/");
 			return;
 		}
 	}

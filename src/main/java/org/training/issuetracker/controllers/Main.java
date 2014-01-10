@@ -10,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
 import org.training.issuetracker.constants.Constants;
 import org.training.issuetracker.data.xml.ConstantsXML;
 import org.training.issuetracker.data.xml.DataStorage;
@@ -43,19 +44,8 @@ public class Main extends AbstractBaseController {
 		response.setContentType("application/json");
 		
 		DataStorage data = DataStorage.getInstance();
-		JsonObject json = null;
-		
-		String idStr = request.getParameter("issueId");
-		
-		if (null == idStr) {
-			json = JSONCreator.createBulkIssueJson(user, data.getIssuesMap());
-		} else {
-			long id = Long.parseLong(idStr);
-			json = JSONCreator.createSingleIssueJson(user, id);
-			//Gson gson = new Gson();
-			//String jsons = gson.toJson(data.getIssue(id));
-			
-		}
+		JsonObject json = JSONCreator.createBulkIssueJson(user, data.getIssuesMap());
+				
 		System.out.println(json);
 		
 		PrintWriter out = response.getWriter();

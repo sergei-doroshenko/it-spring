@@ -5,7 +5,7 @@ function bindSubmit () {
 			cache: false,
 			target: "#authform",
 			url: "Login.do",
-			type: "POST",
+			type: "get",
 			beforeSubmit: showRequest,
 			success: showResponse,
 			timeout: 3000,

@@ -35,13 +35,19 @@ public class ParameterParser {
 		} else {
 			param = values[0];
 		}
-		System.out.println(">" + param + "<");
+		
 		return param;
 	}
 	
 	public int getIntParameter(String name) 
 			throws ParameterNotFoundException, NumberFormatException{
 		return Integer.parseInt(getStringParameter(name));
+		
+	}
+	
+	public long getLongParameter(String name) 
+			throws ParameterNotFoundException, NumberFormatException{
+		return Long.parseLong(getStringParameter(name));
 		
 	}
 	

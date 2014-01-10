@@ -101,7 +101,7 @@
 			
 			function getIssue (id) {
 				$.ajax({
-	    		    url: 'Main.do',
+	    		    url: 'Issue.do',
 	    		    data: 'issueId=' + id,
 	    		    type: 'GET',
 	    		    dataType : "json",                     
@@ -129,9 +129,14 @@
     	    			if('guest' != userdata.role) {
     	    				handleUserData(userdata.name);
     	    			} 
-	    		        $('.menu-obj').empty().append('<li class="menu-obj-item"><a href="http://localhost:8080/issuetracker/">Main</a></li>');
+	    		        $('.menu-obj').empty().append('<li class="menu-obj-item"><a href="/issuetracker/">Main</a></li>');
+	    		    },
+	    		    error: function (response, status) {
+	    		    	if(response.status == 400) {
+	    		    		var errText = response.responseText;
+	    		    		$('.table-container').empty().append('Error while getting url. ' + errText);     
+	    		    	}
 	    		    }
-	    		    
 	    		});
 			}
 			
