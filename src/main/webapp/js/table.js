@@ -17,21 +17,14 @@ function createIssueTable () {
                cell:"cell"
             },
         },
-        colNames: ["Id", "Create Date", "Create By", "Modify Date", "Modify By",
-                   "Summary", "Status", "Resolution", "Type", "Priority", "Project", "Assignee"],
+        colNames: ["Id", "Priority", "Assignee", "Type", "Status", "Summary"],
         colModel: [
             { name: "id", width: 55, formatter:'showlink', formatoptions:{ baseLinkUrl:'issuedetails.html', addParam: '&action=openDocument', idName:'issueId'}},
-            { name: "createdate", width: 90,sortable:true},
-            { name: "createby", width: 80},
-            { name: "modifydate", width: 80},
-            { name: "modifyby", width: 80},
-            { name: "summary", width: 100},
-            { name: "status", width: 100},
-            { name: "resolution", width: 100},
-            { name: "type", width: 100},
             { name: "priority", width: 100},
-            { name: "project", width: 100},
-            { name: "assignee", width: 100}
+            { name: "assignee", width: 100},
+            { name: "type", width: 100},
+            { name: "status", width: 100},
+            { name: "summary", width: 200}
         ],
         pager: "#pager",
         rowNum: 10,
@@ -63,6 +56,19 @@ function handleLoadComplete () {
 				href:'Login.do',
 				class: 'logout'
 			}).appendTo("#authform");
+		}
+		var priorityCol = $('#list').jqGrid('getCol', 'priority', true);
+		
+		for (var i = 0, l = priorityCol.length; i < l; i++) {
+			var id = priorityCol[i].id;
+			var priority =  priorityCol[i].value;
+			var styleClass;
+			if (priority == 'MINOR') {
+				styleClass = 'minor-priority-highlight';
+			} else if (priority == 'IMPORTANT') {
+				styleClass = 'important-priority-highlight';
+			}
+			$('#list').jqGrid('setCell',id,"priority","",styleClass);
 		}
 }
 

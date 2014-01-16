@@ -137,4 +137,15 @@ li.menu-obj-item a:hover {
     height: 100px;
     border: 1px solid black;
 }
+/************* Priorities styles **********************************/
+.minor-priority-highlight {
+	color: green;
+}
+.important-priority-highlight {
+	color: orange;
+}
+.critical-priority-highlight {
+	color: red;
+}
 
+/************* End of Priorities styles ***************************/

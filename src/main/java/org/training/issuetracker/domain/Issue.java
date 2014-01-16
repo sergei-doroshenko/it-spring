@@ -117,21 +117,35 @@ public class Issue extends AbstractPersistentObj {
 		this.assignee = assignee;
 	}
 	
+//	public JsonObject toJson () {
+//		JsonObject issueJson = Json.createObjectBuilder()
+//						.add("id", getId())
+//						.add("cell", Json.createArrayBuilder() 
+//							.add(getId()).add(getCreateDate().toString())
+//							.add(getCreateBy().toString())
+//							.add(getModifyDate().toString())
+//							.add(getModifyBy().toString()).add(getSummary())
+//							.add(getStatus().getName())
+//							.add(
+//								(null == getResolution() ? "UNRESOLVED" : getResolution().getName())	
+//							)
+//							.add(getType().getName()).add(getPriority().getName())
+//							.add(getProject().getName())
+//							.add(getAssignee().toString())
+//						).build();
+//		return issueJson;
+//	}
+	
 	public JsonObject toJson () {
 		JsonObject issueJson = Json.createObjectBuilder()
 						.add("id", getId())
 						.add("cell", Json.createArrayBuilder() 
-							.add(getId()).add(getCreateDate().toString())
-							.add(getCreateBy().toString())
-							.add(getModifyDate().toString())
-							.add(getModifyBy().toString()).add(getSummary())
-							.add(getStatus().getName())
-							.add(
-								(null == getResolution() ? "UNRESOLVED" : getResolution().getName())	
-							)
-							.add(getType().getName()).add(getPriority().getName())
-							.add(getProject().getName())
+							.add(getId())
+							.add(getPriority().getName())
 							.add(getAssignee().toString())
+							.add(getType().getName())
+							.add(getStatus().getName())
+							.add(getSummary())
 						).build();
 		return issueJson;
 	}
