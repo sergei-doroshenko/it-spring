@@ -1,5 +1,7 @@
 package org.training.issuetracker.utils;
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -9,13 +11,16 @@ import java.sql.Statement;
 import java.util.Properties;
 
 import org.apache.log4j.Logger;
+import org.training.issuetracker.data.xml.ConstantsXML;
 
 public class ConnectionManager {
 	/* the default framework is embedded*/
+	public static String resourceRealPath = ConstantsXML.RESOURCE_REAL_PATH + "WEB-INF\\classes\\db\\";
 	private Logger log;
 	private static final String DB_DRIVER = "org.apache.derby.jdbc.EmbeddedDriver";
 	private static final String DB_URI = "jdbc:derby:";
-	private static final String DB_NAME = "issuetrackerDB";
+	private static final String DB_NAME = resourceRealPath + "issuetrackerDB";
+	private static final String DB_PROPERTIES = ConstantsXML.RESOURCE_REAL_PATH + "WEB-INF\\classes\\derby.properties";
 	//private static final String DB_NAME = "D://Java_Training_Workspace//DerbyProject//derbyDB";
 	private Connection connection;
 
@@ -26,8 +31,16 @@ public class ConnectionManager {
 	public Connection getConnection() {
 		loadDriver();
 		Properties props = new Properties();
+
+		try {
+			props.load(new FileInputStream(DB_PROPERTIES));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
 		try {
 			connection = DriverManager.getConnection(DB_URI + DB_NAME  + ";create=true", props);
+			//connection = DriverManager.getConnection(DB_URI + DB_NAME);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

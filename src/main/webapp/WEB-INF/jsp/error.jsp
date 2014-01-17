@@ -8,7 +8,7 @@
 </head>
 <body>
 	<div>
-		<a href="main.jspage">Main</a>
+		<a href="issuetracker">Main</a>
     	<p><span>Sorry, an error occurred.</span></p>
     			
 		<% if(exception != null) {%>">            

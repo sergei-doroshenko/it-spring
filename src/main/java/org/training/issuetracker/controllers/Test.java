@@ -22,14 +22,6 @@ import org.training.issuetracker.utils.ConnectionManager;
 public class Test extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public Test() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
-
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
@@ -55,8 +47,8 @@ public class Test extends HttpServlet {
 				ResultSet rs = st.executeQuery("select * from users");
 
 				while (rs.next()){
-					//String s = rs.getString(0) + rs.getString(1);
-					out.println("<span>"+ rs.toString() +"</span>");
+					String s = rs.getString(1) + "-" + rs.getString(2);
+					out.println("<span>"+ s +"</span>");
 				}
 			} catch (SQLException e) {
 
