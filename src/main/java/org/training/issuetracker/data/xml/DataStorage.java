@@ -24,6 +24,11 @@ import org.training.issuetracker.domain.DAO.TypeDAO;
 import org.training.issuetracker.domain.DAO.UserDAO;
 import org.training.issuetracker.exceptions.DaoException;
 
+/**
+ * Dfta Storage
+ * @author Sergei_Doroshenko
+ *
+ */
 public class DataStorage {
 	private static DataStorage instance;
 	private Map<Long, Role> rolesMap;
@@ -34,7 +39,10 @@ public class DataStorage {
 	private Map<String, User> usersMap;
 	private Map<Long, Project> projectsMap;
 	private Map<Long, Issue> issuesMap;
-	 
+
+	/**
+	 * Cjycnhucnjh
+	 */
 	private DataStorage() {
 		RoleDAO roleDAO = DAOFactory.getDAO(RoleDAO.class);
 		TypeDAO typeDAO = DAOFactory.getDAO(TypeDAO.class);
@@ -50,9 +58,13 @@ public class DataStorage {
 		} catch (DaoException e) {
 			e.printStackTrace();
 		}
-		
+
 	}
- 
+
+	/**
+	 * Singletone
+	 * @return DataStorage
+	 */
 	public static synchronized DataStorage getInstance() {
 		if (instance == null) {
 			instance = new DataStorage();
@@ -60,14 +72,21 @@ public class DataStorage {
 		return instance;
 	}
 
+	/**
+	 * @return
+	 */
 	public Map<Long, Role> getRolesMap() {
 		return rolesMap;
 	}
-	
+
+	/**
+	 * @param id - ID
+	 * @return
+	 */
 	public Role getRole (long id) {
 		return rolesMap.get(id);
 	}
-	
+
 	public Map<String, User> getUsersMap() {
 		if (null == usersMap) {
 			UserDAO userDAO = DAOFactory.getDAO(UserDAO.class);
@@ -79,35 +98,35 @@ public class DataStorage {
 		}
 		return usersMap;
 	}
-	
+
 	public User getUser (String login) {
 		return getUsersMap().get(login);
 	}
-	
+
 	public Map<Long, Type> getTypesMap() {
 		return typesMap;
 	}
-	
+
 	public Type getType (long id) {
 		return typesMap.get(id);
 	}
-	
+
 	public Map<Long, Priority> getPrioritiesMap() {
 		return prioritiesMap;
 	}
-	
+
 	public Priority getPriority (long id) {
 		return prioritiesMap.get(id);
 	}
-	
+
 	public Map<Long, Resolution> getResolutionsMap() {
 		return resolutionsMap;
 	}
-	
+
 	public Resolution getResolution (long id) {
 		return resolutionsMap.get(id);
 	}
-	
+
 	public Map<Long, Project> getProjectsMap() {
 		if (null == projectsMap) {
 			ProjectDAO projectDAO = DAOFactory.getDAO(ProjectDAO.class);
@@ -119,21 +138,21 @@ public class DataStorage {
 		}
 		return projectsMap;
 	}
-	
+
 	public Project getProject (long id) {
 		return getProjectsMap().get(id);
 	}
-	
+
 	public Map<Long, Status> getStatusesMap() {
 		return statusesMap;
 	}
-	
+
 	public Status getStatus (long id) {
 		return statusesMap.get(id);
 	}
-	
-	
-	
+
+
+
 	public Map<Long, Issue> getIssuesMap() {
 		if (null == issuesMap) {
 			IssueDAO issueDAO = DAOFactory.getDAO(IssueDAO.class);
@@ -145,13 +164,13 @@ public class DataStorage {
 		}
 		return issuesMap;
 	}
-	
+
 	public Issue getIssue (long id) {
 		return getIssuesMap().get(id);
 	}
-	
+
 	public <T extends AbstractPersistentObj> void printDataMap (PrintWriter out, Map<?, T> map) {
-	
+
 		String str = "";
 		String className = null;
 		if (map != null) {
@@ -161,7 +180,7 @@ public class DataStorage {
 					str += className + "<br>";
 				}
 				str +=  entry.getKey() + "//";
-				
+
 				if (className.equals("User") || className.equals("Project")
 						|| className.equals("Issue")) {
 					str += entry.getValue().toString() + "<br>";
