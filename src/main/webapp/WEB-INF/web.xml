@@ -13,6 +13,7 @@
   <welcome-file-list>
     <welcome-file>/index.jsp</welcome-file>
   </welcome-file-list>
+  
   <error-page>
     <exception-type>java.lang.Exception</exception-type>
     <location>/WEB-INF/jsp/error.jsp</location>
@@ -21,4 +22,27 @@
     <error-code>404</error-code>
     <location>/WEB-INF/jsp/error.jsp</location>
   </error-page>
+  
+  <login-config>
+        <auth-method>FORM</auth-method>
+        <form-login-config>
+            <form-login-page>/login.jsp</form-login-page>
+            <form-error-page>/error.jsp</form-error-page>
+        </form-login-config>
+    </login-config>
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>SecurePages</web-resource-name>
+            <description>Security constraint for resources in the secure directory</description>
+            <url-pattern>/secure/*</url-pattern>
+            <http-method>POST</http-method>
+            <http-method>GET</http-method>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>USER</role-name>
+        </auth-constraint>
+    </security-constraint>
+    <security-role>
+        <role-name>admin</role-name>
+    </security-role>
 </web-app>

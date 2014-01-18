@@ -44,10 +44,10 @@ public class Test extends HttpServlet {
 				String name = "Ivan";
 				String password = "111";
 				//st.execute("insert into users values ('Ivan', 'Ivan')");
-				ResultSet rs = st.executeQuery("select * from users");
+				ResultSet rs = st.executeQuery("select * from roles");
 
 				while (rs.next()){
-					String s = rs.getString(1) + "-" + rs.getString(2);
+					String s = rs.getString(1);// + "-" + rs.getString(2);
 					out.println("<span>"+ s +"</span>");
 				}
 			} catch (SQLException e) {
