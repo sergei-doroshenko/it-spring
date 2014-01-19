@@ -16,7 +16,6 @@
 		<script type="text/javascript" src="js/login.js"> </script>
 		<script type="text/javascript" src="js/table.js"> </script>
 		
-		
 	</head>
 	<body>
 		<div class="page-wrapper">
@@ -40,6 +39,8 @@
 					<li class="menu-obj-item"><a>Issue</a></li>
 					<li class="menu-obj-item"><a>Project</a></li>
 					<li class="menu-obj-item"><a>Status</a></li>
+					<li class="menu-obj-item"><a href="Test.do">Test DB</a></li>
+					<li class="menu-obj-item"><a href="secure/test.html">Test Secure</a></li>
 				</ul>
 			</div><!-- end menu-bar -->
 			<div class="content">
