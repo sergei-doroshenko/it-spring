@@ -99,6 +99,10 @@ li.menu-obj-item a:hover {
 	height: 20px;
 	background-color: grey;
 }
+/**************** css for login form template***********/
+#login-form-template {
+	display: none;
+}
 
 /***************css for issue template *****************/
 #issue-template {

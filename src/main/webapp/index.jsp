@@ -1,4 +1,5 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!DOCTYPE html>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -12,27 +13,14 @@
 		<script type="text/javascript" src="js/jquery-1.9.0.min.js"> </script>
 		<script type="text/javascript" src="js/i18n/grid.locale-en.js"> </script>
 		<script type="text/javascript" src="js/jquery.jqGrid.min.js"> </script>
-		<script type="text/javascript" src="js/jquery.form.js"> </script>
+		<script type="text/javascript" src="js/jquery.cookie.js"> </script>
 		<script type="text/javascript" src="js/login.js"> </script>
 		<script type="text/javascript" src="js/table.js"> </script>
-		
 	</head>
 	<body>
 		<div class="page-wrapper">
-			<div class="header">
-				<div class="logo">
-					<h2>Issue Tracker</h2>
-				</div><!--end logo-->
-				<div id="user-info" class="user-info">
-					<div id="error"></div>
-                    <form id="authform">
-                        <label>Name:</label>
-                        <input name="login" id="login" class="login" type="text" value="My name"/>
-                        <label>Password:</label>
-                        <input name="password" id="password" class="password" type="password" />
-                        <input id="authsubmit" class="authsubmit" type="submit" value="Log in" />
-                    </form>
-				</div><!--end user-info-->
+			<div id="header" class="header">
+				<jsp:include page="/WEB-INF/jsp/header.jsp"></jsp:include>
 			</div><!--end header-->
 			<div id="menu-bar" class="menu-bar">
 				<ul class="menu-obj">
@@ -56,8 +44,11 @@
 		<script type="text/javascript">
 			$(document).ready(function () {
 				createIssueTable();
-				bindSubmit();
+				if($('#auth-form')) {
+					bindLongin();
+				}
 			});
-		</script>	
+		</script>
+			
 	</body>
 </html>

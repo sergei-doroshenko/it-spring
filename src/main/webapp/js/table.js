@@ -1,4 +1,4 @@
-function createIssueTable () {    
+function createIssueTable() {    
     $("#list").jqGrid({
         url: "Main.do",
 		mtype: "GET",
@@ -19,7 +19,7 @@ function createIssueTable () {
         },
         colNames: ["Id", "Priority", "Assignee", "Type", "Status", "Summary"],
         colModel: [
-            { name: "id", width: 55, formatter:'showlink', formatoptions:{ baseLinkUrl:'issuedetails.html', addParam: '&action=openDocument', idName:'issueId'}},
+            { name: "id", width: 55, formatter:'showlink', formatoptions:{ baseLinkUrl:'issuedetails.jsp', addParam: '&action=openIssue', idName:'issueId'}},
             { name: "priority", width: 100},
             { name: "assignee", width: 100},
             { name: "type", width: 100},
@@ -47,28 +47,19 @@ function handleDoubleClick (rowid,iRow,iCol,e) {
 
 function handleLoadComplete () {
 	var data = $("#list").getGridParam('userData');
-		if ('guest' != data.role) {
-			$("#authform").empty().append(data.name);
-			$("#authform:first").css("color", "white");
-			$('#error').empty();
-			$('<a>',{
-				text:'log out',
-				href:'Login.do',
-				class: 'logout'
-			}).appendTo("#authform");
+	console.log('Grid Param = ' + data.role);
+	handleUserData(data);
+	var priorityCol = $('#list').jqGrid('getCol', 'priority', true);
+	
+	for (var i = 0, l = priorityCol.length; i < l; i++) {
+		var id = priorityCol[i].id;
+		var priority =  priorityCol[i].value;
+		var styleClass;
+		if (priority == 'MINOR') {
+			styleClass = 'minor-priority-highlight';
+		} else if (priority == 'IMPORTANT') {
+			styleClass = 'important-priority-highlight';
 		}
-		var priorityCol = $('#list').jqGrid('getCol', 'priority', true);
-		
-		for (var i = 0, l = priorityCol.length; i < l; i++) {
-			var id = priorityCol[i].id;
-			var priority =  priorityCol[i].value;
-			var styleClass;
-			if (priority == 'MINOR') {
-				styleClass = 'minor-priority-highlight';
-			} else if (priority == 'IMPORTANT') {
-				styleClass = 'important-priority-highlight';
-			}
-			$('#list').jqGrid('setCell',id,"priority","",styleClass);
-		}
+		$('#list').jqGrid('setCell',id,"priority","",styleClass);
+	}
 }
-

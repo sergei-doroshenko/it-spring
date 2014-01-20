@@ -18,8 +18,9 @@ public class ConnectionManager {
 	public static String resourceRealPath = ConstantsXML.RESOURCE_REAL_PATH + "WEB-INF\\classes\\db\\";
 	private Logger log;
 	private static final String DB_DRIVER = "org.apache.derby.jdbc.EmbeddedDriver";
-	//private static final String DB_DRIVER = "org.apache.derby.jdbc.ClientDriver";
 	private static final String DB_URI = "jdbc:derby:";
+	//private static final String DB_DRIVER = "org.apache.derby.jdbc.ClientDriver";
+	//private static final String DB_URI = "jdbc:derby://localhost:1527/";
 	private static final String DB_NAME = resourceRealPath + "issuetrackerDB";
 	private static final String DB_PROPERTIES = ConstantsXML.RESOURCE_REAL_PATH + "WEB-INF\\classes\\db\\derby.properties";
 	//private static final String DB_NAME = "D://Java_Training_Workspace//DerbyProject//derbyDB";

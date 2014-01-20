@@ -1,28 +1,18 @@
 <!DOCTYPE html>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <html>
      <head>
              <meta charset="UTF-8">
              <title>Issue Delails</title>
              <link rel="stylesheet" type="text/css" media="screen" href="css/default.css" />
              <script type="text/javascript" src="js/jquery-1.9.0.min.js"> </script>
+             <script type="text/javascript" src="js/jquery.cookie.js"> </script>
              <script type="text/javascript" src="js/login.js"> </script>
      </head>
      <body>
         <div class="page-wrapper">
              <div class="header">
-                <div class="logo">
-                        <h2>Issue Tracker</h2>
-                </div><!--end logo-->
-                <div id="user-info" class="user-info">
-                        <div id="error"></div>
-         <form id="auth-form">
-             <label>Name:</label>
-             <input name="login" id="login" class="login" type="text" value="My name"/>
-             <label>Password:</label>
-             <input name="password" id="password" class="password" type="password" />
-             <input id="authsubmit" class="authsubmit" type="submit" value="Log in" />
-         </form>
-                     </div><!--end user-info-->
+                <jsp:include page="/WEB-INF/jsp/header.jsp"></jsp:include>
              </div><!--end header-->
              <div id="menu-bar" class="menu-bar">
                     <ul class="menu-obj">
@@ -78,26 +68,11 @@
                    $( document ).ready(function () {
                            var searchString = window.location.search.substring(1);
                            var issueId = searchString.split('=')[1];
-                           getIssue(issueId);        
+                           getIssue(issueId);
+                           bindLongin();
+                           var user = $.cookie('user');
+                           
                    });
-                   
-                   $('#auth-form').submit(function () {
-                           console.log('You submit the form!');
-                           var formdata = 'login=' + $('#login').val() + '&password=' + $('#password').val();
-                           console.log(formdata);
-                           var jqxhr = $.ajax({
-                                   url: 'Login.do',
-                                   data: formdata,
-                                   type: 'get',
-                                   success: function (data) {
-                                           console.log('data=' + data);
-                                           handleUserData(data);
-                                           console.log('Status: ' + jqxhr.getAllResponseHeaders());
-                                   },
-                                   error: handleError
-                           });
-                           return false;
-                   })
                    
                    function getIssue (id) {
                            $.ajax({
@@ -127,7 +102,7 @@
                                
                                var userdata = data.userdata;
                                    if('guest' != userdata.role) {
-                                           handleUserData(userdata.name);
+                                           handleUserData(userdata);
                                    } 
                                $('.menu-obj').empty().append('<li class="menu-obj-item"><a href="/issuetracker/">Main</a></li>');
                            },
@@ -138,17 +113,6 @@
                                    }
                            }
                        });
-                   }
-                   
-                   function handleUserData (data) {
-                           $("#auth-form").empty().append(data);
-                           $("#auth-form:first").css("color", "white");
-                           $('#error').empty();
-                           $('<a>',{
-                                   text:'log out',
-                                   href:'Login.do',
-                                   class: 'logout'
-                           }).appendTo("#auth-form");
                    }
            </script>
      </body>

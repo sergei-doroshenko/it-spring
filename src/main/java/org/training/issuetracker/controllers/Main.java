@@ -23,7 +23,8 @@ import org.training.issuetracker.utils.JSONCreator;
 @WebServlet(value="/Main.do", loadOnStartup=1)
 public class Main extends AbstractBaseController {
 	private static final long serialVersionUID = 1L;
-	
+
+	@Override
 	public void init(ServletConfig config) throws ServletException {
 		ConstantsXML.RESOURCE_REAL_PATH = config.getServletContext().getRealPath(Constants.ROOT_PATH);
 	}
@@ -31,10 +32,10 @@ public class Main extends AbstractBaseController {
 	@Override
 	void performTask(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
+
 		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute(Constants.KEY_USER);
-		
+
 		if(null == user) {
 			response.setHeader("userrole", "guest");
 		} else {
@@ -42,24 +43,25 @@ public class Main extends AbstractBaseController {
 			response.setHeader("username", user.getFirstName());
 		}
 		response.setContentType("application/json");
-		
+
 		DataStorage data = DataStorage.getInstance();
+		System.out.println(user);
 		JsonObject json = JSONCreator.createBulkIssueJson(user, data.getIssuesMap());
-				
+
 		System.out.println(json);
-		
+
 		PrintWriter out = response.getWriter();
 		out.print(json);
 		out.flush();
 		out.close();
-		
+
 //		RequestDispatcher dispatcher = request.getRequestDispatcher("/error.html");
 //		if (dispatcher != null) dispatcher.forward(request, response);
-		
+
 		//response.sendRedirect("http://localhost:8080/issuetracker/");
 		return;
-		
+
 
 	}
-	
+
 }
