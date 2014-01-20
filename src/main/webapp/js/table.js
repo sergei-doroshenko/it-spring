@@ -1,3 +1,13 @@
+var names = ["Id", "Priority", "Assignee", "Type", "Status", "Summary"];
+var model = [
+             { name: "id", width: 55, formatter:'showlink', formatoptions:{ baseLinkUrl:'details.jsp', addParam: '&action=openIssue'}},
+             { name: "priority", width: 100},
+             { name: "assignee", width: 100},
+             { name: "type", width: 100},
+             { name: "status", width: 100},
+             { name: "summary", width: 200}
+         ];
+
 function createIssueTable() {    
     $("#list").jqGrid({
         url: "Main.do",
@@ -17,15 +27,8 @@ function createIssueTable() {
                cell:"cell"
             },
         },
-        colNames: ["Id", "Priority", "Assignee", "Type", "Status", "Summary"],
-        colModel: [
-            { name: "id", width: 55, formatter:'showlink', formatoptions:{ baseLinkUrl:'issuedetails.jsp', addParam: '&action=openIssue', idName:'issueId'}},
-            { name: "priority", width: 100},
-            { name: "assignee", width: 100},
-            { name: "type", width: 100},
-            { name: "status", width: 100},
-            { name: "summary", width: 200}
-        ],
+        colNames: names,
+        colModel: model,
         pager: "#pager",
         rowNum: 10,
         rowList: [10, 20, 30],
@@ -47,7 +50,6 @@ function handleDoubleClick (rowid,iRow,iCol,e) {
 
 function handleLoadComplete () {
 	var data = $("#list").getGridParam('userData');
-	console.log('Grid Param = ' + data.role);
 	handleUserData(data);
 	var priorityCol = $('#list').jqGrid('getCol', 'priority', true);
 	

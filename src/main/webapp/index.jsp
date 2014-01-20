@@ -23,13 +23,7 @@
 				<jsp:include page="/WEB-INF/jsp/header.jsp"></jsp:include>
 			</div><!--end header-->
 			<div id="menu-bar" class="menu-bar">
-				<ul class="menu-obj">
-					<li class="menu-obj-item"><a>Issue</a></li>
-					<li class="menu-obj-item"><a>Project</a></li>
-					<li class="menu-obj-item"><a>Status</a></li>
-					<li class="menu-obj-item"><a href="Test.do">Test DB</a></li>
-					<li class="menu-obj-item"><a href="secure/test.html">Test Secure</a></li>
-				</ul>
+				<jsp:include page="/WEB-INF/jsp/menubar.jsp"></jsp:include>
 			</div><!-- end menu-bar -->
 			<div class="content">
 				<div class="table-container">
@@ -38,7 +32,7 @@
 				</div><!--end issue-table-->
 			</div><!--end content-->
 			<div class="footer">
-				<span>Copyright &copy Sergei Doroshenko</span>
+				<jsp:include page="/WEB-INF/jsp/footer.jsp"></jsp:include>
 			</div><!--end footer-->
 		</div><!--end page-wrapper-->
 		<script type="text/javascript">

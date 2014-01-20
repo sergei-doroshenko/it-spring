@@ -26,16 +26,16 @@ public class IssueController extends AbstractBaseController {
 	@Override
 	void performTask(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
+
 		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute(Constants.KEY_USER);
-		
+
 		response.setContentType("application/json");
 		PrintWriter out = response.getWriter();
 		ParameterParser parser = new ParameterParser(request);
-		
+
 		try {
-			long id = parser.getLongParameter("issueId");
+			long id = parser.getLongParameter("id");
 			JsonObject json = JSONCreator.createSingleIssueJson(user, id);
 			System.out.println(json);
 			out.print(json);
@@ -44,9 +44,9 @@ public class IssueController extends AbstractBaseController {
 			out.print(e.getMessage());
 			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 		}
-		
+
 		out.close();
-		
+
 	}
 
 }

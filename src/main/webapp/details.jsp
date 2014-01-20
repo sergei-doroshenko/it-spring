@@ -3,7 +3,7 @@
 <html>
      <head>
              <meta charset="UTF-8">
-             <title>Issue Delails</title>
+             <title>Delails</title>
              <link rel="stylesheet" type="text/css" media="screen" href="css/default.css" />
              <script type="text/javascript" src="js/jquery-1.9.0.min.js"> </script>
              <script type="text/javascript" src="js/jquery.cookie.js"> </script>
@@ -15,11 +15,7 @@
                 <jsp:include page="/WEB-INF/jsp/header.jsp"></jsp:include>
              </div><!--end header-->
              <div id="menu-bar" class="menu-bar">
-                    <ul class="menu-obj">
-                         <li class="menu-obj-item"><a>Issue</a></li>
-                         <li class="menu-obj-item"><a>Project</a></li>
-                         <li class="menu-obj-item"><a>Status</a></li>
-                    </ul>
+                <jsp:include page="/WEB-INF/jsp/menubar.jsp"></jsp:include>
              </div><!-- end menu-bar -->
              <div class="content">
                  <div class="table-container">
@@ -28,7 +24,7 @@
                  </div><!--end issue-table-->
              </div><!--end content-->
              <div class="footer">
-                     <span>Copyright &copy Sergei Doroshenko</span>
+                 <jsp:include page="/WEB-INF/jsp/footer.jsp"></jsp:include>
              </div><!--end footer-->
         </div><!--end page-wrapper-->
              
@@ -65,54 +61,85 @@
       </div>
       <!-------- End of Issue Template -------------->
            <script type="text/javascript">
+           		$('.menu-obj:first').before('<li class="menu-obj-item"><a href="index.jsp">Main</a></li>');
+           			var actions = {
+           					openIssue: 'Issue.do',
+           					openUser: 'User.do'
+           			};
+           			
                    $( document ).ready(function () {
-                           var searchString = window.location.search.substring(1);
-                           var issueId = searchString.split('=')[1];
-                           getIssue(issueId);
-                           bindLongin();
-                           var user = $.cookie('user');
-                           
+                          var params = getParameters();
+                          var id = params.id;
+                          var action = params.action;
+                          console.log('Id = ' + id);
+                          console.log('Action = ' + action);
+                          var linkurl;
+                          if(id && action){
+                        	  linkurl = actions[action];
+                        	  getDetails(id, linkurl);  
+                          }
+                          bindLongin();
                    });
                    
-                   function getIssue (id) {
+                   function getParameters() {
+                       var searchString = window.location.search.substring(1);
+                       var params = searchString.split("&");
+                       var hash = {};
+
+	                   if (searchString == "") return {};
+	                   for (var i = 0; i < params.length; i++) {
+	                     var val = params[i].split("=");
+	                     hash[unescape(val[0])] = unescape(val[1]);
+	                   }
+	                   return hash;
+	               }
+                   
+                   function getDetails (id, link) {
                            $.ajax({
-                           url: 'Issue.do',
-                           data: 'issueId=' + id,
+                           url: link,
+                           data: 'id=' + id,
                            type: 'GET',
                            dataType : "json",                     
                            success: function (data, textStatus) {
-                               $('.table-container').empty();
-                               var templ = $('.issue-container').clone();
-                               var issue = data.issue;
-                               $(templ).find('#id').append('<span>' + issue.id + '</span>');
-                               $(templ).find('#createdate').append(issue.createdate);
-                               $(templ).find('#createby').append(issue.createby);
-                               $(templ).find('#modifydate').append(issue.modifydate);
-                               $(templ).find('#modifyby').append(issue.modifyby);
-                               $(templ).find('#summary').append(issue.summary);
-                               $(templ).find('#description').append(issue.description);
-                               $(templ).find('#status').append(issue.status);
-                               $(templ).find('#resolution').append(issue.resolution);
-                               $(templ).find('#type').append(issue.type);
-                               $(templ).find('#priority').append(issue.priority);
-                               $(templ).find('#project').append(issue.project);
-                               $(templ).find('#projectbuild').append(issue.projectbuild);
-                               $(templ).find('#assignee').append(issue.assignee);
-                               templ.appendTo('.content');
-                               
-                               var userdata = data.userdata;
-                                   if('guest' != userdata.role) {
-                                           handleUserData(userdata);
-                                   } 
-                               $('.menu-obj').empty().append('<li class="menu-obj-item"><a href="/issuetracker/">Main</a></li>');
+                        	   succesDetailsIssue(data, textStatus);
                            },
-                           error: function (response, status) {
-                                   if(response.status == 400) {
-                                           var errText = response.responseText;
-                                           $('.table-container').empty().append('Error while getting url. ' + errText);     
-                                   }
+                           error: function(response, status){
+                        	   errDetails(response, status);
                            }
                        });
+                   }
+                   
+                   function succesDetailsIssue(data, textStatus){
+                	   $('.table-container').empty();
+                       var templ = $('.issue-container').clone();
+                       var issue = data.issue;
+                       $(templ).find('#id').append('<span>' + issue.id + '</span>');
+                       $(templ).find('#createdate').append(issue.createdate);
+                       $(templ).find('#createby').append(issue.createby);
+                       $(templ).find('#modifydate').append(issue.modifydate);
+                       $(templ).find('#modifyby').append(issue.modifyby);
+                       $(templ).find('#summary').append(issue.summary);
+                       $(templ).find('#description').append(issue.description);
+                       $(templ).find('#status').append(issue.status);
+                       $(templ).find('#resolution').append(issue.resolution);
+                       $(templ).find('#type').append(issue.type);
+                       $(templ).find('#priority').append(issue.priority);
+                       $(templ).find('#project').append(issue.project);
+                       $(templ).find('#projectbuild').append(issue.projectbuild);
+                       $(templ).find('#assignee').append(issue.assignee);
+                       templ.appendTo('.content');
+                       
+                       var userdata = data.userdata;
+                       if('guest' != userdata.role) {
+                           handleUserData(userdata);
+                       }; 
+                   }
+                   
+                   function errDetails(response, status){
+                	   if(response.status == 400) {
+                           var errText = response.responseText;
+                           $('.table-container').empty().append('Error while getting url. ' + errText);     
+                   		}
                    }
            </script>
      </body>

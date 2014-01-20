@@ -15,9 +15,10 @@ function bindLongin() {
                 type: 'get',
                 beforeSubmit: showRequest,
                 success: function (data) {
-                        console.log('data=' + data);
-                        handleUserData(data);
-                        console.log('Status: ' + jqxhr.getAllResponseHeaders());
+                        //console.log('data=' + data);
+                        //handleUserData(data);
+                        //console.log('Status: ' + jqxhr.getAllResponseHeaders());
+                        document.location.href = 'index.jsp';
                 },
                 error:  handleError
         });
@@ -28,8 +29,12 @@ function bindLongin() {
 
 function handleUserData(data) {
 	if(data.role != 'guest') {
-		$("#auth-form").empty().append(data.name);
-	    $("#auth-form:first").css("color", "white");
+		$("#auth-form").empty();
+		$('<a>', {
+			text: data.name,
+			href:'details.jsp?id=' + data.id + '&action=openUser',
+			class: 'logout'
+		}).appendTo('#auth-form');
 	    $('#error').empty();
 	    $('<a>',{
 	            text:'log out',
@@ -39,9 +44,7 @@ function handleUserData(data) {
 	    if($("#list")){
 	    	$("#list").trigger("reloadGrid"); 
 	    }
-	} else {
-		$.cookie('user', null);
-	}
+	} 
 }
 
 function showRequest(formData, jqForm, options) {
@@ -70,10 +73,4 @@ function handleError (response, status, err) {
 	if(response.status == 601){
 		sessionTimedOut();
 	}
-}
-
-function getCookie(name) {
-	var matches = document.cookie.match(new RegExp("(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"));
-	
-	return matches ? decodeURIComponent(matches[1]) : undefined;
 }

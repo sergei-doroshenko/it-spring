@@ -9,9 +9,9 @@ public class User extends AbstractPersistentObj {
 	private String email;
 	private Role role;
 	private String password;
-	
+
 	public User() { }
-	
+
 	public User(long id, String name, String firstName, String lastName, String email, Role role,
 			String password) {
 		super(id, name);
@@ -57,9 +57,10 @@ public class User extends AbstractPersistentObj {
 	public String toString() {
 		return firstName + " " + lastName;
 	}
-	
+
 	public JsonObject toJsonObj () {
 		JsonObject issueJson = Json.createObjectBuilder()
+							.add("id", getId())
 							.add("role", getRole().getName())
 							.add("name", getFirstName() + " " + getLastName())
 						.build();
