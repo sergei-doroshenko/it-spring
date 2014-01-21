@@ -6,10 +6,10 @@ if (mylib == null) {
 function bindLongin() {
 	$('#auth-form').submit(function () {
         console.log('You submit the form!');
-        var formdata = 'login=' + $('#login').val() + '&password=' + $('#password').val();
+        var formdata = 'command=login&login=' + $('#login').val() + '&password=' + $('#password').val();
         console.log(formdata);
         var jqxhr = $.ajax({
-                url: 'Login.do',
+                url: 'Main.do',
                 data: formdata,
                 dataType: 'json',
                 type: 'get',
@@ -18,6 +18,7 @@ function bindLongin() {
                         //console.log('data=' + data);
                         //handleUserData(data);
                         //console.log('Status: ' + jqxhr.getAllResponseHeaders());
+                        handleUserOnLoad();
                         document.location.href = 'index.jsp';
                 },
                 error:  handleError
@@ -31,20 +32,43 @@ function handleUserData(data) {
 	if(data.role != 'guest') {
 		$("#auth-form").empty();
 		$('<a>', {
-			text: data.name,
-			href:'details.jsp?id=' + data.id + '&action=openUser',
+			text: userdata.name,
+			href:'Main.do?id=' + userdata.id + '&command=user',
 			class: 'logout'
 		}).appendTo('#auth-form');
 	    $('#error').empty();
 	    $('<a>',{
 	            text:'log out',
-	            href:'Login.do',
+	            href: 'Main.do?command=logout',
 	            class: 'logout'
 	    }).appendTo("#auth-form");
 	    if($("#list")){
 	    	$("#list").trigger("reloadGrid"); 
 	    }
 	} 
+}
+
+function handleUserOnLoad() {
+	try {
+		var userdata = JSON.parse($.cookie('user'));
+		console.log(userdata);
+		if (userdata) {
+			$("#auth-form").empty();
+			$('<a>', {
+				text: userdata.name,
+				href:'Main.do?id=' + userdata.id + '&command=user',
+				class: 'logout'
+			}).appendTo('#auth-form');
+		    $('#error').empty();
+		    $('<a>',{
+		            text:'log out',
+		            href: 'Main.do?command=logout',
+		            class: 'logout'
+		    }).appendTo("#auth-form");
+		}
+	} catch (exception_var) {
+		console.log('User null!');
+	}
 }
 
 function showRequest(formData, jqForm, options) {

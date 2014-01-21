@@ -8,10 +8,17 @@
 			<param name="ConversionPattern" value="%d %p [%c] %X{server.context} %m%n" />
 		</layout>
 	</appender>
-
+    <appender name="fileout" class="org.apache.log4j.FileAppender">
+        <param name="File" value="tmp/application.log" />
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d %p [%c] %X{server.context} %m%n" />
+        </layout>
+    </appender>
+    
 	<root>
 		<level value="debug" />
 		<appender-ref ref="stdout" />
+		<appender-ref ref="fileout" />
 	</root>
 
 </log4j:configuration>

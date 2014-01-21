@@ -11,18 +11,18 @@ import java.sql.Statement;
 import java.util.Properties;
 
 import org.apache.log4j.Logger;
-import org.training.issuetracker.data.xml.ConstantsXML;
+import org.training.issuetracker.constants.Constants;
 
 public class ConnectionManager {
 	/* the default framework is embedded*/
-	public static String resourceRealPath = ConstantsXML.RESOURCE_REAL_PATH + "WEB-INF\\classes\\db\\";
-	private Logger log;
+	public static String resourceRealPath = Constants.RESOURCE_REAL_PATH + "WEB-INF\\classes\\db\\";
+	private final Logger logger = Logger.getLogger("ConnectionManager");
 	private static final String DB_DRIVER = "org.apache.derby.jdbc.EmbeddedDriver";
 	private static final String DB_URI = "jdbc:derby:";
 	//private static final String DB_DRIVER = "org.apache.derby.jdbc.ClientDriver";
 	//private static final String DB_URI = "jdbc:derby://localhost:1527/";
 	private static final String DB_NAME = resourceRealPath + "issuetrackerDB";
-	private static final String DB_PROPERTIES = ConstantsXML.RESOURCE_REAL_PATH + "WEB-INF\\classes\\db\\derby.properties";
+	private static final String DB_PROPERTIES = Constants.RESOURCE_REAL_PATH + "WEB-INF\\classes\\db\\derby.properties";
 	//private static final String DB_NAME = "D://Java_Training_Workspace//DerbyProject//derbyDB";
 	private Connection connection;
 
@@ -64,7 +64,7 @@ public class ConnectionManager {
             Class.forName(DB_DRIVER).newInstance();
         } catch (ClassNotFoundException cnfe) {
         	cnfe.printStackTrace(System.err);
-            log.error(cnfe.getMessage());
+            logger.error(cnfe.getMessage());
         } catch (InstantiationException ie) {
             ie.printStackTrace(System.err);
         } catch (IllegalAccessException iae) {

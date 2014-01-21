@@ -16,8 +16,9 @@ import org.training.issuetracker.domain.User;
 public class JSONCreator {
 	private static JsonBuilderFactory factory = Json.createBuilderFactory(null);
 
-	public static JsonObject createBulkIssueJson (User user, Map<Long, Issue> issueMap) {
-
+	public static JsonObject createBulkIssueJson (User user) {
+		DataStorage data = DataStorage.getInstance();
+		Map<Long, Issue> issueMap = data.getIssuesMap();
 		JsonArrayBuilder arrBuild = factory.createArrayBuilder();
 
 		if (issueMap != null) {
@@ -68,6 +69,14 @@ public class JSONCreator {
 		DataStorage data = DataStorage.getInstance();
 		JsonObject value = factory.createObjectBuilder()
 				.add("userdata", createUserData(user))
+				.add("issue", data.getIssue(id).toJsonObj()).build();
+
+		return value;
+	}
+
+	public static JsonObject createSingleIssueJson (long id) {
+		DataStorage data = DataStorage.getInstance();
+		JsonObject value = factory.createObjectBuilder()
 				.add("issue", data.getIssue(id).toJsonObj()).build();
 
 		return value;

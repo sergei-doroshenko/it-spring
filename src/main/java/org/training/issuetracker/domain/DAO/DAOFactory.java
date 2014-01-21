@@ -3,6 +3,7 @@ package org.training.issuetracker.domain.DAO;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.training.issuetracker.data.xml.IssueImplXML;
 import org.training.issuetracker.data.xml.PriorityImplXML;
 import org.training.issuetracker.data.xml.ProjectImplXML;
 import org.training.issuetracker.data.xml.ResolutionImplXML;

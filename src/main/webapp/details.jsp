@@ -70,12 +70,12 @@
                    $( document ).ready(function () {
                           var params = getParameters();
                           var id = params.id;
-                          var action = params.action;
+                          var command = params.command;
                           console.log('Id = ' + id);
-                          console.log('Action = ' + action);
+                          console.log('Command = ' + command);
                           var linkurl;
-                          if(id && action){
-                        	  linkurl = actions[action];
+                          if(id && command){
+                        	  linkurl = actions[command];
                         	  getDetails(id, linkurl);  
                           }
                           bindLongin();
@@ -83,6 +83,7 @@
                    
                    function getParameters() {
                        var searchString = window.location.search.substring(1);
+                       console.log(document.location.search);
                        var params = searchString.split("&");
                        var hash = {};
 
@@ -96,8 +97,9 @@
                    
                    function getDetails (id, link) {
                            $.ajax({
-                           url: link,
-                           data: 'id=' + id,
+                           url: 'Main.do',
+                           //data: 'id=' + id,
+                           data: document.location.search.substring(1),
                            type: 'GET',
                            dataType : "json",                     
                            success: function (data, textStatus) {
@@ -129,10 +131,10 @@
                        $(templ).find('#assignee').append(issue.assignee);
                        templ.appendTo('.content');
                        
-                       var userdata = data.userdata;
-                       if('guest' != userdata.role) {
-                           handleUserData(userdata);
-                       }; 
+                       //var userdata = jQuery.parseJSON($.cookie('user'));
+                       //if('guest' != userdata.role) {
+                       //    handleUserData(userdata);
+                       //}; 
                    }
                    
                    function errDetails(response, status){

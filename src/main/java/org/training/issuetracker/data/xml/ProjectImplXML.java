@@ -3,6 +3,7 @@ package org.training.issuetracker.data.xml;
 import java.io.IOException;
 import java.util.Map;
 
+import org.training.issuetracker.constants.Constants;
 import org.training.issuetracker.domain.Project;
 import org.training.issuetracker.domain.DAO.ProjectDAO;
 import org.training.issuetracker.exceptions.DaoException;
@@ -13,10 +14,10 @@ import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.XMLReaderFactory;
 
 public class ProjectImplXML implements ProjectDAO {
-	public static String resourceRealPath = ConstantsXML.RESOURCE_REAL_PATH + ConstantsXML.XML_RESOURCE_PATH;
+	public static String resourceRealPath = Constants.RESOURCE_REAL_PATH + ConstantsXML.XML_RESOURCE_PATH;
 	public static String schemaUrl = resourceRealPath + "project.xsd";
 	private static String xmlUrl = resourceRealPath + "projects.xml";
-	
+
 	public ProjectImplXML() { }
 
 	@Override
@@ -31,15 +32,15 @@ public class ProjectImplXML implements ProjectDAO {
 			reader.setContentHandler(handler);
 			reader.parse(xmlUrl);
 			projects = handler.getProjects();
-			
+
 		} catch (ValidationException e) {
-			throw new DaoException(e);	
+			throw new DaoException(e);
 		} catch (SAXException e) {
 			throw new DaoException(e);
 		} catch (IOException e) {
 			throw new DaoException(e);
 		}
-		
+
 		return projects;
 	}
 }

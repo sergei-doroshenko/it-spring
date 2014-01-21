@@ -1,6 +1,9 @@
 var names = ["Id", "Priority", "Assignee", "Type", "Status", "Summary"];
+
+var rowLink = { baseLinkUrl:'details.jsp', addParam: '&command=issue'};
+
 var model = [
-             { name: "id", width: 55, formatter:'showlink', formatoptions:{ baseLinkUrl:'details.jsp', addParam: '&action=openIssue'}},
+             { name: "id", width: 55, formatter:'showlink', formatoptions: rowLink},
              { name: "priority", width: 100},
              { name: "assignee", width: 100},
              { name: "type", width: 100},
@@ -8,31 +11,34 @@ var model = [
              { name: "summary", width: 200}
          ];
 
+var jsonHandler = {
+        root: "rows",
+        page: "page",
+        total: "total",
+        records: "records",
+        repeatitems: true,
+        cell: "cell",
+        id: "id",
+        userdata: "userdata",
+        subgrid: {root:"rows", 
+            repeatitems: true, 
+           cell:"cell"
+        }
+    };
+
 function createIssueTable() {    
     $("#list").jqGrid({
         url: "Main.do",
+        postData: {	command: 'issuelist' },
 		mtype: "GET",
         datatype: "json",
-        jsonReader : {
-            root: "rows",
-            page: "page",
-            total: "total",
-            records: "records",
-            repeatitems: true,
-            cell: "cell",
-            id: "id",
-            userdata: "userdata",
-            subgrid: {root:"rows", 
-                repeatitems: true, 
-               cell:"cell"
-            },
-        },
+        jsonReader : jsonHandler,
         colNames: names,
         colModel: model,
         pager: "#pager",
         rowNum: 10,
         rowList: [10, 20, 30],
-        sortname: "invdate",
+        sortname: "id",
         sortorder: "desc",
         viewrecords: true,
         gridview: true,
@@ -40,7 +46,7 @@ function createIssueTable() {
         caption: "Issues",
         height: $(".table-container").height(),
 		ondblClickRow: handleDoubleClick,
-        loadComplete: handleLoadComplete
+        loadComplete: handleUserOnLoad
     });
 }
 
