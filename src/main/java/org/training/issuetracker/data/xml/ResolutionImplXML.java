@@ -15,7 +15,7 @@ import org.xml.sax.helpers.XMLReaderFactory;
 
 public class ResolutionImplXML implements ResolutionDAO {
 
-	public static String resourceRealPath = Constants.RESOURCE_REAL_PATH + ConstantsXML.XML_RESOURCE_PATH;
+	public static String resourceRealPath = Constants.getRealPath() + ConstantsXML.XML_RESOURCE_PATH;
 	public static String schemaUrl = resourceRealPath + "resolution.xsd";
 	private static String xmlUrl = resourceRealPath + "resolutions.xml";
 
@@ -25,7 +25,7 @@ public class ResolutionImplXML implements ResolutionDAO {
 		XMLValidator validator = new XMLValidator();
 		try {
 			validator.validateXML(schemaUrl, xmlUrl);
-			System.out.println ("xml is valid");
+
 			XMLReader reader = XMLReaderFactory.createXMLReader();
 			PersistObjDefaultHandler<Resolution> handler = new PersistObjDefaultHandler<Resolution>(Resolution.class, "p:resolutions", "p:resolution");
 			reader.setContentHandler(handler);

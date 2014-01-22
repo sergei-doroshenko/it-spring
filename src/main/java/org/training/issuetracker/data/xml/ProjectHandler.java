@@ -14,12 +14,12 @@ public class ProjectHandler extends DefaultHandler {
 	private final int NAME_ATTR_INDEX = 1;
 	private String currEl;
 	private Project currProject;
-	private Map<Long, Project> projects = new HashMap<Long, Project>();
-	
+	private final Map<Long, Project> projects = new HashMap<Long, Project>();
+
 	public Map<Long, Project> getProjects() {
 		return projects;
 	}
-	
+
 	@Override
     public void startElement(String uri, String localName,
         String qName, Attributes attributes) throws SAXException {
@@ -30,12 +30,11 @@ public class ProjectHandler extends DefaultHandler {
 			currProject.setId(id);
 			currProject.setName(name);
 		}
-		
+
 		if (!qName.equals("p:project") && !qName.equals("p:projects")) {
 			currEl = qName;
 		}
-		
-        System.out.println("start element    : " + qName + "--"+ currEl);
+
     }
 
 	@Override
@@ -43,19 +42,18 @@ public class ProjectHandler extends DefaultHandler {
 		if (qName.equals("p:project")) {
 			projects.put(currProject.getId(), currProject);
 		}
-        System.out.println("end element      : " + qName);
+
     }
 
 	@Override
     public void characters(char ch[], int start, int length) throws SAXException {
 		String str = new String(ch, start, length);
 		str = str.trim();
-		
+
 		if (null == currEl || str.isEmpty()) return;
-		
-		System.out.println(currEl + "=" + str);
+
 		switch (currEl) {
-			case "p:description" : 
+			case "p:description" :
 				currProject.setDescription(str);
 				break;
 			case "p:build" :
@@ -64,7 +62,7 @@ public class ProjectHandler extends DefaultHandler {
 			case "p:manager" :
 				User manager = DataStorage.getInstance().getUser(str);
 				currProject.setManager(manager);
-				break;	
+				break;
 		}
 	}
 }

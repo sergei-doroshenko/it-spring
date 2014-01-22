@@ -1,15 +1,13 @@
 package org.training.issuetracker.constants;
 
+import org.training.issuetracker.inter.LocalizerLanguage;
+
 /**This class contains constants.
  * @author Sergei_Doroshenko
  *
  */
 public final class Constants {
 //********************	Path ***********************************************
-	/**Real path to files stored in application folders.
-	 * Init in ApplicationContextListener.
-	 */
-	public static String RESOURCE_REAL_PATH;
 	/**Constant for root path.
 	 *
 	 */
@@ -23,25 +21,30 @@ public final class Constants {
      */
     public static final String JUMP_ERROR = "/error.html";
 
-//************* Keys *****************************************************
+//************* Parameters Keys *****************************************************
     /**String literal for id parameter.
-     *
      */
     public static final String KEY_ID = "id";
     /**login string literal.
-     *
      */
     public static final String KEY_LOGIN = "login";
 	/**password string literal.
-	 *
 	 */
 	public static final String KEY_PASSWORD = "password";
 
 	/**user string literal.
-	 *
 	 */
 	public static final String KEY_USER = "user";
 
+	/**
+	 * Contains string literal for language parameter.
+	 */
+	public static final String KEY_LANGUAGE = "lang";
+
+	/**
+	 *  Contains string literal for command parameter.
+	 */
+	public static final String KEY_COMMAND = "command";
 //*************** Errors ****************************************************
     /**Error caused by wrong input.
      *
@@ -76,8 +79,39 @@ public final class Constants {
      *
      */
     public static final  String URL_PREFIX = "/WEB-INF/jsp";
+
+	/**This constant assign default language that used for.
+	 * internationalization - English language.
+	 */
+	public static final LocalizerLanguage DEFAULT_LANGUAGE = LocalizerLanguage.EN;
+
+//********************* Attributes *******************************************
+	/**
+	 * Contains string literal for localizer attribute.
+	 */
+	public static final String KEY_LOCALIZER = "localizer";
+
+	/**Real path to files stored in application folders.
+	 * Init in ApplicationContextListener.
+	 */
+	private static String realPath;
+
     /**
 	 * Private constructor
 	 */
 	private Constants() { }
+
+	/**Getter for realPath field.
+	 * @return App realPath.
+	 */
+	public static String getRealPath() {
+		return realPath;
+	}
+
+	/**Setter for realPath field.
+	 * @param realPath - string url part.
+	 */
+	public static void setRealPath(String realPath) {
+		Constants.realPath = realPath;
+	}
 }

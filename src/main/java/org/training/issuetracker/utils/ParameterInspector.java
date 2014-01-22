@@ -7,75 +7,126 @@ import org.training.issuetracker.constants.Constants;
 import org.training.issuetracker.domain.User;
 import org.training.issuetracker.exceptions.ValidationException;
 
-public class ParameterInspector {
+/**Class encapsulate validation and inspection.
+ * parameter values received from request.
+ * @author Sergei_Doroshenko
+ *
+ */
+public final class ParameterInspector {
+	/**
+	 * User name pattern.
+	 */
 	public static final String NAME_PATTERN = "[a-zA-Z0-9]{4,6}";
+    /**
+     * User password pattern.
+     */
     public static final String PASSWORD_PATTERN = "[a-zA-Z0-9]{3,6}";
+    /**
+     * User e-mail pattern.
+     */
     public static final String EMAIL_PATTERN = "^([a-zA-Z0-9_.-])+@([a-zA-Z0-9_.-])+\\.([a-zA-Z])+";
-	
-	public ParameterInspector() {}
-	
-	public static boolean checkName(String name) throws ValidationException{
+
+	/**
+	 * Default constructor.
+	 */
+	private ParameterInspector() { }
+
+	/**Method checks login parameter value.
+	 * @param name - name value.
+	 * @return - true if name is valid or false if not.
+	 * @throws ValidationException
+	 */
+	public static boolean checkName(String name) throws ValidationException {
 		Pattern pattern = Pattern.compile(NAME_PATTERN);
-		
-		if(name == null){
-			throw new ValidationException("login empty!");//Constants.ERROR_LOGIN
+
+		if (name == null) {
+			throw new ValidationException("login empty!");
 		} else {
 			Matcher matcher = pattern.matcher(name);
-			if(!matcher.matches()){
+			if (!matcher.matches()) {
 				throw new ValidationException(Constants.ERROR_LOGIN);
 			}
+
 			return true;
 		}
 	}
-	
-	public static boolean checkPassword(String pass, String confpass) throws ValidationException{
+
+	/**Check password value for validation rule and equals with.
+	 * password confirmation.
+	 * @param pass - password parameter value.
+	 * @param confpass - password confirmation value.
+	 * @return - true if password and confirmation is valid.
+	 * @throws ValidationException
+	 */
+	public static boolean checkPassword(String pass, String confpass) throws ValidationException {
 		Pattern pattern = Pattern.compile(PASSWORD_PATTERN);
 		Matcher matcher = pattern.matcher(pass);
-		
-		if(!matcher.matches() || !pass.equals(confpass)){
+
+		if (!matcher.matches() || !pass.equals(confpass)) {
 			throw new ValidationException(Constants.ERROR_PASSWORD);
 		}
-		
+
 		return true;
 	}
-	
-	public static boolean checkPassword(String pass) throws ValidationException{
+
+	/**Check password value for validation rule.
+	 * @param pass - password parameter value.
+	 * @return - true if password and confirmation is valid.
+	 * @throws ValidationException
+	 */
+	public static boolean checkPassword(String pass) throws ValidationException {
 		Pattern pattern = Pattern.compile(PASSWORD_PATTERN);
 		Matcher matcher = pattern.matcher(pass);
-		
-		if(!matcher.matches()){
+
+		if (!matcher.matches()) {
 			throw new ValidationException(Constants.ERROR_PASSWORD);
 		}
-		
+
 		return true;
 	}
-	
-	
-	public static boolean checkEmail(String name) throws ValidationException{
+
+
+	/**Check e-mail value for validation certain e-mail pattern.
+	 * see above.
+	 * @param name - email value.
+	 * @return - true if password and confirmation is valid.
+	 * @throws ValidationException
+	 */
+	public static boolean checkEmail(String name) throws ValidationException {
 		Pattern pattern = Pattern.compile(EMAIL_PATTERN);
 		Matcher matcher = pattern.matcher(name);
-		
-		if(!matcher.matches()){
+
+		if (!matcher.matches()) {
 			throw new ValidationException(Constants.ERROR_EMAIL);
 		}
-		
+
 		return true;
 	}
-	
-	public static User checkUser(String firstName, String lastName, String mail,  
-			String pass, String confpass) throws ValidationException{
-		
+
+	/**Check all user credentials.
+	 * @param firstName - user first name.
+	 * @param lastName - user last name.
+	 * @param mail - user e-mail.
+	 * @param pass - user password.
+	 * @param confpass - user password confirmation.
+	 * @return - User object if all credentials is valid with fields populated
+	 * by arguments.
+	 * @throws ValidationException if some of credentials in invalid.
+	 */
+	public static User checkUser(String firstName, String lastName, String mail,
+			String pass, String confpass) throws ValidationException {
+
 		User user = new User();
-		
-		if(checkName(firstName) && checkName(lastName) && checkPassword(pass, confpass) 
-				&& checkEmail(mail)){
+
+		if (checkName(firstName) && checkName(lastName) && checkPassword(pass, confpass)
+				&& checkEmail(mail)) {
 			user.setFirstName(firstName);
 			user.setLastName(lastName);
 			user.setEmail(mail);
 			user.setPassword(pass);
 		}
-		
+
 		return user;
-			 
+
 	}
 }

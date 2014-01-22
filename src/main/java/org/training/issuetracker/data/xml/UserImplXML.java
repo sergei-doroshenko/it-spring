@@ -14,7 +14,7 @@ import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.XMLReaderFactory;
 
 public class UserImplXML implements UserDAO {
-	public static String resourceRealPath = Constants.RESOURCE_REAL_PATH + ConstantsXML.XML_RESOURCE_PATH;
+	public static String resourceRealPath = Constants.getRealPath() + ConstantsXML.XML_RESOURCE_PATH;
 	public static String schemaUrl = resourceRealPath + "user.xsd";
 	private static String xmlUrl = resourceRealPath + "users.xml";
 	private Map<String, User> users = null;
@@ -27,7 +27,7 @@ public class UserImplXML implements UserDAO {
 			XMLValidator validator = new XMLValidator();
 			try {
 				validator.validateXML(schemaUrl, xmlUrl);
-				System.out.println ("xml is valid-------------------------------");
+
 				XMLReader reader = XMLReaderFactory.createXMLReader();
 				UserHandler handler = new UserHandler();
 				reader.setContentHandler(handler);

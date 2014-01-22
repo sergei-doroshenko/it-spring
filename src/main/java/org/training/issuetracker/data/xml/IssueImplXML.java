@@ -14,7 +14,7 @@ import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.XMLReaderFactory;
 
 public class IssueImplXML implements IssueDAO {
-	public static String resourceRealPath = Constants.RESOURCE_REAL_PATH + ConstantsXML.XML_RESOURCE_PATH;
+	public static String resourceRealPath = Constants.getRealPath() + ConstantsXML.XML_RESOURCE_PATH;
 	public static String schemaUrl = resourceRealPath + "issue.xsd";
 	private static String xmlUrl = resourceRealPath + "issues.xml";
 
@@ -26,7 +26,6 @@ public class IssueImplXML implements IssueDAO {
 		XMLValidator validator = new XMLValidator();
 		try {
 			validator.validateXML(schemaUrl, xmlUrl);
-			System.out.println ("xml is valid-------------------------------");
 			XMLReader reader = XMLReaderFactory.createXMLReader();
 			IssueHandler handler = new IssueHandler();
 			reader.setContentHandler(handler);

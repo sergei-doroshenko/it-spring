@@ -15,7 +15,7 @@ import org.xml.sax.helpers.XMLReaderFactory;
 
 public class RoleImpXML implements RoleDAO {
 
-	public static String resourceRealPath = Constants.RESOURCE_REAL_PATH + ConstantsXML.XML_RESOURCE_PATH;
+	public static String resourceRealPath = Constants.getRealPath() + ConstantsXML.XML_RESOURCE_PATH;
 	public static String schemaUrl = resourceRealPath + "role.xsd";
 	private static String xmlUrl = resourceRealPath + "roles.xml";
 
@@ -28,7 +28,7 @@ public class RoleImpXML implements RoleDAO {
 		XMLValidator validator = new XMLValidator();
 		try {
 			validator.validateXML(schemaUrl, xmlUrl);
-			System.out.println ("xml is valid");
+
 			XMLReader reader = XMLReaderFactory.createXMLReader();
 			PersistObjDefaultHandler<Role> handler = new PersistObjDefaultHandler<Role>(Role.class, "p:roles", "p:role");
 			reader.setContentHandler(handler);

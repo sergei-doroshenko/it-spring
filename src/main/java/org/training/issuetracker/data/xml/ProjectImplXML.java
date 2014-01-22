@@ -14,7 +14,7 @@ import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.XMLReaderFactory;
 
 public class ProjectImplXML implements ProjectDAO {
-	public static String resourceRealPath = Constants.RESOURCE_REAL_PATH + ConstantsXML.XML_RESOURCE_PATH;
+	public static String resourceRealPath = Constants.getRealPath() + ConstantsXML.XML_RESOURCE_PATH;
 	public static String schemaUrl = resourceRealPath + "project.xsd";
 	private static String xmlUrl = resourceRealPath + "projects.xml";
 
@@ -26,7 +26,7 @@ public class ProjectImplXML implements ProjectDAO {
 		XMLValidator validator = new XMLValidator();
 		try {
 			validator.validateXML(schemaUrl, xmlUrl);
-			System.out.println ("xml is valid-------------------------------");
+
 			XMLReader reader = XMLReaderFactory.createXMLReader();
 			ProjectHandler handler = new ProjectHandler();
 			reader.setContentHandler(handler);

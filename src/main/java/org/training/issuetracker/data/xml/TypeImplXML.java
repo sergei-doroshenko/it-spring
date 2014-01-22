@@ -14,7 +14,7 @@ import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.XMLReaderFactory;
 
 public class TypeImplXML implements TypeDAO {
-	public static String resourceRealPath = Constants.RESOURCE_REAL_PATH + ConstantsXML.XML_RESOURCE_PATH;
+	public static String resourceRealPath = Constants.getRealPath() + ConstantsXML.XML_RESOURCE_PATH;
 	public static String schemaUrl = resourceRealPath + "type.xsd";
 	private static String xmlUrl = resourceRealPath + "types.xml";
 
@@ -26,7 +26,7 @@ public class TypeImplXML implements TypeDAO {
 		XMLValidator validator = new XMLValidator();
 		try {
 			validator.validateXML(schemaUrl, xmlUrl);
-			System.out.println ("xml is valid-------------------------------");
+
 			XMLReader reader = XMLReaderFactory.createXMLReader();
 			PersistObjDefaultHandler<Type> handler = new PersistObjDefaultHandler<Type>(Type.class, "p:types", "p:type");
 			reader.setContentHandler(handler);

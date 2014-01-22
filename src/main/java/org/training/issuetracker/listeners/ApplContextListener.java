@@ -18,18 +18,15 @@ import org.training.issuetracker.constants.Constants;
  */
 @WebListener
 public class ApplContextListener implements ServletContextListener {
-
+	Logger logger = Logger.getLogger("org.training.issuetracker");
 	/* This method executes on application init.
 	 * @see javax.servlet.ServletContextListener#contextInitialized(javax.servlet.ServletContextEvent)
 	 */
 	@Override
 	public void contextInitialized(ServletContextEvent servletContextEvent) {
-		ServletContext ctx = servletContextEvent.getServletContext();
-		Constants.RESOURCE_REAL_PATH = ctx.getRealPath(Constants.ROOT_PATH);
-
 		PatternLayout layout = new PatternLayout("%d %p [%c] %X{server.context} %m%n");
-		String fileUrl = Constants.RESOURCE_REAL_PATH + "/WEB-INF/application.log";
-		Logger logger = Logger.getLogger(ApplContextListener.class);
+		String fileUrl = Constants.getRealPath() + "/WEB-INF/application.log";
+
 		try {
 			FileAppender appender = new FileAppender(layout, fileUrl,false);
 			logger.addAppender(appender);
@@ -37,7 +34,9 @@ public class ApplContextListener implements ServletContextListener {
 			e.printStackTrace();
 		}
 
-		logger.debug(Constants.RESOURCE_REAL_PATH);
+		ServletContext ctx = servletContextEvent.getServletContext();
+		Constants.setRealPath(ctx.getRealPath(Constants.ROOT_PATH));
+		logger.debug("App real path = " + Constants.getRealPath());
 
 	}
 

@@ -12,26 +12,25 @@ import org.xml.sax.helpers.DefaultHandler;
 public class UserHandler extends DefaultHandler {
 	private String currEl;
 	private User currUser;
-	private Map<String, User> users = new HashMap<String, User>();
-	
+	private final Map<String, User> users = new HashMap<String, User>();
+
 	public UserHandler() { }
 
 	public Map<String, User> getUsersMap() {
 		return users;
 	}
-	
+
 	@Override
     public void startElement(String uri, String localName,
         String qName, Attributes attributes) throws SAXException {
 		if (qName.equals("p:user")) {
 			currUser = new User();
 		}
-		
+
 		if (!qName.equals("p:user") && !qName.equals("p:users")) {
 			currEl = qName;
 		}
-		
-        System.out.println("start element    : " + qName + "--"+ currEl);
+
     }
 
 	@Override
@@ -39,19 +38,18 @@ public class UserHandler extends DefaultHandler {
 		if (qName.equals("p:user")) {
 			users.put(currUser.getEmail(), currUser);
 		}
-        System.out.println("end element      : " + qName);
+
     }
 
 	@Override
     public void characters(char ch[], int start, int length) throws SAXException {
 		String str = new String(ch, start, length);
 		str = str.trim();
-		
+
 		if (null == currEl || str.isEmpty()) return;
-		
-		System.out.println(currEl + "=" + str);
+
 		switch (currEl) {
-			case "p:id" : 
+			case "p:id" :
 				currUser.setId(Long.parseLong(str));
 				break;
 			case "p:firstname" :
@@ -70,7 +68,7 @@ public class UserHandler extends DefaultHandler {
 				break;
 			case "p:password" :
 				currUser.setPassword(str);
-				break;	
+				break;
 		}
     }
 }
