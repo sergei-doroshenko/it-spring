@@ -18,6 +18,7 @@ public class IssueImplXML implements IssueDAO {
 	public static String schemaUrl = resourceRealPath + "issue.xsd";
 	private static String xmlUrl = resourceRealPath + "issues.xml";
 
+
 	public IssueImplXML() { }
 
 	@Override

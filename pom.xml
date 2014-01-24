@@ -47,11 +47,39 @@
 				<artifactId>jsr311-api</artifactId>
 				<version>0.11</version>
 			</dependency>
+			<dependency>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>native2ascii-maven-plugin</artifactId>
+				<version>1.0-beta-1</version>
+			</dependency>
+			<dependency>
+				<groupId>jstl</groupId>
+				<artifactId>jstl</artifactId>
+				<version>1.2</version>
+			</dependency>
 		</dependencies>
 	<build>
 		<finalName>issuetracker</finalName>
 		<plugins>
-			<!-- plugin>
+			<plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>native2ascii-maven-plugin</artifactId>
+                <version>1.0-alpha-1</version>
+                <executions>
+                    <execution>
+                    	<phase>package</phase>
+                        <goals>
+                            <goal>native2ascii</goal>
+                        </goals>
+                        <configuration>
+                            <encoding>UTF8</encoding>
+                            <src>src/main/resources/i18n</src>
+                            <dest>target/classes/i18n</dest>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>2.5.1</version>
@@ -60,8 +88,8 @@
 					<source>1.7</source>
 					<target>1.7</target>
 				</configuration>
-			</plugin-->
-			<plugin>
+			</plugin>
+			<!-- plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-checkstyle-plugin</artifactId>
 				<version>2.9.1</version>
@@ -77,8 +105,8 @@
 						</goals>
 					</execution>
 				</executions>
-			</plugin>
-			<!-- plugin>
+			</plugin-->
+			<plugin>
 		        <groupId>org.apache.maven.plugins</groupId>
 		        <artifactId>maven-war-plugin</artifactId>
 		        <version>2.4</version>
@@ -89,8 +117,37 @@
 		            </manifest>
 		          </archive>
 		        </configuration>
-		     </plugin-->
+		     </plugin>
 		</plugins>
+		<pluginManagement>
+			<plugins>
+				<!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
+				<plugin>
+					<groupId>org.eclipse.m2e</groupId>
+					<artifactId>lifecycle-mapping</artifactId>
+					<version>1.0.0</version>
+					<configuration>
+						<lifecycleMappingMetadata>
+							<pluginExecutions>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>org.codehaus.mojo</groupId>
+										<artifactId>native2ascii-maven-plugin</artifactId>
+										<versionRange>1.0-alpha-1</versionRange>
+										<goals>
+											<goal>native2ascii</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore></ignore>
+									</action>
+								</pluginExecution>
+							</pluginExecutions>
+						</lifecycleMappingMetadata>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
 	</build>
 	<dependencyManagement>
 		<dependencies>

@@ -1,5 +1,11 @@
 package org.training.issuetracker.listeners;
 
+import java.net.MalformedURLException;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.ResourceBundle;
+
 import javax.servlet.annotation.WebListener;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpSessionEvent;
@@ -7,9 +13,8 @@ import javax.servlet.http.HttpSessionListener;
 
 import org.apache.log4j.Logger;
 import org.training.issuetracker.constants.Constants;
-import org.training.issuetracker.inter.Localizer;
-import org.training.issuetracker.inter.LocalizerFactory;
-
+import org.training.issuetracker.i18n.Localizer;
+import org.training.issuetracker.i18n.LocalizerFactory;
 /**Issue session listener.
  * @author Sergei_Doroshenko
  *
@@ -21,9 +26,30 @@ public class IssueSessionListener implements HttpSessionListener {
 
 	@Override
 	public void sessionCreated(HttpSessionEvent se) {
-		Localizer localizer = LocalizerFactory.getLocalizer(Constants.DEFAULT_LANGUAGE);
+		Localizer localizer = null;
+		try {
+			localizer = LocalizerFactory.getLocalizer(Constants.DEFAULT_LANGUAGE);
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		HttpSession session = se.getSession();
-		session.setAttribute(Constants.KEY_LOCALIZER, localizer);
+
+
+		ResourceBundle resource = localizer.getBundle();
+		Map<String, String> map = new HashMap<String, String>();
+
+        Enumeration<String> keys = resource.getKeys();
+        while (keys.hasMoreElements()) {
+            String key = keys.nextElement();
+            map.put(key, resource.getString(key));
+            //logger.info("key = " + key + "; value = " + resource.getString(key));
+        }
+
+
+
+		session.setAttribute("map", map);
+
 		logger.info("Created session; Id = " + session.getId());
 		logger.debug("Set localizer " + localizer.getClass().getSimpleName());
 

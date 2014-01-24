@@ -8,9 +8,9 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
 import org.training.issuetracker.constants.Constants;
 import org.training.issuetracker.exceptions.ParameterNotFoundException;
-import org.training.issuetracker.inter.Localizer;
-import org.training.issuetracker.inter.LocalizerFactory;
-import org.training.issuetracker.inter.LocalizerLanguage;
+import org.training.issuetracker.i18n.Localizer;
+import org.training.issuetracker.i18n.LocalizerFactory;
+import org.training.issuetracker.i18n.LocalizerLanguage;
 import org.training.issuetracker.utils.ParameterParser;
 
 /**Class to process localization action.

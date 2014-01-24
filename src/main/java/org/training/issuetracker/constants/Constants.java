@@ -1,6 +1,6 @@
 package org.training.issuetracker.constants;
 
-import org.training.issuetracker.inter.LocalizerLanguage;
+import org.training.issuetracker.i18n.LocalizerLanguage;
 
 /**This class contains constants.
  * @author Sergei_Doroshenko
