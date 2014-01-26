@@ -6,6 +6,7 @@ import java.io.PrintWriter;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.Locale;
+import java.util.PropertyResourceBundle;
 import java.util.ResourceBundle;
 
 import javax.servlet.ServletException;
@@ -34,13 +35,13 @@ public class TestLocale extends HttpServlet {
 		Locale locale = new Locale("ru","RU");
 		response.setLocale(locale);
 
-
 		String path = Constants.getRealPath() + "WEB-INF\\classes\\i18n\\";
 		File file = new File(path);
 		URL[] urls = {file.toURI().toURL()};
 		ClassLoader loader = new URLClassLoader(urls);
-		ResourceBundle bundle = ResourceBundle.getBundle("utf-test", locale, loader);
-
+		//ResourceBundle bundle = ResourceBundle.getBundle("utf-test", locale, loader);
+		ResourceBundle bundle = PropertyResourceBundle.getBundle("utf-test", locale, loader);
+		
 		//ResourceBundle bundle = ResourceBundle.getBundle("test", locale);
 		String one = bundle.getString("one");
 		String res = new String (one.getBytes("ISO-8859-1"), "UTF-8");
