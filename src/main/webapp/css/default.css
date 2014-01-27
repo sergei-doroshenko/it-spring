@@ -24,6 +24,16 @@ html, body, ul, li {
 	color: orange;
 }
 
+#lang {
+    float: right;
+    margin: 3px;
+    
+}
+
+#lang > a {
+    color: #F6F6F6;
+}
+
 .user-info {
 	/*height: 50px;
 	width: 450px;

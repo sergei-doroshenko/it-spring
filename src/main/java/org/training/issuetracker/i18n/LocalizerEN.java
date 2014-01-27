@@ -25,8 +25,8 @@ public class LocalizerEN implements Localizer {
 		File file = new File(path);
 		URL[] urls = {file.toURI().toURL()};
 		ClassLoader loader = new URLClassLoader(urls);
-		Locale locale = new Locale("ru","RU");
-		bundle = PropertyResourceBundle.getBundle("utf-test", locale, loader);
+		Locale locale = new Locale("en","EN");
+		bundle = PropertyResourceBundle.getBundle("main", locale, loader);
 	}
 
 	@Override

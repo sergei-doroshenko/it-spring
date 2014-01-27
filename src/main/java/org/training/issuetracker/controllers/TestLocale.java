@@ -8,6 +8,7 @@ import java.net.URLClassLoader;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -44,21 +45,24 @@ public class TestLocale extends HttpServlet {
 		//ResourceBundle bundle = ResourceBundle.getBundle("test", locale);
 		String one = bundle.getString("one");
 		String res = new String (one.getBytes("ISO-8859-1"), "UTF-8");
+		request.getSession().setAttribute("test", one);
+//		out.println("<html>");
+//        out.println("<head>");
+//        out.println("<title>Sample Servlet interface implementation</title>");
+//        out.println("</head>");
+//        out.println("<body><b>i18n test</b>");
+//
+//        System.out.println(one);
+//
+//        out.println("<p>" + one + "</p>");
+//        out.println("<p>" + res + "</p>");
+//
+//		out.println("</body>");
+//        out.println("</html>");
+//        out.close();
+		RequestDispatcher disp = request.getRequestDispatcher("search.jsp");
+		disp.forward(request, response);
 
-		out.println("<html>");
-        out.println("<head>");
-        out.println("<title>Sample Servlet interface implementation</title>");
-        out.println("</head>");
-        out.println("<body><b>i18n test</b>");
-
-        System.out.println(one);
-
-        out.println("<p>" + one + "</p>");
-        out.println("<p>" + res + "</p>");
-
-		out.println("</body>");
-        out.println("</html>");
-        out.close();
 	}
 
 	/**

@@ -18,7 +18,7 @@ function bindLongin() {
                         //console.log('data=' + data);
                         //handleUserData(data);
                         //console.log('Status: ' + jqxhr.getAllResponseHeaders());
-                        handleUserOnLoad();
+                        //handleUserOnLoad();
                         document.location.href = 'index.jsp';
                 },
                 error:  handleError

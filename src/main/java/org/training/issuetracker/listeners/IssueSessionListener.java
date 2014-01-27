@@ -1,10 +1,8 @@
 package org.training.issuetracker.listeners;
 
+import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
-import java.util.Enumeration;
-import java.util.HashMap;
 import java.util.Map;
-import java.util.ResourceBundle;
 
 import javax.servlet.annotation.WebListener;
 import javax.servlet.http.HttpSession;
@@ -30,25 +28,19 @@ public class IssueSessionListener implements HttpSessionListener {
 		try {
 			localizer = LocalizerFactory.getLocalizer(Constants.DEFAULT_LANGUAGE);
 		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		}
 		HttpSession session = se.getSession();
 
+		Map<String, String> map;
+		try {
+			map = localizer.getValuesMap();
+			session.setAttribute("map", map);
+		} catch (UnsupportedEncodingException e) {
 
-		ResourceBundle resource = localizer.getBundle();
-		Map<String, String> map = new HashMap<String, String>();
-
-        Enumeration<String> keys = resource.getKeys();
-        while (keys.hasMoreElements()) {
-            String key = keys.nextElement();
-            map.put(key, resource.getString(key));
-            //logger.info("key = " + key + "; value = " + resource.getString(key));
-        }
-
-
-
-		session.setAttribute("map", map);
+			e.printStackTrace();
+		}
 
 		logger.info("Created session; Id = " + session.getId());
 		logger.debug("Set localizer " + localizer.getClass().getSimpleName());

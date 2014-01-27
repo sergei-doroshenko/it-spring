@@ -46,7 +46,7 @@ function createIssueTable() {
         caption: "Issues",
         height: $(".table-container").height(),
 		ondblClickRow: handleDoubleClick,
-        loadComplete: handleUserOnLoad
+        //loadComplete: handleUserOnLoad
     });
 }
 

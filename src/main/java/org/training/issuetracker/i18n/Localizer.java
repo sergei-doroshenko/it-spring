@@ -21,4 +21,5 @@ public interface Localizer {
 	ResourceBundle getBundle();
 
 	Map<String, String> getValuesMap() throws UnsupportedEncodingException;
+
 }
