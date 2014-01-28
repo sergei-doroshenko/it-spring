@@ -10,7 +10,7 @@
     <p:status>1</p:status>
     <p:type>2</p:type>
     <p:priority>4</p:priority>
-    <p:project>1</p:project>
+    <p:build>1</p:build>
     <p:assignee>jlo@gmail.com</p:assignee>
   </p:issue>
   <p:issue id="2" name="Second">
@@ -23,7 +23,7 @@
     <p:status>1</p:status>
     <p:type>2</p:type>
     <p:priority>4</p:priority>
-    <p:project>1</p:project>
+    <p:build>1</p:build>
     <p:assignee>jlo@gmail.com</p:assignee>
   </p:issue>
   <p:issue id="3" name="Third">
@@ -36,7 +36,7 @@
     <p:status>1</p:status>
     <p:type>1</p:type>
     <p:priority>3</p:priority>
-    <p:project>2</p:project>
+    <p:build>2</p:build>
     <p:assignee>ajolie@gmail.com</p:assignee>
   </p:issue>
   <p:issue id="4" name="Four">
@@ -49,7 +49,7 @@
     <p:status>1</p:status>
     <p:type>1</p:type>
     <p:priority>3</p:priority>
-    <p:project>2</p:project>
+    <p:build>2</p:build>
     <p:assignee>ajolie@gmail.com</p:assignee>
   </p:issue>
   <p:issue id="5" name="Five">
@@ -62,7 +62,7 @@
     <p:status>1</p:status>
     <p:type>1</p:type>
     <p:priority>3</p:priority>
-    <p:project>2</p:project>
+    <p:build>2</p:build>
     <p:assignee>jlo@gmail.com</p:assignee>
   </p:issue>
 </p:issues>

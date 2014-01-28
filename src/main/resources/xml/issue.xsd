@@ -23,7 +23,7 @@
 			<xs:element name="resolution" type="xs:long" minOccurs="0"/>
 			<xs:element name="type" type="xs:long"/>
 			<xs:element name="priority" type="xs:long"/>
-			<xs:element name="project" type="xs:long"/>
+			<xs:element name="build" type="xs:long"/>
 			<xs:element name="assignee" type="xs:string"/>
 		</xs:sequence>
 		<xs:attribute name="id" type="xs:long" use="required"/>

@@ -3,11 +3,28 @@ package org.training.issuetracker.domain;
 import java.sql.Date;
 
 public class Attachment extends AbstractPersistentObj {
+	private long issueId;
 	private Date createDate;
 	private User createBy;
 	private String url;
-	
+
 	public Attachment() { }
+
+	public Attachment(long issueId, Date createDate, User createBy, String url) {
+		super();
+		this.issueId = issueId;
+		this.createDate = createDate;
+		this.createBy = createBy;
+		this.url = url;
+	}
+
+	public long getIssueId() {
+		return issueId;
+	}
+
+	public void setIssueId(long issueId) {
+		this.issueId = issueId;
+	}
 
 	public Date getCreateDate() {
 		return createDate;

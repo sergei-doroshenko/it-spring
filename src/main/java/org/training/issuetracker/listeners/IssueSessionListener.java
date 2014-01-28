@@ -20,7 +20,6 @@ import org.training.issuetracker.i18n.LocalizerFactory;
 @WebListener
 public class IssueSessionListener implements HttpSessionListener {
 	private final Logger logger = Logger.getLogger("org.training.issuetracker.listeners");
-	private HttpSession session;
 
 	@Override
 	public void sessionCreated(HttpSessionEvent se) {
@@ -49,7 +48,7 @@ public class IssueSessionListener implements HttpSessionListener {
 
 	@Override
 	public void sessionDestroyed(HttpSessionEvent se) {
-		logger.info("Created destroyed; Id = " + session.getId());
+		logger.info("Created destroyed; Id = " + se.getSession().getId());
 	}
 
 }

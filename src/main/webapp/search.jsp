@@ -14,6 +14,23 @@
         <script type="text/javascript" src="js/login.js"> </script>
 	</head>
 	<body>
+		<!------------ i18n ------------------>
+		<fmt:requestEncoding value="UTF-8" />
+		<c:choose>
+			<c:when test="${!empty param.lang}">
+				<c:set var="language" value="${param.lang}" scope="session"/>
+				<fmt:setLocale value="${param.lang}"/>
+			</c:when>
+			<c:otherwise>
+				<c:if test="${!empty sessionScope.language}">
+					<fmt:setLocale value="${sessionScope.language}"/>
+				</c:if>
+			</c:otherwise>
+		</c:choose>
+				
+		<fmt:setBundle basename="i18n.utf_test" var="lang"/>
+		
+		<!----------- End of i18n ----------------> 
 		<div class="page-wrapper">
              <div class="header">
                 <jsp:include page="/WEB-INF/jsp/header.jsp"></jsp:include>
@@ -25,19 +42,7 @@
              <div class="content">
 	    		<p><span>Search page</span><p>
 	    		<c:out value="Hello ${map.two}"/>
-	    		
-	    		
-
-
-
-
-
-
-
-
-
-
-
+				<fmt:message key="one" bundle="${lang}"/>
              </div><!--end content-->
              <div class="footer">
                  <jsp:include page="/WEB-INF/jsp/footer.jsp"></jsp:include>

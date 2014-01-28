@@ -16,9 +16,9 @@ public class Issue extends AbstractPersistentObj {
 	private Resolution resolution;
 	private Type type;
 	private Priority priority;
-	private Project project;
+	private Build build;
 	private User assignee;
-	
+
 	public Issue() { }
 
 	public Date getCreateDate() {
@@ -84,7 +84,7 @@ public class Issue extends AbstractPersistentObj {
 	public void setResolution(Resolution resolution) {
 		this.resolution = resolution;
 	}
-	
+
 	public Type getType() {
 		return type;
 	}
@@ -101,12 +101,12 @@ public class Issue extends AbstractPersistentObj {
 		this.priority = priority;
 	}
 
-	public Project getProject() {
-		return project;
+	public Build getBuild() {
+		return build;
 	}
 
-	public void setProject(Project project) {
-		this.project = project;
+	public void setBuild(Build build) {
+		this.build = build;
 	}
 
 	public User getAssignee() {
@@ -116,18 +116,18 @@ public class Issue extends AbstractPersistentObj {
 	public void setAssignee(User assignee) {
 		this.assignee = assignee;
 	}
-	
+
 //	public JsonObject toJson () {
 //		JsonObject issueJson = Json.createObjectBuilder()
 //						.add("id", getId())
-//						.add("cell", Json.createArrayBuilder() 
+//						.add("cell", Json.createArrayBuilder()
 //							.add(getId()).add(getCreateDate().toString())
 //							.add(getCreateBy().toString())
 //							.add(getModifyDate().toString())
 //							.add(getModifyBy().toString()).add(getSummary())
 //							.add(getStatus().getName())
 //							.add(
-//								(null == getResolution() ? "UNRESOLVED" : getResolution().getName())	
+//								(null == getResolution() ? "UNRESOLVED" : getResolution().getName())
 //							)
 //							.add(getType().getName()).add(getPriority().getName())
 //							.add(getProject().getName())
@@ -135,11 +135,11 @@ public class Issue extends AbstractPersistentObj {
 //						).build();
 //		return issueJson;
 //	}
-	
+
 	public JsonObject toJson () {
 		JsonObject issueJson = Json.createObjectBuilder()
 						.add("id", getId())
-						.add("cell", Json.createArrayBuilder() 
+						.add("cell", Json.createArrayBuilder()
 							.add(getId())
 							.add(getPriority().getName())
 							.add(getAssignee().toString())
@@ -149,7 +149,7 @@ public class Issue extends AbstractPersistentObj {
 						).build();
 		return issueJson;
 	}
-	
+
 	public JsonObject toJsonObj () {
 		JsonObject issueJson = Json.createObjectBuilder()
 							.add("id", getId())
@@ -160,30 +160,30 @@ public class Issue extends AbstractPersistentObj {
 							.add("summary", getSummary())
 							.add("description", getDescription())
 							.add("status", getStatus().getName())
-							.add("resolution", 
-								(null == getResolution() ? "UNRESOLVED" : getResolution().getName())	
+							.add("resolution",
+								(null == getResolution() ? "UNRESOLVED" : getResolution().getName())
 							)
 							.add("type", getType().getName())
 							.add("priority", getPriority().getName())
-							.add("project", getProject().getName())
-							.add("projectbuild", getProject().getBuilds().get(0))
+							.add("project", getBuild().getProjectId())
+							.add("projectbuild", getBuild().getName())
 							.add("assignee", getAssignee().toString())
 						.build();
 		return issueJson;
 	}
-	
+
 	@Override
 	public String toString() {
-		return "Issue [id=" + super.getId() + ", name=" + super.getName() 
+		return "Issue [id=" + super.getId() + ", name=" + super.getName()
 				+ ", createDate=" +  createDate + ", createBy=" + createBy.getFirstName()
 				+ ", modifyDate=" + modifyDate + ", modifyBy=" + modifyBy.getFirstName()
 				+ ", summary=" + summary + ", description=" + description
-				+ ", status=" + status.getName() + ", resolution=" 
+				+ ", status=" + status.getName() + ", resolution="
 				+ (null == resolution ? "UNRESOLVED" : resolution.getName())
 				+ ", type" + type.getName()
-				+ ", priority=" + priority.getId() + ", project=" + project.getName()
+				+ ", priority=" + priority.getId() + ", project=" + getBuild().getProjectId()
 				+ ", assignee=" + assignee.getFirstName() + "]";
 	}
-	
-	
+
+
 }

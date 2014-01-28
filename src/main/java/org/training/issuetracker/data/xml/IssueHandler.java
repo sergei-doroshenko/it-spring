@@ -88,8 +88,8 @@ public class IssueHandler extends DefaultHandler {
 			case "p:priority" :
 				currIssue.setPriority(data.getPriority(Long.parseLong(str)));
 				break;
-			case "p:project" :
-				currIssue.setProject(data.getProject(Long.parseLong(str)));
+			case "p:build" :
+				currIssue.setBuild(data.getBuild(Long.parseLong(str)));
 				break;
 			case "p:assignee" :
 				user = data.getUser(str);

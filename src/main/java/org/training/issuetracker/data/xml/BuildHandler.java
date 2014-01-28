@@ -3,32 +3,31 @@ package org.training.issuetracker.data.xml;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.training.issuetracker.domain.Project;
-import org.training.issuetracker.domain.User;
+import org.training.issuetracker.domain.Build;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
-public class ProjectHandler extends DefaultHandler {
+public class BuildHandler extends DefaultHandler {
 	private final int ID_ATTR_INDEX = 0;
 	private final int NAME_ATTR_INDEX = 1;
 	private String currEl;
-	private Project currProject;
-	private final Map<Long, Project> projects = new HashMap<Long, Project>();
+	private Build currBuild;
+	private final Map<Long, Build> builds = new HashMap<Long, Build>();
 
-	public Map<Long, Project> getProjects() {
-		return projects;
+	public Map<Long, Build> getBuilds() {
+		return builds;
 	}
 
 	@Override
     public void startElement(String uri, String localName,
         String qName, Attributes attributes) throws SAXException {
-		if (qName.equals("p:project")) {
-			currProject = new Project();
+		if (qName.equals("p:build")) {
+			currBuild = new Build();
 			long id = Long.parseLong(attributes.getValue(ID_ATTR_INDEX));
 			String name = attributes.getValue(NAME_ATTR_INDEX);
-			currProject.setId(id);
-			currProject.setName(name);
+			currBuild.setId(id);
+			currBuild.setName(name);
 		}
 
 		if (!qName.equals("p:project") && !qName.equals("p:projects")) {
@@ -39,8 +38,8 @@ public class ProjectHandler extends DefaultHandler {
 
 	@Override
     public void endElement(String uri, String localName, String qName) throws SAXException {
-		if (qName.equals("p:project")) {
-			projects.put(currProject.getId(), currProject);
+		if (qName.equals("p:build")) {
+			builds.put(currBuild.getId(), currBuild);
 		}
 
     }
@@ -53,13 +52,10 @@ public class ProjectHandler extends DefaultHandler {
 		if (null == currEl || str.isEmpty()) return;
 
 		switch (currEl) {
-			case "p:description" :
-				currProject.setDescription(str);
-				break;
-			case "p:manager" :
-				User manager = DataStorage.getInstance().getUser(str);
-				currProject.setManager(manager);
+			case "p:projectid" :
+				currBuild.setProjectId(Long.parseLong(str));
 				break;
 		}
 	}
+
 }

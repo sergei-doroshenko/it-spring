@@ -4,12 +4,10 @@
 	xsi:schemaLocation="http://www.w3schools.com ../../../../target/classes/xml/project.xsd ">
   <p:project id="1" name="Time Journal">
     <p:description>The Journal for register working time of employees.</p:description>
-    <p:build>1.4.0</p:build>
     <p:manager>ajolie@gmail.com</p:manager>
   </p:project>
   <p:project id="2" name="Customer support">
     <p:description>Web-service to support customer's preferences.</p:description>
-    <p:build>2.5.1</p:build>
     <p:manager>ajolie@gmail.com</p:manager>
   </p:project>
 </p:projects>

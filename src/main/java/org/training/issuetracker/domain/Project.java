@@ -1,14 +1,16 @@
 package org.training.issuetracker.domain;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Project extends AbstractPersistentObj {
 	private String description;
-	private List<String> builds = new ArrayList<String>();
 	private User manager;
-	
+
 	public Project() { }
+
+	public Project(long id, String name, String description, User manager) {
+		super(id, name);
+		this.description = description;
+		this.manager = manager;
+	}
 
 	public Project(long id, String name) {
 		super(id, name);
@@ -22,14 +24,6 @@ public class Project extends AbstractPersistentObj {
 		this.description = description;
 	}
 
-	public List<String> getBuilds() {
-		return builds;
-	}
-
-	public void setBuilds(List<String> builds) {
-		this.builds = builds;
-	}
-
 	public User getManager() {
 		return manager;
 	}
@@ -40,8 +34,7 @@ public class Project extends AbstractPersistentObj {
 
 	@Override
 	public String toString() {
-		return "Project [" + description + ", builds=" + builds
-				+ ", manager=" + manager.getFirstName() + manager.getLastName() + "]";
+		return "Project [" + description + "manager=" + manager.getFirstName() + manager.getLastName() + "]";
 	}
-	
+
 }

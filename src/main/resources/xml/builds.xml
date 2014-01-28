@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<p:builds xmlns:p="http://www.w3schools.com" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xsi:schemaLocation="http://www.w3schools.com build.xsd ">
+  <p:build id="1" name="v.1.01.1">
+    <p:projectid>1</p:projectid>
+  </p:build>
+  <p:build id="2" name="v.2.03.1-alpha">
+    <p:projectid>1</p:projectid>
+  </p:build>
+  
+</p:builds>

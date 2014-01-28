@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.training.issuetracker.domain.AbstractPersistentObj;
+import org.training.issuetracker.domain.Build;
 import org.training.issuetracker.domain.Issue;
 import org.training.issuetracker.domain.Priority;
 import org.training.issuetracker.domain.Project;
@@ -13,6 +14,7 @@ import org.training.issuetracker.domain.Role;
 import org.training.issuetracker.domain.Status;
 import org.training.issuetracker.domain.Type;
 import org.training.issuetracker.domain.User;
+import org.training.issuetracker.domain.DAO.BuildDAO;
 import org.training.issuetracker.domain.DAO.DAOFactory;
 import org.training.issuetracker.domain.DAO.IssueDAO;
 import org.training.issuetracker.domain.DAO.PriorityDAO;
@@ -39,6 +41,7 @@ public class DataStorage {
 	private Map<String, User> usersMap;
 	private Map<Long, Project> projectsMap;
 	private Map<Long, Issue> issuesMap;
+	private Map<Long, Build> buildMap;
 
 	/**
 	 * Cjycnhucnjh
@@ -49,12 +52,14 @@ public class DataStorage {
 		PriorityDAO priorityDAO = DAOFactory.getDAO(PriorityDAO.class);
 		ResolutionDAO resolutionDAO = DAOFactory.getDAO(ResolutionDAO.class);
 		StatusDAO statusDAO = DAOFactory.getDAO(StatusDAO.class);
+		BuildDAO buildDAO = DAOFactory.getDAO(BuildDAO.class);
 		try {
 			this.rolesMap = roleDAO.getRolesMap();
 			this.typesMap = typeDAO.getTypesMap();
 			this.prioritiesMap = priorityDAO.getPriorityMap();
 			this.resolutionsMap = resolutionDAO.getResolutionMap();
 			this.statusesMap = statusDAO.getStatusesMap();
+			this.buildMap = buildDAO.getBuildMap();
 		} catch (DaoException e) {
 			e.printStackTrace();
 		}
@@ -151,7 +156,9 @@ public class DataStorage {
 		return statusesMap.get(id);
 	}
 
-
+	public Map<Long, Build> getBuildMap() {
+		return buildMap;
+	}
 
 	public Map<Long, Issue> getIssuesMap() {
 		if (null == issuesMap) {
@@ -193,5 +200,13 @@ public class DataStorage {
 		}
 		out.println(str);
 		out.println("<br>");
+	}
+
+	public Build getBuild(long id) {
+		return getBuildsMap().get(id);
+	}
+
+	private Map<Long, Build> getBuildsMap() {
+		return buildMap;
 	}
 }

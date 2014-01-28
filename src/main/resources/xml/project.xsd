@@ -14,7 +14,6 @@
 	<xs:complexType name="projecttype">
 		<xs:sequence>
 			<xs:element name="description" type="xs:string"/>
-			<xs:element name="build" type="xs:string"/>
 			<xs:element name="manager" type="xs:string"/>
 		</xs:sequence>
 		<xs:attribute name="id" type="xs:long" use="required"/>
