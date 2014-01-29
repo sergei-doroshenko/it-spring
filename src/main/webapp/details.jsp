@@ -62,87 +62,53 @@
       <!-------- End of Issue Template -------------->
            <script type="text/javascript">
            		$('.menu-obj:first').before('<li class="menu-obj-item"><a href="index.jsp">Main</a></li>');
-           			var actions = {
-           					openIssue: 'Issue.do',
-           					openUser: 'User.do'
-           			};
-           			
-                   $( document ).ready(function () {
-                          var params = getParameters();
-                          var id = params.id;
-                          var command = params.command;
-                          console.log('Id = ' + id);
-                          console.log('Command = ' + command);
-                          var linkurl;
-                          if(id && command){
-                        	  linkurl = actions[command];
-                        	  getDetails(id, linkurl);  
-                          }
-                          bindLongin();
-                   });
+                $( document ).ready(function () {
+                     getDetails();  
+                     bindLongin();
+                });
                    
-                   function getParameters() {
-                       var searchString = window.location.search.substring(1);
-                       console.log(document.location.search);
-                       var params = searchString.split("&");
-                       var hash = {};
-
-	                   if (searchString == "") return {};
-	                   for (var i = 0; i < params.length; i++) {
-	                     var val = params[i].split("=");
-	                     hash[unescape(val[0])] = unescape(val[1]);
-	                   }
-	                   return hash;
-	               }
+                function getDetails () {
+                    $.ajax({
+                        url: 'Main.do',
+                        data: window.location.search.substring(1),
+                        type: 'GET',
+                        dataType : "json",                     
+                        success: function (data, textStatus) {
+                     	   succesDetailsIssue(data, textStatus);
+                        },
+                        error: function(response, status){
+                     	   errDetails(response, status);
+                        }
+                    });
+                }
                    
-                   function getDetails (id, link) {
-                           $.ajax({
-                           url: 'Main.do',
-                           //data: 'id=' + id,
-                           data: document.location.search.substring(1),
-                           type: 'GET',
-                           dataType : "json",                     
-                           success: function (data, textStatus) {
-                        	   succesDetailsIssue(data, textStatus);
-                           },
-                           error: function(response, status){
-                        	   errDetails(response, status);
-                           }
-                       });
-                   }
+                function succesDetailsIssue(data, textStatus){
+             	   $('.table-container').empty();
+                    var templ = $('.issue-container').clone();
+                    var issue = data.issue;
+                    $(templ).find('#id').append('<span>' + issue.id + '</span>');
+                    $(templ).find('#createdate').append(issue.createdate);
+                    $(templ).find('#createby').append(issue.createby);
+                    $(templ).find('#modifydate').append(issue.modifydate);
+                    $(templ).find('#modifyby').append(issue.modifyby);
+                    $(templ).find('#summary').append(issue.summary);
+                    $(templ).find('#description').append(issue.description);
+                    $(templ).find('#status').append(issue.status);
+                    $(templ).find('#resolution').append(issue.resolution);
+                    $(templ).find('#type').append(issue.type);
+                    $(templ).find('#priority').append(issue.priority);
+                    $(templ).find('#project').append(issue.project);
+                    $(templ).find('#projectbuild').append(issue.projectbuild);
+                    $(templ).find('#assignee').append(issue.assignee);
+                    templ.appendTo('.content');
+                }
                    
-                   function succesDetailsIssue(data, textStatus){
-                	   $('.table-container').empty();
-                       var templ = $('.issue-container').clone();
-                       var issue = data.issue;
-                       $(templ).find('#id').append('<span>' + issue.id + '</span>');
-                       $(templ).find('#createdate').append(issue.createdate);
-                       $(templ).find('#createby').append(issue.createby);
-                       $(templ).find('#modifydate').append(issue.modifydate);
-                       $(templ).find('#modifyby').append(issue.modifyby);
-                       $(templ).find('#summary').append(issue.summary);
-                       $(templ).find('#description').append(issue.description);
-                       $(templ).find('#status').append(issue.status);
-                       $(templ).find('#resolution').append(issue.resolution);
-                       $(templ).find('#type').append(issue.type);
-                       $(templ).find('#priority').append(issue.priority);
-                       $(templ).find('#project').append(issue.project);
-                       $(templ).find('#projectbuild').append(issue.projectbuild);
-                       $(templ).find('#assignee').append(issue.assignee);
-                       templ.appendTo('.content');
-                       
-                       //var userdata = jQuery.parseJSON($.cookie('user'));
-                       //if('guest' != userdata.role) {
-                       //    handleUserData(userdata);
-                       //}; 
-                   }
-                   
-                   function errDetails(response, status){
-                	   if(response.status == 400) {
-                           var errText = response.responseText;
-                           $('.table-container').empty().append('Error while getting url. ' + errText);     
-                   		}
-                   }
+                function errDetails(response, status){
+             	   if(response.status == 400) {
+                        var errText = response.responseText;
+                        $('.table-container').empty().append('Error while getting url. ' + errText);     
+                	}
+                }
            </script>
      </body>
 </html>

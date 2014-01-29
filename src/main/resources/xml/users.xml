@@ -6,7 +6,7 @@
     <p:id>1</p:id>
     <p:firstname>Sergei</p:firstname>
     <p:lastname>Doroshenko</p:lastname>
-    <p:email>6823298@gmail.com</p:email>
+    <p:email>admin@gmail.com</p:email>
     <p:roleid>1</p:roleid>
     <p:password>111</p:password>
   </p:user>

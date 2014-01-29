@@ -1,6 +1,17 @@
 var names = ["Id", "Priority", "Assignee", "Type", "Status", "Summary"];
 
-var rowLink = { baseLinkUrl:'details.jsp', addParam: '&command=issue'};
+function getDetailsUrl() {
+	var url = window.location.href;
+	console.log(url);
+	var ind = url.lastIndexOf('/') + 1;
+	console.log(ind);
+	
+	url = url.substring(0,ind) + 'details.jsp';
+	console.log(url);
+	return url;
+}
+
+var rowLink = { baseLinkUrl: getDetailsUrl(), addParam: '&command=issue'};
 
 var model = [
              { name: "id", width: 55, formatter:'showlink', formatoptions: rowLink},
@@ -46,7 +57,7 @@ function createIssueTable() {
         caption: "Issues",
         height: $(".table-container").height(),
 		ondblClickRow: handleDoubleClick,
-        //loadComplete: handleUserOnLoad
+        loadComplete: handleLoadComplete
     });
 }
 
@@ -55,8 +66,8 @@ function handleDoubleClick (rowid,iRow,iCol,e) {
 }
 
 function handleLoadComplete () {
-	var data = $("#list").getGridParam('userData');
-	handleUserData(data);
+	//var data = $("#list").getGridParam('userData');
+	//handleUserData(data);
 	var priorityCol = $('#list').jqGrid('getCol', 'priority', true);
 	
 	for (var i = 0, l = priorityCol.length; i < l; i++) {

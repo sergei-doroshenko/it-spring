@@ -27,7 +27,7 @@ public class UserImplXML implements UserDAO {
 			XMLValidator validator = new XMLValidator();
 			try {
 				validator.validateXML(schemaUrl, xmlUrl);
-
+				System.out.println("Validation OK");
 				XMLReader reader = XMLReaderFactory.createXMLReader();
 				UserHandler handler = new UserHandler();
 				reader.setContentHandler(handler);
