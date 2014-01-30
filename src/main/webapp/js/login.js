@@ -32,7 +32,6 @@ function bindLongin() {
                 data: formdata,
                 dataType: 'json',
                 type: 'GET',
-                beforeSubmit: showRequest,
                 success: function (data) {
                         //console.log('data=' + data);
                         //handleUserData(data);
@@ -58,10 +57,11 @@ function handleError (response, status, err) {
 	// everything is always 'OK' a.k.a 200
 	if(response.status == 400){
 		var errText = response.responseText;
-		var errKey = errText.substring(0,1);      
+		var errKey = errText.substring(0,1);
+		console.log(errKey);
 		if (errKey == 'p') {
 			$('#password').css('border','2px solid red');
-		} else if (errKey == 'e') {
+		} else if (errKey == 'e' || errKey == 'l') {
 			$('#login').css('border','2px solid red');
 		} else {
 			$('#password').css('border','2px solid red');

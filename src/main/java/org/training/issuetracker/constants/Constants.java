@@ -23,6 +23,9 @@ public final class Constants {
      *
      */
     public static final String RESOURCE_PATHS = "/WEB-INF/classes/xml/";
+    
+    /**url part of jsp pages folder.*/
+    public static final  String URL_PREFIX = "/WEB-INF/jsp";
 
     /** Constants string literal for page-url of index.jsp */
 	public static final String URL_MAIN = "index.jsp";
@@ -104,7 +107,11 @@ public final class Constants {
     /**Error message cased by wrong e-mail input.
      *
      */
-    public static final String ERROR_EMAIL = null;
+    public static final String ERROR_EMAIL = "login invalid!";
+    
+    /**errorMessage string literal.
+     */
+    public static final String ERROR_FIND_USER = "User not found!";
 
     /**errorMessage string literal.
      */
@@ -114,12 +121,7 @@ public final class Constants {
      * errorMessage appear when constant map not created
      */
     public static final String CONSTANTS_MAP_INIT_ERR = "Error of constants initialization!";
-
-    /**url part of jsp pages folder.
-     *
-     */
-    public static final  String URL_PREFIX = "/WEB-INF/jsp";
-
+    
 	/**This constant assign default language that used for.
 	 * internationalization - English language.
 	 */

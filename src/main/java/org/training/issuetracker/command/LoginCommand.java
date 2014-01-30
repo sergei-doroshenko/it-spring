@@ -38,6 +38,7 @@ public class LoginCommand extends AbstractWebCommand {
 	 */
 	@Override
 	public void execute() throws IOException {
+		System.out.println("Start");
 		getResponse().setContentType(MediaType.APPLICATION_JSON);
 		PrintWriter out = getResponse().getWriter();
 		ParameterParser parser = new ParameterParser(getRequest());
@@ -45,12 +46,13 @@ public class LoginCommand extends AbstractWebCommand {
 		try {
 			String login = parser.getStringParameter(Constants.KEY_LOGIN);
 			String password = parser.getStringParameter(Constants.KEY_PASSWORD);
-
+			System.out.println(login + " - " + password);
 			ParameterInspector.checkEmail(login);
 			ParameterInspector.checkPassword(password);
 			UserDAO userDAO = DAOFactory.getDAO(UserDAO.class);
+			System.out.println(userDAO);
 			User user = userDAO.getUser(login, password);
-
+			System.out.println(user);
 			if (user != null) {
 				getSession().setAttribute(Constants.KEY_USER, user);
 				Cookie userCookie = new Cookie(Constants.KEY_USER, user.toJsonObj().toString());
@@ -62,17 +64,20 @@ public class LoginCommand extends AbstractWebCommand {
 			}
 
 		} catch (DaoException e) {
+			e.printStackTrace();
 			out.print(e.getMessage());
 			getResponse().setStatus(HttpServletResponse.SC_BAD_REQUEST);
-			return;
+			
 		} catch (ValidationException e) {
+			e.printStackTrace();
+			System.out.println(e.getMessage());
 			out.print(e.getMessage());
 			getResponse().setStatus(HttpServletResponse.SC_BAD_REQUEST);
-			return;
+			
 		} catch (ParameterNotFoundException e) {
 			out.print(e.getMessage());
 			getResponse().setStatus(HttpServletResponse.SC_BAD_REQUEST);
-			return;
+			
 		} finally {
 			out.flush();
 			out.close();

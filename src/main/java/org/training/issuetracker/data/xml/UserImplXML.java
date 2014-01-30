@@ -49,12 +49,15 @@ public class UserImplXML implements UserDAO {
 	@Override
 	public User getUser(String login, String password) throws DaoException {
 		User user = getUsersMap().get(login);
-		if (!(null == user)) {
+		System.out.println(user+ "User");
+		if(user == null) {
+			throw new DaoException(Constants.ERROR_FIND_USER);
+		} else {
 			if (!user.getPassword().equals(password)) {
-				user = null;
+				throw new DaoException(Constants.ERROR_PASSWORD);
 			}
 		}
-
+		
 		return user;
 	}
 }
