@@ -1,5 +1,7 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>      
 <!DOCTYPE html>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <html>
      <head>
              <meta charset="UTF-8">
@@ -12,19 +14,20 @@
      <body>
         <div class="page-wrapper">
              <div class="header">
-                <jsp:include page="/WEB-INF/jsp/header.jsp"></jsp:include>
+                <jsp:include page="${constants.URL_HEADER}"></jsp:include>
              </div><!--end header-->
              <div id="menu-bar" class="menu-bar">
-                <jsp:include page="/WEB-INF/jsp/menubar.jsp"></jsp:include>
+                <jsp:include page="${constants.URL_MENU_TOP}"></jsp:include>
              </div><!-- end menu-bar -->
              <div class="content">
+             	<p><span>Details page</span><p>
                  <div class="table-container">
                       <table id="list"><tr><td></td></tr></table> 
                       <div id="pager"></div>
                  </div><!--end issue-table-->
              </div><!--end content-->
              <div class="footer">
-                 <jsp:include page="/WEB-INF/jsp/footer.jsp"></jsp:include>
+                 <jsp:include page="${constants.URL_FOOTER}"></jsp:include>
              </div><!--end footer-->
         </div><!--end page-wrapper-->
              
@@ -61,7 +64,6 @@
       </div>
       <!-------- End of Issue Template -------------->
            <script type="text/javascript">
-           		$('.menu-obj:first').before('<li class="menu-obj-item"><a href="index.jsp">Main</a></li>');
                 $( document ).ready(function () {
                      getDetails();  
                      bindLongin();
@@ -104,7 +106,7 @@
                 }
                    
                 function errDetails(response, status){
-             	   if(response.status == 400) {
+             	   if(response.status == 400 || response.status == 500) {
                         var errText = response.responseText;
                         $('.table-container').empty().append('Error while getting url. ' + errText);     
                 	}

@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <!DOCTYPE html>
 <html>
 	<head>
@@ -28,28 +28,25 @@
 			</c:otherwise>
 		</c:choose>
 				
-		<fmt:setBundle basename="i18n.utf_test" var="lang"/>
+		<fmt:setBundle basename="i18n.main" var="lang"/>
 		
 		<!----------- End of i18n ----------------> 
 		<div class="page-wrapper">
              <div class="header">
-                <jsp:include page="/WEB-INF/jsp/header.jsp"></jsp:include>
+                <jsp:include page="${constants.URL_HEADER}"></jsp:include>
              </div><!--end header-->
              <div id="menu-bar" class="menu-bar">
-                <jsp:include page="/WEB-INF/jsp/menubar.jsp"></jsp:include>
-                
+                <jsp:include page="${constants.URL_MENU_TOP}"></jsp:include>
              </div><!-- end menu-bar -->
              <div class="content">
 	    		<p><span>Search page</span><p>
-	    		<c:out value="Hello ${map.two}"/>
-				<fmt:message key="one" bundle="${lang}"/>
+	    		
+				${constants.KEY_COMMAND}
              </div><!--end content-->
              <div class="footer">
-                 <jsp:include page="/WEB-INF/jsp/footer.jsp"></jsp:include>
+                 <jsp:include page="${constants.URL_FOOTER}"></jsp:include>
              </div><!--end footer-->
              <script type="text/javascript">
-           		//$('.menu-obj').append('<li class="menu-obj-item"><a href="index.jsp">Main</a></li>');
-           		$('.menu-obj:first').replaceWith('<li class="menu-obj-item"><a href="index.jsp">Main</a></li>');
            		$( document ).ready(function () {
            			bindLongin();	
            		});

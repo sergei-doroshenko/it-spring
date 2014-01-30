@@ -131,6 +131,7 @@ li.menu-obj-item a:hover {
     text-align: left;
     margin: 2px;
     overflow: hidden;
+    border: 1px solid black;
 }
 
 .com-att {

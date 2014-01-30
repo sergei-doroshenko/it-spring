@@ -45,7 +45,14 @@ abstract class AbstractBaseController extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 
 		request.setAttribute(Constants.KEY_ERROR_MESSAGE, message);
-		RequestDispatcher rd = getServletContext().getRequestDispatcher(Constants.JUMP_ERROR);
+		RequestDispatcher rd = getServletContext().getRequestDispatcher(Constants.URL_ERROR);
+		rd.forward(request, response);
+	}
+
+	protected void sendErrorContent(String message, HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+
+		RequestDispatcher rd = getServletContext().getRequestDispatcher(Constants.URL_ERROR_CONTENT);
 		rd.forward(request, response);
 	}
 }

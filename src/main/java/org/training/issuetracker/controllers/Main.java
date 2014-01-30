@@ -1,6 +1,7 @@
 package org.training.issuetracker.controllers;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -41,8 +42,10 @@ public class Main extends AbstractBaseController {
 			Command command = comFactory.getCommand(commandName);
 			command.execute();
 		} catch (ParameterNotFoundException e) {
-			e.printStackTrace();
-			super.jumpError(Constants.ERROR_SOURCE, request, response);
+			PrintWriter out = response.getWriter();
+			out.print(e.getMessage());
+			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+			return;
 		}
 
 		return;

@@ -1,16 +1,5 @@
 var names = ["Id", "Priority", "Assignee", "Type", "Status", "Summary"];
 
-function getDetailsUrl() {
-	var url = window.location.href;
-	console.log(url);
-	var ind = url.lastIndexOf('/') + 1;
-	console.log(ind);
-	
-	url = url.substring(0,ind) + 'details.jsp';
-	console.log(url);
-	return url;
-}
-
 var rowLink = { baseLinkUrl: getDetailsUrl(), addParam: '&command=issue'};
 
 var model = [

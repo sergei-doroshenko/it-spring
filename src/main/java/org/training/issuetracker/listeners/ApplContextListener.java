@@ -1,6 +1,7 @@
 package org.training.issuetracker.listeners;
 
 import java.io.IOException;
+import java.util.Map;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
@@ -11,6 +12,7 @@ import org.apache.log4j.FileAppender;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PatternLayout;
 import org.training.issuetracker.constants.Constants;
+import org.training.issuetracker.exceptions.AppInitException;
 
 
 /**Listener of application start or stop.
@@ -37,6 +39,15 @@ public class ApplContextListener implements ServletContextListener {
 		ServletContext ctx = servletContextEvent.getServletContext();
 		Constants.setRealPath(ctx.getRealPath(Constants.ROOT_PATH));
 		logger.debug("App real path = " + Constants.getRealPath());
+
+		Map<String, Object> constantsMap = Constants.getConstMap();
+		if (constantsMap != null) {
+			logger.debug("Constants map create succesfully!");
+			ctx.setAttribute("constants", constantsMap);
+		} else {
+			logger.fatal(Constants.CONSTANTS_MAP_INIT_ERR);
+			throw new AppInitException ();
+		}
 
 	}
 

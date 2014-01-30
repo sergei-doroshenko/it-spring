@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -21,10 +22,10 @@
 	<body>
 		<div class="page-wrapper">
 			<div id="header" class="header">
-				<jsp:include page="/WEB-INF/jsp/header.jsp"></jsp:include>
+				<jsp:include page="${constants.URL_HEADER}"></jsp:include>
 			</div><!--end header-->
 			<div id="menu-bar" class="menu-bar">
-				<jsp:include page="/WEB-INF/jsp/menubar.jsp"></jsp:include>
+				<jsp:include page="${constants.URL_MENU_TOP}"></jsp:include>
 			</div><!-- end menu-bar -->
 			<div class="content">
 				<div class="table-container">
@@ -33,7 +34,7 @@
 				</div><!--end issue-table-->
 			</div><!--end content-->
 			<div class="footer">
-				<jsp:include page="/WEB-INF/jsp/footer.jsp"></jsp:include>
+				<jsp:include page="${constants.URL_FOOTER}"></jsp:include>
 			</div><!--end footer-->
 		</div><!--end page-wrapper-->
 		<script type="text/javascript">
@@ -44,6 +45,5 @@
 				}
 			});
 		</script>
-			
 	</body>
 </html>

@@ -1,11 +1,18 @@
 package org.training.issuetracker.constants;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
+import java.util.Map;
+import java.util.TreeMap;
+
+import org.apache.log4j.Logger;
 import org.training.issuetracker.i18n.LocalizerLanguage;
 
 /**This class contains constants.
  * @author Sergei_Doroshenko
  *
  */
+
 public final class Constants {
 //********************	Path ***********************************************
 	/**Constant for root path.
@@ -16,10 +23,30 @@ public final class Constants {
      *
      */
     public static final String RESOURCE_PATHS = "/WEB-INF/classes/xml/";
-    /**Url part for error page.
-     *
-     */
-    public static final String JUMP_ERROR = "/error.html";
+
+    /** Constants string literal for page-url of index.jsp */
+	public static final String URL_MAIN = "index.jsp";
+
+    /** Constants string literal for page-url of details.jsp */
+	public static final String URL_DETAILS = "details.jsp";
+
+	/** Constants string literal for page-url of error.jsp */
+	public static final String URL_ERROR = "/WEB-INF/jsp/error.jsp";
+
+	/** Constants string literal for page-url of search.jsp */
+	public static final String URL_SEARCH = "search.jsp";
+
+	/** Constants string literal for page-fragment-url of header.jsp */
+	public static final String URL_HEADER = "/WEB-INF/jsp/header.jsp";
+
+	/** Constants string literal for page-fragment-url of header.jsp */
+	public static final String URL_MENU_TOP = "/WEB-INF/jsp/menu_top.jsp";
+
+	/** Constants string literal for page-fragment-url of footer.jsp */
+	public static final String URL_FOOTER = "/WEB-INF/jsp/footer.jsp";
+
+	/** Constants string literal for page-fragment-url of error-content.jsp */
+	public static final String URL_ERROR_CONTENT = "/WEB-INF/jsp/error-content.jsp";
 
 //************* Parameters Keys *****************************************************
     /**String literal for id parameter.
@@ -45,6 +72,13 @@ public final class Constants {
 	 *  Contains string literal for command parameter.
 	 */
 	public static final String KEY_COMMAND = "command";
+//************************ ROLES *****************************************
+	/** Constants string literal for role - user. */
+	public static final String ROLE_USER = "USER";
+
+	/** Constants string literal for role - admin. */
+	public static final String ROLE_ADMIN = "ADMINISTRATOR";
+
 //*************** Errors ****************************************************
     /**Error caused by wrong input.
      *
@@ -75,6 +109,12 @@ public final class Constants {
     /**errorMessage string literal.
      */
     public static final String KEY_ERROR_MESSAGE = "errorMessage";
+
+    /**
+     * errorMessage appear when constant map not created
+     */
+    public static final String CONSTANTS_MAP_INIT_ERR = "Error of constants initialization!";
+
     /**url part of jsp pages folder.
      *
      */
@@ -114,4 +154,30 @@ public final class Constants {
 	public static void setRealPath(String realPath) {
 		Constants.realPath = realPath;
 	}
+
+	/**Method create map consist from static final constants.
+	 * declared in this Constants class.
+	 * @return TreeMap of String, Object.
+	 */
+	public static Map<String, Object> getConstMap() {
+		Logger log = Logger.getLogger("org.training.issuetracker.constants");
+		Map<String, Object> map = new TreeMap<String, Object>();
+
+		Field[] fields = Constants.class.getDeclaredFields();
+
+		for (Field field : fields) {
+
+		   int modifier = field.getModifiers();
+		   log.debug("Mod = " + modifier);
+
+		   if (Modifier.isPublic(modifier) && Modifier.isStatic(modifier) && Modifier.isFinal(modifier)) {
+		      try {
+		    	 log.debug("field name = " + field.getName() + " /val name = " + field.get(null));
+		         map.put(field.getName(), field.get(null));//Obj param of get method is ignored for static fields
+		      } catch (IllegalAccessException e) { /* ignorable due to modifiers check */ }
+		   }
+		}
+		return map;
+	}
+
 }
