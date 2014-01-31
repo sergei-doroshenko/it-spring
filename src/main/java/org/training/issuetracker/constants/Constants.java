@@ -23,7 +23,7 @@ public final class Constants {
      *
      */
     public static final String RESOURCE_PATHS = "/WEB-INF/classes/xml/";
-    
+
     /**url part of jsp pages folder.*/
     public static final  String URL_PREFIX = "/WEB-INF/jsp";
 
@@ -50,6 +50,13 @@ public final class Constants {
 
 	/** Constants string literal for page-fragment-url of error-content.jsp */
 	public static final String URL_ERROR_CONTENT = "/WEB-INF/jsp/error-content.jsp";
+
+	/** Constants string literal for page-fragment-url of issue-details.jsp */
+	public static final String URL_ISSUE_DETAILS = "/WEB-INF/jsp/issue-details.jsp";
+
+	/** Constants string literal for page-fragment-url of buttons-block.jsp */
+	public static final String URL_BUTTONS_BLOCK = "/WEB-INF/jsp/buttons-block.jsp";
+
 
 //************* Parameters Keys *****************************************************
     /**String literal for id parameter.
@@ -108,7 +115,7 @@ public final class Constants {
      *
      */
     public static final String ERROR_EMAIL = "login invalid!";
-    
+
     /**errorMessage string literal.
      */
     public static final String ERROR_FIND_USER = "User not found!";
@@ -121,7 +128,7 @@ public final class Constants {
      * errorMessage appear when constant map not created
      */
     public static final String CONSTANTS_MAP_INIT_ERR = "Error of constants initialization!";
-    
+
 	/**This constant assign default language that used for.
 	 * internationalization - English language.
 	 */
@@ -132,6 +139,15 @@ public final class Constants {
 	 * Contains string literal for localizer attribute.
 	 */
 	public static final String KEY_LOCALIZER = "localizer";
+
+	/** String literal for entity type*/
+	public static final String ENTITY_TYPE = "type";
+
+	/** Sting literal for issue type */
+	public static final String ISSUE_TYPE = "issue";
+
+	/** String literal for entity */
+	public static final String ENTITY = "entity";
 
 	/**Real path to files stored in application folders.
 	 * Init in ApplicationContextListener.

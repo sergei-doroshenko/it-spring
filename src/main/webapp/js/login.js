@@ -4,7 +4,7 @@ function getDetailsUrl() {
 	var ind = url.lastIndexOf('/') + 1;
 	console.log(ind);
 	
-	url = url.substring(0,ind) + 'details.jsp';
+	url = url.substring(0,ind) + 'Main.do';
 	console.log(url);
 	return url;
 }
@@ -23,7 +23,7 @@ function getMainUrl() {
 function bindLongin() {
 	$('#auth-form').submit(function () {
         console.log('You submit the form!');
-        //alert('You submit the form!');
+        alert('You submit the form!');
         var formdata = 'command=login&login=' + $('#login').val() + '&password=' + $('#password').val();
         console.log(formdata);
         //alert(formdata);

@@ -2,30 +2,20 @@
 <%@ page import="org.training.issuetracker.domain.User" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <div class="logo">
 	<h2>Issue Tracker</h2>
 </div><!--end logo-->
 
-<div id="lang">
-   	<a href="${pageContext.request.requestURL}?lang=en_EN">EN</a>
-	<a href="${pageContext.request.requestURL}?lang=ru_RU">RU</a>
-</div>
 <!-- i18n -->
-<fmt:requestEncoding value="UTF-8" />
-<c:choose>
-	<c:when test="${!empty param.lang}">
-		<c:set var="language" value="${param.lang}" scope="session"/>
-		<fmt:setLocale value="${param.lang}"/>
-	</c:when>
-	<c:otherwise>
-		<c:if test="${!empty sessionScope.language}">
-			<fmt:setLocale value="${sessionScope.language}"/>
-		</c:if>
-	</c:otherwise>
-</c:choose>
-		
+<fmt:requestEncoding value="UTF-8" />	
 <fmt:setBundle basename="i18n.main" var="lang"/>
-<!-- End of i18n --> 
+<!-- End of i18n -->
+<div id="lang">
+   	<a href="Main.do?command=localize&lang=en_EN">EN</a>
+	<a href="Main.do?command=localize&lang=ru_RU">RU</a>
+</div>
+<c:out value="${enlink} ${rulink}"/>
 <div id="user-info" class="user-info">
 	<div id="error"></div>
      <form id="auth-form">

@@ -2,6 +2,8 @@ package org.training.issuetracker.command;
 
 import java.io.IOException;
 
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -44,7 +46,7 @@ public abstract class AbstractWebCommand implements Command {
 	 * @see org.training.issuetracker.command.Command#execute()
 	 */
 	@Override
-	public void execute() throws IOException {
+	public void execute() throws IOException, ServletException {
 
 	}
 
@@ -67,6 +69,11 @@ public abstract class AbstractWebCommand implements Command {
 	 */
 	public HttpSession getSession() {
 		return session;
+	}
+
+	protected void jump(String url) throws ServletException, IOException {
+		RequestDispatcher rd = request.getRequestDispatcher(url);
+		rd.forward(request, response);
 	}
 
 }

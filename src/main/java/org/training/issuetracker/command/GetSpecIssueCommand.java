@@ -1,16 +1,15 @@
 package org.training.issuetracker.command;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 
-import javax.json.JsonObject;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.ws.rs.core.MediaType;
 
 import org.training.issuetracker.constants.Constants;
+import org.training.issuetracker.data.xml.DataStorage;
+import org.training.issuetracker.domain.Issue;
 import org.training.issuetracker.exceptions.ParameterNotFoundException;
-import org.training.issuetracker.utils.JSONCreator;
 import org.training.issuetracker.utils.ParameterParser;
 
 /**Class for get one issue specified by id.
@@ -32,24 +31,31 @@ public class GetSpecIssueCommand extends AbstractWebCommand {
 	 * javax.servlet.http.HttpServletResponse)
 	 */
 	@Override
-	public void execute() throws IOException {
+	public void execute() throws IOException, ServletException {
 
-		getResponse().setContentType(MediaType.APPLICATION_JSON);
-		PrintWriter out = getResponse().getWriter();
+		//getResponse().setContentType(MediaType.APPLICATION_JSON);
+		//PrintWriter out = getResponse().getWriter();
 		ParameterParser parser = new ParameterParser(getRequest());
 
 		try {
 			long id = parser.getLongParameter(Constants.KEY_ID);
-			JsonObject json = JSONCreator.createSingleIssueJson(id);
-			System.out.println(json);
-			out.print(json);
-			out.flush();
+			DataStorage data = DataStorage.getInstance();
+			Issue issue = data.getIssue(id);
+			getRequest().setAttribute(Constants.ENTITY_TYPE, Constants.ISSUE_TYPE);
+			getRequest().setAttribute(Constants.ENTITY, issue);
+
+			//JsonObject json = JSONCreator.createSingleIssueJson(id);
+			System.out.println(issue);
+			//out.print(json);
+			//out.flush();
+			jump(Constants.URL_DETAILS);
 		} catch (NumberFormatException | ParameterNotFoundException e) {
-			out.print(e.getMessage());
-			getResponse().setStatus(HttpServletResponse.SC_BAD_REQUEST);
+			//out.print(e.getMessage());
+			//getResponse().setStatus(HttpServletResponse.SC_BAD_REQUEST);
 		}
 
-		out.close();
+
+		//out.close();
 
 	}
 

@@ -23,6 +23,7 @@ public class WebCommandFactory {
 		commandMap.put("issuelist", new GetListIssueCommand(request, response));
 		commandMap.put("login", new LoginCommand(request, response));
 		commandMap.put("logout", new LogoutCommand(request, response));
+		commandMap.put("localize", new LocalizeCommand(request, response));
 	}
 
 	/**Method for call specific command object.
