@@ -23,8 +23,8 @@
     <location>/WEB-INF/jsp/error.jsp</location>
   </error-page>
   
-	 <context-param>
+	<context-param>
 	    <param-name>javax.servlet.jsp.jstl.fmt.locale</param-name>
-	    <param-value>en_EN</param-value>
+	    <param-value>de_DE</param-value>
 	</context-param>
 </web-app>

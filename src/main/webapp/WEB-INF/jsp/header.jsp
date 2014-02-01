@@ -7,15 +7,31 @@
 	<h2>Issue Tracker</h2>
 </div><!--end logo-->
 
+<c:set var="backurl" value="${pageContext.request.servletPath}"/>
+<!--  i18n -->
+<c:set var="lang" value="${sessionScope[constants.KEY_LOCALE].language}"/>
+Lang:<c:out value="${lang}"/>
+Locale:${sessionScope[constants.KEY_LOCALE]}
+<c:choose>
+	<c:when test="${!empty lang}">
+		<fmt:setLocale value="${lang}"/>
+	</c:when>
+	<c:otherwise>
+		<fmt:setLocale value="constants.DEFAULT_LANGUAGE"/>
+	</c:otherwise>
+</c:choose>
+
 <!-- i18n -->
-<fmt:requestEncoding value="UTF-8" />	
+<fmt:requestEncoding value="UTF-8" />
+
+<fmt:setLocale value="${pageContext.response.locale}" scope="session"/>
 <fmt:setBundle basename="i18n.main" var="lang"/>
 <!-- End of i18n -->
 <div id="lang">
-   	<a href="Main.do?command=localize&lang=en_EN">EN</a>
-	<a href="Main.do?command=localize&lang=ru_RU">RU</a>
+   	<a href="Main.do?command=localize&lang=en_EN&backurl=${backurl}">EN</a>
+	<a href="Main.do?command=localize&lang=ru_RU&backurl=${backurl}">RU</a>
 </div>
-<c:out value="${enlink} ${rulink}"/>
+
 <div id="user-info" class="user-info">
 	<div id="error"></div>
      <form id="auth-form">

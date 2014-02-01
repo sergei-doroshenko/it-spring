@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.derby.jdbc.EmbeddedDataSource;
+import org.training.issuetracker.constants.Constants;
 import org.training.issuetracker.utils.ConnectionManager;
 
 /**
@@ -27,33 +29,39 @@ public class Test extends HttpServlet {
 	 */
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		ConnectionManager manager = new ConnectionManager();
+		//ConnectionManager manager = new ConnectionManager();
 		Connection connection = null;
+		//connection = manager.getConnection();
+		
+		EmbeddedDataSource ds = new EmbeddedDataSource(); 
+		ds.setDatabaseName(Constants.getRealPath() + "WEB-INF\\classes\\db\\issuetrackerDB");
+		ds.setUser("admin");  
+		ds.setPassword("111");
+
 		PrintWriter out = response.getWriter();
-
-		connection = manager.getConnection();
-
 		out.println("<html>");
         out.println("<head>");
         out.println("<title>Sample Servlet interface implementation</title>");
         out.println("</head>");
         out.println("<body><b>Hello Buddy!</b>");
-			try {
-				Statement st = connection.createStatement();
-				//st.execute("create table users (name varchar(40), password varchar(40))");
-				String name = "Ivan";
-				String password = "111";
-				//st.execute("insert into users values ('Ivan', 'Ivan')");
-				ResultSet rs = st.executeQuery("select * from roles");
+        
+		try {
+			connection = ds.getConnection();
+			Statement st = connection.createStatement();
+			//st.execute("create table users (name varchar(40), password varchar(40))");
+			//String name = "Ivan";
+			//String password = "111";
+			//st.execute("insert into users values ('Ivan', 'Ivan')");
+			ResultSet rs = st.executeQuery("select * from roles");
 
-				while (rs.next()){
-					String s = rs.getString(1);// + "-" + rs.getString(2);
-					out.println("<span>"+ s +"</span>");
-				}
-			} catch (SQLException e) {
-
-				e.printStackTrace();
+			while (rs.next()) {
+				String s = rs.getString(2);// + "-" + rs.getString(2);
+				out.println("<span>"+ s +"</span>");
 			}
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
 
 		out.println("</body>");
         out.println("</html>");

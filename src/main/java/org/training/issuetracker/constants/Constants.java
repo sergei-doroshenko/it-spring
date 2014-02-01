@@ -6,7 +6,6 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import org.apache.log4j.Logger;
-import org.training.issuetracker.i18n.LocalizerLanguage;
 
 /**This class contains constants.
  * @author Sergei_Doroshenko
@@ -29,7 +28,13 @@ public final class Constants {
 
     /** Constants string literal for page-url of index.jsp */
 	public static final String URL_MAIN = "index.jsp";
-
+	
+	/** Constants string literal for page-url of view-issue.jsp */
+	public static final String URL_VIEW_ISSUE = "/WEB-INF/jsp/view-issue.jsp";
+	
+	/** Constants string literal for page-url of edit-issue.jsp */
+	public static final String URL_EDIT_ISSUE = "/WEB-INF/jsp/edit-issue.jsp";
+	
     /** Constants string literal for page-url of details.jsp */
 	public static final String URL_DETAILS = "details.jsp";
 
@@ -56,7 +61,14 @@ public final class Constants {
 
 	/** Constants string literal for page-fragment-url of buttons-block.jsp */
 	public static final String URL_BUTTONS_BLOCK = "/WEB-INF/jsp/buttons-block.jsp";
+	
+	/** Constants string literal for submitissue-url  */
+	public static final String URL_MAIN_COMMAND = "/issuetracker/Main.do?command=";
 
+//***************** Commands *****************************************************
+	/** Constants string literal for submit issue command */
+	public static final String COMMAND_SUBMIT_ISSUE = "submitissue";
+	
 
 //************* Parameters Keys *****************************************************
     /**String literal for id parameter.
@@ -132,7 +144,7 @@ public final class Constants {
 	/**This constant assign default language that used for.
 	 * internationalization - English language.
 	 */
-	public static final LocalizerLanguage DEFAULT_LANGUAGE = LocalizerLanguage.EN;
+	public static final String DEFAULT_LANGUAGE = "en_en";
 
 //********************* Attributes *******************************************
 	/**
@@ -144,10 +156,16 @@ public final class Constants {
 	public static final String ENTITY_TYPE = "type";
 
 	/** Sting literal for issue type */
-	public static final String ISSUE_TYPE = "issue";
+	public static final String ISSUE = "issue";
 
 	/** String literal for entity */
 	public static final String ENTITY = "entity";
+	
+	/** String literal for backurl */
+	public static final String KEY_BACK_URL = "backurl";
+	
+	/** String literal for locale attribute */
+	public static final String KEY_LOCALE = "locale";
 
 	/**Real path to files stored in application folders.
 	 * Init in ApplicationContextListener.
@@ -177,7 +195,7 @@ public final class Constants {
 	 * declared in this Constants class.
 	 * @return TreeMap of String, Object.
 	 */
-	public static Map<String, Object> getConstMap() {
+	public static final Map<String, Object> getConstMap() {
 		Logger log = Logger.getLogger("org.training.issuetracker.constants");
 		Map<String, Object> map = new TreeMap<String, Object>();
 

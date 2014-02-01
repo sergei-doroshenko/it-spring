@@ -22,7 +22,7 @@
              <div class="content">
              	<jsp:include page="${constants.URL_BUTTONS_BLOCK}"/>
 	        	<c:choose>
-             		<c:when test="${requestScope[constants.ENTITY_TYPE] eq constants.ISSUE_TYPE}">
+             		<c:when test="${sessionScope[constants.ENTITY_TYPE] eq constants.ISSUE_TYPE}">
              			<jsp:include page="${constants.URL_ISSUE_DETAILS}"/>
              		</c:when>
              	</c:choose>

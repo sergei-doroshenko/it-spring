@@ -6,6 +6,7 @@ import java.util.Locale;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 import org.training.issuetracker.constants.Constants;
@@ -34,12 +35,19 @@ public class LocalizeCommand extends AbstractWebCommand {
 		try {
 			String langParam = parser.getStringParameter(Constants.KEY_LANGUAGE);
 			Locale locale = new Locale(langParam);
-			getResponse().setLocale(locale);
-			//getRequest().getSession().setAttribute("locale", locale);
-			String url = (String) getRequest().getSession().getAttribute("lastUrl");
+			logger.debug(locale.getLanguage());
+			HttpSession session = getRequest().getSession();
+			session.setAttribute(Constants.KEY_LOCALE, locale);
+			//getResponse().setLocale(locale);
 			logger.debug("Set locale " + locale.getLanguage());
-			logger.debug("Jump to url " + url);
-			jump(url);
+			
+			String backUrlParam = parser.getStringParameter(Constants.KEY_BACK_URL);
+			if(backUrlParam == null) {
+				backUrlParam = Constants.URL_MAIN;
+			}
+			
+			logger.debug("Jump to url " + backUrlParam);
+			jump(backUrlParam);
 		} catch (ParameterNotFoundException e) {
 			logger.error("Cannot set Locale!" + e.getMessage());
 			jump(Constants.URL_ERROR);

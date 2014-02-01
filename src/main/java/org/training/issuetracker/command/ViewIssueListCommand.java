@@ -16,13 +16,13 @@ import org.training.issuetracker.utils.JSONCreator;
  * @author Sergei_Doroshenko
  *
  */
-public class GetListIssueCommand extends AbstractWebCommand {
+public class ViewIssueListCommand extends AbstractWebCommand {
 
 	/**Constructor from superclass.
 	 * @param request - HttpServletRequest
 	 * @param response - HttpServletResponse
 	 */
-	public GetListIssueCommand(HttpServletRequest request,
+	public ViewIssueListCommand(HttpServletRequest request,
 			HttpServletResponse response) {
 		super(request, response);
 	}

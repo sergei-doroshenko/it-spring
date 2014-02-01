@@ -1,8 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<!-- i18n -->
+<c:set var="lang" value="${sessionScope[constants.KEY_LOCALE].language}"/>
+<fmt:requestEncoding value="UTF-8" />
+<c:choose>
+	<c:when test="${!empty lang}">
+		<fmt:setLocale value="${lang}"/>
+	</c:when>
+	<c:otherwise>
+		<fmt:setLocale value="constants.DEFAULT_LANGUAGE"/>
+	</c:otherwise>
+</c:choose>
 <fmt:setBundle basename="i18n.main" var="lang"/>
-<c:set var="issue" scope="page" value="${requestScope[constants.ENTITY]}"/>
+<!-- End of i18n --> 
+<c:set var="issue" scope="page" value="${sessionScope[constants.ENTITY]}"/>
  <div class="issue-container">
        <div class="obj-fields">
                <table>

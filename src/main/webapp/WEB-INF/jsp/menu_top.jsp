@@ -3,19 +3,16 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <!-- i18n -->
+<c:set var="lang" value="${sessionScope[constants.KEY_LOCALE].language}"/>
 <fmt:requestEncoding value="UTF-8" />
 <c:choose>
-	<c:when test="${!empty param.lang}">
-		<c:set var="language" value="${param.lang}" scope="session"/>
-		<fmt:setLocale value="${param.lang}"/>
+	<c:when test="${!empty lang}">
+		<fmt:setLocale value="${lang}"/>
 	</c:when>
 	<c:otherwise>
-		<c:if test="${!empty sessionScope.language}">
-			<fmt:setLocale value="${sessionScope.language}"/>
-		</c:if>
+		<fmt:setLocale value="constants.DEFAULT_LANGUAGE"/>
 	</c:otherwise>
 </c:choose>
-		
 <fmt:setBundle basename="i18n.main" var="lang"/>
 <!-- End of i18n --> 
 
@@ -23,7 +20,7 @@
 	<li class="menu-obj-item"><a href="${constants.URL_MAIN}"><fmt:message key="main" bundle="${lang}"/></a></li>
 	<c:choose>
 		<c:when test="${(user.role.name eq constants.ROLE_USER) or (user.role.name eq constants.ROLE_ADMIN)}">
-			<li class="menu-obj-item"><a href="${constants.URL_DETAILS}"><fmt:message key="submitissue" bundle="${lang}"/></a></li>
+			<li class="menu-obj-item"><a href="${constants.URL_MAIN_COMMAND}${constants.COMMAND_SUBMIT_ISSUE}"><fmt:message key="submitissue" bundle="${lang}"/></a></li>
 			<c:if test="${user.role.name eq constants.ROLE_ADMIN}">
 				<li class="menu-obj-item"><a href="${constants.URL_DETAILS}"><fmt:message key="admin.users" bundle="${lang}"/></a></li>
 				<li class="menu-obj-item"><a href="${constants.URL_DETAILS}"><fmt:message key="admin.roles" bundle="${lang}"/></a></li>

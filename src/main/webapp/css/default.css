@@ -95,6 +95,24 @@ li.menu-obj-item a {
 li.menu-obj-item a:hover {
     text-decoration: underline;
 }
+/****************** Buttons ***************************************/
+.buttons-block {
+    background-color: #7396FF;
+}
+
+.buttons-container {
+    margin: 0px 10px 0px 100px;
+    padding: 5px;
+}
+
+.control-button {
+    width: 80px;
+}
+
+#save {
+   
+}
+
 /******************************** Content *******************/
 .content {
     height: 500px;
@@ -126,11 +144,12 @@ li.menu-obj-item a:hover {
 }
 
 .detail-col-name {
-
+	text-align: right;
+	font-weight: 800;
 }
 
 .detail-col-value {
-    
+    text-align: left;
 }
 
 .detail-col-input {
@@ -202,22 +221,6 @@ li.menu-obj-item a:hover {
 .attachments-list {
     height: 100px;
     background-color: #FFFF99;
-}
-/****************** Buttons ***************************************/
-.buttons-block {
-    background-color: #7396FF;
-}
-
-.buttons-container {
-    margin-left: 100px;
-}
-
-.control-button {
-    width: 80px;
-}
-
-#save {
-   
 }
 /************* Priorities styles **********************************/
 .minor-priority-highlight {

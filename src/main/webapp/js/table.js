@@ -1,6 +1,6 @@
 var names = ["Id", "Priority", "Assignee", "Type", "Status", "Summary"];
 
-var rowLink = { baseLinkUrl: getDetailsUrl(), addParam: '&command=issue'};
+var rowLink = { baseLinkUrl: '/issuetracker/Main.do', addParam: '&command=issue'};// getDetailsUrl()
 
 var model = [
              { name: "id", width: 55, formatter:'showlink', formatoptions: rowLink},

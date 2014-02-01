@@ -1,23 +1,24 @@
 function getDetailsUrl() {
 	var url = window.location.href;
-	console.log(url);
-	var ind = url.lastIndexOf('/') + 1;
+	var pathname = window.location.pathname;
+	console.log(pathname);
+	var ind = pathname.lastIndexOf('/') + 1;
 	console.log(ind);
 	
-	url = url.substring(0,ind) + 'Main.do';
-	console.log(url);
-	return url;
+	url = pathname.substring(0,ind) + 'Main.do';
+	console.log(pathname);
+	return pathname;
 }
 
 function getMainUrl() {
-	var url = window.location.href;
-	console.log(url);
-	var ind = url.lastIndexOf('/') + 1;
+	var pathname = window.location.pathname;
+	console.log(pathname);
+	var ind = pathname.lastIndexOf('/') + 1;
 	console.log(ind);
 	
-	url = url.substring(0,ind) + 'index.jsp';
-	console.log(url);
-	return url;
+	pathname = pathname.substring(0,ind) + 'index.jsp';
+	console.log(pathname);
+	return pathname;
 }
 
 function bindLongin() {
@@ -38,6 +39,8 @@ function bindLongin() {
                         //console.log('Status: ' + jqxhr.getAllResponseHeaders());
                         //alert('Status: ' + jqxhr.getAllResponseHeaders());
                         //handleUserOnLoad();
+                		alert('Request succes!');
+                		alert('Jump to url: ' + getMainUrl());
                         window.location.href = getMainUrl();
                 },
                 error:  handleError
