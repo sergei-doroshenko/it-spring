@@ -3,6 +3,7 @@ package org.training.issuetracker.domain.DAO;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.training.issuetracker.data.db.IssueImplDB;
 import org.training.issuetracker.data.xml.BuildImplXML;
 import org.training.issuetracker.data.xml.IssueImplXML;
 import org.training.issuetracker.data.xml.PriorityImplXML;
@@ -26,7 +27,7 @@ public class DAOFactory {
 		factories.put(StatusDAO.class, new StatusImplXML());
 		factories.put(UserDAO.class, new UserImplXML());
 		factories.put(ProjectDAO.class, new ProjectImplXML());
-		factories.put(IssueDAO.class, new IssueImplXML());
+		factories.put(IssueDAO.class, new IssueImplDB());
 		factories.put(BuildDAO.class, new BuildImplXML());
 //		factories.put(IPlayDAO.class, new PlayImplDB());
 //		factories.put(IPlayDAO.class, new PlayImplXML());

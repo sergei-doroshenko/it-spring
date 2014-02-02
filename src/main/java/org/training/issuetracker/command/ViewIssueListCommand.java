@@ -10,6 +10,7 @@ import javax.ws.rs.core.MediaType;
 
 import org.training.issuetracker.constants.Constants;
 import org.training.issuetracker.domain.User;
+import org.training.issuetracker.exceptions.DaoException;
 import org.training.issuetracker.utils.JSONCreator;
 
 /**Command class for get list of Issue objects.
@@ -35,7 +36,13 @@ public class ViewIssueListCommand extends AbstractWebCommand {
 	public void execute() throws IOException {
 		getResponse().setContentType(MediaType.APPLICATION_JSON);
 		User user = (User) getSession().getAttribute(Constants.KEY_USER);
-		JsonObject json = JSONCreator.createBulkIssueJson(user);
+		JsonObject json = null;
+		try {
+			json = JSONCreator.createIssueJsonList(user);
+		} catch (DaoException e) {
+			
+			e.printStackTrace();
+		}
 		PrintWriter out = getResponse().getWriter();
 		out.print(json);
 		out.flush();

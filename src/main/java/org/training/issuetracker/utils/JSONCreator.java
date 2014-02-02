@@ -1,5 +1,6 @@
 package org.training.issuetracker.utils;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -12,6 +13,9 @@ import javax.json.JsonObject;
 import org.training.issuetracker.data.xml.DataStorage;
 import org.training.issuetracker.domain.Issue;
 import org.training.issuetracker.domain.User;
+import org.training.issuetracker.domain.DAO.DAOFactory;
+import org.training.issuetracker.domain.DAO.IssueDAO;
+import org.training.issuetracker.exceptions.DaoException;
 
 public class JSONCreator {
 	private static JsonBuilderFactory factory = Json.createBuilderFactory(null);
@@ -44,7 +48,37 @@ public class JSONCreator {
 
 		return value;
 	}
+	
+	public static JsonObject createIssueJsonList(User user) throws DaoException {
+		IssueDAO dao = DAOFactory.getDAO(IssueDAO.class);
+		List<Issue> issueList = dao.getIssueList();
+		JsonArrayBuilder arrBuild = factory.createArrayBuilder();
 
+		if (issueList != null) {
+			for (Issue issue : issueList) {
+				if (null != user) {
+					if (issue.getAssignee().equals(user)) {
+						arrBuild.add(issue.toJson());
+					}
+				} else {
+					arrBuild.add(issue.toJson());
+				}
+
+			}
+			
+			
+		}
+		JsonArray array = arrBuild.build();
+
+		JsonObject value = factory.createObjectBuilder()
+				.add("page", 1)
+				.add("records", 10)
+				.add("userdata", createUserData(user))
+				.add("rows", array).build();
+
+		return value;
+	}
+	
 	public static JsonObject createUserData (User user) {
 
 		JsonObject userdata = factory.createObjectBuilder()

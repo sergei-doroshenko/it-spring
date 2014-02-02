@@ -1,6 +1,7 @@
 package org.training.issuetracker.data.xml;
 
 import java.io.PrintWriter;
+import java.sql.SQLException;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -164,7 +165,9 @@ public class DataStorage {
 		if (null == issuesMap) {
 			IssueDAO issueDAO = DAOFactory.getDAO(IssueDAO.class);
 			try {
-				this.issuesMap = issueDAO.getIssue();
+				
+					this.issuesMap = issueDAO.getIssue();
+				
 			} catch (DaoException e) {
 				e.printStackTrace();
 			}

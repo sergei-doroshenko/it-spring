@@ -1,6 +1,8 @@
 package org.training.issuetracker.data.xml;
 
 import java.io.IOException;
+import java.sql.SQLException;
+import java.util.List;
 import java.util.Map;
 
 import org.training.issuetracker.constants.Constants;
@@ -42,6 +44,18 @@ public class IssueImplXML implements IssueDAO {
 		}
 
 		return issues;
+	}
+
+	@Override
+	public Map<Long, Issue> getIssuesMap() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Issue> getIssueList() throws DaoException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

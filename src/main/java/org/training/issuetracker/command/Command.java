@@ -4,6 +4,8 @@ import java.io.IOException;
 
 import javax.servlet.ServletException;
 
+import org.training.issuetracker.exceptions.DaoException;
+
 
 /**Interface for implementing by commands class.
  * @author Sergei_Doroshenko

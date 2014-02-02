@@ -16,6 +16,7 @@ public class Issue extends AbstractPersistentObj {
 	private Resolution resolution;
 	private Type type;
 	private Priority priority;
+	private Project project;
 	private Build build;
 	private User assignee;
 
@@ -99,6 +100,14 @@ public class Issue extends AbstractPersistentObj {
 
 	public void setPriority(Priority priority) {
 		this.priority = priority;
+	}
+	
+	public Project getProject() {
+		return project;
+	}
+
+	public void setProject(Project project) {
+		this.project = project;
 	}
 
 	public Build getBuild() {

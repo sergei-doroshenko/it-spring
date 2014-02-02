@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.training.issuetracker.exceptions.DaoException;
+
 /**Class of abstract web command contains request.
  * and response for child web commands
  * @author Sergei_Doroshenko
