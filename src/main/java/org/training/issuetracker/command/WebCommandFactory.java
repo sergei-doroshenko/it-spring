@@ -27,6 +27,7 @@ public class WebCommandFactory {
 		commandMap.put("logout", new LogoutCommand(request, response));
 		commandMap.put("localize", new LocalizeCommand(request, response));
 		commandMap.put(Constants.COMMAND_SUBMIT_ISSUE, new EditIssueCommand(request, response));
+		commandMap.put(Constants.COMMAND_VIEW_USER, new ViewUserCommand(request, response));
 	}
 
 	/**Method for call specific command object.

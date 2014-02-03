@@ -26,58 +26,91 @@ public final class Constants {
     /**url part of jsp pages folder.*/
     public static final  String URL_PREFIX = "/WEB-INF/jsp";
 
-    /** Constants string literal for page-url of index.jsp */
-	public static final String URL_MAIN = "index.jsp";
-
-	/** Constants string literal for page-url of view-issue.jsp */
-	public static final String URL_VIEW_ISSUE = "/WEB-INF/jsp/view-issue.jsp";
+    /** Constants string literal for page-url of view-issue.jsp */
+	public static final String URL_VIEW_ISSUE = URL_PREFIX + "/view-issue.jsp";
 
 	/** Constants string literal for page-url of edit-issue.jsp */
-	public static final String URL_EDIT_ISSUE = "/WEB-INF/jsp/edit-issue.jsp";
+	public static final String URL_EDIT_ISSUE = URL_PREFIX + "/edit-issue.jsp";
+    
+	/** Constants string literal for page-url of error.jsp */
+	public static final String URL_ERROR = URL_PREFIX + "/error.jsp";
+	
+	/** Constants string literal for page-fragment-url of header.jsp */
+	public static final String URL_HEADER = URL_PREFIX + "/header.jsp";
+	
+	/** Constants string literal for page-fragment-url of header.jsp */
+	public static final String URL_HEADER_SIMPLE = URL_PREFIX + "/header-simple.jsp";
+
+	/** Constants string literal for page-fragment-url of header.jsp */
+	public static final String URL_MENU_TOP = URL_PREFIX + "/menu_top.jsp";
+
+	/** Constants string literal for page-fragment-url of footer.jsp */
+	public static final String URL_FOOTER = URL_PREFIX + "/footer.jsp";
+
+	/** Constants string literal for page-fragment-url of error-content.jsp */
+	public static final String URL_ERROR_CONTENT = URL_PREFIX + "/error-content.jsp";
+
+	/** Constants string literal for page-fragment-url of issue-details.jsp */
+	public static final String URL_ISSUE_DETAILS = URL_PREFIX + "/issue-details.jsp";
+
+	/** Constants string literal for page-fragment-url of buttons-view.jsp */
+	public static final String URL_BUTTONS_VIEW = URL_PREFIX + "/buttons-view.jsp";
+	
+	/** Constants string literal for page-fragment-url of buttons-view-user.jsp */
+	public static final String URL_BUTTONS_VIEW_USER = URL_PREFIX + "/buttons-view-user.jsp";
+
+	/** Constants string literal for page-fragment-url of buttons-edit.jsp */
+	public static final String URL_BUTTONS_EDIT = URL_PREFIX + "/buttons-edit.jsp";
+	
+	/** Constants string literal for view-user.jsp url  */
+	public static final String URL_VIEW_USER = URL_PREFIX + "/view-user.jsp";
+	
+	/** Constants string literal for edit-user.jsp url  */
+	public static final String URL_EDIT_USER = URL_PREFIX + "/edit-user.jsp";
 
     /** Constants string literal for page-url of details.jsp */
 	public static final String URL_DETAILS = "details.jsp";
-
-	/** Constants string literal for page-url of error.jsp */
-	public static final String URL_ERROR = "/WEB-INF/jsp/error.jsp";
+	
+	/** Constants string literal for page-url of index.jsp */
+	public static final String URL_MAIN = "index.jsp";
 
 	/** Constants string literal for page-url of search.jsp */
 	public static final String URL_SEARCH = "search.jsp";
 
-	/** Constants string literal for page-fragment-url of header.jsp */
-	public static final String URL_HEADER = "/WEB-INF/jsp/header.jsp";
+	
 
-	/** Constants string literal for page-fragment-url of header.jsp */
-	public static final String URL_MENU_TOP = "/WEB-INF/jsp/menu_top.jsp";
-
-	/** Constants string literal for page-fragment-url of footer.jsp */
-	public static final String URL_FOOTER = "/WEB-INF/jsp/footer.jsp";
-
-	/** Constants string literal for page-fragment-url of error-content.jsp */
-	public static final String URL_ERROR_CONTENT = "/WEB-INF/jsp/error-content.jsp";
-
-	/** Constants string literal for page-fragment-url of issue-details.jsp */
-	public static final String URL_ISSUE_DETAILS = "/WEB-INF/jsp/issue-details.jsp";
-
-	/** Constants string literal for page-fragment-url of buttons-view.jsp */
-	public static final String URL_BUTTONS_VIEW = "/WEB-INF/jsp/buttons-view.jsp";
-
-	/** Constants string literal for page-fragment-url of buttons-edit.jsp */
-	public static final String URL_BUTTONS_EDIT = "/WEB-INF/jsp/buttons-edit.jsp";
-
-	/** Constants string literal for submitissue-url  */
-	public static final String URL_MAIN_COMMAND = "/issuetracker/Main.do?command=";
-
-	/** Constants string literal for localize-english url  */
-	public static final String URL_LOCALIZE_EN_COMMAND = "Main.do?command=localize&lang=en_EN&backurl=";
-
-	/** Constants string literal for localize-russian url  */
-	public static final String URL_LOCALIZE_RU_COMMAND = "Main.do?command=localize&lang=ru_RU&backurl=";
+	
 
 //***************** Commands *****************************************************
 	/** Constants string literal for submit issue command */
 	public static final String COMMAND_SUBMIT_ISSUE = "submitissue";
+	
+	/** Constants string literal for logout command  */
+	public static final String COMMAND_LOGOUT = "logout";
+	
+	/** Constants string literal for view user info command  */
+	public static final String COMMAND_VIEW_USER = "viewuser";
+	
+	/** Constants string literal for edit user info command  */
+	public static final String COMMAND_EDIT_USER = "viewuser";
+	
+	/** Constants string literal for submitissue-url  */
+	public static final String URL_MAIN_COMMAND = "/issuetracker/Main.do?command=";
+	
+	/** Constants string literal for submitissue-url  */
+	public static final String URL_LOGOUT_COMMAND = URL_MAIN_COMMAND + COMMAND_LOGOUT;
+	
+	/** Constants string literal for localize-english url  */
+	public static final String URL_LOCALIZE_EN_COMMAND = URL_MAIN_COMMAND + "localize&lang=en_EN&backurl=";
 
+	/** Constants string literal for localize-russian url  */
+	public static final String URL_LOCALIZE_RU_COMMAND = URL_MAIN_COMMAND +"localize&lang=ru_RU&backurl=";
+	
+	/** Constants string literal for view user info url  */
+	public static final String URL_VIEW_USER_COMMAND = URL_MAIN_COMMAND + COMMAND_VIEW_USER;
+	
+	/** Constants string literal for edit user info url  */
+	public static final String URL_EDIT_USER_COMMAND = URL_MAIN_COMMAND + COMMAND_EDIT_USER;;
 
 //************* Parameters Keys *****************************************************
     /**String literal for id parameter.

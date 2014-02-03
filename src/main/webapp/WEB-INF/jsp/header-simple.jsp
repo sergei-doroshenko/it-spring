@@ -36,19 +36,7 @@ Role:${user.role.name}${user.email}${user.password}
 <div id="user-info" class="user-info">
 	<div id="error"></div>
      <form id="auth-form">
-     	<c:choose>
-     		<c:when test="${empty user}">
-     			<label><fmt:message key="user.name" bundle="${lang}"/></label>
-	        	<input name="login" id="login" class="login" type="text" value="<fmt:message key="user.entername" bundle="${lang}"/>"/>
-	        	<label><fmt:message key="user.password" bundle="${lang}"/></label>
-	        	<input name="password" id="password" class="password" type="password" />
-	        	<input id="authsubmit" class="authsubmit" type="submit" value="<fmt:message key="user.login" bundle="${lang}"/>" />
-     		</c:when>
-     		<c:otherwise>
-     			<a class="logout" href="Main.do?id=${user.id}&command=${constants.COMMAND_VIEW_USER}"><c:out value="${user.firstName}  ${user.lastName}"/></a>
-	      		<a class="logout" href="${constants.URL_LOGOUT_COMMAND}"><fmt:message key="user.logout" bundle="${lang}"/></a>
-     		</c:otherwise>
-     	</c:choose>
+	      <a class="logout" href="${constants.URL_LOGOUT_COMMAND}"><fmt:message key="user.logout" bundle="${lang}"/></a>
      </form>
 </div><!--end user-info-->
 		

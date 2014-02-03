@@ -152,7 +152,12 @@
 				               </table>
 				               <div id="attachments-container" class="attachments-container">                         
 				                  <div class="field-label"><fmt:message key="page.issue.attachments" bundle="${lang}"/>
-				                  		<input id="attachment" class="attachment" type="file"/>			                  
+				                  		<p>${uploadmessage}</p>
+				                  		<form action="FileUploadDownload.do" method="post" enctype="multipart/form-data">
+											Select File to Upload:<input id="attachment" class="attachment" type="file" name="file"/>
+											<br>
+											<input type="submit" value="Upload">
+										</form>		                  
 				                  </div>
 				                  <div id="attachments-list" class="attachments-list"></div>
 				              </div><!-- attachments-container end -->
