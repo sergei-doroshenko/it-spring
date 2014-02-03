@@ -33,7 +33,7 @@
                 <jsp:include page="${constants.URL_MENU_TOP}"/>
              </div><!-- end menu-bar -->
              <div class="content">
-             	<jsp:include page="${constants.URL_BUTTONS_BLOCK}"/>
+             	<jsp:include page="${constants.URL_BUTTONS_VIEW}"/>
 	        	<c:set var="issue" scope="page" value="${sessionScope[constants.ISSUE]}"/>
 				 <div class="issue-container">
 				       <div class="obj-fields">
@@ -123,8 +123,17 @@
 				       <div class="com-att">
 				           <div id="comments-container" class="comments-container">
 				               <div class="field-label" ><fmt:message key="page.issue.comments" bundle="${lang}"/></div>
-				                  <div id="comments-list" class="comments-list"></div>
-				                  <textarea id="comment" class="comment" rows="7" cols="40"></textarea>
+				                  <div id="comments-list" class="comments-list">
+				                  		<c:forEach var="comment" items="${comments}">
+				                  			<div class="comment-block">
+				                  				<div class="comment-block">
+										            <div class="comment-value">${comment.comment}</div>
+										            <div class="comment-create-date">${comment.createDate}</div>
+										            <div class="comment-create-by">${comment.createBy.firstName} ${comment.createBy.lastName}</div>
+										        </div>
+				                  			</div>
+				                  		</c:forEach>
+				                  </div>
 				           </div><!-- comment end -->
 				       </div>
 				 </div><!-- isuue-container end -->
@@ -136,6 +145,15 @@
         <script type="text/javascript">
              $( document ).ready(function () {
                   bindLongin();
+                  $('#new-button').bind().on('click', function(){
+                	  alert('Click new!');
+                  });
+                  $('#edit-button').bind().on('click', function(){
+                	  alert('Click edit!');
+                  });
+                  $('#delete-button').bind().on('click', function(){
+                	  alert('Click delete!');
+                  });
                   $('.description').attr('readonly','readonly');
              });
         </script>

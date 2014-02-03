@@ -12,6 +12,7 @@
 <c:set var="lang" value="${sessionScope[constants.KEY_LOCALE].language}"/>
 Lang:<c:out value="${lang}"/>
 Locale:${sessionScope[constants.KEY_LOCALE]}
+Role:${user.role.name}${user.email}${user.password}
 <c:choose>
 	<c:when test="${!empty lang}">
 		<fmt:setLocale value="${lang}"/>
@@ -28,8 +29,8 @@ Locale:${sessionScope[constants.KEY_LOCALE]}
 <fmt:setBundle basename="i18n.main" var="lang"/>
 <!-- End of i18n -->
 <div id="lang">
-   	<a href="Main.do?command=localize&lang=en_EN&backurl=${backurl}">EN</a>
-	<a href="Main.do?command=localize&lang=ru_RU&backurl=${backurl}">RU</a>
+   	<a href="${constants.URL_LOCALIZE_EN_COMMAND}${backurl}">EN</a>
+	<a href="${constants.URL_LOCALIZE_RU_COMMAND}${backurl}">RU</a>
 </div>
 
 <div id="user-info" class="user-info">

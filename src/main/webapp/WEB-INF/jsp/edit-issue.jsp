@@ -33,7 +33,7 @@
                 <jsp:include page="${constants.URL_MENU_TOP}"/>
              </div><!-- end menu-bar -->
              <div class="content">
-             	<jsp:include page="${constants.URL_BUTTONS_BLOCK}"/>
+             	<jsp:include page="${constants.URL_BUTTONS_EDIT}"/>
 	        	<c:set var="issue" scope="page" value="${sessionScope[constants.ISSUE]}"/>
 				 <div class="issue-container">
 				       <div class="obj-fields">
@@ -162,7 +162,7 @@
 				               <div class="field-label" ><fmt:message key="page.issue.comments" bundle="${lang}"/></div>
 				                  <div id="comments-list" class="comments-list"></div>
 				                  <textarea id="comment" class="comment" rows="7" cols="40"></textarea>
-				                  <button id="add-comment"><fmt:message key="page.issue.addcomment" bundle="${lang}"/></button>
+				                  <button id="add-comment"><fmt:message key="button.addcomment" bundle="${lang}"/></button>
 				           </div><!-- comment end -->
 				       </div>
 				 </div><!-- isuue-container end -->
@@ -174,8 +174,12 @@
         <script type="text/javascript">
              $( document ).ready(function () {
                   bindLongin();
-                  $('.detail-col-input').attr('readonly','readonly');
-                  $('.detail-col-select').attr("disabled", true);
+                  $('#save-button').bind().on('click', function(){
+                	  alert('Click save!');
+                  });
+                  $('#cancel-button').bind().on('click', function(){
+                	  alert('Click cancel!');
+                  });
                   $('.description').attr('readonly','readonly');
              });
         </script>

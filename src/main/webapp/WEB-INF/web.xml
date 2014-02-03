@@ -25,6 +25,6 @@
   
 	<context-param>
 	    <param-name>javax.servlet.jsp.jstl.fmt.locale</param-name>
-	    <param-value>de_DE</param-value>
+	    <param-value>en_EN</param-value>
 	</context-param>
 </web-app>

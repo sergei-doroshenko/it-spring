@@ -8,9 +8,10 @@ import org.training.issuetracker.domain.Issue;
 import org.training.issuetracker.exceptions.DaoException;
 
 public interface IssueDAO {
-	Map <Long, Issue> getIssue () throws DaoException;
-	
+
 	List <Issue> getIssueList () throws DaoException;
-	
+
 	Map<Long, Issue> getIssuesMap() throws SQLException;
+
+	Issue getIssue(long id) throws DaoException;
 }

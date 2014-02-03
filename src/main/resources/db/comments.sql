@@ -1,0 +1,11 @@
+SELECT COMMENTS.ID AS comment_id,
+COMMENTS.ISSUE_ID AS comment_issue_id,
+COMMENTS.CREATE_DATE AS comment_create_date,
+COMMENTS.CREATE_BY AS comment_create_by,
+COMMENTS.COMMENT AS comment_value,
+USERS.ID AS create_by_id,
+USERS.FIRST_NAME AS create_by_first_name,
+USERS.LAST_NAME AS create_by_last_name
+FROM COMMENTS
+LEFT JOIN USERS ON COMMENTS.CREATE_BY = USERS.ID
+WHERE COMMENTS.ISSUE_ID = 3;

@@ -28,13 +28,13 @@ public final class Constants {
 
     /** Constants string literal for page-url of index.jsp */
 	public static final String URL_MAIN = "index.jsp";
-	
+
 	/** Constants string literal for page-url of view-issue.jsp */
 	public static final String URL_VIEW_ISSUE = "/WEB-INF/jsp/view-issue.jsp";
-	
+
 	/** Constants string literal for page-url of edit-issue.jsp */
 	public static final String URL_EDIT_ISSUE = "/WEB-INF/jsp/edit-issue.jsp";
-	
+
     /** Constants string literal for page-url of details.jsp */
 	public static final String URL_DETAILS = "details.jsp";
 
@@ -59,16 +59,25 @@ public final class Constants {
 	/** Constants string literal for page-fragment-url of issue-details.jsp */
 	public static final String URL_ISSUE_DETAILS = "/WEB-INF/jsp/issue-details.jsp";
 
-	/** Constants string literal for page-fragment-url of buttons-block.jsp */
-	public static final String URL_BUTTONS_BLOCK = "/WEB-INF/jsp/buttons-block.jsp";
-	
+	/** Constants string literal for page-fragment-url of buttons-view.jsp */
+	public static final String URL_BUTTONS_VIEW = "/WEB-INF/jsp/buttons-view.jsp";
+
+	/** Constants string literal for page-fragment-url of buttons-edit.jsp */
+	public static final String URL_BUTTONS_EDIT = "/WEB-INF/jsp/buttons-edit.jsp";
+
 	/** Constants string literal for submitissue-url  */
 	public static final String URL_MAIN_COMMAND = "/issuetracker/Main.do?command=";
+
+	/** Constants string literal for localize-english url  */
+	public static final String URL_LOCALIZE_EN_COMMAND = "Main.do?command=localize&lang=en_EN&backurl=";
+
+	/** Constants string literal for localize-russian url  */
+	public static final String URL_LOCALIZE_RU_COMMAND = "Main.do?command=localize&lang=ru_RU&backurl=";
 
 //***************** Commands *****************************************************
 	/** Constants string literal for submit issue command */
 	public static final String COMMAND_SUBMIT_ISSUE = "submitissue";
-	
+
 
 //************* Parameters Keys *****************************************************
     /**String literal for id parameter.
@@ -158,12 +167,15 @@ public final class Constants {
 	/** Sting literal for issue type */
 	public static final String ISSUE = "issue";
 
+	/** Sting literal for comments on jsp */
+	public static final String COMMENTS = "comments";
+
 	/** String literal for entity */
 	public static final String ENTITY = "entity";
-	
+
 	/** String literal for backurl */
 	public static final String KEY_BACK_URL = "backurl";
-	
+
 	/** String literal for locale attribute */
 	public static final String KEY_LOCALE = "locale";
 

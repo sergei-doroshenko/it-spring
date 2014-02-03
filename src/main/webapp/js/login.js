@@ -24,7 +24,7 @@ function getMainUrl() {
 function bindLongin() {
 	$('#auth-form').submit(function () {
         console.log('You submit the form!');
-        alert('You submit the form!');
+        //alert('You submit the form!');
         var formdata = 'command=login&login=' + $('#login').val() + '&password=' + $('#password').val();
         console.log(formdata);
         //alert(formdata);
@@ -39,8 +39,8 @@ function bindLongin() {
                         //console.log('Status: ' + jqxhr.getAllResponseHeaders());
                         //alert('Status: ' + jqxhr.getAllResponseHeaders());
                         //handleUserOnLoad();
-                		alert('Request succes!');
-                		alert('Jump to url: ' + getMainUrl());
+                		//alert('Request succes!');
+                		//alert('Jump to url: ' + getMainUrl());
                         window.location.href = getMainUrl();
                 },
                 error:  handleError

@@ -115,7 +115,7 @@ li.menu-obj-item a:hover {
 
 /******************************** Content *******************/
 .content {
-    height: 500px;
+    height: 530px;
 }
 .table-container {
     height: 300px;
@@ -138,12 +138,14 @@ li.menu-obj-item a:hover {
 }
 
 .obj-fields {
-    width: 550px;
+    width: 600px;
+    height: 470px;
     float: left;
-    background-color: #FF7373;
+    /*background-color: #FF7373;*/
 }
 
 .detail-col-name {
+    width: 150px;
 	text-align: right;
 	font-weight: 800;
 }
@@ -163,7 +165,8 @@ li.menu-obj-item a:hover {
 .description {
     width: 400px;
     height: 50px;
-    resize: vertical;
+    /*resize: vertical;*/
+    resize: none;
     overflow: x-scroll;
 }
 
@@ -171,13 +174,13 @@ li.menu-obj-item a:hover {
     height: 100%;
     width: 500px;
     float: left;
-    background-color: #FFB299;
+    /*background-color: #FFB299;*/
 }
 
 .field-label {
     display: block;
     width: 100%;
-   
+    margin: 0px 0px 5px 0px;
 }
 
 #assignee {
@@ -195,9 +198,9 @@ li.menu-obj-item a:hover {
 
 .comments-container {
     display: block;
-    height: 440px;
+    height: 470px;
     width: 100%;
-    background-color: #BFBFFF;
+    /*background-color: #BFBFFF;*/
 }
 
 .comments-list {
@@ -205,7 +208,34 @@ li.menu-obj-item a:hover {
     height: 250px;
 }
 
-.comment {
+.comment-block {
+    width: 450px;
+    height: 80px;
+    overflow: x-scroll;
+ 
+}
+
+.comment-value {
+    border-right: 1px dotted #8A8A7B;
+    border-bottom: 1px solid #8A8A7B;
+    width: 450px;
+    height: 50px;
+    text-align: left;
+}
+
+.comment-create-by {
+    float: right;
+    padding: 3px 5px 3px 5px;
+    font-size: 10pt;
+}
+
+.comment-create-date {
+    float: right;
+    padding: 3px 5px 3px 5px;
+    font-size: 10pt;
+}
+
+.new-comment {
     width: 480px;
     resize: none;
     overflow: x-scroll;
@@ -213,14 +243,15 @@ li.menu-obj-item a:hover {
 
 .attachments-container {
     display: block;
-    height: 150px;
+    height: 180px;
     width: 500px;
-    background-color: #99FF99;
+    /*background-color: #99FF99;*/
+    margin-left: 20px;
 }
 
 .attachments-list {
-    height: 100px;
-    background-color: #FFFF99;
+    height: 150px;
+    /*background-color: #FFFF99;*/
 }
 /************* Priorities styles **********************************/
 .minor-priority-highlight {
