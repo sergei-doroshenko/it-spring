@@ -7,6 +7,7 @@ import java.util.Map;
 
 import org.training.issuetracker.constants.Constants;
 import org.training.issuetracker.domain.Issue;
+import org.training.issuetracker.domain.User;
 import org.training.issuetracker.domain.DAO.IssueDAO;
 import org.training.issuetracker.exceptions.DaoException;
 import org.training.issuetracker.exceptions.ValidationException;
@@ -23,7 +24,6 @@ public class IssueImplXML implements IssueDAO {
 
 	public IssueImplXML() { }
 
-	@Override
 	public Map<Long, Issue> getIssue() throws DaoException {
 		Map<Long, Issue> issues = null;
 		XMLValidator validator = new XMLValidator();
@@ -52,8 +52,19 @@ public class IssueImplXML implements IssueDAO {
 		return null;
 	}
 
-	@Override
 	public List<Issue> getIssueList() throws DaoException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Issue> getIssueList(User user) throws DaoException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Issue getIssue(long id) throws DaoException {
 		// TODO Auto-generated method stub
 		return null;
 	}

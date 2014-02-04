@@ -5,6 +5,8 @@ import java.sql.Date;
 import javax.json.Json;
 import javax.json.JsonObject;
 
+import com.google.gson.Gson;
+
 public class Issue extends AbstractPersistentObj {
 	private Date createDate;
 	private User createBy;
@@ -145,7 +147,7 @@ public class Issue extends AbstractPersistentObj {
 //		return issueJson;
 //	}
 
-	public JsonObject toJson () {
+	public JsonObject toJsonForTable () {
 		JsonObject issueJson = Json.createObjectBuilder()
 						.add("id", getId())
 						.add("cell", Json.createArrayBuilder()

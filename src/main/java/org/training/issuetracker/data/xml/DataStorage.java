@@ -161,23 +161,23 @@ public class DataStorage {
 		return buildMap;
 	}
 
-	public Map<Long, Issue> getIssuesMap() {
-		if (null == issuesMap) {
-			IssueDAO issueDAO = DAOFactory.getDAO(IssueDAO.class);
-			try {
-				
-					this.issuesMap = issueDAO.getIssue();
-				
-			} catch (DaoException e) {
-				e.printStackTrace();
-			}
-		}
-		return issuesMap;
-	}
-
-	public Issue getIssue (long id) {
-		return getIssuesMap().get(id);
-	}
+//	public Map<Long, Issue> getIssuesMap() {
+//		if (null == issuesMap) {
+//			IssueDAO issueDAO = DAOFactory.getDAO(IssueDAO.class);
+//			try {
+//				
+//					this.issuesMap = issueDAO.getIssue();
+//				
+//			} catch (DaoException e) {
+//				e.printStackTrace();
+//			}
+//		}
+//		return issuesMap;
+//	}
+//
+//	public Issue getIssue (long id) {
+//		return getIssuesMap().get(id);
+//	}
 
 	public <T extends AbstractPersistentObj> void printDataMap (PrintWriter out, Map<?, T> map) {
 
