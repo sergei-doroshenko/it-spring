@@ -18,7 +18,7 @@ public interface Localizer {
 	 */
 	String getElementValue(String key) throws UnsupportedEncodingException;
 
-	ResourceBundle getBundle();
+	ResourceBundle getBundle(String fileName);
 
 	Map<String, String> getValuesMap() throws UnsupportedEncodingException;
 

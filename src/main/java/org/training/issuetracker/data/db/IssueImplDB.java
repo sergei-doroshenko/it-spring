@@ -4,11 +4,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
 import org.training.issuetracker.constants.Constants;
 import org.training.issuetracker.domain.Build;
 import org.training.issuetracker.domain.Issue;
@@ -23,6 +23,7 @@ import org.training.issuetracker.exceptions.DaoException;
 import org.training.issuetracker.utils.ConnectionProvider;
 
 public class IssueImplDB implements IssueDAO {
+	private final Logger logger = Logger.getLogger("org.training.issuetracker.data");
 	private Connection connection;
 
 	@Override
@@ -84,14 +85,27 @@ public class IssueImplDB implements IssueDAO {
 	}
 
 	@Override
-	public List<Issue> getIssueList() throws DaoException {
+	public List<Issue> getIssueList(User user) throws DaoException {
 		List<Issue> list = new ArrayList<Issue>();
+		PreparedStatement select = null;
+		ResultSet rs = null;
+		String query = SQL_SELECT_ISSUE_LIST;
 
-		Statement st = null;
+		if (user != null) {
+			logger.debug("User in sql = " + user.getEmail());
+			query += SQL_SELECT_ISSUE_LIST_TAIL;
+		}
+		logger.debug(query);
 		try {
 			connection = ConnectionProvider.getConnection();
-			st = connection.createStatement();
-			ResultSet rs = st.executeQuery(SQL_SELECT_ISSUE_LIST);
+			select = connection.prepareStatement(query);
+
+			if (user != null) {
+				logger.debug("User Id in sql = " + user.getId());
+				select.setLong(SELECT_ISSUE_LIST_USER_ID_INDES, user.getId());
+			}
+
+			rs = select.executeQuery();
 			while (rs.next()) {
 				Issue issue = new Issue();
 				issue.setId(rs.getLong("issue_id"));
@@ -136,13 +150,15 @@ public class IssueImplDB implements IssueDAO {
 			throw new DaoException(Constants.ERROR_SOURCE, e);
 		} finally {
 			ConnectionProvider.closeConnection(connection);
-			ConnectionProvider.closeStatemnts(st);
+			ConnectionProvider.closePrepStatemnts(select);
 		}
 
 
 	}
 
 	private static final int SELECT_ISSUE_INDEX = 1;
+
+	private static final int SELECT_ISSUE_LIST_USER_ID_INDES = 1;
 
 	private static final String SQL_SELECT_ISSUE =
 			"SELECT ISSUES.ID AS issue_id, ISSUES.CREATE_DATE AS create_date,"
@@ -198,6 +214,9 @@ public class IssueImplDB implements IssueDAO {
 			+ "LEFT JOIN BUILDS ON ISSUES.BUILD_ID = BUILDS.ID "
 			+ "LEFT JOIN PROJECTS ON BUILDS.PROJECT_ID = PROJECTS.ID "
 			+ "LEFT JOIN USERS ON ISSUES.ASSIGNEE_ID = USERS.ID";
+
+	private static final String SQL_SELECT_ISSUE_LIST_TAIL =
+			" WHERE ISSUES.ASSIGNEE_ID = ?";
 
 	@Override
 	public Map<Long, Issue> getIssuesMap() throws SQLException {

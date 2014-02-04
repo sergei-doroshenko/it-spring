@@ -40,7 +40,7 @@ public final class ParameterInspector {
 		Pattern pattern = Pattern.compile(NAME_PATTERN);
 
 		if (name == null) {
-			throw new ValidationException("login empty!");
+			throw new ValidationException("Wrong parameter enter!");
 		} else {
 			Matcher matcher = pattern.matcher(name);
 			if (!matcher.matches()) {

@@ -19,14 +19,15 @@ import org.training.issuetracker.constants.Constants;
  */
 public class LocalizerEN implements Localizer {
 	private static final String path = Constants.getRealPath() + "WEB-INF\\classes\\i18n\\";
-	private final ResourceBundle bundle;
+	private ResourceBundle bundle;
+	private final Locale locale;
+	private final ClassLoader loader;
 
 	public LocalizerEN () throws MalformedURLException {
 		File file = new File(path);
 		URL[] urls = {file.toURI().toURL()};
-		ClassLoader loader = new URLClassLoader(urls);
-		Locale locale = new Locale("en","EN");
-		bundle = PropertyResourceBundle.getBundle("main", locale, loader);
+		loader = new URLClassLoader(urls);
+		this.locale = new Locale("en","EN");
 	}
 
 	@Override
@@ -35,8 +36,8 @@ public class LocalizerEN implements Localizer {
 	}
 
 	@Override
-	public ResourceBundle getBundle() {
-		return bundle;
+	public ResourceBundle getBundle(String fileName) {
+		return PropertyResourceBundle.getBundle(fileName, locale, loader);
 	}
 
 	private Map<String, String> convertResourceBundleToMap(ResourceBundle resource)

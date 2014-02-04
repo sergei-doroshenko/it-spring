@@ -14,6 +14,11 @@ import org.apache.log4j.Logger;
 
 public final class Constants {
 //********************	Path ***********************************************
+	/**Real path to files stored in application folders.
+	 * Init in ApplicationContextListener.
+	 */
+	private static String realPath;
+
 	/**Constant for root path.
 	 *
 	 */
@@ -23,6 +28,9 @@ public final class Constants {
      */
     public static final String RESOURCE_PATHS = "/WEB-INF/classes/xml/";
 
+    /**url i18n properties files.*/
+    public static final String RESOURCE_I18N_PATHS = "WEB-INF\\classes\\i18n\\";
+
     /**url part of jsp pages folder.*/
     public static final  String URL_PREFIX = "/WEB-INF/jsp";
 
@@ -31,13 +39,13 @@ public final class Constants {
 
 	/** Constants string literal for page-url of edit-issue.jsp */
 	public static final String URL_EDIT_ISSUE = URL_PREFIX + "/edit-issue.jsp";
-    
+
 	/** Constants string literal for page-url of error.jsp */
 	public static final String URL_ERROR = URL_PREFIX + "/error.jsp";
-	
+
 	/** Constants string literal for page-fragment-url of header.jsp */
 	public static final String URL_HEADER = URL_PREFIX + "/header.jsp";
-	
+
 	/** Constants string literal for page-fragment-url of header.jsp */
 	public static final String URL_HEADER_SIMPLE = URL_PREFIX + "/header-simple.jsp";
 
@@ -55,62 +63,87 @@ public final class Constants {
 
 	/** Constants string literal for page-fragment-url of buttons-view.jsp */
 	public static final String URL_BUTTONS_VIEW = URL_PREFIX + "/buttons-view.jsp";
-	
+
 	/** Constants string literal for page-fragment-url of buttons-view-user.jsp */
 	public static final String URL_BUTTONS_VIEW_USER = URL_PREFIX + "/buttons-view-user.jsp";
 
 	/** Constants string literal for page-fragment-url of buttons-edit.jsp */
 	public static final String URL_BUTTONS_EDIT = URL_PREFIX + "/buttons-edit.jsp";
-	
+
 	/** Constants string literal for view-user.jsp url  */
 	public static final String URL_VIEW_USER = URL_PREFIX + "/view-user.jsp";
-	
+
 	/** Constants string literal for edit-user.jsp url  */
 	public static final String URL_EDIT_USER = URL_PREFIX + "/edit-user.jsp";
 
+	/** Constants string literal for comments-block.jsp url  */
+	public static final String URL_COMMENTS_BLOCK = URL_PREFIX + "/comments-block.jsp";
+
+	/** Constants string literal for attachments-block.jsp url  */
+	public static final String URL_ATTACHMENTS_BLOCK = URL_PREFIX + "/attachments-block.jsp";
+
     /** Constants string literal for page-url of details.jsp */
 	public static final String URL_DETAILS = "details.jsp";
-	
+
 	/** Constants string literal for page-url of index.jsp */
 	public static final String URL_MAIN = "index.jsp";
 
 	/** Constants string literal for page-url of search.jsp */
 	public static final String URL_SEARCH = "search.jsp";
 
-	
+	/**
+     * Directory where uploaded files will be saved, its relative to
+     * the web application directory.
+     */
+    public static final String URL_UPLOAD_DIR = "uploads";
 
-	
+    /**
+     * Directory for downloaded files from jsp.
+     */
+    public static final String URL_DOWNLOAD_DIR = getRealPath() + URL_UPLOAD_DIR;
+
+	/** Base name for errors.properties files */
+	public static final String PROPERTIES_ERRORS = RESOURCE_I18N_PATHS + "errors";
+
 
 //***************** Commands *****************************************************
 	/** Constants string literal for submit issue command */
 	public static final String COMMAND_SUBMIT_ISSUE = "submitissue";
-	
+
+	/** Constants string literal for edit issue command */
+	public static final String COMMAND_EDIT_ISSUE = "editissue";
+
+	/** Constants string literal for delete issue command */
+	public static final String COMMAND_DELETE_ISSUE = "deleteissue";
+
 	/** Constants string literal for logout command  */
 	public static final String COMMAND_LOGOUT = "logout";
-	
+
 	/** Constants string literal for view user info command  */
 	public static final String COMMAND_VIEW_USER = "viewuser";
-	
+
 	/** Constants string literal for edit user info command  */
 	public static final String COMMAND_EDIT_USER = "viewuser";
-	
+
 	/** Constants string literal for submitissue-url  */
 	public static final String URL_MAIN_COMMAND = "/issuetracker/Main.do?command=";
-	
+
 	/** Constants string literal for submitissue-url  */
 	public static final String URL_LOGOUT_COMMAND = URL_MAIN_COMMAND + COMMAND_LOGOUT;
-	
+
 	/** Constants string literal for localize-english url  */
 	public static final String URL_LOCALIZE_EN_COMMAND = URL_MAIN_COMMAND + "localize&lang=en_EN&backurl=";
 
 	/** Constants string literal for localize-russian url  */
 	public static final String URL_LOCALIZE_RU_COMMAND = URL_MAIN_COMMAND +"localize&lang=ru_RU&backurl=";
-	
+
 	/** Constants string literal for view user info url  */
 	public static final String URL_VIEW_USER_COMMAND = URL_MAIN_COMMAND + COMMAND_VIEW_USER;
-	
+
 	/** Constants string literal for edit user info url  */
-	public static final String URL_EDIT_USER_COMMAND = URL_MAIN_COMMAND + COMMAND_EDIT_USER;;
+	public static final String URL_EDIT_USER_COMMAND = URL_MAIN_COMMAND + COMMAND_EDIT_USER;
+
+	public static final String URL_DOWNLOAD_COMMAND = "FileUploadDownload.do?fileName=";
 
 //************* Parameters Keys *****************************************************
     /**String literal for id parameter.
@@ -203,6 +236,9 @@ public final class Constants {
 	/** Sting literal for comments on jsp */
 	public static final String COMMENTS = "comments";
 
+	/** Sting literal for getting attachments attribute on jsp */
+	public static final String ATTACHMENTS = "attachments";
+
 	/** String literal for entity */
 	public static final String ENTITY = "entity";
 
@@ -211,11 +247,6 @@ public final class Constants {
 
 	/** String literal for locale attribute */
 	public static final String KEY_LOCALE = "locale";
-
-	/**Real path to files stored in application folders.
-	 * Init in ApplicationContextListener.
-	 */
-	private static String realPath;
 
     /**
 	 * Private constructor

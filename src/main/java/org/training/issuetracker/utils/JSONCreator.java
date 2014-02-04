@@ -13,8 +13,6 @@ import javax.json.JsonObject;
 import org.training.issuetracker.data.xml.DataStorage;
 import org.training.issuetracker.domain.Issue;
 import org.training.issuetracker.domain.User;
-import org.training.issuetracker.domain.DAO.DAOFactory;
-import org.training.issuetracker.domain.DAO.IssueDAO;
 import org.training.issuetracker.exceptions.DaoException;
 
 public class JSONCreator {
@@ -48,26 +46,19 @@ public class JSONCreator {
 
 		return value;
 	}
-	
-	public static JsonObject createIssueJsonList(User user) throws DaoException {
-		IssueDAO dao = DAOFactory.getDAO(IssueDAO.class);
-		List<Issue> issueList = dao.getIssueList();
+
+	public static JsonObject createIssueJsonList(List<Issue> issueList, User user) throws DaoException {
+
 		JsonArrayBuilder arrBuild = factory.createArrayBuilder();
 
 		if (issueList != null) {
-			for (Issue issue : issueList) {
-				if (null != user) {
-					if (issue.getAssignee().equals(user)) {
-						arrBuild.add(issue.toJson());
-					}
-				} else {
-					arrBuild.add(issue.toJson());
-				}
 
+			for (Issue issue : issueList) {
+				arrBuild.add(issue.toJson());
 			}
-			
-			
+
 		}
+
 		JsonArray array = arrBuild.build();
 
 		JsonObject value = factory.createObjectBuilder()
@@ -78,7 +69,7 @@ public class JSONCreator {
 
 		return value;
 	}
-	
+
 	public static JsonObject createUserData (User user) {
 
 		JsonObject userdata = factory.createObjectBuilder()

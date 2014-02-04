@@ -3,6 +3,7 @@ package org.training.issuetracker.domain.DAO;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.training.issuetracker.data.db.AttchmentImplDB;
 import org.training.issuetracker.data.db.CommentImpDB;
 import org.training.issuetracker.data.db.IssueImplDB;
 import org.training.issuetracker.data.db.UserImplDB;
@@ -29,8 +30,9 @@ public class DAOFactory {
 		factories.put(UserDAO.class, new UserImplDB());
 		factories.put(ProjectDAO.class, new ProjectImplXML());
 		factories.put(IssueDAO.class, new IssueImplDB());
-		factories.put(CommentDAO.class, new CommentImpDB());
 		factories.put(BuildDAO.class, new BuildImplXML());
+		factories.put(CommentDAO.class, new CommentImpDB());
+		factories.put(AttachmentDAO.class, new AttchmentImplDB());
 //		factories.put(IPlayDAO.class, new PlayImplDB());
 //		factories.put(IPlayDAO.class, new PlayImplXML());
 	}

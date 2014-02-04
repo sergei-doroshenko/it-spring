@@ -1,6 +1,7 @@
 package org.training.issuetracker.i18n;
 
 import java.net.MalformedURLException;
+import java.util.Locale;
 
 
 /**Factory that create Localizer object.
@@ -14,19 +15,26 @@ public class LocalizerFactory {
 	 * @return - Localizer object
 	 * @throws MalformedURLException
 	 */
-	public static Localizer getLocalizer (LocalizerLanguage lang) throws MalformedURLException {
+	public static Localizer getLocalizer (Locale locale) throws MalformedURLException {
+		String language = null;
+		if (locale != null) {
+			language = locale.getLanguage();
+		} else {
+			language = "en";
+		}
 
 		Localizer localizer = null;
-		switch (lang) {
-			case EN : {
+		switch (language) {
+			case "en" : {
 				localizer = new LocalizerEN();
 				break;
 			}
-			case RU : {
+			case "ru" : {
 				localizer = new LocalizerRU();
 				break;
 			}
 		default:
+			localizer = new LocalizerEN();
 			break;
 		}
 

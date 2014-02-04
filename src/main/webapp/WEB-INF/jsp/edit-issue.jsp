@@ -150,24 +150,35 @@
 				                       </td>
 				                   </tr>
 				               </table>
+				               
 				               <div id="attachments-container" class="attachments-container">                         
-				                  <div class="field-label"><fmt:message key="page.issue.attachments" bundle="${lang}"/>
-				                  		<p>${uploadmessage}</p>
-				                  		<form action="FileUploadDownload.do" method="post" enctype="multipart/form-data">
-											Select File to Upload:<input id="attachment" class="attachment" type="file" name="file"/>
-											<br>
-											<input type="submit" value="Upload">
-										</form>		                  
+				                  <div class="field-label"><fmt:message key="page.issue.attachments" bundle="${lang}"/></div>
+				                  <c:if test="${!empty issue}">
+					                  <div class="upload-block">
+					                  		<p>${uploadmessage}</p>
+					                  		<form id="file-upload-form" action="FileUploadDownload.do" 
+					                  								method="post" enctype="multipart/form-data">
+												Select File:<input id="button-attachment" class="button-attachment" type="file" name="file"/>
+												<br>
+												<input id="button-upload" type="submit" value="<fmt:message key="button.upload" bundle="${lang}"/>">
+											</form>		          
+					                  </div>
+				                  </c:if>
+				                  <div id="attachments-list" class="attachments-list">
+					                  <jsp:include page="${constants.URL_ATTACHMENTS_BLOCK}"/>
 				                  </div>
-				                  <div id="attachments-list" class="attachments-list"></div>
 				              </div><!-- attachments-container end -->
 				       </div>
 				       <div class="com-att">
 				           <div id="comments-container" class="comments-container">
 				               <div class="field-label" ><fmt:message key="page.issue.comments" bundle="${lang}"/></div>
-				                  <div id="comments-list" class="comments-list"></div>
-				                  <textarea id="comment" class="comment" rows="7" cols="40"></textarea>
-				                  <button id="add-comment"><fmt:message key="button.addcomment" bundle="${lang}"/></button>
+				               <c:if test="${!empty issue}">
+					               <div id="comments-list" class="comments-list">
+					               		<jsp:include page="${constants.URL_COMMENTS_BLOCK}"/>
+					               </div>
+					               <textarea id="comment" class="new-comment"></textarea>
+					               <button id="add-comment"><fmt:message key="button.addcomment" bundle="${lang}"/></button>
+					           </c:if>   
 				           </div><!-- comment end -->
 				       </div>
 				 </div><!-- isuue-container end -->

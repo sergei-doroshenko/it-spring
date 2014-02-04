@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -13,87 +15,141 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
+import org.apache.log4j.Logger;
 import org.training.issuetracker.constants.Constants;
+import org.training.issuetracker.domain.Attachment;
+import org.training.issuetracker.domain.Issue;
+import org.training.issuetracker.domain.User;
+import org.training.issuetracker.domain.DAO.AttachmentDAO;
+import org.training.issuetracker.domain.DAO.DAOFactory;
+import org.training.issuetracker.exceptions.DaoException;
+import org.training.issuetracker.i18n.Localizer;
+import org.training.issuetracker.i18n.LocalizerFactory;
 
 /**
  * Servlet implementation class FileUploadController
  */
-@WebServlet("/FileUploadDownload.do")
-@MultipartConfig(fileSizeThreshold=1024*1024*10,    // 10 MB 
+@WebServlet(value = "/FileUploadDownload.do")
+@MultipartConfig(fileSizeThreshold=1024*1024*10,    // 10 MB
 				maxFileSize=1024*1024*50,          // 50 MB
 				maxRequestSize=1024*1024*100)      // 100 MB
 public class FileUploadDownloadController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-    
-	/**
-     * Directory where uploaded files will be saved, its relative to
-     * the web application directory.
-     */
-    private static final String UPLOAD_DIR = "uploads";
-	
+	private final Logger logger = Logger.getLogger("org.training.issuetracker.controllers");
+
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
+	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String fileName = request.getParameter("fileName");
-		if(fileName == null || fileName.equals("")){
+
+		if(fileName == null || fileName.equals("")) {
 			throw new ServletException("File Name can't be null or empty");
 		}
-		File file = new File(request.getServletContext().getAttribute("FILES_DIR")+File.separator+fileName);
-		if(!file.exists()){
+
+		long issueId = ((Issue) request.getSession().getAttribute(Constants.ISSUE)).getId();
+
+		String path = Constants.getRealPath() + Constants.URL_UPLOAD_DIR
+							+ File.separator + issueId + File.separator + fileName;
+
+		logger.debug("Download file path = " + path);
+		File file = new File(path);
+
+		if(!file.exists()) {
 			throw new ServletException("File doesn't exists on server.");
 		}
-		System.out.println("File location on server::"+file.getAbsolutePath());
+
+		logger.debug("File location on server::"+file.getAbsolutePath());
 		ServletContext ctx = getServletContext();
 		InputStream fis = new FileInputStream(file);
 		String mimeType = ctx.getMimeType(file.getAbsolutePath());
 		response.setContentType(mimeType != null? mimeType:"application/octet-stream");
 		response.setContentLength((int) file.length());
 		response.setHeader("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
-		
-		ServletOutputStream os       = response.getOutputStream();
+
+		ServletOutputStream os = response.getOutputStream();
 		byte[] bufferData = new byte[1024];
 		int read=0;
+
 		while((read = fis.read(bufferData))!= -1){
 			os.write(bufferData, 0, read);
 		}
+
 		os.flush();
 		os.close();
 		fis.close();
-		System.out.println("File downloaded at client successfully");
+		logger.info("File downloaded at client successfully");
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
+	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// gets absolute path of the web application
-        String applicationPath = request.getServletContext().getRealPath("");
+		HttpSession session = request.getSession();
+		Locale locale = (Locale) session.getAttribute(Constants.KEY_LOCALE);
+		Localizer localizer = LocalizerFactory.getLocalizer(locale);
+		logger.info(request.getLocale().getLanguage());
+
+		ResourceBundle bundle = localizer.getBundle("errors");
+		logger.debug(bundle.getString("issue.err.null"));
+
+		Issue issue = (Issue) session.getAttribute(Constants.ISSUE);
+
+		if(issue == null) {
+			throw new ServletException(bundle.getString("issue.err.null"));
+		}
+
         // constructs path of the directory to save uploaded file
-        String uploadFilePath = applicationPath + File.separator + UPLOAD_DIR;
+        String uploadFilePath = Constants.getRealPath() + File.separator
+        		+ Constants.URL_UPLOAD_DIR + File.separator + issue.getId();
 
         // creates the save directory if it does not exists
-        File fileSaveDir = new File(uploadFilePath);
-        if (!fileSaveDir.exists()) {
-            fileSaveDir.mkdirs();
+        File fileUploadDir = new File(uploadFilePath);
+        if (!fileUploadDir.exists()) {
+            fileUploadDir.mkdirs();
         }
-        System.out.println("Upload File Directory="+fileSaveDir.getAbsolutePath());
-         
+
+        User user = (User) session.getAttribute(Constants.KEY_USER);
+        java.util.Date date = new java.util.Date();
+        java.sql.Date currentDate = new java.sql.Date(date.getTime());
+
+
+        logger.info("Upload File Directory="+fileUploadDir.getAbsolutePath());
+        AttachmentDAO dao = DAOFactory.getDAO(AttachmentDAO.class);
         String fileName = null;
         //Get all the parts from request and write it to the file on server
         for (Part part : request.getParts()) {
+
             fileName = getFileName(part);
-            part.write(uploadFilePath + File.separator + fileName);
+
+            Attachment attch = new Attachment();
+        	attch.setCreateBy(user);
+        	attch.setCreateDate(currentDate);
+        	attch.setIssueId(issue.getId());
+        	attch.setUrl(fileName);
+            try {
+				dao.addAttchment(attch);
+				part.write(uploadFilePath + File.separator + fileName);
+			} catch (DaoException e) {
+
+				e.printStackTrace();
+				request.setAttribute("errormessage", fileName + " File upload fail!");
+				getServletContext().getRequestDispatcher(Constants.URL_ERROR).forward(request, response);
+			}
+
         }
-  
+
         request.setAttribute("uploadmessage", fileName + " File uploaded successfully!");
         getServletContext().getRequestDispatcher(Constants.URL_EDIT_ISSUE).forward(request, response);
 	}
-	
+
 	/**
-     * Utility method to get file name from HTTP header content-disposition
+     * Method to get file name from HTTP header content-disposition
      */
     private String getFileName(Part part) {
         String contentDisp = part.getHeader("content-disposition");

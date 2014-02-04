@@ -5,11 +5,12 @@ import java.util.List;
 import java.util.Map;
 
 import org.training.issuetracker.domain.Issue;
+import org.training.issuetracker.domain.User;
 import org.training.issuetracker.exceptions.DaoException;
 
 public interface IssueDAO {
 
-	List <Issue> getIssueList () throws DaoException;
+	List <Issue> getIssueList (User user) throws DaoException;
 
 	Map<Long, Issue> getIssuesMap() throws SQLException;
 

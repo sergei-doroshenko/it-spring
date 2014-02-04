@@ -37,6 +37,7 @@ public class Main extends AbstractBaseController {
 		ParameterParser parser = new ParameterParser(request);
 		try {
 			String commandName = parser.getStringParameter(Constants.KEY_COMMAND);
+
 			logger.info("Invoke -> " + commandName);
 			WebCommandFactory comFactory = new WebCommandFactory(request, response);
 			Command command = comFactory.getCommand(commandName);

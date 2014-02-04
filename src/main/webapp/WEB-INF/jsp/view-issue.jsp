@@ -117,22 +117,16 @@
 				               </table>
 				               <div id="attachments-container" class="attachments-container">                         
 				                  <div class="field-label"><fmt:message key="page.issue.attachments" bundle="${lang}"/></div>
-				                  <div id="attachments-list" class="attachments-list"></div>
+				                  <div id="attachments-list" class="attachments-list">
+					                  <jsp:include page="${constants.URL_ATTACHMENTS_BLOCK}"/>
+				                  </div>
 				              </div><!-- attachments-container end -->
 				       </div>
 				       <div class="com-att">
 				           <div id="comments-container" class="comments-container">
 				               <div class="field-label" ><fmt:message key="page.issue.comments" bundle="${lang}"/></div>
 				                  <div id="comments-list" class="comments-list">
-				                  		<c:forEach var="comment" items="${comments}">
-				                  			<div class="comment-block">
-				                  				<div class="comment-block">
-										            <div class="comment-value">${comment.comment}</div>
-										            <div class="comment-create-date">${comment.createDate}</div>
-										            <div class="comment-create-by">${comment.createBy.firstName} ${comment.createBy.lastName}</div>
-										        </div>
-				                  			</div>
-				                  		</c:forEach>
+				                  		<jsp:include page="${constants.URL_COMMENTS_BLOCK}"/>
 				                  </div>
 				           </div><!-- comment end -->
 				       </div>
@@ -147,9 +141,11 @@
                   bindLongin();
                   $('#new-button').bind().on('click', function(){
                 	  alert('Click new!');
+                	  window.location.href = '/issuetracker/Main.do?command=submitissue';
                   });
                   $('#edit-button').bind().on('click', function(){
                 	  alert('Click edit!');
+                	  window.location.href = '/issuetracker/Main.do?command=editissue';
                   });
                   $('#delete-button').bind().on('click', function(){
                 	  alert('Click delete!');

@@ -8,9 +8,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
 import org.training.issuetracker.constants.Constants;
+import org.training.issuetracker.domain.Attachment;
 import org.training.issuetracker.domain.Comment;
 import org.training.issuetracker.domain.Issue;
+import org.training.issuetracker.domain.DAO.AttachmentDAO;
 import org.training.issuetracker.domain.DAO.CommentDAO;
 import org.training.issuetracker.domain.DAO.DAOFactory;
 import org.training.issuetracker.domain.DAO.IssueDAO;
@@ -23,6 +26,7 @@ import org.training.issuetracker.utils.ParameterParser;
  *
  */
 public class ViewIssueCommand extends AbstractWebCommand {
+	private final Logger logger = Logger.getLogger("org.training.issuetracker.command");
 	/**Constructor from superclass.
 	 * @param request - HttpServletRequest
 	 * @param response - HttpServletResponse
@@ -49,11 +53,15 @@ public class ViewIssueCommand extends AbstractWebCommand {
 			HttpSession session = getRequest().getSession();
 			session.setAttribute(Constants.ISSUE, issue);
 
-			System.out.println(issue);
+			logger.debug(issue);
 
 			CommentDAO comDAO = DAOFactory.getDAO(CommentDAO.class);
 			List<Comment> comments = comDAO.getCommentsList(id);
 			session.setAttribute(Constants.COMMENTS, comments);
+
+			AttachmentDAO attchDAO = DAOFactory.getDAO(AttachmentDAO.class);
+			List<Attachment> attachments = attchDAO.getAttachmentsList(id);
+			session.setAttribute(Constants.ATTACHMENTS, attachments);
 
 			jump(Constants.URL_VIEW_ISSUE);
 		} catch (NumberFormatException | ParameterNotFoundException e) {

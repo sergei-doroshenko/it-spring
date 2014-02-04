@@ -38,9 +38,7 @@
                 <jsp:include page="${constants.URL_MENU_TOP}"></jsp:include>
              </div><!-- end menu-bar -->
              <div class="content">
-	    		<p><span>Search page</span><p>
-	    		
-				${constants.KEY_COMMAND}
+	    		<p><span>Sorry. This page in is in the developing process... </span><p>
              </div><!--end content-->
              <div class="footer">
                  <jsp:include page="${constants.URL_FOOTER}"></jsp:include>
