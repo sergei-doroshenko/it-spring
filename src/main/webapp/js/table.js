@@ -3,12 +3,12 @@ var names = ["Id", "Priority", "Assignee", "Type", "Status", "Summary"];
 var rowLink = { baseLinkUrl: '/issuetracker/Main.do', addParam: '&command=issue'};// getDetailsUrl()
 
 var model = [
-             { name: "id", width: 55, formatter:'showlink', formatoptions: rowLink},
-             { name: "priority", width: 100},
-             { name: "assignee", width: 100},
-             { name: "type", width: 100},
-             { name: "status", width: 100},
-             { name: "summary", width: 200}
+             { name: "id", index: 'id', width: 55, formatter:'showlink', formatoptions: rowLink},
+             { name: "priority", index: 'property', width: 100},
+             { name: "assignee", index: 'assignee', width: 100},
+             { name: "type", index: 'type', width: 100},
+             { name: "status", index: 'status', width: 100},
+             { name: "summary", index: 'summary', width: 200}
          ];
 
 var jsonHandler = {

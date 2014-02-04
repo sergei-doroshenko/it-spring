@@ -147,17 +147,29 @@ public class Issue extends AbstractPersistentObj {
 //		return issueJson;
 //	}
 
+//	public JsonObject toJsonForTable () {
+//		JsonObject issueJson = Json.createObjectBuilder()
+//						.add("id", getId())
+//						.add("cell", Json.createArrayBuilder()
+//							.add(getId())
+//							.add(getPriority().getName())
+//							.add(getAssignee().toString())
+//							.add(getType().getName())
+//							.add(getStatus().getName())
+//							.add(getSummary())
+//						).build();
+//		return issueJson;
+//	}
+//	
 	public JsonObject toJsonForTable () {
 		JsonObject issueJson = Json.createObjectBuilder()
-						.add("id", getId())
-						.add("cell", Json.createArrayBuilder()
-							.add(getId())
-							.add(getPriority().getName())
-							.add(getAssignee().toString())
-							.add(getType().getName())
-							.add(getStatus().getName())
-							.add(getSummary())
-						).build();
+					.add("id", getId())
+					.add("priority", getPriority().getName())
+					.add("assignee", getAssignee().toString())
+					.add("type", getType().getName())
+					.add("status", getStatus().getName())
+					.add("summary", getSummary())
+					.build();
 		return issueJson;
 	}
 
@@ -183,18 +195,30 @@ public class Issue extends AbstractPersistentObj {
 		return issueJson;
 	}
 
+//	@Override
+//	public String toString() {
+//		return "Issue [id=" + super.getId() + ", name=" + super.getName()
+//				+ ", createDate=" +  createDate + ", createBy=" + createBy.getFirstName()
+//				+ ", modifyDate=" + modifyDate + ", modifyBy=" + modifyBy.getFirstName()
+//				+ ", summary=" + summary + ", description=" + description
+//				+ ", status=" + status.getName() + ", resolution="
+//				+ (null == resolution ? "UNRESOLVED" : resolution.getName())
+//				+ ", type" + type.getName()
+//				+ ", priority=" + priority.getId() + ", project=" + getBuild().getProjectId()
+//				+ ", assignee=" + assignee.getFirstName() + "]";
+//	}
+	
 	@Override
 	public String toString() {
-		return "Issue [id=" + super.getId() + ", name=" + super.getName()
-				+ ", createDate=" +  createDate + ", createBy=" + createBy.getFirstName()
-				+ ", modifyDate=" + modifyDate + ", modifyBy=" + modifyBy.getFirstName()
-				+ ", summary=" + summary + ", description=" + description
-				+ ", status=" + status.getName() + ", resolution="
-				+ (null == resolution ? "UNRESOLVED" : resolution.getName())
-				+ ", type" + type.getName()
-				+ ", priority=" + priority.getId() + ", project=" + getBuild().getProjectId()
-				+ ", assignee=" + assignee.getFirstName() + "]";
+		JsonObject issueJson = Json.createObjectBuilder()
+				.add("id", getId())
+				.add("priority", getPriority().getName())
+				.add("assignee", getAssignee().toString())
+				.add("type", getType().getName())
+				.add("status", getStatus().getName())
+				.add("summary", getSummary())
+				.build();
+		return issueJson.toString();
 	}
-
 
 }

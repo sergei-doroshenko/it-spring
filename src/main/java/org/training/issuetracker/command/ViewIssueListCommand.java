@@ -17,6 +17,7 @@ import org.training.issuetracker.domain.DAO.DAOFactory;
 import org.training.issuetracker.domain.DAO.IssueDAO;
 import org.training.issuetracker.exceptions.DaoException;
 import org.training.issuetracker.utils.JSONCreator;
+import org.training.issuetracker.utils.JqGridData;
 
 /**Command class for get list of Issue objects.
  * @author Sergei_Doroshenko
@@ -55,6 +56,10 @@ public class ViewIssueListCommand extends AbstractWebCommand {
 			issueList = dao.getIssueList(user);
 			logger.debug("Issue List = " + issueList);
 			json = JSONCreator.createIssueJsonList(issueList, user);
+			
+			
+			JqGridData<Issue> data = new JqGridData<>(2, 1, 2, issueList);
+			logger.debug(data.getJsonString());
 			out.print(json);
 		} catch (DaoException e) {
 			e.printStackTrace();
