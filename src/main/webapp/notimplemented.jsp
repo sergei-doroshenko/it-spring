@@ -45,9 +45,14 @@
              </div><!--end footer-->
              <script type="text/javascript">
            		$( document ).ready(function () {
-           			bindLongin();	
+           			bindLongin();
+           			$('#en-loc').click(function(ev) {
+           				changeLocaleUrl (ev);
+           			});
+           			$('#ru-loc').click(function(ev) {
+           				changeLocaleUrl (ev);
+           			});
            		});
-           		
            	</script>
         </div><!--end page-wrapper-->
 	</body>

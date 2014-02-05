@@ -15,4 +15,6 @@ public interface IssueDAO {
 	Map<Long, Issue> getIssuesMap() throws SQLException;
 
 	Issue getIssue(long id) throws DaoException;
+
+	boolean isId (long id) throws DaoException;
 }

@@ -16,7 +16,7 @@ public final class ParameterInspector {
 	/**
 	 * User name pattern.
 	 */
-	public static final String NAME_PATTERN = "[a-zA-Z0-9]{4,6}";
+	public static final String NAME_PATTERN = "[a-zA-Z0-9]{4,10}";
     /**
      * User password pattern.
      */

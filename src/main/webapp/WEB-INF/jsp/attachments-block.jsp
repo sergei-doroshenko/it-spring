@@ -3,21 +3,13 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <!-- i18n -->
-<c:set var="lang" value="${sessionScope[constants.KEY_LOCALE].language}"/>
 <fmt:requestEncoding value="UTF-8" />
-<c:choose>
-	<c:when test="${!empty lang}">
-		<fmt:setLocale value="${lang}"/>
-	</c:when>
-	<c:otherwise>
-		<fmt:setLocale value="constants.DEFAULT_LANGUAGE"/>
-	</c:otherwise>
-</c:choose>
+<fmt:setLocale value="${sessionScope[constants.KEY_LOCALE]}"/>
 <fmt:setBundle basename="i18n.main" var="lang"/>
 <!-- End of i18n -->
-<c:forEach var="attch" items="${sessionScope[constants.ATTACHMENTS]}">
+<c:forEach var="attch" items="${requestScope[constants.ATTACHMENTS]}">
 	<div class="attachment">
-		<a href="${sessionScope[constants.URL_DOWNLOAD_COMMAND]}${attch.url}" class="download-link">
+		<a href="${constants.URL_DOWNLOAD_COMMAND}${constants.ROOT_PATH}${issue.id}${constants.ROOT_PATH}${attch.url}" class="download-link">
 			${attch.url}
 		</a>
 	</div>

@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 
-import javax.json.JsonObject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.core.MediaType;
@@ -16,7 +15,6 @@ import org.training.issuetracker.domain.User;
 import org.training.issuetracker.domain.DAO.DAOFactory;
 import org.training.issuetracker.domain.DAO.IssueDAO;
 import org.training.issuetracker.exceptions.DaoException;
-import org.training.issuetracker.utils.JSONCreator;
 import org.training.issuetracker.utils.JqGridData;
 
 /**Command class for get list of Issue objects.
@@ -48,26 +46,22 @@ public class ViewIssueListCommand extends AbstractWebCommand {
 		}
 
 		List<Issue> issueList = null;
-		JsonObject json = null;
 
 		IssueDAO dao = DAOFactory.getDAO(IssueDAO.class);
 
 		try {
 			issueList = dao.getIssueList(user);
 			logger.debug("Issue List = " + issueList);
-			json = JSONCreator.createIssueJsonList(issueList, user);
-			
-			
+
 			JqGridData<Issue> data = new JqGridData<>(2, 1, 2, issueList);
-			logger.debug(data.getJsonString());
+			String json = data.getJsonString();
+			logger.debug(json);
 			out.print(json);
 		} catch (DaoException e) {
 			e.printStackTrace();
 			out.print(e.getMessage());
 			getResponse().setStatus(HttpServletResponse.SC_BAD_REQUEST);
-
 		}
-		logger.debug("Issue list json = " + json);
 
 		out.flush();
 		out.close();

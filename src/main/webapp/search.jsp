@@ -11,25 +11,16 @@
         <script type="text/javascript" src="js/jquery-1.9.0.min.js"> </script>
         <script type="text/javascript" src="js/jquery.cookie.js"> </script>
         <script type="text/javascript" src="js/login.js"> </script>
+        <script type="text/javascript" src="js/issue-tracker-main.js"> </script>
 	</head>
 	<body>
-		<!------------ i18n ------------------>
+		<!-- i18n -->
 		<fmt:requestEncoding value="UTF-8" />
-		<c:choose>
-			<c:when test="${!empty param.lang}">
-				<c:set var="language" value="${param.lang}" scope="session"/>
-				<fmt:setLocale value="${param.lang}"/>
-			</c:when>
-			<c:otherwise>
-				<c:if test="${!empty sessionScope.language}">
-					<fmt:setLocale value="${sessionScope.language}"/>
-				</c:if>
-			</c:otherwise>
-		</c:choose>
-				
+		<fmt:setLocale value="${sessionScope[constants.KEY_LOCALE]}"/>
 		<fmt:setBundle basename="i18n.main" var="lang"/>
+		<!-- End of i18n -->
 		
-		<!----------- End of i18n ----------------> 
+		
 		<div class="page-wrapper">
              <div class="header">
                 <jsp:include page="${constants.URL_HEADER}"></jsp:include>
@@ -47,9 +38,14 @@
              </div><!--end footer-->
              <script type="text/javascript">
            		$( document ).ready(function () {
-           			bindLongin();	
+           			bindLongin();
+           			$('#en-loc').click(function(ev) {
+           				changeLocaleUrl (ev);
+           			});
+           			$('#ru-loc').click(function(ev) {
+           				changeLocaleUrl (ev);
+           			});
            		});
-           		
            	</script>
         </div><!--end page-wrapper-->
 	</body>

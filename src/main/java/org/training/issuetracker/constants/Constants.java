@@ -123,7 +123,10 @@ public final class Constants {
 	public static final String COMMAND_VIEW_USER = "viewuser";
 
 	/** Constants string literal for edit user info command  */
-	public static final String COMMAND_EDIT_USER = "viewuser";
+	public static final String COMMAND_EDIT_USER = "edituser";
+
+	/** Constants string literal for edit user info command  */
+	public static final String COMMAND_LOCALE = "locale";
 
 	/** Constants string literal for submitissue-url  */
 	public static final String URL_MAIN_COMMAND = "/issuetracker/Main.do?command=";
@@ -132,9 +135,11 @@ public final class Constants {
 	public static final String URL_LOGOUT_COMMAND = URL_MAIN_COMMAND + COMMAND_LOGOUT;
 
 	/** Constants string literal for localize-english url  */
-	public static final String URL_LOCALIZE_EN_COMMAND = URL_MAIN_COMMAND + "localize&lang=en_EN&backurl=";
+//	public static final String URL_LOCALIZE_EN_COMMAND = URL_MAIN_COMMAND + "localize&lang=en_EN&backurl=";
+	public static final String URL_LOCALIZE_EN_COMMAND = "/?locale=en";
 
 	/** Constants string literal for localize-russian url  */
+//	public static final String URL_LOCALIZE_RU_COMMAND = URL_MAIN_COMMAND +"localize&lang=ru_RU&backurl=";
 	public static final String URL_LOCALIZE_RU_COMMAND = URL_MAIN_COMMAND +"localize&lang=ru_RU&backurl=";
 
 	/** Constants string literal for view user info url  */

@@ -1,6 +1,7 @@
 package org.training.issuetracker.filters;
 
 import java.io.IOException;
+import java.util.Locale;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -14,8 +15,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
+import org.training.issuetracker.constants.Constants;
 @WebFilter(urlPatterns = {"/*"})
-public class UrlFilter implements Filter {
+public class LocaleFilter implements Filter {
 
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {
@@ -33,20 +35,26 @@ public class UrlFilter implements Filter {
 			HttpServletRequest httpRequest = (HttpServletRequest) request;
 			HttpServletResponse httpResponse = (HttpServletResponse) response;
 			HttpSession session = httpRequest.getSession();
+			Locale locale = null;
+			String langParam = httpRequest.getParameter(Constants.COMMAND_LOCALE);
 
-			String command = httpRequest.getParameter("command");
-			logger.debug(command);
-			String lastUrl = null;
+			logger.debug(langParam);
 
 
-			if((command != null) && !(command.equals("localize"))) {
-				if (command.equals("issuelist")) {
-					lastUrl = httpRequest.getServletPath();
-				} else {
-					lastUrl = httpRequest.getServletPath() + "?" + httpRequest.getQueryString();
+			if (langParam == null || langParam.isEmpty()) {
+				locale = (Locale) session.getAttribute(Constants.KEY_LOCALE);
+				if (locale == null) {
+					locale = new Locale(Constants.DEFAULT_LANGUAGE);
+					session.setAttribute(Constants.KEY_LOCALE, locale);
 				}
-				session.setAttribute("lastUrl", lastUrl);
+			} else {
+				locale = new Locale(langParam.toLowerCase(), langParam);
+				session.setAttribute(Constants.KEY_LOCALE, locale);
 			}
+
+			locale = (Locale) session.getAttribute(Constants.KEY_LOCALE);
+			logger.debug("Set locale " + locale.getLanguage() + " " + locale.getDisplayLanguage());
+
 
 //			logger.debug(
 //					httpRequest.getContextPath() + " 2 "
@@ -56,8 +64,6 @@ public class UrlFilter implements Filter {
 //					+ httpRequest.getQueryString()
 //
 //					);
-
-			logger.debug(lastUrl);
 
 			chain.doFilter(request, response);
 		} else {

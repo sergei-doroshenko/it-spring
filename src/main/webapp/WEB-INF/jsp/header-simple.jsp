@@ -7,30 +7,15 @@
 	<h2>Issue Tracker</h2>
 </div><!--end logo-->
 
-<c:set var="backurl" value="${pageContext.request.servletPath}"/>
-<!--  i18n -->
-<c:set var="lang" value="${sessionScope[constants.KEY_LOCALE].language}"/>
-Lang:<c:out value="${lang}"/>
-Locale:${sessionScope[constants.KEY_LOCALE]}
-Role:${user.role.name}${user.email}${user.password}
-<c:choose>
-	<c:when test="${!empty lang}">
-		<fmt:setLocale value="${lang}"/>
-	</c:when>
-	<c:otherwise>
-		<fmt:setLocale value="constants.DEFAULT_LANGUAGE"/>
-	</c:otherwise>
-</c:choose>
-
 <!-- i18n -->
 <fmt:requestEncoding value="UTF-8" />
-
-<fmt:setLocale value="${pageContext.response.locale}" scope="session"/>
+<fmt:setLocale value="${sessionScope[constants.KEY_LOCALE]}"/>
 <fmt:setBundle basename="i18n.main" var="lang"/>
-<!-- End of i18n -->
+<!-- End of i18n -->        
+
 <div id="lang">
-   	<a href="${constants.URL_LOCALIZE_EN_COMMAND}${backurl}">EN</a>
-	<a href="${constants.URL_LOCALIZE_RU_COMMAND}${backurl}">RU</a>
+   	<span id="en-loc" class="button-locale">EN</span>
+	<span id="ru-loc" class="button-locale">RU</span>
 </div>
 
 <div id="user-info" class="user-info">

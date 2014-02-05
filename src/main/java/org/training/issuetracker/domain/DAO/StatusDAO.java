@@ -1,13 +1,12 @@
 package org.training.issuetracker.domain.DAO;
 
-import java.util.Map;
+import java.util.List;
 
-import org.training.issuetracker.domain.Status;
+import org.training.issuetracker.data.db.StatusImplDB;
+import org.training.issuetracker.domain.AbstractPersistentObj;
 import org.training.issuetracker.exceptions.DaoException;
 
 public interface StatusDAO {
-	
-	Map<Long, Status> getStatusesMap() throws DaoException;
-	
 
+	List<AbstractPersistentObj> getStatusesList(StatusImplDB.PropertyType prop) throws DaoException;
 }

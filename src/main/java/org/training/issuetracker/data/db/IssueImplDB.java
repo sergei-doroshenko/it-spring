@@ -152,8 +152,6 @@ public class IssueImplDB implements IssueDAO {
 			ConnectionProvider.closeConnection(connection);
 			ConnectionProvider.closePrepStatemnts(select);
 		}
-
-
 	}
 
 	private static final int SELECT_ISSUE_INDEX = 1;
@@ -218,11 +216,40 @@ public class IssueImplDB implements IssueDAO {
 	private static final String SQL_SELECT_ISSUE_LIST_TAIL =
 			" WHERE ISSUES.ASSIGNEE_ID = ?";
 
+	private static final String SQL_IS_ID_SELECT =
+			"SELECT ISSUES.ID AS issue_id FROM ISSUES WHERE ISSUES.ID = ?";
+
 	@Override
 	public Map<Long, Issue> getIssuesMap() throws SQLException {
 		Map<Long,Issue> map = null;
 
 		return map;
+	}
+
+	@Override
+	public boolean isId(long id) throws DaoException {
+		long findId = 0;
+		PreparedStatement select = null;
+		ResultSet rs = null;
+		try {
+			connection = ConnectionProvider.getConnection();
+			select = connection.prepareStatement(SQL_IS_ID_SELECT);
+			select.setLong(SELECT_ISSUE_INDEX, id);
+			rs = select.executeQuery();
+
+			while (rs.next()) {
+				findId = rs.getLong("issue_id");
+			}
+
+			return findId > 0;
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DaoException(Constants.ERROR_SOURCE, e);
+		} finally {
+			ConnectionProvider.closeConnection(connection);
+			ConnectionProvider.closePrepStatemnts(select);
+		}
 	}
 
 }

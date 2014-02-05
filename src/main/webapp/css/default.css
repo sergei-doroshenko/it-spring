@@ -70,6 +70,12 @@ div.user-info label {
 .authsubmit {
     width: 100px;
 }
+
+.button-locale:hover {
+    text-decoration: underline;
+    cursor: pointer;
+    color: #FF0000;
+}
 /********************************** Menu-bar ***************************/
 .menu-bar {
     height: 20px;

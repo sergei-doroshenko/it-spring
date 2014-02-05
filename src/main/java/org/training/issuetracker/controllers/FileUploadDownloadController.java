@@ -25,9 +25,12 @@ import org.training.issuetracker.domain.Issue;
 import org.training.issuetracker.domain.User;
 import org.training.issuetracker.domain.DAO.AttachmentDAO;
 import org.training.issuetracker.domain.DAO.DAOFactory;
+import org.training.issuetracker.domain.DAO.IssueDAO;
 import org.training.issuetracker.exceptions.DaoException;
+import org.training.issuetracker.exceptions.ParameterNotFoundException;
 import org.training.issuetracker.i18n.Localizer;
 import org.training.issuetracker.i18n.LocalizerFactory;
+import org.training.issuetracker.utils.ParameterParser;
 
 /**
  * Servlet implementation class FileUploadController
@@ -45,18 +48,21 @@ public class FileUploadDownloadController extends HttpServlet {
 	 */
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
 		String fileName = request.getParameter("fileName");
 
 		if(fileName == null || fileName.equals("")) {
 			throw new ServletException("File Name can't be null or empty");
 		}
 
-		long issueId = ((Issue) request.getSession().getAttribute(Constants.ISSUE)).getId();
+//		String path = Constants.getRealPath() + Constants.URL_UPLOAD_DIR
+//				+ File.separator + issue.getId() + File.separator + fileName;
 
 		String path = Constants.getRealPath() + Constants.URL_UPLOAD_DIR
-							+ File.separator + issueId + File.separator + fileName;
+				+  fileName;
 
 		logger.debug("Download file path = " + path);
+
 		File file = new File(path);
 
 		if(!file.exists()) {
@@ -83,6 +89,7 @@ public class FileUploadDownloadController extends HttpServlet {
 		os.close();
 		fis.close();
 		logger.info("File downloaded at client successfully");
+
 	}
 
 	/**
@@ -98,54 +105,67 @@ public class FileUploadDownloadController extends HttpServlet {
 		ResourceBundle bundle = localizer.getBundle("errors");
 		logger.debug(bundle.getString("issue.err.null"));
 
-		Issue issue = (Issue) session.getAttribute(Constants.ISSUE);
+		ParameterParser parser = new ParameterParser(request);
+		String fileName = null;
 
-		if(issue == null) {
-			throw new ServletException(bundle.getString("issue.err.null"));
-		}
+		try {
+			long issueId = parser.getLongParameter(Constants.KEY_ID);
 
-        // constructs path of the directory to save uploaded file
-        String uploadFilePath = Constants.getRealPath() + File.separator
-        		+ Constants.URL_UPLOAD_DIR + File.separator + issue.getId();
+			IssueDAO issueDAO = DAOFactory.getDAO(IssueDAO.class);
+			Issue issue = issueDAO.getIssue(issueId);
 
-        // creates the save directory if it does not exists
-        File fileUploadDir = new File(uploadFilePath);
-        if (!fileUploadDir.exists()) {
-            fileUploadDir.mkdirs();
-        }
-
-        User user = (User) session.getAttribute(Constants.KEY_USER);
-        java.util.Date date = new java.util.Date();
-        java.sql.Date currentDate = new java.sql.Date(date.getTime());
-
-
-        logger.info("Upload File Directory="+fileUploadDir.getAbsolutePath());
-        AttachmentDAO dao = DAOFactory.getDAO(AttachmentDAO.class);
-        String fileName = null;
-        //Get all the parts from request and write it to the file on server
-        for (Part part : request.getParts()) {
-
-            fileName = getFileName(part);
-
-            Attachment attch = new Attachment();
-        	attch.setCreateBy(user);
-        	attch.setCreateDate(currentDate);
-        	attch.setIssueId(issue.getId());
-        	attch.setUrl(fileName);
-            try {
-				dao.addAttchment(attch);
-				part.write(uploadFilePath + File.separator + fileName);
-			} catch (DaoException e) {
-
-				e.printStackTrace();
-				request.setAttribute("errormessage", fileName + " File upload fail!");
-				getServletContext().getRequestDispatcher(Constants.URL_ERROR).forward(request, response);
+			if (issue == null) {
+				return;
 			}
 
-        }
+			// constructs path of the directory to save uploaded file
+	        String uploadFilePath = Constants.getRealPath() + File.separator
+	        		+ Constants.URL_UPLOAD_DIR + File.separator + issueId;
 
-        request.setAttribute("uploadmessage", fileName + " File uploaded successfully!");
-        getServletContext().getRequestDispatcher(Constants.URL_EDIT_ISSUE).forward(request, response);
+	        // creates the save directory if it does not exists
+	        File fileUploadDir = new File(uploadFilePath);
+	        if (!fileUploadDir.exists()) {
+	            fileUploadDir.mkdirs();
+	        }
+
+	        User user = (User) session.getAttribute(Constants.KEY_USER);
+	        java.util.Date date = new java.util.Date();
+	        java.sql.Date currentDate = new java.sql.Date(date.getTime());
+
+
+	        logger.info("Upload File Directory="+fileUploadDir.getAbsolutePath());
+	        AttachmentDAO dao = DAOFactory.getDAO(AttachmentDAO.class);
+
+	        //Get all the parts from request and write it to the file on server
+	        for (Part part : request.getParts()) {
+
+	            fileName = getFileName(part);
+
+	            Attachment attch = new Attachment();
+	        	attch.setCreateBy(user);
+	        	attch.setCreateDate(currentDate);
+	        	attch.setIssueId(issueId);
+	        	attch.setUrl(fileName);
+
+				dao.addAttchment(attch);
+				part.write(uploadFilePath + File.separator + fileName);
+
+	        }
+
+	        request.setAttribute("uploadmessage", fileName + " File uploaded successfully!");
+	        request.setAttribute(Constants.ISSUE, issue);
+	        getServletContext().getRequestDispatcher(Constants.URL_EDIT_ISSUE).forward(request, response);
+
+		} catch (ParameterNotFoundException e) {
+
+			e.printStackTrace();
+			getServletContext().getRequestDispatcher(Constants.URL_ERROR).forward(request, response);
+		} catch (DaoException e) {
+			e.printStackTrace();
+			request.setAttribute("errormessage", fileName + " File upload fail!");
+			getServletContext().getRequestDispatcher(Constants.URL_ERROR).forward(request, response);
+		}
+
 	}
 
 	/**

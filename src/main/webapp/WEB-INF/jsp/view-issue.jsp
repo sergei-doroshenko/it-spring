@@ -1,6 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>      
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<!-- i18n -->
+<fmt:requestEncoding value="UTF-8" />
+<fmt:setLocale value="${sessionScope[constants.KEY_LOCALE]}"/>
+<fmt:setBundle basename="i18n.main" var="lang"/>
+<!-- End of i18n -->      
 <!DOCTYPE html>
 <html>
      <head>
@@ -9,22 +14,11 @@
         <link rel="stylesheet" type="text/css" media="screen" href="css/default.css" />
         <script type="text/javascript" src="js/jquery-1.9.0.min.js"> </script>
         <script type="text/javascript" src="js/jquery.cookie.js"> </script>
+        <script type="text/javascript" src="js/issue-tracker-main.js"> </script>
         <script type="text/javascript" src="js/login.js"> </script>
      </head>
      <body>
-     	<!-- i18n -->
-		<c:set var="lang" value="${sessionScope[constants.KEY_LOCALE].language}"/>
-		<fmt:requestEncoding value="UTF-8" />
-		<c:choose>
-			<c:when test="${!empty lang}">
-				<fmt:setLocale value="${lang}"/>
-			</c:when>
-			<c:otherwise>
-				<fmt:setLocale value="constants.DEFAULT_LANGUAGE"/>
-			</c:otherwise>
-		</c:choose>
-		<fmt:setBundle basename="i18n.main" var="lang"/>
-		<!-- End of i18n --> 
+     	
         <div class="page-wrapper">
              <div class="header">
                 <jsp:include page="${constants.URL_HEADER}"/>
@@ -34,7 +28,7 @@
              </div><!-- end menu-bar -->
              <div class="content">
              	<jsp:include page="${constants.URL_BUTTONS_VIEW}"/>
-	        	<c:set var="issue" scope="page" value="${sessionScope[constants.ISSUE]}"/>
+	        	<c:set var="issue" scope="page" value="${requestScope[constants.ISSUE]}"/>
 				 <div class="issue-container">
 				       <div class="obj-fields">
 				               <table>
@@ -145,12 +139,18 @@
                   });
                   $('#edit-button').bind().on('click', function(){
                 	  alert('Click edit!');
-                	  window.location.href = '/issuetracker/Main.do?command=editissue';
+                	  window.location.href = '/issuetracker/Main.do?command=editissue&id='+ getParameterByName('id');
                   });
                   $('#delete-button').bind().on('click', function(){
                 	  alert('Click delete!');
                   });
                   $('.description').attr('readonly','readonly');
+                  $('#en-loc').click(function(ev) {
+              		changeLocaleUrl (ev);
+              	});
+              	$('#ru-loc').click(function(ev) {
+              		changeLocaleUrl (ev);
+              	});
              });
         </script>
      </body>
