@@ -65,9 +65,7 @@ public class AttchmentImplDB implements AttachmentDAO {
 				attch.setCreateBy(createBy);
 				attch.setUrl(rs.getString("attachment_file_name"));
 				list.add(attch);
-				return list;
 			}
-
 			return list;
 		} catch (SQLException e) {
 			e.printStackTrace();

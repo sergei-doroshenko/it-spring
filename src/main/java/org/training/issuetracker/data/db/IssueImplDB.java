@@ -252,4 +252,9 @@ public class IssueImplDB implements IssueDAO {
 		}
 	}
 
+	@Override
+	public long insertIssue(Issue issue) throws DaoException {
+		return 202;
+	}
+
 }

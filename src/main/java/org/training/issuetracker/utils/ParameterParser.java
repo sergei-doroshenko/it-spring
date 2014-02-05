@@ -72,10 +72,10 @@ public class ParameterParser {
 	 * @return - long value of requested parameter.
 	 * @throws ParameterNotFoundException
 	 */
-	public long getLongParameter(String name)
-			throws ParameterNotFoundException {
+	public long getLongParameter(String name) throws ParameterNotFoundException, NumberFormatException {
+		
 		return Long.parseLong(getStringParameter(name));
-
+		
 	}
 
 }

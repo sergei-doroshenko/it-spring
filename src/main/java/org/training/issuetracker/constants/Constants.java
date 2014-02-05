@@ -115,7 +115,10 @@ public final class Constants {
 
 	/** Constants string literal for delete issue command */
 	public static final String COMMAND_DELETE_ISSUE = "deleteissue";
-
+	
+	/** Constants string literal for save issue command */
+	public static final String COMMAND_SAVE_ISSUE = "saveissue";
+	
 	/** Constants string literal for logout command  */
 	public static final String COMMAND_LOGOUT = "logout";
 
@@ -133,6 +136,9 @@ public final class Constants {
 
 	/** Constants string literal for submitissue-url  */
 	public static final String URL_LOGOUT_COMMAND = URL_MAIN_COMMAND + COMMAND_LOGOUT;
+	
+	/** Constants string literal for submitissue-url  */
+	public static final String URL_SAVEISSUE_COMMAND = URL_MAIN_COMMAND + COMMAND_SAVE_ISSUE;
 
 	/** Constants string literal for localize-english url  */
 //	public static final String URL_LOCALIZE_EN_COMMAND = URL_MAIN_COMMAND + "localize&lang=en_EN&backurl=";
@@ -252,7 +258,34 @@ public final class Constants {
 
 	/** String literal for locale attribute */
 	public static final String KEY_LOCALE = "locale";
-
+	
+	/** String literal for request parameter type */
+	public static final String KEY_TYPE = "type";
+	
+	/** String literal for request parameter priority */
+	public static final String KEY_PRIORITY = "priority";
+	
+	/** String literal for request parameter status */
+	public static final String KEY_STATUS = "status";
+	
+	/** String literal for request parameter resolution */
+	public static final String KEY_RESOLUTION = "resolution";
+	
+	/** String literal for request parameter project */
+	public static final String KEY_PROJECT = "project";
+	
+	/** String literal for request parameter projectbuild */
+	public static final String KEY_PROJECT_BUILD = "projectbuild";
+	
+	/** String literal for request parameter assignee */
+	public static final String KEY_ASSIGNEE = "assignee";
+	
+	/** String literal for request parameter summary */
+	public static final String KEY_SUMMARY = "summary";
+	
+	/** String literal for request parameter description */
+	public static final String KEY_DESCRIPTION = "description";
+	
     /**
 	 * Private constructor
 	 */

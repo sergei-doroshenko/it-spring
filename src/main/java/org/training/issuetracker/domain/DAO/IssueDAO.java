@@ -17,4 +17,6 @@ public interface IssueDAO {
 	Issue getIssue(long id) throws DaoException;
 
 	boolean isId (long id) throws DaoException;
+
+	long insertIssue(Issue issue) throws DaoException;
 }

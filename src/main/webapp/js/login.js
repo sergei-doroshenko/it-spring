@@ -77,3 +77,43 @@ function handleError (response, status, err) {
 		sessionTimedOut();
 	}
 }
+
+function bindEditIssueForm() {
+	$('#edit-issue-form').submit(function () {
+        console.log('You submit edit issue form!');
+        
+        var data = {
+	        'command' : $('#save-command').val(),
+	        'type': $('#type').val(),
+	        'priority' : $('#priority').val(),
+	        'status' : $('#status').val(),
+	        'resolution' : $('#resolution').val(),
+	        'project' : $('#project').val(),
+	        'projectbuild' : $('#projectbuild').val(),
+	        'assignee' : $('#assignee').val(),
+	        'summary' : $('#summary').val(),
+	        'description' : $('#description').val(),
+	    };
+    
+        console.log(data);
+        alert(data);
+        $.ajax({
+                url: 'Main.do',
+                data: data,
+                dataType: 'text',
+                type: 'post',
+                success: function (data) {
+                        //console.log('data=' + data);
+                        //handleUserData(data);
+                        //console.log('Status: ' + jqxhr.getAllResponseHeaders());
+                        //alert('Status: ' + jqxhr.getAllResponseHeaders());
+                        //handleUserOnLoad();
+                		alert('Request succes!');
+                		//alert('Jump to url: ' + getMainUrl());
+                        //window.location.href = getMainUrl();
+                },
+                error:  handleError
+        });
+        return false;
+	});	
+}

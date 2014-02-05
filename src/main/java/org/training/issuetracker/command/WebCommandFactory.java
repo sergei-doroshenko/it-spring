@@ -28,6 +28,7 @@ public class WebCommandFactory {
 		commandMap.put("localize", new LocalizeCommand(request, response));
 		commandMap.put(Constants.COMMAND_SUBMIT_ISSUE, new EditIssueCommand(request, response));
 		commandMap.put(Constants.COMMAND_EDIT_ISSUE, new EditIssueCommand(request, response));
+		commandMap.put(Constants.COMMAND_SAVE_ISSUE, new SaveIssueCommand(request, response));
 		commandMap.put(Constants.COMMAND_VIEW_USER, new ViewUserCommand(request, response));
 	}
 

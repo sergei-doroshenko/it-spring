@@ -34,8 +34,6 @@ public class EditIssueCommand extends AbstractWebCommand {
 
 		ParameterParser parser = new ParameterParser(getRequest());
 
-		HttpSession session = getRequest().getSession();
-
 		User user = (User) getRequest().getSession().getAttribute(Constants.KEY_USER);
 		logger.debug("User = " + user);
 
@@ -63,23 +61,12 @@ public class EditIssueCommand extends AbstractWebCommand {
 				List<Attachment> attachments = attchDAO.getAttachmentsList(id);
 				getRequest().setAttribute(Constants.ATTACHMENTS, attachments);
 
-
-
 			} else if (commandName.equals(Constants.COMMAND_SUBMIT_ISSUE)) {
 
 			}
 
 			jump(Constants.URL_EDIT_ISSUE);
 
-//			long id = parser.getLongParameter(Constants.KEY_ID);
-//			DataStorage data = DataStorage.getInstance();
-//			Issue issue = data.getIssue(id);
-//
-//			HttpSession session = getRequest().getSession();
-//
-//			session.setAttribute(Constants.ISSUE, issue);
-//
-//			jump(Constants.URL_VIEW_ISSUE);
 		} catch (NumberFormatException | ParameterNotFoundException e) {
 			e.printStackTrace();
 			jump(Constants.URL_ERROR);
