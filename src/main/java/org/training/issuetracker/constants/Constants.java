@@ -115,10 +115,16 @@ public final class Constants {
 
 	/** Constants string literal for delete issue command */
 	public static final String COMMAND_DELETE_ISSUE = "deleteissue";
-	
-	/** Constants string literal for save issue command */
-	public static final String COMMAND_SAVE_ISSUE = "saveissue";
-	
+
+	/** Constants string literal for update issue command */
+	public static final String COMMAND_UPDATE_ISSUE = "update_issue";
+
+	/** Constants string literal for update issue command */
+	public static final String COMMAND_INSERT_ISSUE = "insert_issue";
+
+	/** Constants string literal for login command  */
+	public static final String COMMAND_LOGIN = "login";
+
 	/** Constants string literal for logout command  */
 	public static final String COMMAND_LOGOUT = "logout";
 
@@ -131,14 +137,17 @@ public final class Constants {
 	/** Constants string literal for edit user info command  */
 	public static final String COMMAND_LOCALE = "locale";
 
+	/** Constants string literal for edit user info command  */
+	public static final String COMMAND_GET_PROJECT_BUILDS = "get_project_builds";
+
 	/** Constants string literal for submitissue-url  */
 	public static final String URL_MAIN_COMMAND = "/issuetracker/Main.do?command=";
 
 	/** Constants string literal for submitissue-url  */
 	public static final String URL_LOGOUT_COMMAND = URL_MAIN_COMMAND + COMMAND_LOGOUT;
-	
+
 	/** Constants string literal for submitissue-url  */
-	public static final String URL_SAVEISSUE_COMMAND = URL_MAIN_COMMAND + COMMAND_SAVE_ISSUE;
+	public static final String URL_SAVEISSUE_COMMAND = URL_MAIN_COMMAND + COMMAND_UPDATE_ISSUE;
 
 	/** Constants string literal for localize-english url  */
 //	public static final String URL_LOCALIZE_EN_COMMAND = URL_MAIN_COMMAND + "localize&lang=en_EN&backurl=";
@@ -180,6 +189,40 @@ public final class Constants {
 	 *  Contains string literal for command parameter.
 	 */
 	public static final String KEY_COMMAND = "command";
+
+	/** String literal for backurl */
+	public static final String KEY_BACK_URL = "backurl";
+
+	/** String literal for locale attribute */
+	public static final String KEY_LOCALE = "locale";
+
+	/** String literal for request parameter type */
+	public static final String KEY_TYPE = "type";
+
+	/** String literal for request parameter priority */
+	public static final String KEY_PRIORITY = "priority";
+
+	/** String literal for request parameter status */
+	public static final String KEY_STATUS = "status";
+
+	/** String literal for request parameter resolution */
+	public static final String KEY_RESOLUTION = "resolution";
+
+	/** String literal for request parameter project */
+	public static final String KEY_PROJECT = "project";
+
+	/** String literal for request parameter projectbuild */
+	public static final String KEY_PROJECT_BUILD = "projectbuild";
+
+	/** String literal for request parameter assignee */
+	public static final String KEY_ASSIGNEE = "assignee";
+
+	/** String literal for request parameter summary */
+	public static final String KEY_SUMMARY = "summary";
+
+	/** String literal for request parameter description */
+	public static final String KEY_DESCRIPTION = "description";
+
 //************************ ROLES *****************************************
 	/** Constants string literal for role - user. */
 	public static final String ROLE_USER = "USER";
@@ -250,42 +293,30 @@ public final class Constants {
 	/** Sting literal for getting attachments attribute on jsp */
 	public static final String ATTACHMENTS = "attachments";
 
+	/** Sting literal for getting statuses attribute on jsp */
+	public static final String STATUSES = "statuses";
+
+	/** Sting literal for getting resolutions attribute on jsp */
+	public static final String RESOLUTIONS = "resolutions";
+
+	/** Sting literal for getting priorities attribute on jsp */
+	public static final String PRIORITIES = "priorities";
+
+	/** Sting literal for getting types attribute on jsp */
+	public static final String TYPES = "types";
+
+	/** Sting literal for getting projects attribute on jsp */
+	public static final String PROJECTS = "projects";
+
+	/** Sting literal for getting build attribute on jsp */
+	public static final String BUILDS = "build";
+
+	/** Sting literal for getting assignee attribute on jsp */
+	public static final String ASSIGNEES = "assignee";
+
 	/** String literal for entity */
 	public static final String ENTITY = "entity";
 
-	/** String literal for backurl */
-	public static final String KEY_BACK_URL = "backurl";
-
-	/** String literal for locale attribute */
-	public static final String KEY_LOCALE = "locale";
-	
-	/** String literal for request parameter type */
-	public static final String KEY_TYPE = "type";
-	
-	/** String literal for request parameter priority */
-	public static final String KEY_PRIORITY = "priority";
-	
-	/** String literal for request parameter status */
-	public static final String KEY_STATUS = "status";
-	
-	/** String literal for request parameter resolution */
-	public static final String KEY_RESOLUTION = "resolution";
-	
-	/** String literal for request parameter project */
-	public static final String KEY_PROJECT = "project";
-	
-	/** String literal for request parameter projectbuild */
-	public static final String KEY_PROJECT_BUILD = "projectbuild";
-	
-	/** String literal for request parameter assignee */
-	public static final String KEY_ASSIGNEE = "assignee";
-	
-	/** String literal for request parameter summary */
-	public static final String KEY_SUMMARY = "summary";
-	
-	/** String literal for request parameter description */
-	public static final String KEY_DESCRIPTION = "description";
-	
     /**
 	 * Private constructor
 	 */

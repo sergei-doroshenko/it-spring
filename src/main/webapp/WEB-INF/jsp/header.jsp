@@ -23,6 +23,7 @@ Role:${user.role.name}${user.email}${user.password}
 <div id="user-info" class="user-info">
 	<div id="error"></div>
      <form id="auth-form">
+     	<input id="login-command" name="command" type="hidden" value="${constants.COMMAND_LOGIN}"/>
      	<c:choose>
      		<c:when test="${empty user}">
      			<label><fmt:message key="user.name" bundle="${lang}"/></label>

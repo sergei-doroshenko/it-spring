@@ -6,10 +6,11 @@ import java.util.Map;
 import org.training.issuetracker.data.db.AttchmentImplDB;
 import org.training.issuetracker.data.db.CommentImpDB;
 import org.training.issuetracker.data.db.IssueImplDB;
+import org.training.issuetracker.data.db.ProjectImplDB;
+import org.training.issuetracker.data.db.PropImplDB;
 import org.training.issuetracker.data.db.UserImplDB;
 import org.training.issuetracker.data.xml.BuildImplXML;
 import org.training.issuetracker.data.xml.PriorityImplXML;
-import org.training.issuetracker.data.xml.ProjectImplXML;
 import org.training.issuetracker.data.xml.ResolutionImplXML;
 import org.training.issuetracker.data.xml.RoleImpXML;
 import org.training.issuetracker.data.xml.StatusImplXML;
@@ -28,13 +29,14 @@ public class DAOFactory {
 		factories.put(StatusDAO.class, new StatusImplXML());
 //		factories.put(UserDAO.class, new UserImplXML());
 		factories.put(UserDAO.class, new UserImplDB());
-		factories.put(ProjectDAO.class, new ProjectImplXML());
+//		factories.put(ProjectDAO.class, new ProjectImplXML());
 		factories.put(IssueDAO.class, new IssueImplDB());
 		factories.put(BuildDAO.class, new BuildImplXML());
+		factories.put(PropDAO.class, new PropImplDB());
+		factories.put(ProjectDAO.class, new ProjectImplDB());
 		factories.put(CommentDAO.class, new CommentImpDB());
 		factories.put(AttachmentDAO.class, new AttchmentImplDB());
-//		factories.put(IPlayDAO.class, new PlayImplDB());
-//		factories.put(IPlayDAO.class, new PlayImplXML());
+
 	}
 
 	public <T> void putDAO(Class<T> type, T instance) {

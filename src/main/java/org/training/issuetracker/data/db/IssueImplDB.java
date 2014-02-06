@@ -6,7 +6,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.training.issuetracker.constants.Constants;
@@ -23,6 +22,109 @@ import org.training.issuetracker.exceptions.DaoException;
 import org.training.issuetracker.utils.ConnectionProvider;
 
 public class IssueImplDB implements IssueDAO {
+	private static final int SELECT_ISSUE_INDEX = 1;
+
+	private static final int SELECT_ISSUE_LIST_USER_ID_INDEX = 1;
+
+	private static final String SQL_SELECT_ISSUE =
+			"SELECT ISSUES.ID AS issue_id, ISSUES.CREATE_DATE AS create_date,"
+			+ "ISSUES.CREATE_BY AS create_by_id,"
+			+ "(SELECT USERS.FIRST_NAME FROM USERS where USERS.ID = ISSUES.CREATE_BY) AS create_by_first_name,"
+			+ "(SELECT USERS.LAST_NAME FROM USERS where USERS.ID = ISSUES.CREATE_BY) AS create_by_last_name,"
+			+ "ISSUES.MODIFY_DATE AS modity_date,"
+			+ "ISSUES.MODIFIED_BY AS modify_by_id,"
+			+ "(SELECT USERS.FIRST_NAME FROM USERS where USERS.ID = ISSUES.MODIFIED_BY) AS modify_by_first_name,"
+			+ "(SELECT USERS.LAST_NAME FROM USERS where USERS.ID = ISSUES.MODIFIED_BY) AS modifiy_by_last_name,"
+			+ "ISSUES.TYPE_ID AS type_id, TYPES.TP_NAME AS type_name,"
+			+ "ISSUES.PRIORITY_ID AS priority_id, PRIORITIES.PR_NAME AS priority_name,"
+			+ "ISSUES.STATUS_ID AS status_id, STATUSES.ST_NAME AS status_name,"
+			+ "ISSUES.RESOLUTION_ID AS resolution_id, RESOLUTIONS.RES_NAME AS resolution_name,"
+			+ "ISSUES.BUILD_ID AS build_id, BUILDS.BL_NAME AS build_name,"
+			+ "BUILDS.PROJECT_ID AS project_id, PROJECTS.PROJECT_NAME AS project_name,"
+			+ "ISSUES.ASSIGNEE_ID AS assignee_id, USERS.FIRST_NAME AS assignee_first_name,"
+			+ "USERS.LAST_NAME AS assignee_last_name,"
+			+ "ISSUES.SUMMARY AS summary, ISSUES.DESCRIPTION AS description "
+			+ "FROM ISSUES "
+			+ "LEFT JOIN TYPES ON ISSUES.TYPE_ID = TYPES.ID "
+			+ "LEFT JOIN PRIORITIES ON ISSUES.PRIORITY_ID = PRIORITIES.ID "
+			+ "LEFT JOIN STATUSES ON STATUSES.ID = ISSUES.STATUS_ID "
+			+ "LEFT JOIN RESOLUTIONS ON ISSUES.RESOLUTION_ID = RESOLUTIONS.ID "
+			+ "LEFT JOIN BUILDS ON ISSUES.BUILD_ID = BUILDS.ID "
+			+ "LEFT JOIN PROJECTS ON BUILDS.PROJECT_ID = PROJECTS.ID "
+			+ "LEFT JOIN USERS ON ISSUES.ASSIGNEE_ID = USERS.ID "
+			+ "WHERE ISSUES.ID = ?";
+
+	private static String SQL_SELECT_ISSUE_LIST =
+			"SELECT ISSUES.ID AS issue_id, ISSUES.CREATE_DATE AS create_date,"
+			+ "ISSUES.CREATE_BY AS create_by_id,"
+			+ "(SELECT USERS.FIRST_NAME FROM USERS where USERS.ID = ISSUES.CREATE_BY) AS create_by_first_name,"
+			+ "(SELECT USERS.LAST_NAME FROM USERS where USERS.ID = ISSUES.CREATE_BY) AS create_by_last_name,"
+			+ "ISSUES.MODIFY_DATE AS modity_date,"
+			+ "ISSUES.MODIFIED_BY AS modify_by_id,"
+			+ "(SELECT USERS.FIRST_NAME FROM USERS where USERS.ID = ISSUES.MODIFIED_BY) AS modify_by_first_name,"
+			+ "(SELECT USERS.LAST_NAME FROM USERS where USERS.ID = ISSUES.MODIFIED_BY) AS modifiy_by_last_name,"
+			+ "ISSUES.TYPE_ID AS type_id, TYPES.TP_NAME AS type_name,"
+			+ "ISSUES.PRIORITY_ID AS priority_id, PRIORITIES.PR_NAME AS priority_name,"
+			+ "ISSUES.STATUS_ID AS status_id, STATUSES.ST_NAME AS status_name,"
+			+ "ISSUES.RESOLUTION_ID AS resolution_id, RESOLUTIONS.RES_NAME AS resolution_name,"
+			+ "ISSUES.BUILD_ID AS build_id, BUILDS.BL_NAME AS build_name,"
+			+ "BUILDS.PROJECT_ID AS project_id, PROJECTS.PROJECT_NAME AS project_name,"
+			+ "ISSUES.ASSIGNEE_ID AS assignee_id, USERS.FIRST_NAME AS assignee_first_name,"
+			+ "USERS.LAST_NAME AS assignee_last_name,"
+			+ "ISSUES.SUMMARY AS summary, ISSUES.DESCRIPTION AS description "
+			+ "FROM ISSUES "
+			+ "LEFT JOIN TYPES ON ISSUES.TYPE_ID = TYPES.ID "
+			+ "LEFT JOIN PRIORITIES ON ISSUES.PRIORITY_ID = PRIORITIES.ID "
+			+ "LEFT JOIN STATUSES ON STATUSES.ID = ISSUES.STATUS_ID "
+			+ "LEFT JOIN RESOLUTIONS ON ISSUES.RESOLUTION_ID = RESOLUTIONS.ID "
+			+ "LEFT JOIN BUILDS ON ISSUES.BUILD_ID = BUILDS.ID "
+			+ "LEFT JOIN PROJECTS ON BUILDS.PROJECT_ID = PROJECTS.ID "
+			+ "LEFT JOIN USERS ON ISSUES.ASSIGNEE_ID = USERS.ID";
+
+	private static final String SQL_SELECT_ISSUE_LIST_TAIL =
+			" WHERE ISSUES.ASSIGNEE_ID = ?";
+
+	private static final String SQL_IS_ID_SELECT =
+			"SELECT ISSUES.ID AS issue_id FROM ISSUES WHERE ISSUES.ID = ?";
+
+	private static final String SQL_UPDATE_ISSUE =
+			"UPDATE ISSUES SET "
+			+ "ISSUES.MODIFY_DATE = CURRENT_DATE,"
+			+ "ISSUES.MODIFIED_BY = ?,"
+			+ "ISSUES.TYPE_ID = ?,"
+			+ "ISSUES.PRIORITY_ID = ?,"
+			+ "ISSUES.STATUS_ID = ?,"
+			+ "ISSUES.RESOLUTION_ID = ?,"
+			+ "ISSUES.BUILD_ID = ?,"
+			+ "ISSUES.PROJECT_ID = ?,"
+			+ "ISSUES.ASSIGNEE_ID = ?,"
+			+ "ISSUES.SUMMARY = ?,"
+			+ "ISSUES.DESCRIPTION = ?"
+			+ "WHERE ISSUES.ID = ?";
+
+	private static final int UPDATE_ISSUE_MODIFY_BY_IND = 1;
+
+	private static final int UPDATE_ISSUE_TYPE_ID_IND = 2;
+
+	private static final int UPDATE_ISSUE_PRIORITY_ID_IND = 3;
+
+	private static final int UPDATE_ISSUE_STATUS_ID_IND = 4;
+
+	private static final int UPDATE_ISSUE_RESOLUTION_ID_IND = 5;
+
+	private static final int UPDATE_ISSUE_BUILD_ID_IND = 6;
+
+	private static final int UPDATE_ISSUE_PROJECT_ID_IND = 7;
+
+	private static final int UPDATE_ISSUE_ASSIGNEE_ID_IND = 8;
+
+	private static final int UPDATE_ISSUE_SUMMARY_IND = 9;
+
+	private static final int UPDATE_ISSUE_DESCRIPTION_IND = 10;
+
+	private static final int UPDATE_ISSUE_ID_IND = 11;
+
+
 	private final Logger logger = Logger.getLogger("org.training.issuetracker.data");
 	private Connection connection;
 
@@ -92,17 +194,15 @@ public class IssueImplDB implements IssueDAO {
 		String query = SQL_SELECT_ISSUE_LIST;
 
 		if (user != null) {
-			logger.debug("User in sql = " + user.getEmail());
 			query += SQL_SELECT_ISSUE_LIST_TAIL;
 		}
-		logger.debug(query);
+
 		try {
 			connection = ConnectionProvider.getConnection();
 			select = connection.prepareStatement(query);
 
 			if (user != null) {
-				logger.debug("User Id in sql = " + user.getId());
-				select.setLong(SELECT_ISSUE_LIST_USER_ID_INDES, user.getId());
+				select.setLong(SELECT_ISSUE_LIST_USER_ID_INDEX, user.getId());
 			}
 
 			rs = select.executeQuery();
@@ -154,78 +254,6 @@ public class IssueImplDB implements IssueDAO {
 		}
 	}
 
-	private static final int SELECT_ISSUE_INDEX = 1;
-
-	private static final int SELECT_ISSUE_LIST_USER_ID_INDES = 1;
-
-	private static final String SQL_SELECT_ISSUE =
-			"SELECT ISSUES.ID AS issue_id, ISSUES.CREATE_DATE AS create_date,"
-			+ "ISSUES.CREATE_BY AS create_by_id,"
-			+ "(SELECT USERS.FIRST_NAME FROM USERS where USERS.ID = ISSUES.CREATE_BY) AS create_by_first_name,"
-			+ "(SELECT USERS.LAST_NAME FROM USERS where USERS.ID = ISSUES.CREATE_BY) AS create_by_last_name,"
-			+ "ISSUES.MODIFY_DATE AS modity_date,"
-			+ "ISSUES.MODIFIED_BY AS modify_by_id,"
-			+ "(SELECT USERS.FIRST_NAME FROM USERS where USERS.ID = ISSUES.MODIFIED_BY) AS modify_by_first_name,"
-			+ "(SELECT USERS.LAST_NAME FROM USERS where USERS.ID = ISSUES.MODIFIED_BY) AS modifiy_by_last_name,"
-			+ "ISSUES.TYPE_ID AS type_id, TYPES.TP_NAME AS type_name,"
-			+ "ISSUES.PRIORITY_ID AS priority_id, PRIORITIES.PR_NAME AS priority_name,"
-			+ "ISSUES.STATUS_ID AS status_id, STATUSES.ST_NAME AS status_name,"
-			+ "ISSUES.RESOLUTION_ID AS resolution_id, RESOLUTIONS.RES_NAME AS resolution_name,"
-			+ "ISSUES.BUILD_ID AS build_id, BUILDS.BL_NAME AS build_name,"
-			+ "BUILDS.PROJECT_ID AS project_id, PROJECTS.PROJECT_NAME AS project_name,"
-			+ "ISSUES.ASSIGNEE_ID AS assignee_id, USERS.FIRST_NAME AS assignee_first_name,"
-			+ "USERS.LAST_NAME AS assignee_last_name,"
-			+ "ISSUES.SUMMARY AS summary, ISSUES.DESCRIPTION AS description "
-			+ "FROM ISSUES "
-			+ "LEFT JOIN TYPES ON ISSUES.TYPE_ID = TYPES.ID "
-			+ "LEFT JOIN PRIORITIES ON ISSUES.PRIORITY_ID = PRIORITIES.ID "
-			+ "LEFT JOIN STATUSES ON STATUSES.ID = ISSUES.STATUS_ID "
-			+ "LEFT JOIN RESOLUTIONS ON ISSUES.RESOLUTION_ID = RESOLUTIONS.ID "
-			+ "LEFT JOIN BUILDS ON ISSUES.BUILD_ID = BUILDS.ID "
-			+ "LEFT JOIN PROJECTS ON BUILDS.PROJECT_ID = PROJECTS.ID "
-			+ "LEFT JOIN USERS ON ISSUES.ASSIGNEE_ID = USERS.ID "
-			+ "WHERE ISSUES.ID = ?";
-
-	private static String SQL_SELECT_ISSUE_LIST =
-			"SELECT ISSUES.ID AS issue_id, ISSUES.CREATE_DATE AS create_date,"
-			+ "ISSUES.CREATE_BY AS create_by_id,"
-			+ "(SELECT USERS.FIRST_NAME FROM USERS where USERS.ID = ISSUES.CREATE_BY) AS create_by_first_name,"
-			+ "(SELECT USERS.LAST_NAME FROM USERS where USERS.ID = ISSUES.CREATE_BY) AS create_by_last_name,"
-			+ "ISSUES.MODIFY_DATE AS modity_date,"
-			+ "ISSUES.MODIFIED_BY AS modify_by_id,"
-			+ "(SELECT USERS.FIRST_NAME FROM USERS where USERS.ID = ISSUES.MODIFIED_BY) AS modify_by_first_name,"
-			+ "(SELECT USERS.LAST_NAME FROM USERS where USERS.ID = ISSUES.MODIFIED_BY) AS modifiy_by_last_name,"
-			+ "ISSUES.TYPE_ID AS type_id, TYPES.TP_NAME AS type_name,"
-			+ "ISSUES.PRIORITY_ID AS priority_id, PRIORITIES.PR_NAME AS priority_name,"
-			+ "ISSUES.STATUS_ID AS status_id, STATUSES.ST_NAME AS status_name,"
-			+ "ISSUES.RESOLUTION_ID AS resolution_id, RESOLUTIONS.RES_NAME AS resolution_name,"
-			+ "ISSUES.BUILD_ID AS build_id, BUILDS.BL_NAME AS build_name,"
-			+ "BUILDS.PROJECT_ID AS project_id, PROJECTS.PROJECT_NAME AS project_name,"
-			+ "ISSUES.ASSIGNEE_ID AS assignee_id, USERS.FIRST_NAME AS assignee_first_name,"
-			+ "USERS.LAST_NAME AS assignee_last_name,"
-			+ "ISSUES.SUMMARY AS summary, ISSUES.DESCRIPTION AS description "
-			+ "FROM ISSUES "
-			+ "LEFT JOIN TYPES ON ISSUES.TYPE_ID = TYPES.ID "
-			+ "LEFT JOIN PRIORITIES ON ISSUES.PRIORITY_ID = PRIORITIES.ID "
-			+ "LEFT JOIN STATUSES ON STATUSES.ID = ISSUES.STATUS_ID "
-			+ "LEFT JOIN RESOLUTIONS ON ISSUES.RESOLUTION_ID = RESOLUTIONS.ID "
-			+ "LEFT JOIN BUILDS ON ISSUES.BUILD_ID = BUILDS.ID "
-			+ "LEFT JOIN PROJECTS ON BUILDS.PROJECT_ID = PROJECTS.ID "
-			+ "LEFT JOIN USERS ON ISSUES.ASSIGNEE_ID = USERS.ID";
-
-	private static final String SQL_SELECT_ISSUE_LIST_TAIL =
-			" WHERE ISSUES.ASSIGNEE_ID = ?";
-
-	private static final String SQL_IS_ID_SELECT =
-			"SELECT ISSUES.ID AS issue_id FROM ISSUES WHERE ISSUES.ID = ?";
-
-	@Override
-	public Map<Long, Issue> getIssuesMap() throws SQLException {
-		Map<Long,Issue> map = null;
-
-		return map;
-	}
-
 	@Override
 	public boolean isId(long id) throws DaoException {
 		long findId = 0;
@@ -254,7 +282,61 @@ public class IssueImplDB implements IssueDAO {
 
 	@Override
 	public long insertIssue(Issue issue) throws DaoException {
-		return 202;
+		PreparedStatement update = null;
+
+		try {
+			connection = ConnectionProvider.getConnection();
+			update = connection.prepareStatement(SQL_UPDATE_ISSUE);
+			update.setLong(UPDATE_ISSUE_MODIFY_BY_IND, issue.getModifyBy().getId());
+			update.setLong(UPDATE_ISSUE_TYPE_ID_IND, issue.getType().getId());
+			update.setLong(UPDATE_ISSUE_PRIORITY_ID_IND, issue.getPriority().getId());
+			update.setLong(UPDATE_ISSUE_STATUS_ID_IND, issue.getStatus().getId());
+			update.setLong(UPDATE_ISSUE_RESOLUTION_ID_IND, issue.getResolution().getId());
+			update.setLong(UPDATE_ISSUE_BUILD_ID_IND, issue.getBuild().getId());
+			update.setLong(UPDATE_ISSUE_PROJECT_ID_IND, issue.getProject().getId());
+			update.setLong(UPDATE_ISSUE_ASSIGNEE_ID_IND, issue.getAssignee().getId());
+			update.setString(UPDATE_ISSUE_SUMMARY_IND, issue.getSummary());
+			update.setString(UPDATE_ISSUE_DESCRIPTION_IND, issue.getDescription());
+			update.setLong(UPDATE_ISSUE_ID_IND, issue.getId());
+
+			return update.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DaoException(Constants.ERROR_SOURCE, e);
+		} finally {
+			ConnectionProvider.closeConnection(connection);
+			ConnectionProvider.closePrepStatemnts(update);
+		}
+	}
+
+	@Override
+	public long updateIssue(Issue issue) throws DaoException {
+		PreparedStatement update = null;
+
+		try {
+			connection = ConnectionProvider.getConnection();
+			update = connection.prepareStatement(SQL_UPDATE_ISSUE);
+			update.setLong(UPDATE_ISSUE_MODIFY_BY_IND, issue.getModifyBy().getId());
+			update.setLong(UPDATE_ISSUE_TYPE_ID_IND, issue.getType().getId());
+			update.setLong(UPDATE_ISSUE_PRIORITY_ID_IND, issue.getPriority().getId());
+			update.setLong(UPDATE_ISSUE_STATUS_ID_IND, issue.getStatus().getId());
+			update.setLong(UPDATE_ISSUE_RESOLUTION_ID_IND, issue.getResolution().getId());
+			update.setLong(UPDATE_ISSUE_BUILD_ID_IND, issue.getBuild().getId());
+			update.setLong(UPDATE_ISSUE_PROJECT_ID_IND, issue.getProject().getId());
+			update.setLong(UPDATE_ISSUE_ASSIGNEE_ID_IND, issue.getAssignee().getId());
+			update.setString(UPDATE_ISSUE_SUMMARY_IND, issue.getSummary());
+			update.setString(UPDATE_ISSUE_DESCRIPTION_IND, issue.getDescription());
+			update.setLong(UPDATE_ISSUE_ID_IND, issue.getId());
+
+			return update.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DaoException(Constants.ERROR_SOURCE, e);
+		} finally {
+			ConnectionProvider.closeConnection(connection);
+			ConnectionProvider.closePrepStatemnts(update);
+		}
+
 	}
 
 }

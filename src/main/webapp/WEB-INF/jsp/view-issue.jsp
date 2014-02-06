@@ -83,7 +83,7 @@
 				                   <tr>
 				                       <td class="detail-col-name"><fmt:message key="page.issue.project" bundle="${lang}"/></td>
 				                       <td class="detail-col-value">
-				                           <c:out value="Test Project"/>
+				                           <c:out value="${issue.project.name}"/>
 				                       </td>
 				                       <td class="detail-col-name"><fmt:message key="page.issue.build" bundle="${lang}"/></td>
 				                       <td class="detail-col-value">
@@ -138,7 +138,6 @@
                 	  window.location.href = '/issuetracker/Main.do?command=submitissue';
                   });
                   $('#edit-button').bind().on('click', function(){
-                	  alert('Click edit!');
                 	  window.location.href = '/issuetracker/Main.do?command=editissue&id='+ getParameterByName('id');
                   });
                   $('#delete-button').bind().on('click', function(){

@@ -51,19 +51,19 @@ public class ViewIssueCommand extends AbstractWebCommand {
 			Issue issue = dao.getIssue(id);
 
 			HttpSession session = getRequest().getSession();
-			//session.setAttribute(Constants.ISSUE, issue);
+
 			getRequest().setAttribute(Constants.ISSUE, issue);
 
 			logger.debug(issue);
 
 			CommentDAO comDAO = DAOFactory.getDAO(CommentDAO.class);
 			List<Comment> comments = comDAO.getCommentsList(id);
-			//session.setAttribute(Constants.COMMENTS, comments);
+
 			getRequest().setAttribute(Constants.COMMENTS, comments);
 
 			AttachmentDAO attchDAO = DAOFactory.getDAO(AttachmentDAO.class);
 			List<Attachment> attachments = attchDAO.getAttachmentsList(id);
-			//session.setAttribute(Constants.ATTACHMENTS, attachments);
+
 			getRequest().setAttribute(Constants.ATTACHMENTS, attachments);
 
 			jump(Constants.URL_VIEW_ISSUE);

@@ -32,14 +32,15 @@
 				 <div class="issue-container">
 				       <div class="obj-fields">
 				       		<form id="edit-issue-form" >
-				       			<input id="save-command" name="command" type="hidden" value="${constants.COMMAND_SAVE_ISSUE}"></input>
-				               <table>
+				       			<input id="update-command" name="command" type="hidden" value="${constants.COMMAND_UPDATE_ISSUE}"/>	
+				       			<table>
 				                   <tr>
 				                       <td class="detail-col-name">
 				                       		<fmt:message key="page.id" bundle="${lang}"/>
 				                       </td>
-				                       <td id="id" class="detail-col-value">
+				                       <td id="issue-id" class="detail-col-value">
 				                       		<c:out value="${issue.id}"/>
+				                       		<input id="id" name="id" type="hidden" value="${issue.id}"/>
 				                       </td>
 				                   </tr>
 				                   <tr>
@@ -60,27 +61,25 @@
 				                       </td>
 				                       <td class="detail-col-name"><fmt:message key="page.issue.modifyby" bundle="${lang}"/></td>
 				                       <td class="detail-col-value">
-				                           <!-- input id="modifyby" class="detail-col-input" type="text" value="${user.firstName} ${user.lastName}"></input-->
+				                       		<!-- input id="modifyby" name="modifyby" type="hidden" value="${user.id}"/-->
 				                           <c:out  value="${user.firstName} ${user.lastName}"/>
 				                       </td>
 				                   </tr>
 				                   <tr>
 				                       <td class="detail-col-name"><fmt:message key="page.issue.type" bundle="${lang}"/></td>
 				                       <td class="detail-col-value">
-				                           <select id="type" name="type" class="detail-col-select" size="1">
-				                               <option value="1" selected="selected">${issue.type.name}</option>
-				                               <option value="2">Test 2</option>
-				                               <option value="3">Test 3</option>
-				                               <option value="4">Test 4</option>
+				                           <select id="type" name="type" class="detail-col-select" size="1" required>
+				                               <c:forEach var="type" items="${requestScope[constants.TYPES]}">
+				                           			<option value="${type.id}" <c:if test="${type.id eq issue.type.id}">selected</c:if>>${type.name}</option>
+				                           		</c:forEach>
 				                           </select>
 				                       </td>
 				                       <td class="detail-col-name"><fmt:message key="page.issue.priority" bundle="${lang}"/></td>
 				                       <td class="detail-col-value">
 				                           <select id="priority" name="priority" class="detail-col-select" size="1">
-				                               <option value="1" selected="selected">${issue.priority.name}</option>
-				                               <option value="2">Test 2</option>
-				                               <option value="3">Test 3</option>
-				                               <option value="4">Test 4</option>
+				                               <c:forEach var="priority" items="${requestScope[constants.PRIORITIES]}">
+				                           			<option value="${priority.id}" <c:if test="${priority.id eq issue.priority.id}">selected</c:if>>${priority.name}</option>
+				                           		</c:forEach>
 				                           </select>
 				                       </td>
 				                   </tr>
@@ -88,39 +87,36 @@
 				                       <td class="detail-col-name"><fmt:message key="page.issue.status" bundle="${lang}"/></td>
 				                       <td class="detail-col-value">
 				                           <select id="status" name="status" class="detail-col-select" size="1">
-				                               <option value="1" selected="selected">${issue.status.name}</option>
-				                               <option value="2">Test 2</option>
-				                               <option value="3">Test 3</option>
-				                               <option value="4">Test 4</option>
+				                           	<c:forEach var="status" items="${requestScope[constants.STATUSES]}">
+				                           		<option value="${status.id}" <c:if test="${status.id eq issue.status.id}">selected</c:if>>${status.name}</option>
+				                           	</c:forEach>
 				                           </select>
 				                       </td>
 				                       <td class="detail-col-name"><fmt:message key="page.issue.resolution" bundle="${lang}"/></td>
 				                       <td class="detail-col-value">
 				                           <select id="resolution" name="resolution" class="detail-col-select" size="1">
-				                               <option value="1" selected="selected">${issue.resolution.name}</option>
-				                               <option value="2">Test 2</option>
-				                               <option value="3">Test 3</option>
-				                               <option value="4">Test 4</option>
+				                               <c:forEach var="resolution" items="${requestScope[constants.RESOLUTIONS]}">
+				                           			<option value="${resolution.id}" <c:if test="${resolution.id eq issue.resolution.id}">selected</c:if>>${resolution.name}</option>
+				                           		</c:forEach>
 				                           </select>
 				                       </td>
 				                   </tr>
 				                   <tr>
 				                       <td class="detail-col-name"><fmt:message key="page.issue.project" bundle="${lang}"/></td>
 				                       <td class="detail-col-value">
+				                       		<input id="get-builds-command" name="command" type="hidden" value="${constants.COMMAND_GET_PROJECT_BUILDS}"/>
 				                           <select id="project" name="project" class="detail-col-select" size="1">
-				                               <option value="1" selected="selected">Project</option>
-				                               <option value="2">Test 2</option>
-				                               <option value="3">Test 3</option>
-				                               <option value="4">Test 4</option>
+				                               <c:forEach var="project" items="${requestScope[constants.PROJECTS]}">
+				                           			<option value="${project.id}" <c:if test="${project.id eq issue.project.id}">selected</c:if>>${project.name}</option>
+				                           		</c:forEach>
 				                           </select>
 				                       </td>
 				                       <td class="detail-col-name"><fmt:message key="page.issue.build" bundle="${lang}"/></td>
 				                       <td class="detail-col-value">
 				                           <select id="projectbuild" name="projectbuild" class="detail-col-select" size="1">
-				                               <option value="1" selected="selected">${issue.build.name}</option>
-				                               <option value="2">Test 2</option>
-				                               <option value="3">Test 3</option>
-				                               <option value="4">Test 4</option>
+				                               <c:forEach var="build" items="${requestScope[constants.BUILDS]}">
+				                           			<option value="${build.id}" <c:if test="${build.id eq issue.build.id}">selected</c:if>>${build.name}</option>
+				                           		</c:forEach>
 				                           </select>
 				                       </td>
 				                   </tr>
@@ -128,10 +124,9 @@
 				                       <td class="detail-col-name"><fmt:message key="page.issue.assignee" bundle="${lang}"/></td>
 				                       <td class="detail-col-value" colspan="3">
 				                           <select id="assignee" name="assignee" class="detail-col-select" size="1">
-				                               <option value="1" selected="selected">${issue.assignee.firstName} ${issue.assignee.lastName}</option>
-				                               <option value="2">Test 2</option>
-				                               <option value="3">Test 3</option>
-				                               <option value="4">Test 4</option>
+				                               <c:forEach var="assignee" items="${requestScope[constants.ASSIGNEES]}">
+				                           			<option value="${assignee.id}" <c:if test="${assignee.id eq issue.assignee.id}">selected</c:if>>${assignee.firstName} ${assignee.lastName}</option>
+				                           		</c:forEach>
 				                           </select>
 				                       </td>
 				                   </tr>
@@ -190,19 +185,24 @@
                   bindLongin();
                   bindEditIssueForm();
                   $('#save-button').bind().on('click', function(){
-                	  alert('Click save!');
+                	  
                   });
                   $('#cancel-button').bind().on('click', function(){
                 	  alert('Click cancel!');
                   });
-                  $('.description').attr('readonly','readonly');
+                  //$('.description').attr('readonly','readonly');
                   $('#en-loc').click(function(ev) {
               		changeLocaleUrl (ev);
               		});
 	              	$('#ru-loc').click(function(ev) {
 	              		changeLocaleUrl (ev);
 	              	});
-	              $('#modifydate').text(getCurrentDate ());	
+	              $('#modifydate').text(getCurrentDate ());
+	              $('#project').change(function() {
+	            	  var id = $('#project').val();
+	            	  getProjectBuilds (id);
+	              });
+	            		  
              });
         </script>
      </body>

@@ -28,8 +28,9 @@ public class WebCommandFactory {
 		commandMap.put("localize", new LocalizeCommand(request, response));
 		commandMap.put(Constants.COMMAND_SUBMIT_ISSUE, new EditIssueCommand(request, response));
 		commandMap.put(Constants.COMMAND_EDIT_ISSUE, new EditIssueCommand(request, response));
-		commandMap.put(Constants.COMMAND_SAVE_ISSUE, new SaveIssueCommand(request, response));
+		commandMap.put(Constants.COMMAND_UPDATE_ISSUE, new UpdateIssueCommand(request, response));
 		commandMap.put(Constants.COMMAND_VIEW_USER, new ViewUserCommand(request, response));
+		commandMap.put(Constants.COMMAND_GET_PROJECT_BUILDS, new GetProjectBuildsCommand(request, response));
 	}
 
 	/**Method for call specific command object.

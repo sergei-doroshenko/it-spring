@@ -61,9 +61,9 @@ public class ViewIssueListCommand extends AbstractWebCommand {
 			e.printStackTrace();
 			out.print(e.getMessage());
 			getResponse().setStatus(HttpServletResponse.SC_BAD_REQUEST);
+		} finally {
+			out.flush();
+			out.close();
 		}
-
-		out.flush();
-		out.close();
 	}
 }

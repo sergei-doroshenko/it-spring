@@ -156,9 +156,16 @@ create table issues (
 /******************** Insert colummn ******************************************/
 ALTER TABLE ISSUES ADD COLUMN resolution_id INTEGER;
 ALTER TABLE ISSUES ADD COLUMN description varchar(700) not null DEFAULT 'Test';
+ALTER TABLE ISSUES ADD COLUMN project_id INTEGER not null DEFAULT 1;
+
+DELETE FROM ISSUES; 
 /*********************** Add constraint **************************************/
 ALTER TABLE ISSUES 
 ADD CONSTRAINT fk_resolution_id FOREIGN KEY (resolution_id) REFERENCES RESOLUTIONS(ID);
+
+ALTER TABLE ISSUES 
+ADD CONSTRAINT fk_issue_project_id FOREIGN KEY (project_id) REFERENCES PROJECTS(ID);
+
 /*********************** Drop column *****************************************/
 ALTER TABLE ISSUES DROP COLUMN resolusion_id;
 ALTER TABLE ISSUES DROP COLUMN decription;
@@ -172,6 +179,8 @@ insert into ISSUES(CREATE_BY, MODIFIED_BY, SUMMARY, DECRIPTION, STATUS_ID,
 TYPE_ID, PRIORITY_ID, BUILD_ID, ASSIGNEE_ID)
 values
 (2, 2, 'Summ', 'Descrip', 2, 1, 1, 1, 3);
+
+DELETE FROM ISSUES;
 
 DROP TABLE ISSUES;
 /************** For issue inserting ****************************/
