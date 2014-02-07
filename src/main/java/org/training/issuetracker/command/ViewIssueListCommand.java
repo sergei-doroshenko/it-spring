@@ -2,6 +2,7 @@ package org.training.issuetracker.command;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,6 +16,7 @@ import org.training.issuetracker.domain.User;
 import org.training.issuetracker.domain.DAO.DAOFactory;
 import org.training.issuetracker.domain.DAO.IssueDAO;
 import org.training.issuetracker.exceptions.DaoException;
+import org.training.issuetracker.utils.IssueComparator;
 import org.training.issuetracker.utils.JqGridData;
 
 /**Command class for get list of Issue objects.
@@ -41,16 +43,20 @@ public class ViewIssueListCommand extends AbstractWebCommand {
 		getResponse().setContentType(MediaType.APPLICATION_JSON);
 		PrintWriter out = getResponse().getWriter();
 		User user = (User) getRequest().getSession().getAttribute(Constants.KEY_USER);
-		if (user != null) {
-			logger.debug("User = " + user.getFirstName() + " " + user.getLastName());
-		}
+
+
 
 		List<Issue> issueList = null;
 
 		IssueDAO dao = DAOFactory.getDAO(IssueDAO.class);
 
 		try {
-			issueList = dao.getIssueList(user);
+			issueList = dao.getIssueList(null);
+
+			if (user != null) {
+				Collections.sort(issueList, new IssueComparator(user));
+			}
+
 			logger.debug("Issue List = " + issueList);
 
 			JqGridData<Issue> data = new JqGridData<>(2, 1, 2, issueList);

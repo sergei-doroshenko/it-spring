@@ -21,14 +21,15 @@ public class WebCommandFactory {
 	 * @param response - an HttpServletResponse
 	 */
 	public WebCommandFactory(HttpServletRequest request, HttpServletResponse response) {
-		commandMap.put("issue", new ViewIssueCommand(request, response));
-		commandMap.put("issuelist", new ViewIssueListCommand(request, response));
-		commandMap.put("login", new LoginCommand(request, response));
-		commandMap.put("logout", new LogoutCommand(request, response));
-		commandMap.put("localize", new LocalizeCommand(request, response));
+		commandMap.put(Constants.COMMAND_VIEW_ISSUE, new ViewIssueCommand(request, response));
+		commandMap.put(Constants.COMMAND_VIEW_ISSUE_LIST, new ViewIssueListCommand(request, response));
+		commandMap.put(Constants.COMMAND_LOGIN, new LoginCommand(request, response));
+		commandMap.put(Constants.COMMAND_LOGOUT, new LogoutCommand(request, response));
+		commandMap.put(Constants.COMMAND_INSERT_ISSUE, new InsertIssueCommand(request, response));
 		commandMap.put(Constants.COMMAND_SUBMIT_ISSUE, new EditIssueCommand(request, response));
 		commandMap.put(Constants.COMMAND_EDIT_ISSUE, new EditIssueCommand(request, response));
 		commandMap.put(Constants.COMMAND_UPDATE_ISSUE, new UpdateIssueCommand(request, response));
+		commandMap.put(Constants.COMMAND_DELETE_ISSUE, new DeleteIssueCommand(request, response));
 		commandMap.put(Constants.COMMAND_VIEW_USER, new ViewUserCommand(request, response));
 		commandMap.put(Constants.COMMAND_GET_PROJECT_BUILDS, new GetProjectBuildsCommand(request, response));
 	}

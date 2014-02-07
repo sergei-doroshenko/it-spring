@@ -278,5 +278,8 @@ li.menu-obj-item a:hover {
 .critical-priority-highlight {
     color: red;
 }
+.major-priority-highlight {
+    color: #7396FF;    
+}
 
 /************* End of Priorities styles ***************************/

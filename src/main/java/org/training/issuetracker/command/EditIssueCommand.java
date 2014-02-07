@@ -50,6 +50,26 @@ public class EditIssueCommand extends AbstractWebCommand {
 			String commandName = parser.getStringParameter(Constants.KEY_COMMAND);
 			logger.debug("command = " + commandName);
 
+			PropDAO propDAO = DAOFactory.getDAO(PropDAO.class);
+			List<AbstractPersistentObj> statuses = propDAO.getPropList(PropertyType.STATUS);
+
+			getRequest().setAttribute(Constants.STATUSES, statuses);
+
+			List<AbstractPersistentObj> priorities = propDAO.getPropList(PropertyType.PRIORITY);
+			getRequest().setAttribute(Constants.PRIORITIES, priorities);
+
+			List<AbstractPersistentObj> types = propDAO.getPropList(PropertyType.TYPE);
+			getRequest().setAttribute(Constants.TYPES, types);
+
+			ProjectDAO projectDAO = DAOFactory.getDAO(ProjectDAO.class);
+			List<Project> projects = projectDAO.getProjectsList();
+			getRequest().setAttribute(Constants.PROJECTS, projects);
+
+			UserDAO userDAO = DAOFactory.getDAO(UserDAO.class);
+			List<User> assignee = userDAO.getUsersList();
+			getRequest().setAttribute(Constants.ASSIGNEES, assignee);
+
+
 			if (commandName.equals(Constants.COMMAND_EDIT_ISSUE)) {
 				long id = parser.getLongParameter(Constants.KEY_ID);
 				logger.debug("issue id = " + id);
@@ -58,30 +78,11 @@ public class EditIssueCommand extends AbstractWebCommand {
 				Issue issue = dao.getIssue(id);
 				getRequest().setAttribute(Constants.ISSUE, issue);
 
-				PropDAO propDAO = DAOFactory.getDAO(PropDAO.class);
-				List<AbstractPersistentObj> statuses = propDAO.getPropList(PropertyType.STATUS);
-
-				getRequest().setAttribute(Constants.STATUSES, statuses);
-
 				List<AbstractPersistentObj> resolutions = propDAO.getPropList(PropertyType.RESOLUTION);
 				getRequest().setAttribute(Constants.RESOLUTIONS, resolutions);
 
-				List<AbstractPersistentObj> priorities = propDAO.getPropList(PropertyType.PRIORITY);
-				getRequest().setAttribute(Constants.PRIORITIES, priorities);
-
-				List<AbstractPersistentObj> types = propDAO.getPropList(PropertyType.TYPE);
-				getRequest().setAttribute(Constants.TYPES, types);
-
-				ProjectDAO projectDAO = DAOFactory.getDAO(ProjectDAO.class);
-				List<Project> projects = projectDAO.getProjectsList();
-				getRequest().setAttribute(Constants.PROJECTS, projects);
-
 				List<Build> builds = projectDAO.getProjectBuilds(issue.getProject().getId());
 				getRequest().setAttribute(Constants.BUILDS, builds);
-
-				UserDAO userDAO = DAOFactory.getDAO(UserDAO.class);
-				List<User> assignee = userDAO.getUsersList();
-				getRequest().setAttribute(Constants.ASSIGNEES, assignee);
 
 				CommentDAO comDAO = DAOFactory.getDAO(CommentDAO.class);
 				List<Comment> comments = comDAO.getCommentsList(id);
@@ -91,11 +92,12 @@ public class EditIssueCommand extends AbstractWebCommand {
 				List<Attachment> attachments = attchDAO.getAttachmentsList(id);
 				getRequest().setAttribute(Constants.ATTACHMENTS, attachments);
 
+				jump(Constants.URL_EDIT_ISSUE);
+
 			} else if (commandName.equals(Constants.COMMAND_SUBMIT_ISSUE)) {
 
+				jump(Constants.URL_NEW_ISSUE);
 			}
-
-			jump(Constants.URL_EDIT_ISSUE);
 
 		} catch (NumberFormatException | ParameterNotFoundException e) {
 			e.printStackTrace();

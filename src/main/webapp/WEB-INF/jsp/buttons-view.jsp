@@ -12,6 +12,7 @@
 			<c:when test="${(user.role.name eq constants.ROLE_USER) or (user.role.name eq constants.ROLE_ADMIN)}">
 				<button id="new-button" class="control-button"><fmt:message key="button.new" bundle="${lang}"/></button>
 				<button id="edit-button" class="control-button"><fmt:message key="button.edit" bundle="${lang}"/></button>
+				<button id="cancel-button" class="control-button" onclick="window.history.back()"><fmt:message key="button.cancel" bundle="${lang}"/></button>
 				<c:if test="${user.role.name eq constants.ROLE_ADMIN}">
 					<button id="delete-button" class="control-button"><fmt:message key="button.delete" bundle="${lang}"/></button>
 				</c:if>

@@ -30,7 +30,7 @@
 	<body>
 		<div class="page-wrapper">
 			<div id="header" class="header">
-				<jsp:include page="${constants.URL_HEADER}"></jsp:include>
+				<jsp:include page="${constants.URL_HEADER}"/>
 			</div><!--end header-->
 			<div id="menu-bar" class="menu-bar">
 				<jsp:include page="${constants.URL_MENU_TOP}"></jsp:include>

@@ -11,7 +11,7 @@
     	<c:choose>
 			<c:when test="${(user.role.name eq constants.ROLE_USER) or (user.role.name eq constants.ROLE_ADMIN)}">
 				<button id="save-button" class="control-button" type="submit" form="edit-issue-form"><fmt:message key="button.save" bundle="${lang}"/></button>
-				<button id="cancel-button" class="control-button"><fmt:message key="button.cancel" bundle="${lang}"/></button>
+				<button id="cancel-button" class="control-button" onclick="window.history.back()"><fmt:message key="button.cancel" bundle="${lang}"/></button>
 			</c:when>
 		</c:choose>
     </div>

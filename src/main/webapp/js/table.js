@@ -1,6 +1,6 @@
 var names = ["Id", "Priority", "Assignee", "Type", "Status", "Summary"];
 
-var rowLink = { baseLinkUrl: '/issuetracker/Main.do', addParam: '&command=issue'};// getDetailsUrl()
+var rowLink = { baseLinkUrl: '/issuetracker/Main.do', addParam: '&command=issue'};
 
 var model = [
              { name: "id", index: 'id', width: 55, formatter:'showlink', formatoptions: rowLink},
@@ -67,6 +67,10 @@ function handleLoadComplete () {
 			styleClass = 'minor-priority-highlight';
 		} else if (priority == 'IMPORTANT') {
 			styleClass = 'important-priority-highlight';
+		} else if (priority == 'MAJOR') {
+			styleClass = 'major-priority-highlight';
+		} else if (priority == 'CRITICAL') {
+			styleClass = 'critical-priority-highlight';
 		}
 		$('#list').jqGrid('setCell',id,"priority","",styleClass);
 	}

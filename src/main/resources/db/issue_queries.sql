@@ -57,6 +57,8 @@ WHERE ISSUES.ID = 3;
 /*********************** UPDATE ISSUE ********************************************/
 update tablename set col1=val1 from tablename where condition
 
+UPDATE ISSUES SET ISSUES.ASSIGNEE_ID = 3 WHERE ISSUES.ID = 3;
+
 UPDATE ISSUES SET 
 ISSUES.MODIFY_DATE = CURRENT_DATE,
 ISSUES.MODIFIED_BY ,
@@ -70,6 +72,20 @@ ISSUES.ASSIGNEE_ID ,
 ISSUES.SUMMARY , 
 ISSUES.DESCRIPTION 
 WHERE ISSUES.ID = 1;
+/*************************** INSERT ISSUE ***************************************/
+INSERT INTO ISSUES
+(CREATE_DATE, CREATE_BY, 
+STATUS_ID, TYPE_ID, PRIORITY_ID,
+PROJECT_ID, BUILD_ID,
+SUMMARY, DESCRIPTION)
+VALUES
+(CURRENT_DATE, 4,
+2, 1, 1,
+1, 3,
+'Bag in User Form', 'This bag must being fixed immediatly!');
 
+SELECT IDENTITY_VAL_LOCAL() from ISSUES;
 
+DELETE FROM ISSUES WHERE ISSUES.ID = 4;
 
+delete from STATUSES where STATUSES.ST_NAME = 'NEW';

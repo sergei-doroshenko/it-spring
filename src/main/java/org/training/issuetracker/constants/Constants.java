@@ -40,6 +40,9 @@ public final class Constants {
 	/** Constants string literal for page-url of edit-issue.jsp */
 	public static final String URL_EDIT_ISSUE = URL_PREFIX + "/edit-issue.jsp";
 
+	/** Constants string literal for page-url of edit-issue.jsp */
+	public static final String URL_NEW_ISSUE = URL_PREFIX + "/new-issue.jsp";
+
 	/** Constants string literal for page-url of error.jsp */
 	public static final String URL_ERROR = URL_PREFIX + "/error.jsp";
 
@@ -107,6 +110,12 @@ public final class Constants {
 
 
 //***************** Commands *****************************************************
+	/** Constants string literal for view issue list command */
+	public static final String COMMAND_VIEW_ISSUE_LIST = "issuelist";
+
+	/** Constants string literal for view issue command */
+	public static final String COMMAND_VIEW_ISSUE = "issue";
+
 	/** Constants string literal for submit issue command */
 	public static final String COMMAND_SUBMIT_ISSUE = "submitissue";
 
@@ -143,6 +152,9 @@ public final class Constants {
 	/** Constants string literal for submitissue-url  */
 	public static final String URL_MAIN_COMMAND = "/issuetracker/Main.do?command=";
 
+	/** Constants string literal for Main.do-url  */
+	public static final String URL_MAIN_DO = "Main.do";
+
 	/** Constants string literal for submitissue-url  */
 	public static final String URL_LOGOUT_COMMAND = URL_MAIN_COMMAND + COMMAND_LOGOUT;
 
@@ -150,7 +162,6 @@ public final class Constants {
 	public static final String URL_SAVEISSUE_COMMAND = URL_MAIN_COMMAND + COMMAND_UPDATE_ISSUE;
 
 	/** Constants string literal for localize-english url  */
-//	public static final String URL_LOCALIZE_EN_COMMAND = URL_MAIN_COMMAND + "localize&lang=en_EN&backurl=";
 	public static final String URL_LOCALIZE_EN_COMMAND = "/?locale=en";
 
 	/** Constants string literal for localize-russian url  */
@@ -317,6 +328,17 @@ public final class Constants {
 	/** String literal for entity */
 	public static final String ENTITY = "entity";
 
+//****************************** OTHERS *********************************************/
+	/** String literal for NEW status */
+	public static final String STATUS_NEW = "NEW";
+
+	/** String literal for NEW status id */
+	public static final long DEFAULT_STATUS = 2;
+
+	/** String literal for empty string */
+	public static final String EMPTY_STRING = "";
+
+//********************************************** *************************************/
     /**
 	 * Private constructor
 	 */

@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -124,6 +125,34 @@ public class IssueImplDB implements IssueDAO {
 
 	private static final int UPDATE_ISSUE_ID_IND = 11;
 
+	private static final String SQL_INSERT_ISSUE =
+			"INSERT INTO ISSUES (CREATE_DATE, CREATE_BY, STATUS_ID, TYPE_ID, PRIORITY_ID,"
+			+ "PROJECT_ID, BUILD_ID, SUMMARY, DESCRIPTION, ASSIGNEE_ID) "
+			+ "VALUES (CURRENT_DATE, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+	private static final int INSERT_ISSUE_CREATE_BY_IND = 1;
+
+	private static final int INSERT_ISSUE_STATUS_ID_IND = 2;
+
+	private static final int INSERT_ISSUE_TYPE_BY_IND = 3;
+
+	private static final int INSERT_ISSUE_PRIORITY_BY_IND = 4;
+
+	private static final int INSERT_ISSUE_PROJECT_ID_BY_IND = 5;
+
+	private static final int INSERT_ISSUE_BUILD_ID_IND = 6;
+
+	private static final int INSERT_ISSUE_SUMMARY_IND = 7;
+
+	private static final int INSERT_ISSUE_DESCRIPTION_IND = 8;
+
+	private static final int INSERT_ISSUE_ASSIGNEE_ID_IND = 9;
+
+	private static final String SQL_SELECT_LAST_ISSUE_ID = "SELECT IDENTITY_VAL_LOCAL() from ISSUES";
+
+	private static final String SQL_DELETE_ISSUE = "DELETE FROM ISSUES WHERE ISSUES.ID = ?";
+
+	private static final int DELETE_ISSUE_INDEX = 1;
 
 	private final Logger logger = Logger.getLogger("org.training.issuetracker.data");
 	private Connection connection;
@@ -282,30 +311,45 @@ public class IssueImplDB implements IssueDAO {
 
 	@Override
 	public long insertIssue(Issue issue) throws DaoException {
-		PreparedStatement update = null;
+		PreparedStatement insert = null;
+		Statement select = null;
+		ResultSet rs = null;
 
 		try {
 			connection = ConnectionProvider.getConnection();
-			update = connection.prepareStatement(SQL_UPDATE_ISSUE);
-			update.setLong(UPDATE_ISSUE_MODIFY_BY_IND, issue.getModifyBy().getId());
-			update.setLong(UPDATE_ISSUE_TYPE_ID_IND, issue.getType().getId());
-			update.setLong(UPDATE_ISSUE_PRIORITY_ID_IND, issue.getPriority().getId());
-			update.setLong(UPDATE_ISSUE_STATUS_ID_IND, issue.getStatus().getId());
-			update.setLong(UPDATE_ISSUE_RESOLUTION_ID_IND, issue.getResolution().getId());
-			update.setLong(UPDATE_ISSUE_BUILD_ID_IND, issue.getBuild().getId());
-			update.setLong(UPDATE_ISSUE_PROJECT_ID_IND, issue.getProject().getId());
-			update.setLong(UPDATE_ISSUE_ASSIGNEE_ID_IND, issue.getAssignee().getId());
-			update.setString(UPDATE_ISSUE_SUMMARY_IND, issue.getSummary());
-			update.setString(UPDATE_ISSUE_DESCRIPTION_IND, issue.getDescription());
-			update.setLong(UPDATE_ISSUE_ID_IND, issue.getId());
+			insert = connection.prepareStatement(SQL_INSERT_ISSUE);
+			insert.setLong(INSERT_ISSUE_CREATE_BY_IND, issue.getCreateBy().getId());
+			insert.setLong(INSERT_ISSUE_STATUS_ID_IND, issue.getStatus().getId());
+			insert.setLong(INSERT_ISSUE_TYPE_BY_IND, issue.getType().getId());
+			insert.setLong(INSERT_ISSUE_PRIORITY_BY_IND, issue.getPriority().getId());
+			insert.setLong(INSERT_ISSUE_PROJECT_ID_BY_IND, issue.getProject().getId());
+			insert.setLong(INSERT_ISSUE_BUILD_ID_IND, issue.getBuild().getId());
+			insert.setString(INSERT_ISSUE_SUMMARY_IND, issue.getSummary());
+			insert.setString(INSERT_ISSUE_DESCRIPTION_IND, issue.getDescription());
 
-			return update.executeUpdate();
+			if (issue.getAssignee() != null) {
+				insert.setLong(INSERT_ISSUE_ASSIGNEE_ID_IND, issue.getAssignee().getId());
+			} else {
+				insert.setNull(INSERT_ISSUE_ASSIGNEE_ID_IND, java.sql.Types.INTEGER);
+			}
+
+			insert.executeUpdate();
+
+			select = connection.createStatement();
+			rs = select.executeQuery(SQL_SELECT_LAST_ISSUE_ID);
+
+			long lastId = 0;
+			while (rs.next()) {
+				lastId = lastId < rs.getLong(1) ? rs.getLong(1) : lastId;
+			}
+			return lastId;
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new DaoException(Constants.ERROR_SOURCE, e);
 		} finally {
 			ConnectionProvider.closeConnection(connection);
-			ConnectionProvider.closePrepStatemnts(update);
+			ConnectionProvider.closePrepStatemnts(insert);
+			ConnectionProvider.closeStatemnts(select);
 		}
 	}
 
@@ -335,6 +379,26 @@ public class IssueImplDB implements IssueDAO {
 		} finally {
 			ConnectionProvider.closeConnection(connection);
 			ConnectionProvider.closePrepStatemnts(update);
+		}
+
+	}
+
+	@Override
+	public long deleteIssue(long id) throws DaoException {
+		PreparedStatement delete = null;
+
+		try {
+			connection = ConnectionProvider.getConnection();
+			delete = connection.prepareStatement(SQL_DELETE_ISSUE);
+			delete.setLong(DELETE_ISSUE_INDEX, id);
+
+			return delete.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DaoException(Constants.ERROR_SOURCE, e);
+		} finally {
+			ConnectionProvider.closeConnection(connection);
+			ConnectionProvider.closePrepStatemnts(delete);
 		}
 
 	}

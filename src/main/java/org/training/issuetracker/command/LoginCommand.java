@@ -17,7 +17,6 @@ import org.training.issuetracker.domain.DAO.UserDAO;
 import org.training.issuetracker.exceptions.DaoException;
 import org.training.issuetracker.exceptions.ParameterNotFoundException;
 import org.training.issuetracker.exceptions.ValidationException;
-import org.training.issuetracker.utils.JSONCreator;
 import org.training.issuetracker.utils.ParameterInspector;
 import org.training.issuetracker.utils.ParameterParser;
 
@@ -45,7 +44,7 @@ public class LoginCommand extends AbstractWebCommand {
 		getRequest().getSession(false).invalidate();
 		HttpSession session = getRequest().getSession(true);
 
-		getResponse().setContentType(MediaType.APPLICATION_JSON);
+		getResponse().setContentType(MediaType.TEXT_PLAIN);
 		PrintWriter out = getResponse().getWriter();
 		ParameterParser parser = new ParameterParser(getRequest());
 
@@ -66,8 +65,8 @@ public class LoginCommand extends AbstractWebCommand {
 			session.setAttribute(Constants.KEY_USER, user);
 			Cookie userCookie = new Cookie(Constants.KEY_USER, user.toJsonObj().toString());
 			getResponse().addCookie(userCookie);
-			System.out.println(JSONCreator.createUserData(user));
-			out.print(JSONCreator.createUserData(user));
+
+			out.print(Constants.EMPTY_STRING);
 
 		} catch (DaoException e) {
 			e.printStackTrace();

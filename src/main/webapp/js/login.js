@@ -43,7 +43,7 @@ function bindLongin() {
                         //handleUserOnLoad();
                 		//alert('Request succes!');
                 		//alert('Jump to url: ' + getMainUrl());
-                        window.location.href = getMainUrl();
+                        window.location.href = data;
                 },
                 error:  handleError
         });
@@ -92,7 +92,6 @@ function bindEditIssueForm() {
 	        'resolution' : $('#resolution').val(),
 	        'project' : $('#project').val(),
 	        'projectbuild' : $('#projectbuild').val(),
-	        'assignee' : $('#assignee').val(),
 	        'summary' : $('#summary').val(),
 	        'description' : $('#description').val(),
 	        'assignee' : $('#assignee').val()
@@ -106,8 +105,68 @@ function bindEditIssueForm() {
             success: function (data) {
         		window.location.href = data;
             },
-            error:  handleError
+            error:  handleIssueError
         });
         return false;
 	});	
+}
+
+function bindNewIssueForm() {
+	$('#new-issue-form').submit(function () {
+        
+        var post_data = {
+	        'command' : $('#insert-command').val(),
+	        'type': $('#type').val(),
+	        'priority' : $('#priority').val(),
+	        'project' : $('#project').val(),
+	        'projectbuild' : $('#projectbuild').val(),
+	        'summary' : $('#summary').val(),
+	        'description' : $('#description').val(),
+	        'assignee' : $('#assignee').val()
+	    };
+    
+        $.ajax({
+            url: 'Main.do',
+            data: post_data,
+            dataType: 'text',
+            type: 'post',
+            success: function (data) {
+        		window.location.href = data;
+            },
+            error:  handleIssueError
+        });
+        return false;
+	});	
+}
+
+function executeDeleteIssue() {
+        
+        var post_data = {
+	        'command' : $('#delete-command').val(),
+	        'id' : $('#id').val()
+	    };
+    
+        $.ajax({
+            url: 'Main.do',
+            data: post_data,
+            dataType: 'text',
+            type: 'post',
+            success: function (data) {
+        		window.location.href = data;
+            },
+            error:  handleIssueError
+        });
+        return false;	
+}
+
+function handleIssueError (response, status, err) {
+	
+	if(response.status == 400){
+		var errText = response.responseText;
+		$('#error-issue').empty().append('<span>').append(errText);     
+	}
+	
+	if(response.status == 601){
+		sessionTimedOut();
+	}
 }

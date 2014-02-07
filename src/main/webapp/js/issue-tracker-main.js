@@ -37,8 +37,11 @@ function getParameterByName(name) {
 }
 
 function getProjectBuilds (id) {
+	var select = $('#projectbuild');
+	select.empty();
 	
-	var sdata = {
+	if (id) {
+		var sdata = {
 	        'command': $('#get-builds-command').val(),
 	        'id': id
 	    };
@@ -49,14 +52,15 @@ function getProjectBuilds (id) {
                 dataType: 'json',
                 type: 'get',
                 success: function (data) {
-                	var select = $('#projectbuild');
-            		select.empty();
+                        		
             		for (var i = 0, l = data.length; i < l; i++) {
             			select.append('<option value="' + data[i].id+ '">' + data[i].name + '</option>');
 					}
                 },
                 error:  handleError
         });
-        return false;
+	}
+	
+    return false;
 }
 

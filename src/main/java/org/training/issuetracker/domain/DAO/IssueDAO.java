@@ -17,4 +17,6 @@ public interface IssueDAO {
 	long insertIssue(Issue issue) throws DaoException;
 
 	long updateIssue (Issue issue) throws DaoException;
+
+	long deleteIssue (long id)  throws DaoException;
 }

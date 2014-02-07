@@ -16,7 +16,7 @@ public final class ParameterInspector {
 	/**
 	 * User name pattern.
 	 */
-	public static final String NAME_PATTERN = "[a-zA-Z0-9]{4,10}";
+	public static final String NAME_PATTERN = "[a-zA-Z0-9]{3,10}";
     /**
      * User password pattern.
      */
@@ -100,6 +100,13 @@ public final class ParameterInspector {
 			throw new ValidationException(Constants.ERROR_EMAIL);
 		}
 
+		return true;
+	}
+
+	public static boolean checkId(String id) {
+		if (id == null || id.isEmpty()) {
+			return false;
+		}
 		return true;
 	}
 

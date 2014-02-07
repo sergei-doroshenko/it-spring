@@ -30,6 +30,7 @@
              	<jsp:include page="${constants.URL_BUTTONS_EDIT}"/>
 	        	<c:set var="issue" scope="page" value="${requestScope[constants.ISSUE]}"/>
 				 <div class="issue-container">
+				 		<div id="error-issue"></div>
 				       <div class="obj-fields">
 				       		<form id="edit-issue-form" >
 				       			<input id="update-command" name="command" type="hidden" value="${constants.COMMAND_UPDATE_ISSUE}"/>	
@@ -187,22 +188,23 @@
                   $('#save-button').bind().on('click', function(){
                 	  
                   });
+                  
                   $('#cancel-button').bind().on('click', function(){
-                	  alert('Click cancel!');
+                	  //window.history.back();
                   });
+                  
                   //$('.description').attr('readonly','readonly');
                   $('#en-loc').click(function(ev) {
-              		changeLocaleUrl (ev);
-              		});
-	              	$('#ru-loc').click(function(ev) {
+              			changeLocaleUrl (ev);
+           		  });
+	              $('#ru-loc').click(function(ev) {
 	              		changeLocaleUrl (ev);
-	              	});
+	              });
 	              $('#modifydate').text(getCurrentDate ());
 	              $('#project').change(function() {
 	            	  var id = $('#project').val();
 	            	  getProjectBuilds (id);
-	              });
-	            		  
+	              });	            		  
              });
         </script>
      </body>
