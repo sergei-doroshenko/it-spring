@@ -234,10 +234,24 @@ public class PropImplDB implements PropDAO {
 		}
 	}
 
+	@Override
+	public long insertProp(PropertyType prop, AbstractPersistentObj propObject)
+			throws DaoException {
+		// TODO Auto-generated method stub
+		return 201;
+	}
 
+	@Override
+	public long updateProp(PropertyType prop, AbstractPersistentObj propObject)
+			throws DaoException {
+		// TODO Auto-generated method stub
+		return 202;
+	}
 
-
-
-
+	@Override
+	public long deleteProp(PropertyType prop, long id) throws DaoException {
+		// TODO Auto-generated method stub
+		return 203;
+	}
 
 }

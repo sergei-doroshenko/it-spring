@@ -11,6 +11,7 @@ import javax.ws.rs.core.MediaType;
 
 import org.apache.log4j.Logger;
 import org.training.issuetracker.constants.Constants;
+import org.training.issuetracker.domain.AbstractPersistentObj;
 import org.training.issuetracker.domain.Issue;
 import org.training.issuetracker.domain.User;
 import org.training.issuetracker.domain.DAO.DAOFactory;
@@ -24,7 +25,7 @@ import org.training.issuetracker.utils.JqGridData;
  *
  */
 public class ViewIssueListCommand extends AbstractWebCommand {
-	private final Logger logger = Logger.getLogger("org.training.issuetracker.command");
+	private Logger logger = Logger.getLogger("org.training.issuetracker.command");
 	/**Constructor from superclass.
 	 * @param request - HttpServletRequest
 	 * @param response - HttpServletResponse
@@ -44,8 +45,6 @@ public class ViewIssueListCommand extends AbstractWebCommand {
 		PrintWriter out = getResponse().getWriter();
 		User user = (User) getRequest().getSession().getAttribute(Constants.KEY_USER);
 
-
-
 		List<Issue> issueList = null;
 
 		IssueDAO dao = DAOFactory.getDAO(IssueDAO.class);
@@ -58,8 +57,13 @@ public class ViewIssueListCommand extends AbstractWebCommand {
 			}
 
 			logger.debug("Issue List = " + issueList);
-
-			JqGridData<Issue> data = new JqGridData<>(2, 1, 2, issueList);
+			
+			int total = issueList.size();
+			int page = 1;
+			int records = issueList.size();
+			
+			JqGridData<Issue> data = new JqGridData<Issue>(total, page, records, issueList);
+			
 			String json = data.getJsonString();
 			logger.debug(json);
 			out.print(json);

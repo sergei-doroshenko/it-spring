@@ -3,7 +3,6 @@ package org.training.issuetracker.data.xml;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.training.issuetracker.data.xml.DataStorage;
 import org.training.issuetracker.domain.Role;
 import org.training.issuetracker.domain.User;
 import org.xml.sax.Attributes;
@@ -63,9 +62,9 @@ public class UserHandler extends DefaultHandler {
 				currUser.setEmail(str);
 				break;
 			case "p:roleid" :
-				DataStorage data = DataStorage.getInstance();
-				Role role = data.getRole(Long.parseLong(str));
-				currUser.setRole(role);
+				
+//				Role role = data.getRole(Long.parseLong(str));
+//				currUser.setRole(role);
 				break;
 			case "p:password" :
 				currUser.setPassword(str);

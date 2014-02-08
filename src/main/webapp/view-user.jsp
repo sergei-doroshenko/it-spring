@@ -11,10 +11,19 @@
      <head>
         <meta charset="UTF-8">
         <title>Issue edit page</title>
+        <link rel="stylesheet" type="text/css" media="screen" href="css/ui-lightness/jquery-ui.css" />
+        <link rel="stylesheet" type="text/css" media="screen" href="css/ui-lightness/jquery.ui.theme.css" />
+        <link rel="stylesheet" type="text/css" media="screen" href="css/ui-lightness/jquery-ui-1.10.4.custom.css" />
         <link rel="stylesheet" type="text/css" media="screen" href="css/default.css" />
+        
         <script type="text/javascript" src="js/jquery-1.9.0.min.js"> </script>
+        <script type="text/javascript" src="js/jquery-1.10.2.js"> </script>      
         <script type="text/javascript" src="js/jquery.cookie.js"> </script>
+        <script type="text/javascript" src="js/jquery-ui-1.10.4.custom.min.js"> </script>
+        <script type="text/javascript" src="js/jquery.form.js"> </script>
         <script type="text/javascript" src="js/issue-tracker-main.js"> </script>
+        <script type="text/javascript" src="js/user-dialog.js"> </script>
+    
      </head>
 	<body>
 	
@@ -28,21 +37,30 @@
              <div class="content">
 	             	<jsp:include page="${constants.URL_BUTTONS_VIEW_USER}"/>
 	             	<span>${user.firstName} ${user.lastName}</span>
+	             	
+	             	
+					
+					<button id="create-user">Create new user</button>
+					
 	         </div><!--end content-->
              <div class="footer">
                  <jsp:include page="${constants.URL_FOOTER}"></jsp:include>
              </div><!--end footer-->
         </div><!--end page-wrapper-->
         <script type="text/javascript">
-			$(document).ready(function () {	
-				bindLongin();
+			$(document).ready(function () {
+				builUserForm();
+				buildUserView ();
 				$('#en-loc').click(function(ev) {
 					changeLocaleUrl (ev);
 				});
 				$('#ru-loc').click(function(ev) {
 					changeLocaleUrl (ev);
 				});
+				$("#create-user").button().click(function() {
+			        $( "#dialog-form" ).dialog( "open" );
+			    });
 			});
-		</script>  	
+		</script> 	
 	</body>
 </html>

@@ -1,6 +1,7 @@
 package org.training.issuetracker.data.xml;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 
 import org.training.issuetracker.constants.Constants;
@@ -21,7 +22,6 @@ public class UserImplXML implements UserDAO {
 
 	public UserImplXML() { }
 
-	@Override
 	public Map<String, User> getUsersMap() throws DaoException {
 		if(null == users) {
 			XMLValidator validator = new XMLValidator();
@@ -59,5 +59,29 @@ public class UserImplXML implements UserDAO {
 		}
 		
 		return user;
+	}
+
+	@Override
+	public List<User> getUsersList() throws DaoException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public User getUser(long id) throws DaoException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public long insertUser(User user) throws DaoException {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public long updateUser(User user) throws DaoException {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 }

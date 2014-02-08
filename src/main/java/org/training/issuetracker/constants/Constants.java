@@ -142,12 +142,21 @@ public final class Constants {
 
 	/** Constants string literal for edit user info command  */
 	public static final String COMMAND_EDIT_USER = "edituser";
-
+	
+	/** Constants string literal for view user info command  */
+	public static final String COMMAND_ADD_USER = "adduser";
+	
 	/** Constants string literal for edit user info command  */
 	public static final String COMMAND_LOCALE = "locale";
 
 	/** Constants string literal for edit user info command  */
 	public static final String COMMAND_GET_PROJECT_BUILDS = "get_project_builds";
+	
+	/** Constants string literal for view statuses list command  */
+	public static final String COMMAND_VIEW_STATUSES_LIST = "statuses_list";
+	
+	/** Constants string literal for edit status command  */
+	public static final String COMMAND_EDIT_STATUS = "edit_status";
 
 	/** Constants string literal for submitissue-url  */
 	public static final String URL_MAIN_COMMAND = "/issuetracker/Main.do?command=";
@@ -200,7 +209,13 @@ public final class Constants {
 	 *  Contains string literal for command parameter.
 	 */
 	public static final String KEY_COMMAND = "command";
-
+	
+	/** String literal for oper parameter */
+	public static final String KEY_OPERATION = "oper";
+	
+	/** String literal for name parameter */
+	public static final String KEY_NAME = "name";
+	
 	/** String literal for backurl */
 	public static final String KEY_BACK_URL = "backurl";
 
@@ -262,6 +277,7 @@ public final class Constants {
     /**Text of error message occurred when login or password are wrong.
      *
      */
+    
     public static final String LOGIN_OR_PASSWORD_WRONG = "check login and password!";
     /**Error message cased by wrong e-mail input.
      *
@@ -337,7 +353,7 @@ public final class Constants {
 
 	/** String literal for empty string */
 	public static final String EMPTY_STRING = "";
-
+	
 //********************************************** *************************************/
     /**
 	 * Private constructor

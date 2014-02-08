@@ -1,9 +1,11 @@
 package org.training.issuetracker.data.xml;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 
 import org.training.issuetracker.constants.Constants;
+import org.training.issuetracker.domain.Build;
 import org.training.issuetracker.domain.Project;
 import org.training.issuetracker.domain.DAO.ProjectDAO;
 import org.training.issuetracker.exceptions.DaoException;
@@ -20,7 +22,6 @@ public class ProjectImplXML implements ProjectDAO {
 
 	public ProjectImplXML() { }
 
-	@Override
 	public Map<Long, Project> getProjectsMap() throws DaoException {
 		Map<Long, Project> projects = null;
 		XMLValidator validator = new XMLValidator();
@@ -42,5 +43,29 @@ public class ProjectImplXML implements ProjectDAO {
 		}
 
 		return projects;
+	}
+
+	@Override
+	public List<Project> getProjectsList() throws DaoException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Project getProject(long id) throws DaoException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Build> getProjectBuilds(long id) throws DaoException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Build getBuild(long id) throws DaoException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

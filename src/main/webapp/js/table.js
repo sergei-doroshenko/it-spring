@@ -1,10 +1,10 @@
-var names = ["Id", "Priority", "Assignee", "Type", "Status", "Summary"];
+var issue_names = ["Id", "Priority", "Assignee", "Type", "Status", "Summary"];
 
-var rowLink = { baseLinkUrl: '/issuetracker/Main.do', addParam: '&command=issue'};
+var issue_rowLink = { baseLinkUrl: '/issuetracker/Main.do', addParam: '&command=issue'};
 
-var model = [
-             { name: "id", index: 'id', width: 55, formatter:'showlink', formatoptions: rowLink},
-             { name: "priority", index: 'property', width: 100},
+var issue_model = [
+             { name: "id", index: 'id', width: 55, formatter:'showlink', formatoptions: issue_rowLink},
+             { name: "priority", index: 'property', width: 100, formatter: colorFormatter},
              { name: "assignee", index: 'assignee', width: 100},
              { name: "type", index: 'type', width: 100},
              { name: "status", index: 'status', width: 100},
@@ -26,15 +26,15 @@ var jsonHandler = {
         }
     };
 
-function createIssueTable() {    
+function createIssueTable() {
     $("#list").jqGrid({
         url: "Main.do",
         postData: {	command: 'issuelist' },
 		mtype: "GET",
         datatype: "json",
         jsonReader : jsonHandler,
-        colNames: names,
-        colModel: model,
+        colNames: issue_names,
+        colModel: issue_model,
         pager: "#pager",
         rowNum: 10,
         rowList: [10, 20, 30],
@@ -46,8 +46,30 @@ function createIssueTable() {
         caption: "Issues",
         height: $(".table-container").height(),
 		ondblClickRow: handleDoubleClick,
-        loadComplete: handleLoadComplete
+		loadError: function (jqXHR, textStatus, errorThrown) {
+	        alert('HTTP status code: ' + jqXHR.status + '\n' +
+	              'textStatus: ' + textStatus + '\n' +
+	              'errorThrown: ' + errorThrown);
+	        alert('HTTP message body (jqXHR.responseText): ' + '\n' + jqXHR.responseText);
+	    }
+        //loadComplete: handleLoadComplete
     });
+}
+
+function colorFormatter (cellvalue, options, rowObject) {
+	var styleClass;
+	
+	if (cellvalue == 'MINOR') {
+		styleClass = 'minor-priority-highlight';
+	} else if (cellvalue == 'IMPORTANT') {
+		styleClass = 'important-priority-highlight';
+	} else if (cellvalue == 'MAJOR') {
+		styleClass = 'major-priority-highlight';
+	} else if (cellvalue == 'CRITICAL') {
+		styleClass = 'critical-priority-highlight';
+	}
+	
+	return '<span class="' + styleClass +  '">' + cellvalue + '</span>';
 }
 
 function handleDoubleClick (rowid,iRow,iCol,e) {

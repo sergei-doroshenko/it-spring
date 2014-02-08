@@ -1,9 +1,12 @@
 package org.training.issuetracker.data.xml;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 
 import org.training.issuetracker.constants.Constants;
+import org.training.issuetracker.data.db.PropImplDB.PropertyType;
+import org.training.issuetracker.domain.AbstractPersistentObj;
 import org.training.issuetracker.domain.Status;
 import org.training.issuetracker.domain.DAO.StatusDAO;
 import org.training.issuetracker.exceptions.DaoException;
@@ -20,7 +23,6 @@ public class StatusImplXML implements StatusDAO {
 
 	public StatusImplXML() { }
 
-	@Override
 	public Map<Long, Status> getStatusesMap() throws DaoException {
 		Map<Long, Status> statuses = null;
 		XMLValidator validator = new XMLValidator();
@@ -43,5 +45,12 @@ public class StatusImplXML implements StatusDAO {
 		}
 
 		return statuses;
+	}
+
+	@Override
+	public List<AbstractPersistentObj> getPropList(PropertyType prop)
+			throws DaoException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

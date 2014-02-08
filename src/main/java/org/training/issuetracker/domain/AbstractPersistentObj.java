@@ -1,5 +1,8 @@
 package org.training.issuetracker.domain;
 
+import javax.json.Json;
+import javax.json.JsonObject;
+
 /**Abstract class for all persist objects.
  * @author Sergei_Doroshenko
  *
@@ -44,6 +47,10 @@ public abstract class AbstractPersistentObj implements PersistentObj {
 
 	@Override
 	public String toString() {
-		return "AbstractPersistentObj [id=" + id + ", name=" + name + "]";
+		JsonObject issueJson = Json.createObjectBuilder()
+				.add("id", getId())
+				.add("name", getName())
+				.build();
+		return issueJson.toString();
 	}
 }

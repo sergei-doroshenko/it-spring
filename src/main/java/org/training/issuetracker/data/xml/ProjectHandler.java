@@ -3,7 +3,6 @@ package org.training.issuetracker.data.xml;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.training.issuetracker.data.xml.DataStorage;
 import org.training.issuetracker.domain.Project;
 import org.training.issuetracker.domain.User;
 import org.xml.sax.Attributes;
@@ -58,8 +57,8 @@ public class ProjectHandler extends DefaultHandler {
 				currProject.setDescription(str);
 				break;
 			case "p:manager" :
-				User manager = DataStorage.getInstance().getUser(str);
-				currProject.setManager(manager);
+//				User manager = DataStorage.getInstance().getUser(str);
+//				currProject.setManager(manager);
 				break;
 		}
 	}

@@ -3,8 +3,6 @@ package org.training.issuetracker.data.xml;
 import java.sql.Date;
 import java.util.HashMap;
 import java.util.Map;
-
-import org.training.issuetracker.data.xml.DataStorage;
 import org.training.issuetracker.domain.Issue;
 import org.training.issuetracker.domain.User;
 import org.xml.sax.Attributes;
@@ -54,48 +52,47 @@ public class IssueHandler extends DefaultHandler {
 
 		if (null == currEl || str.isEmpty()) return;
 		User user = null;
-		DataStorage data = DataStorage.getInstance();
 
-		switch (currEl) {
-			case "p:createdate" :
-				currIssue.setCreateDate(Date.valueOf(str));
-				break;
-			case "p:createby" :
-				user = data.getUser(str);
-				currIssue.setCreateBy(user);
-				break;
-			case "p:modifydate" :
-				currIssue.setModifyDate(Date.valueOf(str));
-				break;
-			case "p:modifyby" :
-				user = data.getUser(str);
-				currIssue.setModifyBy(user);
-				break;
-			case "p:summary" :
-				currIssue.setSummary(str);
-				break;
-			case "p:description" :
-				currIssue.setDescription(str);
-				break;
-			case "p:status" :
-				currIssue.setStatus(data.getStatus(Long.parseLong(str)));
-				break;
-			case "p:resolution" :
-				currIssue.setResolution(data.getResolution(Long.parseLong(str)));
-				break;
-			case "p:type" :
-				currIssue.setType(data.getType(Long.parseLong(str)));
-				break;
-			case "p:priority" :
-				currIssue.setPriority(data.getPriority(Long.parseLong(str)));
-				break;
-			case "p:build" :
-				currIssue.setBuild(data.getBuild(Long.parseLong(str)));
-				break;
-			case "p:assignee" :
-				user = data.getUser(str);
-				currIssue.setAssignee(user);
-				break;
-		}
+//		switch (currEl) {
+//			case "p:createdate" :
+//				currIssue.setCreateDate(Date.valueOf(str));
+//				break;
+//			case "p:createby" :
+////				user = data.getUser(str);
+////				currIssue.setCreateBy(user);
+//				break;
+//			case "p:modifydate" :
+//				currIssue.setModifyDate(Date.valueOf(str));
+//				break;
+//			case "p:modifyby" :
+////				user = data.getUser(str);
+////				currIssue.setModifyBy(user);
+//				break;
+//			case "p:summary" :
+//				currIssue.setSummary(str);
+//				break;
+//			case "p:description" :
+//				currIssue.setDescription(str);
+//				break;
+//			case "p:status" :
+//				currIssue.setStatus(data.getStatus(Long.parseLong(str)));
+//				break;
+//			case "p:resolution" :
+//				currIssue.setResolution(data.getResolution(Long.parseLong(str)));
+//				break;
+//			case "p:type" :
+//				currIssue.setType(data.getType(Long.parseLong(str)));
+//				break;
+//			case "p:priority" :
+//				currIssue.setPriority(data.getPriority(Long.parseLong(str)));
+//				break;
+//			case "p:build" :
+//				currIssue.setBuild(data.getBuild(Long.parseLong(str)));
+//				break;
+//			case "p:assignee" :
+//				user = data.getUser(str);
+//				currIssue.setAssignee(user);
+//				break;
+//		}
     }
 }

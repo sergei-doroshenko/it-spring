@@ -41,7 +41,8 @@ public class Main extends AbstractBaseController {
 			logger.info("Invoke -> " + commandName);
 			WebCommandFactory comFactory = new WebCommandFactory(request, response);
 			Command command = comFactory.getCommand(commandName);
-			logger.info("Create -> " + command.getClass().getSimpleName());
+//			logger.info("Create -> " + command.getClass().getSimpleName());
+			logger.info("Create -> " + command);
 			command.execute();
 		} catch (ParameterNotFoundException e) {
 			PrintWriter out = response.getWriter();
