@@ -177,7 +177,7 @@ public class PropImplDB implements PropDAO {
 
 
 	public enum PropertyType {
-		STATUS, RESOLUTION, PRIORITY, TYPE
+		STATUS, RESOLUTION, PRIORITY, TYPE, ROLE
 	}
 
 	@Override

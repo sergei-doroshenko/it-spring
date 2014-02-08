@@ -166,5 +166,11 @@ public class UserImplDB implements UserDAO {
 		return 205;
 	}
 
+	@Override
+	public long deleteUser(User user) throws DaoException {
+		
+		return 207;
+	}
+
 
 }

@@ -26,8 +26,10 @@ Role:${user.role.name}${user.email}${user.password}
 	<p class="validateTips">All form fields are required.</p>
 	<form>
 		<fieldset>
-			<label for="name">Name</label>
-			<input type="text" name="name" id="name" class="text ui-widget-content ui-corner-all">
+			<label for="first_name">First Name</label>
+			<input type="text" name="first_name" id="first_name" class="text ui-widget-content ui-corner-all">
+			<label for="last_name">Last Name</label>
+			<input type="text" name="last_name" id="last_name" class="text ui-widget-content ui-corner-all">
 			<label for="email">Email</label>
 			<input type="text" name="email" id="email" value="" class="text ui-widget-content ui-corner-all">
 			<label for="password">Password</label>
@@ -40,7 +42,6 @@ Role:${user.role.name}${user.email}${user.password}
 <div id="user-info" class="user-info">
 	<div id="error"></div>
      <form id="auth-form">
-     	<input id="adduser-command" name="command" type="hidden" value="${constants.COMMAND_ADD_USER}"/>
      	<input id="login-command" name="command" type="hidden" value="${constants.COMMAND_LOGIN}"/>
      	<c:choose>
      		<c:when test="${empty user}">
@@ -50,10 +51,14 @@ Role:${user.role.name}${user.email}${user.password}
 	        	<input name="password" id="password" class="password" type="password">
 	        	<input id="authsubmit" class="authsubmit" type="submit" value="<fmt:message key="user.login" bundle="${lang}"/>" />
 	        	<span id="add-user" class="logout">Sing in</span>
+	        	<input id="buttons-type" name="buttons-type" type="hidden" value="${constants.COMMAND_ADD_USER}"/>
+	        	<input id="send-command" name="command" type="hidden" value="${constants.COMMAND_ADD_USER}"/>
      		</c:when>
      		<c:otherwise>
      			<span id="view-user" class="logout"><c:out value="${user.firstName}  ${user.lastName}"/></span>
 	      		<a class="logout" href="${constants.URL_LOGOUT_COMMAND}"><fmt:message key="user.logout" bundle="${lang}"/></a>
+	      		<input id="buttons-type" name="buttons-type" type="hidden" value="${constants.COMMAND_EDIT_USER}"/>
+	      		<input id="send-command" name="command" type="hidden" value="${constants.COMMAND_EDIT_USER}"/>
      		</c:otherwise>
      	</c:choose>
      </form>

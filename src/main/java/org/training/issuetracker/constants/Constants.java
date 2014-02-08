@@ -143,8 +143,11 @@ public final class Constants {
 	/** Constants string literal for edit user info command  */
 	public static final String COMMAND_EDIT_USER = "edituser";
 	
-	/** Constants string literal for view user info command  */
+	/** Constants string literal for insert user command  */
 	public static final String COMMAND_ADD_USER = "adduser";
+	
+	/** Constants string literal for delete user command  */
+	public static final String COMMAND_DELETE_USER = "deleteuser";
 	
 	/** Constants string literal for edit user info command  */
 	public static final String COMMAND_LOCALE = "locale";
@@ -216,6 +219,15 @@ public final class Constants {
 	/** String literal for name parameter */
 	public static final String KEY_NAME = "name";
 	
+	/** String literal for first name parameter */
+	public static final String KEY_FIRST_NAME = "first_name";
+	
+	/** String literal for last name parameter */
+	public static final String KEY_LAST_NAME = "last_name";
+	
+	/** String literal for last name parameter */
+	public static final String KEY_EMAIL = "email";
+	
 	/** String literal for backurl */
 	public static final String KEY_BACK_URL = "backurl";
 
@@ -252,6 +264,9 @@ public final class Constants {
 //************************ ROLES *****************************************
 	/** Constants string literal for role - user. */
 	public static final String ROLE_USER = "USER";
+	
+	/** Constants string literal for default role - user id=2. */
+	public static final long DEFAULT_ROLE_ID = 2;
 
 	/** Constants string literal for role - admin. */
 	public static final String ROLE_ADMIN = "ADMINISTRATOR";
@@ -353,7 +368,6 @@ public final class Constants {
 
 	/** String literal for empty string */
 	public static final String EMPTY_STRING = "";
-	
 //********************************************** *************************************/
     /**
 	 * Private constructor
