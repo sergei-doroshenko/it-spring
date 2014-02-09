@@ -17,6 +17,6 @@ public interface UserDAO {
 
 	long updateUser(User user) throws DaoException;
 	
-	long deleteUser(User user) throws DaoException;
+	long deleteUser(long id) throws DaoException;
 
 }

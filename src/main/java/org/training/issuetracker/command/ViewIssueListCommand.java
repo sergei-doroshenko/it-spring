@@ -17,8 +17,10 @@ import org.training.issuetracker.domain.User;
 import org.training.issuetracker.domain.DAO.DAOFactory;
 import org.training.issuetracker.domain.DAO.IssueDAO;
 import org.training.issuetracker.exceptions.DaoException;
+import org.training.issuetracker.exceptions.ParameterNotFoundException;
 import org.training.issuetracker.utils.IssueComparator;
 import org.training.issuetracker.utils.JqGridData;
+import org.training.issuetracker.utils.ParameterParser;
 
 /**Command class for get list of Issue objects.
  * @author Sergei_Doroshenko
@@ -30,8 +32,7 @@ public class ViewIssueListCommand extends AbstractWebCommand {
 	 * @param request - HttpServletRequest
 	 * @param response - HttpServletResponse
 	 */
-	public ViewIssueListCommand(HttpServletRequest request,
-			HttpServletResponse response) {
+	public ViewIssueListCommand(HttpServletRequest request,	HttpServletResponse response) {
 		super(request, response);
 	}
 
@@ -44,14 +45,14 @@ public class ViewIssueListCommand extends AbstractWebCommand {
 		getResponse().setContentType(MediaType.APPLICATION_JSON);
 		PrintWriter out = getResponse().getWriter();
 		User user = (User) getRequest().getSession().getAttribute(Constants.KEY_USER);
-
+		ParameterParser parser = new ParameterParser(getRequest());
 		List<Issue> issueList = null;
 
 		IssueDAO dao = DAOFactory.getDAO(IssueDAO.class);
 
 		try {
 			issueList = dao.getIssueList(null);
-
+			int page = parser.getIntParameter(Constants.KEY_PAGE);
 			if (user != null) {
 				Collections.sort(issueList, new IssueComparator(user));
 			}
@@ -59,7 +60,6 @@ public class ViewIssueListCommand extends AbstractWebCommand {
 			logger.debug("Issue List = " + issueList);
 			
 			int total = issueList.size();
-			int page = 1;
 			int records = issueList.size();
 			
 			JqGridData<Issue> data = new JqGridData<Issue>(total, page, records, issueList);
@@ -67,7 +67,7 @@ public class ViewIssueListCommand extends AbstractWebCommand {
 			String json = data.getJsonString();
 			logger.debug(json);
 			out.print(json);
-		} catch (DaoException e) {
+		} catch (DaoException | ParameterNotFoundException e) {
 			e.printStackTrace();
 			out.print(e.getMessage());
 			getResponse().setStatus(HttpServletResponse.SC_BAD_REQUEST);

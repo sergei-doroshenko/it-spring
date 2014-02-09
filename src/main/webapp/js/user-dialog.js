@@ -1,11 +1,4 @@
-var user_form_header_add = 'Create new user';
-
-var user_form_header_edit = 'Edit user info';
-var create_button = 'Create an account';
-
-var button_label = 'Create an account';
-
-function builUserForm(button_label) {
+function builUserForm() {
 	
 	var first_name = $('#first_name'), last_name = $('#last_name'),
 	  email = $('#email'),
@@ -86,7 +79,11 @@ function builUserForm(button_label) {
               success: function (data) {
                   window.location.href = data;
               },
-              error:  handleError
+              error:  function (response, status, err) {	
+            		if(response.status == 400){
+            			updateTips( response.responseText );   
+            		}
+            	} 
 	        });
 	    	 
 	      }
@@ -126,18 +123,30 @@ function builUserForm(button_label) {
 
 function buildUserView () {
     $('#dialog-confirm').dialog({
-    	autoOpen: false,
+      autoOpen: false,
       resizable: false,
-      height:140,
+      height:400,
       modal: true,
       buttons: {
         'Edit': function() {
-        	$('#dialog-form').dialog('open');
-        	$('#first_name').val('Anton');
-        	$('#last_name').val('Chekhov');
-        	$('#email').val('test@gmail.com');
-        	$('#password').val('111');
-      	  	$('#pass-conf').val('111');
+        	var formdata = {
+		        'command' : $('#view-user-command').val(),
+		        'id' : $('#user-id').val()
+	    	};
+        	
+        	$.ajax({
+                url: 'Main.do',
+                data: formdata,
+                dataType: 'json',
+                type: 'post',
+                success: function (data) {
+                	$('#dialog-form').dialog('open');                	
+                	$('#first_name').val(data.firstName);
+                	$('#last_name').val(data.lastName);
+                	$('#email').val(data.email);              	
+                },
+                error:  handleUserError
+  	        });
         	$(this).dialog('close');
         },
         Cancel: function() {
@@ -146,3 +155,16 @@ function buildUserView () {
       }
     });
  }
+
+function handleUserError (response, status, err) {
+	
+	if(response.status == 400){
+		var errText = response.responseText;
+		$('.validateTips').text( errText ).addClass('ui-state-highlight');
+		    
+	}
+	
+	if(response.status == 601){
+		sessionTimedOut();
+	}
+}

@@ -26,15 +26,15 @@ public class LocalizerFactory {
 		Localizer localizer = null;
 		switch (language) {
 			case "en" : {
-				localizer = new LocalizerEN();
+				localizer = new LocalizerEN(locale);
 				break;
 			}
 			case "ru" : {
-				localizer = new LocalizerRU();
+				localizer = new LocalizerRU(locale);
 				break;
 			}
 		default:
-			localizer = new LocalizerEN();
+			localizer = new LocalizerEN(locale);
 			break;
 		}
 

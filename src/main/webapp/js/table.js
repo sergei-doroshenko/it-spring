@@ -54,6 +54,14 @@ function createIssueTable() {
 	    }
         //loadComplete: handleLoadComplete
     });
+    
+    $('#list').jqGrid('navGrid', '#pager',{view:false, del:false, search:true, add: false, edit: false}, //
+    		{closeAfterEdit: true}, // use default settings for edit
+    		{closeAfterAdd: true}, // use default settings for add
+    		{closeAfterDelete: true},  // delete instead that del:false we need this
+    		{multipleSearch : true}, // enable the advanced searching
+    		{closeOnEscape:true} /* allow the view dialog to be closed when user press ESC key*/
+    		);
 }
 
 function colorFormatter (cellvalue, options, rowObject) {

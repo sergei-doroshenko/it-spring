@@ -21,11 +21,11 @@ public class LocalizerRU implements Localizer {
 	private final Locale locale;
 	private final ClassLoader loader;
 
-	public LocalizerRU () throws MalformedURLException {
+	public LocalizerRU (Locale locale) throws MalformedURLException {
 		File file = new File(path);
 		URL[] urls = {file.toURI().toURL()};
 		loader = new URLClassLoader(urls);
-		this.locale = new Locale("ru","RU");
+		this.locale = locale;
 	}
 
 	@Override

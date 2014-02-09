@@ -1,6 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<!-- i18n -->
+<fmt:requestEncoding value="UTF-8" />
+<fmt:setLocale value="${sessionScope[constants.KEY_LOCALE]}"/>
+<fmt:setBundle basename="i18n.main" var="lang"/>
+<!-- End of i18n --> 	
 <!DOCTYPE html>
 <html>
 	<head>
@@ -24,13 +29,6 @@
 		<script type="text/javascript" src="js/issue-tracker-main.js"> </script>
 		<script type="text/javascript" src="js/login.js"> </script>
 		<script type="text/javascript" src="js/table.js"> </script>
-		
-		<!-- i18n -->
-		<fmt:requestEncoding value="UTF-8" />
-		<fmt:setLocale value="${sessionScope[constants.KEY_LOCALE]}"/>
-		<fmt:setBundle basename="i18n.main" var="lang"/>
-		<!-- End of i18n --> 
-		
 	</head>
 	<body>
 		<div class="page-wrapper">

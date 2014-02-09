@@ -148,7 +148,7 @@ public class IssueImplDB implements IssueDAO {
 
 	private static final int INSERT_ISSUE_ASSIGNEE_ID_IND = 9;
 
-	private static final String SQL_SELECT_LAST_ISSUE_ID = "SELECT IDENTITY_VAL_LOCAL() from ISSUES";
+	private static final String SQL_SELECT_LAST_ISSUE_ID = "SELECT IDENTITY_VAL_LOCAL() FROM ISSUES";
 
 	private static final String SQL_DELETE_ISSUE = "DELETE FROM ISSUES WHERE ISSUES.ID = ?";
 

@@ -10,38 +10,41 @@
 <html>
      <head>
         <meta charset="UTF-8">
-        <title>Issue edit page</title>
+        <title>Users page</title>
         <link rel="stylesheet" type="text/css" media="screen" href="css/ui-lightness/jquery-ui.css" />
         <link rel="stylesheet" type="text/css" media="screen" href="css/ui-lightness/jquery.ui.theme.css" />
         <link rel="stylesheet" type="text/css" media="screen" href="css/ui-lightness/jquery-ui-1.10.4.custom.css" />
-        <link rel="stylesheet" type="text/css" media="screen" href="css/default.css" />
-        
-        <script type="text/javascript" src="js/jquery-1.9.0.min.js"> </script>
-        <script type="text/javascript" src="js/jquery-1.10.2.js"> </script>      
-        <script type="text/javascript" src="js/jquery.cookie.js"> </script>
-        <script type="text/javascript" src="js/jquery-ui-1.10.4.custom.min.js"> </script>
+		<link rel="stylesheet" type="text/css" media="screen" href="css/ui.jqgrid.css" />
+		<link rel="stylesheet" type="text/css" media="screen" href="css/default.css" />        
+		
+		<script type="text/javascript" src="js/jquery-1.9.0.min.js"> </script>		
+		<script type="text/javascript" src="js/jquery-ui-1.10.4.custom.min.js"> </script>
+		<script type="text/javascript" src="js/i18n/grid.locale-en.js"> </script>
+		<script type="text/javascript" src="js/jquery.jqGrid.min.js"> </script>
+		<script type="text/javascript" src="js/jquery.cookie.js"> </script>
         <script type="text/javascript" src="js/jquery.form.js"> </script>
-        <script type="text/javascript" src="js/issue-tracker-main.js"> </script>
-        <script type="text/javascript" src="js/user-dialog.js"> </script>
-    
+        <script type="text/javascript" src="js/user-dialog.js"> </script>	
+		<script type="text/javascript" src="js/issue-tracker-main.js"> </script>
+		<script type="text/javascript" src="js/prop-table.js"> </script>
      </head>
 	<body>
 	
 		<div class="page-wrapper">
              <div class="header">
-                <jsp:include page="${constants.URL_HEADER_SIMPLE}"/>
+                <jsp:include page="${constants.URL_HEADER}"/>
              </div><!--end header-->
              <div id="menu-bar" class="menu-bar">
                 <jsp:include page="${constants.URL_MENU_TOP}"/>
              </div><!-- end menu-bar -->
              <div class="content">
-	             	<jsp:include page="${constants.URL_BUTTONS_VIEW_USER}"/>
-	             	<span>${user.firstName} ${user.lastName}</span>
-	             	
-	             	
-					
-					<button id="create-user">Create new user</button>
-					
+	             	<div id="users-table-container">
+		             	<table id="users-table"></table> 
+						<div id="users-pager"></div>
+	             	</div><!-- End of users table container -->
+	             	<div id="roles-table-container">
+	             		<table id="roles-table"></table> 
+						<div id="roles-pager"></div>
+	             	</div><!--  End of roles table container -->
 	         </div><!--end content-->
              <div class="footer">
                  <jsp:include page="${constants.URL_FOOTER}"></jsp:include>
@@ -50,15 +53,17 @@
         <script type="text/javascript">
 			$(document).ready(function () {
 				builUserForm();
-				buildUserView ();
+				buildUserView();
+				createUsersTable();
+				createRolesTable();
 				$('#en-loc').click(function(ev) {
 					changeLocaleUrl (ev);
 				});
 				$('#ru-loc').click(function(ev) {
 					changeLocaleUrl (ev);
 				});
-				$("#create-user").button().click(function() {
-			        $( "#dialog-form" ).dialog( "open" );
+				$('#view-user').click(function() {
+			        $('#dialog-confirm').dialog('open');
 			    });
 			});
 		</script> 	

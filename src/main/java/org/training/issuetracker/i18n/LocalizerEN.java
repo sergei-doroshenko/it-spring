@@ -23,11 +23,11 @@ public class LocalizerEN implements Localizer {
 	private final Locale locale;
 	private final ClassLoader loader;
 
-	public LocalizerEN () throws MalformedURLException {
+	public LocalizerEN (Locale locale) throws MalformedURLException {
 		File file = new File(path);
 		URL[] urls = {file.toURI().toURL()};
 		loader = new URLClassLoader(urls);
-		this.locale = new Locale("en","EN");
+		this.locale = locale;
 	}
 
 	@Override

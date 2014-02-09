@@ -13,20 +13,20 @@ import org.apache.log4j.Logger;
 import org.training.issuetracker.constants.Constants;
 import org.training.issuetracker.data.db.PropImplDB.PropertyType;
 import org.training.issuetracker.domain.AbstractPersistentObj;
-import org.training.issuetracker.domain.Issue;
 import org.training.issuetracker.domain.User;
 import org.training.issuetracker.domain.DAO.DAOFactory;
 import org.training.issuetracker.domain.DAO.PropDAO;
+import org.training.issuetracker.domain.DAO.UserDAO;
 import org.training.issuetracker.exceptions.DaoException;
 import org.training.issuetracker.exceptions.ParameterNotFoundException;
 import org.training.issuetracker.security.PermissionInspector;
 import org.training.issuetracker.utils.JqGridData;
 import org.training.issuetracker.utils.ParameterParser;
 
-public class ViewStatusesListCommand extends AbstractWebCommand {
+public class ViewUsersListCommand extends AbstractWebCommand {
 	private Logger logger = Logger.getLogger("org.training.issuetracker.command");
 	
-	public ViewStatusesListCommand(HttpServletRequest request,	HttpServletResponse response) {
+	public ViewUsersListCommand(HttpServletRequest request,	HttpServletResponse response) {
 		super(request, response);
 	}
 
@@ -38,16 +38,17 @@ public class ViewStatusesListCommand extends AbstractWebCommand {
 		
 		PermissionInspector.checkPermission(user, this.getClass().getSimpleName());
 		ParameterParser parser = new ParameterParser(getRequest());
-		PropDAO propDAO = DAOFactory.getDAO(PropDAO.class);
+		UserDAO userDAO = DAOFactory.getDAO(UserDAO.class);
 		try {
+			
+			List<User> users = userDAO.getUsersList();
+			logger.debug("Users List = " + users);
+			
 			int page = parser.getIntParameter(Constants.KEY_PAGE);
-			List<AbstractPersistentObj> statuses = propDAO.getPropList(PropertyType.STATUS);
-			logger.debug("Prop List = " + statuses);
-			
-			int total = statuses.size();
-			int records = statuses.size();
-			
-			JqGridData<AbstractPersistentObj> data = new JqGridData<>(total, page, records, statuses);
+			int rows = parser.getIntParameter(Constants.KEY_ROWS);
+			int records = users.size();
+			int total = records/rows;			
+			JqGridData<User> data = new JqGridData<>(total, page, records, users);
 			String json = data.getJsonString();
 			logger.debug(json);
 			out.print(json);
@@ -60,4 +61,6 @@ public class ViewStatusesListCommand extends AbstractWebCommand {
 			out.close();
 		}
 	}
+	
+	
 }

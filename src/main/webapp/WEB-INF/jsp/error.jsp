@@ -40,6 +40,8 @@
              <script type="text/javascript">
            		$( document ).ready(function () {
            			bindLongin();
+           			builUserForm();
+    				buildUserView ();
            			$('#en-loc').click(function(ev) {
            				changeLocaleUrl (ev);
            			});

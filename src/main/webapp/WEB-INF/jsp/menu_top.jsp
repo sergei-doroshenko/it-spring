@@ -15,14 +15,8 @@
 			<li class="menu-obj-item"><a href="${constants.URL_MAIN_COMMAND}${constants.COMMAND_SUBMIT_ISSUE}"><fmt:message key="submitissue" bundle="${lang}"/></a></li>
 			<c:if test="${user.role.name eq constants.ROLE_ADMIN}">
 				<li class="menu-obj-item"><a href="view-user.jsp"><fmt:message key="admin.users" bundle="${lang}"/></a></li>
-				<li class="menu-obj-item"><a href="notimplemented.jsp"><fmt:message key="admin.roles" bundle="${lang}"/></a></li>
-				<li class="menu-obj-item"><a href="notimplemented.jsp"><fmt:message key="admin.projects" bundle="${lang}"/></a></li>
-				<li class="menu-obj-item"><a href="notimplemented.jsp"><fmt:message key="admin.statuses" bundle="${lang}"/></a></li>
-				<li class="menu-obj-item"><a href="notimplemented.jsp"><fmt:message key="admin.resolutions" bundle="${lang}"/></a></li>
-				<li class="menu-obj-item"><a href="notimplemented.jsp"><fmt:message key="admin.priorities" bundle="${lang}"/></a></li>
-				<li class="menu-obj-item"><a href="notimplemented.jsp"><fmt:message key="admin.types" bundle="${lang}"/></a></li>
+				<li class="menu-obj-item"><a href="properties.jsp"><fmt:message key="admin.properties" bundle="${lang}"/></a></li>
 			</c:if>
 		</c:when>
 	</c:choose>
-	<li class="menu-obj-item"><a href="${constants.URL_SEARCH}"><fmt:message key="search" bundle="${lang}"/></a></li>
 </ul>

@@ -73,9 +73,6 @@ public final class Constants {
 	/** Constants string literal for page-fragment-url of buttons-edit.jsp */
 	public static final String URL_BUTTONS_EDIT = URL_PREFIX + "/buttons-edit.jsp";
 
-	/** Constants string literal for view-user.jsp url  */
-	public static final String URL_VIEW_USER = URL_PREFIX + "/view-user.jsp";
-
 	/** Constants string literal for edit-user.jsp url  */
 	public static final String URL_EDIT_USER = URL_PREFIX + "/edit-user.jsp";
 
@@ -148,6 +145,8 @@ public final class Constants {
 	
 	/** Constants string literal for delete user command  */
 	public static final String COMMAND_DELETE_USER = "deleteuser";
+	/** Constants string literal for view users list command  */
+	public static final String COMMAND_VIEW_USERS_LIST = "users_list";
 	
 	/** Constants string literal for edit user info command  */
 	public static final String COMMAND_LOCALE = "locale";
@@ -260,6 +259,12 @@ public final class Constants {
 
 	/** String literal for request parameter description */
 	public static final String KEY_DESCRIPTION = "description";
+	
+	/** String literal for request parameter page */
+	public static final String KEY_PAGE = "page";
+	
+	/** String literal for request parameter rows */
+	public static final String KEY_ROWS = "rows";
 
 //************************ ROLES *****************************************
 	/** Constants string literal for role - user. */
@@ -368,6 +373,7 @@ public final class Constants {
 
 	/** String literal for empty string */
 	public static final String EMPTY_STRING = "";
+
 //********************************************** *************************************/
     /**
 	 * Private constructor

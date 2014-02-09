@@ -11,18 +11,11 @@
 <div class="logo">
 	<h2>Issue Tracker</h2>
 </div><!--end logo-->
-
-Locale:${sessionScope[constants.KEY_LOCALE]}
-Role:${user.role.name}${user.email}${user.password}
-
 <div id="lang">
    	<span id="en-loc" class="button-locale">EN</span>
 	<span id="ru-loc" class="button-locale">RU</span>
 </div>
-<div id="dialog-confirm" title="Empty the recycle bin?" class="hidden-block">
-	<p><span class="ui-icon ui-icon-notice" style="float:left; margin:0 7px 20px 0;"></span>Are you sure?</p>
-</div><!-- End of user dialog -->
-<div id="dialog-form" class="user-dialog hidden-block" title="Create new user">
+<div id="dialog-form" class="user-dialog hidden-block" title="User Info">
 	<p class="validateTips">All form fields are required.</p>
 	<form>
 		<fieldset>
@@ -59,6 +52,31 @@ Role:${user.role.name}${user.email}${user.password}
 	      		<a class="logout" href="${constants.URL_LOGOUT_COMMAND}"><fmt:message key="user.logout" bundle="${lang}"/></a>
 	      		<input id="buttons-type" name="buttons-type" type="hidden" value="${constants.COMMAND_EDIT_USER}"/>
 	      		<input id="send-command" name="command" type="hidden" value="${constants.COMMAND_EDIT_USER}"/>
+	      		<input id="view-user-command" name="view-user-command" type="hidden" value="${constants.COMMAND_VIEW_USER}"/>
+	      		<input id="user-id" name="user-id" type="hidden" value="${user.id}"/>
+	      		<div id="dialog-confirm" title="User Info" class="hidden-block">
+					<p><span class="ui-icon ui-icon-notice" style="float:left; margin:0 7px 20px 0;"></span>Hello</p>
+					<p>
+						<span class="user-view-label">Id </span>
+						<span id="user-id-view"><c:out value="${user.id}"/></span>
+					</p>
+					<p>
+						<span class="user-view-label">First Name </span>
+						<span id="user-first-name"><c:out value="${user.firstName}"/></span>
+					</p>
+					<p>
+						<span class="user-view-label">Last Name </span>
+						<span id="user-last-name"><c:out value="${user.lastName}"/></span>
+					</p>
+					<p>
+						<span class="user-view-label">E-mail </span>
+						<span id="user-email"><c:out value="${user.email}"/></span>
+					</p>
+					<p>
+						<span class="user-view-label">Role </span>
+						<span id="user-role"><c:out value="${user.role.name}"/></span>
+					</p>
+				</div><!-- End of user dialog -->
      		</c:otherwise>
      	</c:choose>
      </form>

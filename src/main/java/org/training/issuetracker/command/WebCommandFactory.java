@@ -31,6 +31,7 @@ public class WebCommandFactory {
 		commandMap.put(Constants.COMMAND_UPDATE_ISSUE, new UpdateIssueCommand(request, response));
 		commandMap.put(Constants.COMMAND_DELETE_ISSUE, new DeleteIssueCommand(request, response));
 		commandMap.put(Constants.COMMAND_VIEW_USER, new ViewUserCommand(request, response));
+		commandMap.put(Constants.COMMAND_VIEW_USERS_LIST, new ViewUsersListCommand(request, response));
 		commandMap.put(Constants.COMMAND_ADD_USER, new InsertUserCommand(request, response));
 		commandMap.put(Constants.COMMAND_EDIT_USER, new EditUserCommand(request, response));
 		commandMap.put(Constants.COMMAND_GET_PROJECT_BUILDS, new GetProjectBuildsCommand(request, response));

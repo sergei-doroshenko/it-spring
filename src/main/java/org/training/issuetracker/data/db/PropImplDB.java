@@ -13,6 +13,7 @@ import org.training.issuetracker.constants.Constants;
 import org.training.issuetracker.domain.AbstractPersistentObj;
 import org.training.issuetracker.domain.Priority;
 import org.training.issuetracker.domain.Resolution;
+import org.training.issuetracker.domain.Role;
 import org.training.issuetracker.domain.Status;
 import org.training.issuetracker.domain.Type;
 import org.training.issuetracker.domain.DAO.PropDAO;
@@ -42,7 +43,13 @@ public class PropImplDB implements PropDAO {
 			"SELECT TYPES.ID AS id,"
 			+ "TYPES.TP_NAME AS name "
 			+ "FROM TYPES";
-
+	
+	private static final String SQL_SELECT_ROLES_LIST = 
+			"SELECT ROLES.ID AS id,"
+			+ "ROLES.RL_NAME AS name "
+			+ "FROM ROLES";
+			
+			
 	private static final String SQL_SELECT_STATUS =
 			"SELECT STATUSES.ID AS id,"
 			+ "STATUSES.ST_NAME AS name "
@@ -66,11 +73,15 @@ public class PropImplDB implements PropDAO {
 			+ "TYPES.TP_NAME AS name "
 			+ "FROM TYPES "
 			+ "WHERE TYPES.ID = ?";
+	
+	private static final String SQL_SELECT_ROLE =
+			"SELECT ROLES.ID AS id,"
+			+ "ROLES.RL_NAME AS name "
+			+ "FROM ROLES "
+			+ "WHERE ROLES.ID = ?";
 
 	private static final int SELECT_PROP_INDEX = 1;
-
-
-
+	
 	private AbstractPersistentObj createPropObj (PropertyType prop, long id, String name) {
 		AbstractPersistentObj propObject = null;
 		switch (prop) {
@@ -88,6 +99,10 @@ public class PropImplDB implements PropDAO {
 			}
 			case TYPE : {
 				propObject = new Type(id, name);
+				break;
+			}
+			case ROLE : {
+				propObject = new Role(id, name);
 				break;
 			}
 			default : {
@@ -116,6 +131,10 @@ public class PropImplDB implements PropDAO {
 				propObject = new Type();
 				break;
 			}
+			case ROLE : {
+				propObject = new Role();
+				break;
+			}
 			default : {
 				break;
 			}
@@ -142,6 +161,10 @@ public class PropImplDB implements PropDAO {
 				querySelectList = SQL_SELECT_TYPES_LIST;
 				break;
 			}
+			case ROLE : {
+				querySelectList = SQL_SELECT_ROLES_LIST;
+				break;
+			}
 			default : {
 				break;
 			}
@@ -166,6 +189,10 @@ public class PropImplDB implements PropDAO {
 			}
 			case TYPE : {
 				query = SQL_SELECT_TYPE;
+				break;
+			}
+			case ROLE : {
+				query = SQL_SELECT_ROLE;
 				break;
 			}
 			default : {
@@ -237,20 +264,20 @@ public class PropImplDB implements PropDAO {
 	@Override
 	public long insertProp(PropertyType prop, AbstractPersistentObj propObject)
 			throws DaoException {
-		// TODO Auto-generated method stub
+		
 		return 201;
 	}
 
 	@Override
 	public long updateProp(PropertyType prop, AbstractPersistentObj propObject)
 			throws DaoException {
-		// TODO Auto-generated method stub
+		
 		return 202;
 	}
 
 	@Override
 	public long deleteProp(PropertyType prop, long id) throws DaoException {
-		// TODO Auto-generated method stub
+		
 		return 203;
 	}
 

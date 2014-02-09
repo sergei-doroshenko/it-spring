@@ -213,10 +213,10 @@ public class Issue extends AbstractPersistentObj {
 		JsonObject issueJson = Json.createObjectBuilder()
 				.add("id", getId())
 				.add("priority", getPriority().getName())
-				.add("assignee", getAssignee().toString())
-				.add("type", getType().getName())
-				.add("status", getStatus().getName())
-				.add("summary", getSummary())
+				.add("assignee", assignee.getFirstName() + " " + assignee.getLastName())
+				.add("type", type.getName())
+				.add("status", status.getName())
+				.add("summary", summary)
 				.build();
 		return issueJson.toString();
 	}

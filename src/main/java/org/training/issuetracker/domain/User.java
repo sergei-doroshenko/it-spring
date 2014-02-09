@@ -55,7 +55,15 @@ public class User extends AbstractPersistentObj {
 
 	@Override
 	public String toString() {
-		return firstName + " " + lastName;
+		JsonObject issueJson = Json.createObjectBuilder()
+				.add("id", getId())
+				.add("first_name", firstName)
+				.add("last_name", lastName)
+				.add("email", email)
+				.add("password", password)
+				.add("role", role.toString())
+				.build();
+		return issueJson.toString();
 	}
 
 	public JsonObject toJsonObj () {

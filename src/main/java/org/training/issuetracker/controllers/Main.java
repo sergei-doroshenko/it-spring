@@ -33,7 +33,7 @@ public class Main extends AbstractBaseController {
 	@Override
 	void performTask(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
+		
 		ParameterParser parser = new ParameterParser(request);
 		try {
 			String commandName = parser.getStringParameter(Constants.KEY_COMMAND);
@@ -41,8 +41,8 @@ public class Main extends AbstractBaseController {
 			logger.info("Invoke -> " + commandName);
 			WebCommandFactory comFactory = new WebCommandFactory(request, response);
 			Command command = comFactory.getCommand(commandName);
-//			logger.info("Create -> " + command.getClass().getSimpleName());
-			logger.info("Create -> " + command);
+			logger.info("Create -> " + command.getClass().getSimpleName());
+			
 			command.execute();
 		} catch (ParameterNotFoundException e) {
 			PrintWriter out = response.getWriter();

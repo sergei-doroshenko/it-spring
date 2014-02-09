@@ -11,14 +11,23 @@
      <head>
         <meta charset="UTF-8">
         <title>Issue edit page</title>
-        <link rel="stylesheet" type="text/css" media="screen" href="css/default.css" />
-        <script type="text/javascript" src="js/jquery-1.9.0.min.js"> </script>
-        <script type="text/javascript" src="js/jquery.cookie.js"> </script>
-        <script type="text/javascript" src="js/login.js"> </script>
-        <script type="text/javascript" src="js/issue-tracker-main.js"> </script>
+        <link rel="stylesheet" type="text/css" media="screen" href="css/ui-lightness/jquery-ui.css" />
+        <link rel="stylesheet" type="text/css" media="screen" href="css/ui-lightness/jquery.ui.theme.css" />
+        <link rel="stylesheet" type="text/css" media="screen" href="css/ui-lightness/jquery-ui-1.10.4.custom.css" />
+		<link rel="stylesheet" type="text/css" media="screen" href="css/ui.jqgrid.css" />
+		<link rel="stylesheet" type="text/css" media="screen" href="css/default.css" />        
+		
+		<script type="text/javascript" src="js/jquery-1.9.0.min.js"> </script>		
+		<script type="text/javascript" src="js/jquery-ui-1.10.4.custom.min.js"> </script>
+		<script type="text/javascript" src="js/i18n/grid.locale-en.js"> </script>
+		<script type="text/javascript" src="js/jquery.jqGrid.min.js"> </script>
+		<script type="text/javascript" src="js/jquery.cookie.js"> </script>
+        <script type="text/javascript" src="js/jquery.form.js"> </script>
+        <script type="text/javascript" src="js/user-dialog.js"> </script>	
+		<script type="text/javascript" src="js/issue-tracker-main.js"> </script>
+		<script type="text/javascript" src="js/login.js"> </script>
      </head>
-     <body>
-     	
+     <body>  	
         <div class="page-wrapper">
              <div class="header">
                 <jsp:include page="${constants.URL_HEADER}"/>
@@ -183,16 +192,15 @@
         </div><!--end page-wrapper-->
         <script type="text/javascript">
              $( document ).ready(function () {
-                  bindLongin();
+            	  builUserForm();
+ 				  buildUserView ();
                   bindEditIssueForm();
                   $('#save-button').bind().on('click', function(){
-                	  
-                  });
-                  
+                	  $('#edit-issue-form').submit();
+                  });               
                   $('#cancel-button').bind().on('click', function(){
-                	  //window.history.back();
+                	  window.history.back();
                   });
-                  
                   //$('.description').attr('readonly','readonly');
                   $('#en-loc').click(function(ev) {
               			changeLocaleUrl (ev);
@@ -200,6 +208,9 @@
 	              $('#ru-loc').click(function(ev) {
 	              		changeLocaleUrl (ev);
 	              });
+	              $('#view-user').click(function() {
+				        $('#dialog-confirm').dialog('open');
+				  });
 	              $('#modifydate').text(getCurrentDate ());
 	              $('#project').change(function() {
 	            	  var id = $('#project').val();

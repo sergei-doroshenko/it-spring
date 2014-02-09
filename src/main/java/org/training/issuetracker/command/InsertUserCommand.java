@@ -10,23 +10,14 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
 import org.training.issuetracker.constants.Constants;
 import org.training.issuetracker.data.db.PropImplDB.PropertyType;
-import org.training.issuetracker.domain.Issue;
-import org.training.issuetracker.domain.Priority;
 import org.training.issuetracker.domain.Role;
-import org.training.issuetracker.domain.Status;
-import org.training.issuetracker.domain.Type;
 import org.training.issuetracker.domain.User;
 import org.training.issuetracker.domain.DAO.DAOFactory;
-import org.training.issuetracker.domain.DAO.IssueDAO;
-import org.training.issuetracker.domain.DAO.ProjectDAO;
 import org.training.issuetracker.domain.DAO.PropDAO;
-import org.training.issuetracker.domain.DAO.RoleDAO;
 import org.training.issuetracker.domain.DAO.UserDAO;
 import org.training.issuetracker.exceptions.DaoException;
 import org.training.issuetracker.exceptions.ParameterNotFoundException;
-import org.training.issuetracker.utils.ParameterInspector;
 import org.training.issuetracker.utils.ParameterParser;
-import org.training.issuetracker.utils.UrlCreator;
 
 public class InsertUserCommand extends AbstractWebCommand {
 	private Logger logger = Logger.getLogger("org.training.issuetracker.command");
@@ -39,11 +30,6 @@ public class InsertUserCommand extends AbstractWebCommand {
 	public void execute() throws IOException, ServletException {
 		PrintWriter out = getResponse().getWriter();
 		ParameterParser parser = new ParameterParser(getRequest());
-		User user = (User) getRequest().getSession().getAttribute(Constants.KEY_USER);
-		
-		if (user == null) {
-			return;
-		}
 		
 		try {
 
@@ -52,21 +38,26 @@ public class InsertUserCommand extends AbstractWebCommand {
 			String  email = parser.getStringParameter(Constants.KEY_EMAIL);
 			String  password = parser.getStringParameter(Constants.KEY_PASSWORD);
 
-			User newUser = new User();
+			User user = new User();
 			
-			newUser.setFirstName(firstName);
-			newUser.setLastName(lastName);
-			newUser.setEmail(email);
-			newUser.setPassword(password);
+			user.setFirstName(firstName);
+			user.setLastName(lastName);
+			user.setEmail(email);
+			user.setPassword(password);
 			PropDAO propDAO = DAOFactory.getDAO(PropDAO.class);
 			Role role = (Role) propDAO.getProp(PropertyType.ROLE, Constants.DEFAULT_ROLE_ID);
-			newUser.setRole(role);
+			user.setRole(role);
 			
 			UserDAO userDAO = DAOFactory.getDAO(UserDAO.class);
 					
-			long result = userDAO.insertUser(newUser);
-
-			logger.debug("Inserted issue with id = " + result);
+			long result = userDAO.insertUser(user);
+			
+			logger.debug("Inserted user  = " + user);
+			logger.debug("Inserted user with id = " + result);
+			
+			if (result > 0) {
+				getRequest().getSession().setAttribute(Constants.KEY_USER, userDAO.getUser(result));
+			}
 			
 			out.print(Constants.URL_MAIN);
 		} catch (DaoException e) {
@@ -84,6 +75,5 @@ public class InsertUserCommand extends AbstractWebCommand {
 		}
 		
 	}
-	
-	
+		
 }

@@ -29,6 +29,9 @@ create table users (
     role_id INTEGER not null,
 	CONSTRAINT fk_role_id FOREIGN KEY (role_id) REFERENCES ROLES(ID)
 );
+
+CREATE UNIQUE INDEX email_un ON USERS (EMAIL);
+
 drop table USERS;
 insert into USERS (FIRST_NAME, LAST_NAME, EMAIL, PASSWORD, ROLE_ID)
 values
@@ -238,5 +241,10 @@ CREATE TABLE attachments (
 	CONSTRAINT fk_issue_id_att FOREIGN KEY (issue_id) REFERENCES ISSUES(ID),
 	CONSTRAINT fk_create_by_com_att FOREIGN KEY (create_by) REFERENCES USERS(ID)
 );
+CREATE UNIQUE INDEX priority_un ON PRIORITIES (PR_NAME);
+CREATE UNIQUE INDEX resolution_un ON RESOLUTIONS (RES_NAME);
+CREATE UNIQUE INDEX role_un ON ROLES (RL_NAME);
+CREATE UNIQUE INDEX status_un ON STATUSES (ST_NAME);
+CREATE UNIQUE INDEX type_un ON TYPES (TP_NAME);
 
  

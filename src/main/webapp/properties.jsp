@@ -36,10 +36,10 @@
 				<jsp:include page="${constants.URL_MENU_TOP}"></jsp:include>
 			</div><!-- end menu-bar -->
 			<div class="content">
-				<div class="table-container">
+				<div class="statuses-table-container">
 					<table id="statuses-table"></table> 
 					<div id="statuses-pager"></div>
-				</div><!--end statuse-table-->
+				</div><!--end statuses table container-->
 			</div><!--end content-->
 			<div class="footer">
 				<jsp:include page="${constants.URL_FOOTER}"></jsp:include>
