@@ -62,7 +62,7 @@ public class EditIssueCommand extends AbstractWebCommand {
 			getRequest().setAttribute(Constants.TYPES, types);
 
 			ProjectDAO projectDAO = DAOFactory.getDAO(ProjectDAO.class);
-			List<Project> projects = projectDAO.getProjectsList();
+			List<Project> projects = projectDAO.getProjectsFormList();
 			getRequest().setAttribute(Constants.PROJECTS, projects);
 
 			UserDAO userDAO = DAOFactory.getDAO(UserDAO.class);

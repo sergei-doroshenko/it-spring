@@ -44,13 +44,14 @@
 	        	<input name="password" id="password" class="password" type="password">
 	        	<input id="authsubmit" class="authsubmit" type="submit" value="<fmt:message key="user.login" bundle="${lang}"/>" />
 	        	<span id="add-user" class="logout">Sing in</span>
-	        	<input id="buttons-type" name="buttons-type" type="hidden" value="${constants.COMMAND_ADD_USER}"/>
+	        	<input id="oper" name="oper" type="hidden" value="${constants.OPER_ADD}"/>
 	        	<input id="send-command" name="command" type="hidden" value="${constants.COMMAND_ADD_USER}"/>
      		</c:when>
      		<c:otherwise>
      			<span id="view-user" class="logout"><c:out value="${user.firstName}  ${user.lastName}"/></span>
 	      		<a class="logout" href="${constants.URL_LOGOUT_COMMAND}"><fmt:message key="user.logout" bundle="${lang}"/></a>
-	      		<input id="buttons-type" name="buttons-type" type="hidden" value="${constants.COMMAND_EDIT_USER}"/>
+	      		<input id="oper" name="oper" type="hidden" value="${constants.OPER_EDIT}"/>
+	      		<input id="oper-del" name="oper-del" type="hidden" value="${constants.OPER_DELETE}"/>
 	      		<input id="send-command" name="command" type="hidden" value="${constants.COMMAND_EDIT_USER}"/>
 	      		<input id="view-user-command" name="view-user-command" type="hidden" value="${constants.COMMAND_VIEW_USER}"/>
 	      		<input id="user-id" name="user-id" type="hidden" value="${user.id}"/>

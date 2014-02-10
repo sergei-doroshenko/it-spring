@@ -346,3 +346,24 @@ div#users-contain table td, div#users-contain table th {
 	height: 400px;
 	float: left;
 }
+
+.prop-table-container, .projects-table-container,
+.builds-table-container {
+	float: left;
+	padding: 10px;
+}
+
+.prop-table-container {
+	width: 300x;
+	height: 200px;
+}
+
+.projects-table-container {
+	width: 500x;
+	height: 200px;
+}
+
+.builds-table-container {
+	width: 300x;
+	height: 200px;
+}

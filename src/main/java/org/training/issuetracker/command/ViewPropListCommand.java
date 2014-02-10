@@ -13,7 +13,6 @@ import org.apache.log4j.Logger;
 import org.training.issuetracker.constants.Constants;
 import org.training.issuetracker.data.db.PropImplDB.PropertyType;
 import org.training.issuetracker.domain.AbstractPersistentObj;
-import org.training.issuetracker.domain.Issue;
 import org.training.issuetracker.domain.User;
 import org.training.issuetracker.domain.DAO.DAOFactory;
 import org.training.issuetracker.domain.DAO.PropDAO;
@@ -23,10 +22,10 @@ import org.training.issuetracker.security.PermissionInspector;
 import org.training.issuetracker.utils.JqGridData;
 import org.training.issuetracker.utils.ParameterParser;
 
-public class ViewStatusesListCommand extends AbstractWebCommand {
+public class ViewPropListCommand extends AbstractWebCommand {
 	private Logger logger = Logger.getLogger("org.training.issuetracker.command");
 	
-	public ViewStatusesListCommand(HttpServletRequest request,	HttpServletResponse response) {
+	public ViewPropListCommand(HttpServletRequest request, HttpServletResponse response) {
 		super(request, response);
 	}
 
@@ -41,7 +40,9 @@ public class ViewStatusesListCommand extends AbstractWebCommand {
 		PropDAO propDAO = DAOFactory.getDAO(PropDAO.class);
 		try {
 			int page = parser.getIntParameter(Constants.KEY_PAGE);
-			List<AbstractPersistentObj> statuses = propDAO.getPropList(PropertyType.STATUS);
+			String prop = parser.getStringParameter(Constants.KEY_PROP);
+			PropertyType propType = PropertyType.valueOf(prop);
+			List<AbstractPersistentObj> statuses = propDAO.getPropList(propType);
 			logger.debug("Prop List = " + statuses);
 			
 			int total = statuses.size();
@@ -60,4 +61,6 @@ public class ViewStatusesListCommand extends AbstractWebCommand {
 			out.close();
 		}
 	}
+	
+	
 }

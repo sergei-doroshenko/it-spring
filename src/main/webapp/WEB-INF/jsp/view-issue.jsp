@@ -147,6 +147,7 @@
              $( document ).ready(function () {
                   builUserForm();
   				  buildUserView ();
+  				  bindLongin();
                   $('#new-button').bind().on('click', function(){
                 	  window.location.href = '/issuetracker/Main.do?command=submitissue';
                   });

@@ -1,5 +1,8 @@
 package org.training.issuetracker.domain;
 
+import javax.json.Json;
+import javax.json.JsonObject;
+
 public class Project extends AbstractPersistentObj {
 	private String description;
 	private User manager;
@@ -34,7 +37,13 @@ public class Project extends AbstractPersistentObj {
 
 	@Override
 	public String toString() {
-		return "Project [" + description + "manager=" + manager.getFirstName() + manager.getLastName() + "]";
+		JsonObject issueJson = Json.createObjectBuilder()
+				.add("id", getId())
+				.add("name", getName())
+				.add("description", description)
+				.add("manager", manager.toString())
+				.build();
+		return issueJson.toString();
 	}
 
 }

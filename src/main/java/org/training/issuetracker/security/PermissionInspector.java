@@ -7,7 +7,7 @@ import org.training.issuetracker.command.EditIssueCommand;
 import org.training.issuetracker.command.EditUserCommand;
 import org.training.issuetracker.command.GetProjectBuildsCommand;
 import org.training.issuetracker.command.InsertIssueCommand;
-import org.training.issuetracker.command.InsertUserCommand;
+import org.training.issuetracker.command.EditUserCommand;
 import org.training.issuetracker.command.LoginCommand;
 import org.training.issuetracker.command.LogoutCommand;
 import org.training.issuetracker.command.UpdateIssueCommand;
@@ -24,7 +24,7 @@ public class PermissionInspector {
 		userPermissionSet.add(EditIssueCommand.class.getSimpleName());
 		userPermissionSet.add(UpdateIssueCommand.class.getSimpleName());
 		userPermissionSet.add(ViewUserCommand.class.getSimpleName());
-		userPermissionSet.add(InsertUserCommand.class.getSimpleName());
+		userPermissionSet.add(EditUserCommand.class.getSimpleName());
 		userPermissionSet.add(EditUserCommand.class.getSimpleName());
 		userPermissionSet.add(GetProjectBuildsCommand.class.getSimpleName());		
 	}

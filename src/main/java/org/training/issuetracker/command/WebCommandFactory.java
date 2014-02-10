@@ -32,11 +32,12 @@ public class WebCommandFactory {
 		commandMap.put(Constants.COMMAND_DELETE_ISSUE, new DeleteIssueCommand(request, response));
 		commandMap.put(Constants.COMMAND_VIEW_USER, new ViewUserCommand(request, response));
 		commandMap.put(Constants.COMMAND_VIEW_USERS_LIST, new ViewUsersListCommand(request, response));
-		commandMap.put(Constants.COMMAND_ADD_USER, new InsertUserCommand(request, response));
+		commandMap.put(Constants.COMMAND_ADD_USER, new EditUserCommand(request, response));
 		commandMap.put(Constants.COMMAND_EDIT_USER, new EditUserCommand(request, response));
-		commandMap.put(Constants.COMMAND_GET_PROJECT_BUILDS, new GetProjectBuildsCommand(request, response));
-		commandMap.put(Constants.COMMAND_VIEW_STATUSES_LIST, new ViewStatusesListCommand(request, response));
-		commandMap.put(Constants.COMMAND_EDIT_STATUS, new EditStatusCommand(request, response));
+		commandMap.put(Constants.COMMAND_GET_PROJECT_BUILDS, new GetProjectBuildsCommand(request, response));		
+		commandMap.put(Constants.COMMAND_EDIT_PROP, new EditPropCommand(request, response));
+		commandMap.put(Constants.COMMAND_VIEW_PROP_LIST, new ViewPropListCommand(request, response));
+		commandMap.put(Constants.COMMAND_VIEW_PROJECTS_LIST, new ViewProjectsListCommand(request, response));
 	}
 
 	/**Method for call specific command object.

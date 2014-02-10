@@ -215,7 +215,7 @@
 	              $('#project').change(function() {
 	            	  var id = $('#project').val();
 	            	  getProjectBuilds (id);
-	              });	            		  
+	              });
              });
         </script>
      </body>

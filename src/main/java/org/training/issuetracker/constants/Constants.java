@@ -138,7 +138,7 @@ public final class Constants {
 	public static final String COMMAND_VIEW_USER = "viewuser";
 
 	/** Constants string literal for edit user info command  */
-	public static final String COMMAND_EDIT_USER = "edituser";
+	public static final String COMMAND_EDIT_USER = "edit_user";
 	
 	/** Constants string literal for insert user command  */
 	public static final String COMMAND_ADD_USER = "adduser";
@@ -154,12 +154,15 @@ public final class Constants {
 	/** Constants string literal for edit user info command  */
 	public static final String COMMAND_GET_PROJECT_BUILDS = "get_project_builds";
 	
-	/** Constants string literal for view statuses list command  */
-	public static final String COMMAND_VIEW_STATUSES_LIST = "statuses_list";
+	/** Constants string literal for view prop list command  */
+	public static final String COMMAND_VIEW_PROP_LIST = "prop_list";
 	
-	/** Constants string literal for edit status command  */
-	public static final String COMMAND_EDIT_STATUS = "edit_status";
-
+	/** Constants string literal for edit prop command  */
+	public static final String COMMAND_EDIT_PROP = "edit_prop";
+	
+	/** Constants string literal for view projects list command  */
+	public static final String COMMAND_VIEW_PROJECTS_LIST = "projects_list";
+	
 	/** Constants string literal for submitissue-url  */
 	public static final String URL_MAIN_COMMAND = "/issuetracker/Main.do?command=";
 
@@ -227,6 +230,9 @@ public final class Constants {
 	/** String literal for last name parameter */
 	public static final String KEY_EMAIL = "email";
 	
+	/** String literal for role id parameter */
+	public static final String KEY_ROLE_ID = "role";
+	
 	/** String literal for backurl */
 	public static final String KEY_BACK_URL = "backurl";
 
@@ -235,7 +241,10 @@ public final class Constants {
 
 	/** String literal for request parameter type */
 	public static final String KEY_TYPE = "type";
-
+	
+	/** String literal for request parameter prop */
+	public static final String KEY_PROP = "prop";
+	
 	/** String literal for request parameter priority */
 	public static final String KEY_PRIORITY = "priority";
 
@@ -265,6 +274,16 @@ public final class Constants {
 	
 	/** String literal for request parameter rows */
 	public static final String KEY_ROWS = "rows";
+	
+//**************** OPERATIONS **********************************************
+	/** Constants string literal for parameter oper: add. */
+	public static final String OPER_ADD = "add";
+	
+	/** Constants string literal for parameter oper: edit. */
+	public static final String OPER_EDIT = "edit";
+	
+	/** Constants string literal for parameter oper: delete. */
+	public static final String OPER_DELETE = "del";
 
 //************************ ROLES *****************************************
 	/** Constants string literal for role - user. */

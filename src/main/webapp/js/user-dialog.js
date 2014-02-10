@@ -65,10 +65,12 @@ function builUserForm() {
 	    	  
 	    	  var formdata = {
 		        'command' : $('#send-command').val(),
+		        'oper' : $('#oper').val(),
 		        'first_name' : first_name.val(),
 		        'last_name' : last_name.val(),
 		        'email' : email.val(),
-		        'password' : password.val()
+		        'password' : password.val(),
+		        'id' : $('#user-id').val()
 	    	  };
 	    	  
 	    	 $.ajax({
@@ -77,7 +79,8 @@ function builUserForm() {
               dataType: 'text',
               type: 'post',
               success: function (data) {
-                  window.location.href = data;
+                  //window.location.href = data;
+            	  window.location.reload();
               },
               error:  function (response, status, err) {	
             		if(response.status == 400){
@@ -105,7 +108,7 @@ function builUserForm() {
 			}	
 	};
 	
-	if($('#buttons-type').val() == 'edituser') {
+	if($('#send-command').val() == 'edit_user') {
 		buttons_set = edit_buttons;
 	} 
 	

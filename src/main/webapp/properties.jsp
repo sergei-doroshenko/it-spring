@@ -36,10 +36,30 @@
 				<jsp:include page="${constants.URL_MENU_TOP}"></jsp:include>
 			</div><!-- end menu-bar -->
 			<div class="content">
-				<div class="statuses-table-container">
+				<div class="prop-table-container">
 					<table id="statuses-table"></table> 
 					<div id="statuses-pager"></div>
 				</div><!--end statuses table container-->
+				<div class="prop-table-container">
+					<table id="resolutions-table"></table> 
+					<div id="resolutions-pager"></div>
+				</div><!--end prop table container-->
+				<div class="prop-table-container">
+					<table id="priority-table"></table> 
+					<div id="priority-pager"></div>
+				</div><!--end prop table container-->
+				<div class="prop-table-container">
+					<table id="types-table"></table> 
+					<div id="types-pager"></div>
+				</div><!--end prop table container-->
+				<div class="projects-table-container">
+					<table id="projects-table"></table> 
+					<div id="projects-pager"></div>
+				</div><!--end projects table container-->
+				<div class="builds-table-container">
+					<table id="builds-table"></table> 
+					<div id="builds-pager"></div>
+				</div><!--end projects table container-->
 			</div><!--end content-->
 			<div class="footer">
 				<jsp:include page="${constants.URL_FOOTER}"></jsp:include>
@@ -48,6 +68,10 @@
 		<script type="text/javascript">
 			$(document).ready(function () {
 				createStatusesTable();
+				createResolutionsTable();
+				createPrioritiesTable();
+				createTypesTable();
+				createProjectsTable();
 				bindLongin();
 				$('#en-loc').click(function(ev) {
 					changeLocaleUrl (ev);

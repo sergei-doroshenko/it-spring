@@ -82,6 +82,49 @@ public class PropImplDB implements PropDAO {
 
 	private static final int SELECT_PROP_INDEX = 1;
 	
+	private static final String SQL_INSERT_STATUS = "INSERT INTO STATUSES (ST_NAME) VALUES (?)";
+	
+	private static final String SQL_INSERT_RESOLUTION = "INSERT INTO RESOLUTIONS (RES_NAME) VALUES (?)";
+	
+	private static final String SQL_INSERT_PRIORITY = "INSERT INTO PRIORITIES (PR_NAME) VALUES (?)";
+	
+	private static final String SQL_INSERT_TYPE = "INSERT INTO TYPES (TP_NAME) VALUES (?)";
+	
+	private static final String SQL_INSERT_ROLE = "INSERT INTO ROLES (RL_NAME) VALUES (?)";
+	
+	private static final int INSERT_PROP_INDEX = 1;
+	
+	private static final String SQL_UPDATE_STATUS = 
+			"UPDATE STATUSES SET STATUSES.ST_NAME = ? WHERE STATUSES.ID = ?";
+	
+	private static final String SQL_UPDATE_RESOLUTION = 
+			"UPDATE RESOLUTIONS SET RESOLUTIONS.RES_NAME = ? WHERE RESOLUTIONS.ID = ?";
+	
+	private static final String SQL_UPDATE_PRIORITY = 
+			"UPDATE PRIORITIES SET PRIORITIES.PR_NAME = ? WHERE PRIORITIES.ID = ?";
+	
+	private static final String SQL_UPDATE_TYPE = 
+			"UPDATE TYPES SET TYPES.TP_NAME = ? WHERE TYPES.ID = ?";
+	
+	private static final String SQL_UPDATE_ROLE = 
+			"UPDATE ROLES SET ROLES.RL_NAME = ? WHERE ROLES.ID = ?";
+	
+	private static final int UPDATE_PROP_NAME_IND = 1;
+	
+	private static final int UPDATE_PROP_ID_IND = 2;
+	
+	private static final String SQL_DELETE_STATUS = "DELETE FROM STATUSES WHERE STATUSES.ID = ?";
+	
+	private static final String SQL_DELETE_RESOLUTION = "DELETE FROM RESOLUTIONS WHERE RESOLUTIONS.ID = ?";
+	
+	private static final String SQL_DELETE_PRIORITY = "DELETE FROM PRIORITIES WHERE PRIORITIES.ID = ?";
+	
+	private static final String SQL_DELETE_TYPE = "DELETE FROM TYPES WHERE TYPES.ID = ?";
+	
+	private static final String SQL_DELETE_ROLE = "DELETE FROM ROLES WHERE ROLES.ID = ?";
+	
+	private static final int DELETE_PROP_ID_IND = 1;
+	
 	private AbstractPersistentObj createPropObj (PropertyType prop, long id, String name) {
 		AbstractPersistentObj propObject = null;
 		switch (prop) {
@@ -201,8 +244,97 @@ public class PropImplDB implements PropDAO {
 		}
 		return query;
 	}
-
-
+	
+	private String getInsertPropQuery(PropertyType prop) {
+		String query = null;
+		switch (prop) {
+			case STATUS : {
+				query = SQL_INSERT_STATUS;
+				break;
+			}
+			case RESOLUTION : {
+				query = SQL_INSERT_RESOLUTION;
+				break;
+			}
+			case PRIORITY : {
+				query = SQL_INSERT_PRIORITY;
+				break;
+			}
+			case TYPE : {
+				query = SQL_INSERT_TYPE;
+				break;
+			}
+			case ROLE : {
+				query = SQL_INSERT_ROLE;
+				break;
+			}
+			default : {
+				break;
+			}
+		}
+		return query;
+	}
+	
+	private String getUpdatePropQuery(PropertyType prop) {
+		String query = null;
+		switch (prop) {
+			case STATUS : {
+				query = SQL_UPDATE_STATUS;
+				break;
+			}
+			case RESOLUTION : {
+				query = SQL_UPDATE_RESOLUTION;
+				break;
+			}
+			case PRIORITY : {
+				query = SQL_UPDATE_PRIORITY;
+				break;
+			}
+			case TYPE : {
+				query = SQL_UPDATE_TYPE;
+				break;
+			}
+			case ROLE : {
+				query = SQL_UPDATE_ROLE;
+				break;
+			}
+			default : {
+				break;
+			}
+		}
+		return query;
+	}
+	
+	private String getDeletePropQuery(PropertyType prop) {
+		String query = null;
+		switch (prop) {
+			case STATUS : {
+				query = SQL_DELETE_STATUS;
+				break;
+			}
+			case RESOLUTION : {
+				query = SQL_DELETE_RESOLUTION;
+				break;
+			}
+			case PRIORITY : {
+				query = SQL_DELETE_PRIORITY;
+				break;
+			}
+			case TYPE : {
+				query = SQL_DELETE_TYPE;
+				break;
+			}
+			case ROLE : {
+				query = SQL_DELETE_ROLE;
+				break;
+			}
+			default : {
+				break;
+			}
+		}
+		return query;
+	}
+	
 	public enum PropertyType {
 		STATUS, RESOLUTION, PRIORITY, TYPE, ROLE
 	}
@@ -265,20 +397,63 @@ public class PropImplDB implements PropDAO {
 	public long insertProp(PropertyType prop, AbstractPersistentObj propObject)
 			throws DaoException {
 		
-		return 201;
+		PreparedStatement st = null;
+
+		try {
+			connection = ConnectionProvider.getConnection();
+			st = connection.prepareStatement(getInsertPropQuery(prop));
+			st.setString(INSERT_PROP_INDEX, propObject.getName());
+						
+			return st.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DaoException(e.getMessage(), e);
+		} finally {
+			ConnectionProvider.closeConnection(connection);
+			ConnectionProvider.closePrepStatemnts(st);
+		}
 	}
 
 	@Override
 	public long updateProp(PropertyType prop, AbstractPersistentObj propObject)
 			throws DaoException {
 		
-		return 202;
+		PreparedStatement st = null;
+
+		try {
+			connection = ConnectionProvider.getConnection();
+			st = connection.prepareStatement(getUpdatePropQuery(prop));
+			st.setString(UPDATE_PROP_NAME_IND, propObject.getName());
+			st.setLong(UPDATE_PROP_ID_IND, propObject.getId());
+						
+			return st.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DaoException(e.getMessage(), e);
+		} finally {
+			ConnectionProvider.closeConnection(connection);
+			ConnectionProvider.closePrepStatemnts(st);
+		}
 	}
 
 	@Override
 	public long deleteProp(PropertyType prop, long id) throws DaoException {
 		
-		return 203;
+		PreparedStatement st = null;
+
+		try {
+			connection = ConnectionProvider.getConnection();
+			st = connection.prepareStatement(getDeletePropQuery(prop));
+			st.setLong(DELETE_PROP_ID_IND, id);
+
+			return st.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DaoException(e.getLocalizedMessage());
+		} finally {
+			ConnectionProvider.closeConnection(connection);
+			ConnectionProvider.closePrepStatemnts(st);
+		}
 	}
 
 }

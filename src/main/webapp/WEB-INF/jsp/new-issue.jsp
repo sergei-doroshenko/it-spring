@@ -78,7 +78,11 @@
 				                   <tr>
 				                       <td class="detail-col-name"><fmt:message key="page.issue.status" bundle="${lang}"/></td>
 				                       <td class="detail-col-value">
-				                       		<span><c:out  value="${constants.STATUS_NEW}"/></span>
+				                       		<select id="status" name="status" class="detail-col-select" size="1" disabled="disabled">
+					                           	<c:forEach var="status" items="${requestScope[constants.STATUSES]}">
+					                           		<option value="${status.id}" <c:if test="${status.name eq constants.STATUS_NEW}">selected</c:if>>${status.name}</option>
+					                           	</c:forEach>
+				                           </select>
 				                       </td>
 				                       <td class="detail-col-name"><fmt:message key="page.issue.resolution" bundle="${lang}"/></td>
 				                       <td class="detail-col-value">
@@ -159,7 +163,9 @@
 	            	  var id = $('#project').val();
 	            	  getProjectBuilds (id);
 	              });
-	            		  
+	              $('#assignee').change(function() {
+	            	  $('#status').val(3);
+	              });		  
              });
         </script>
      </body>

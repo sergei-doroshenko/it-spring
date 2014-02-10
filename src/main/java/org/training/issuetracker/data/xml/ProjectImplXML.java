@@ -46,7 +46,7 @@ public class ProjectImplXML implements ProjectDAO {
 	}
 
 	@Override
-	public List<Project> getProjectsList() throws DaoException {
+	public List<Project> getProjectsFormList() throws DaoException {
 		// TODO Auto-generated method stub
 		return null;
 	}
