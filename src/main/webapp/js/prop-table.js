@@ -251,6 +251,65 @@ function createProjectsTable() {
     		);
 }
 
+//projects_options = {value: "1:Data Storage;2:Green World;"};
+function getProjectsOptions(elem) {
+	var res_data;
+	var str = '';
+	$.ajax({
+      url: 'Main.do',
+      dataType: 'json',
+      data: {command: 'projects_list', page: 1, rows: 10},
+      type: 'get',
+      success: function (data) {
+          $(elem).empty();
+          for (var i = 0, l = data.rows.length; i < l; i++) {
+          	$(elem).append("<option value='" + data.rows[i].id + "'>" + data.rows[i].name + "</option>");	
+		   }
+      },
+      error:  handleLoadError
+    });
+    
+}
+
+function createBuildsTable() {
+    $("#builds-table").jqGrid({
+        url: "Main.do",
+        editurl: 'Main.do',
+        postData: {	command: 'builds_list'},
+		mtype: "GET",
+        datatype: "json",
+        jsonReader : jsonHandlerProp,
+        colNames: ["Id", "Name", "Project Id"],
+        colModel: [
+                   { name: "id", index: 'id', width: 50},
+                   { name: "name", index: 'name', width: 200, editable: true, editoptions:{size:"20",maxlength:"30"}},
+                   { name: "projectId", index: 'projectId', width: 70, editable: true, editoptions:{size:"20",maxlength:"30"}} 
+                   //edittype:"select", editoptions: { dataInit: function(elem){getProjectsOptions(elem);}} , editrules:{required:true}        
+               ],  
+        pager: "#builds-pager",
+        rowNum: 10,
+        sortname: "id",
+        sortorder: "desc",
+        viewrecords: true,
+        gridview: true,
+        autoencode: true,
+        caption: "Roles",
+        height: 100,
+		loadError: handleLoadError
+    });
+    
+    var edit_data = {command: 'edit_build'};
+    
+    $("#builds-table").jqGrid('navGrid', '#builds-pager',{view:false, del:true, search:false}, //
+    		{closeAfterEdit: true, editData: edit_data}, // use default settings for edit
+    		{closeAfterAdd: true, editData: edit_data}, // use default settings for add
+    		{closeAfterDelete: true, delData: edit_data},  // delete instead that del:false we need this
+    		{multipleSearch : true}, // enable the advanced searching
+    		{closeOnEscape:true} /* allow the view dialog to be closed when user press ESC key*/
+    		);
+}
+
+
 var jsonHandlerUsers = {
     root: "rows",
     page: "page",

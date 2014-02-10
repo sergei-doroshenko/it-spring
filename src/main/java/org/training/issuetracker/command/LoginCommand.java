@@ -57,6 +57,11 @@ public class LoginCommand extends AbstractWebCommand {
 			UserDAO userDAO = DAOFactory.getDAO(UserDAO.class);
 
 			User user = userDAO.getUser(login, password);
+
+			if(user.getId() == 0) {
+				throw new DaoException(Constants.ERROR_FIND_USER);
+			}
+
 			logger.debug("DAO return user: " + user);
 
 			ParameterInspector.checkName(user.getFirstName());

@@ -11,7 +11,6 @@ import org.apache.log4j.Logger;
 import org.training.issuetracker.constants.Constants;
 import org.training.issuetracker.data.db.PropImplDB.PropertyType;
 import org.training.issuetracker.domain.Role;
-import org.training.issuetracker.domain.Status;
 import org.training.issuetracker.domain.User;
 import org.training.issuetracker.domain.DAO.DAOFactory;
 import org.training.issuetracker.domain.DAO.PropDAO;
@@ -22,7 +21,7 @@ import org.training.issuetracker.security.PermissionInspector;
 import org.training.issuetracker.utils.ParameterParser;
 
 public class EditUserCommand extends AbstractWebCommand {
-	private Logger logger = Logger.getLogger("org.training.issuetracker.command");
+	private final Logger logger = Logger.getLogger("org.training.issuetracker.command");
 
 	public EditUserCommand(HttpServletRequest request, HttpServletResponse response) {
 		super(request, response);
@@ -32,13 +31,14 @@ public class EditUserCommand extends AbstractWebCommand {
 	public void execute() throws IOException, ServletException {
 		PrintWriter out = getResponse().getWriter();
 		ParameterParser parser = new ParameterParser(getRequest());
-					
+
 		UserDAO userDAO = DAOFactory.getDAO(UserDAO.class);
 		try {
 			String oper = parser.getStringParameter(Constants.KEY_OPERATION);
 			long result = 0;
 			switch (oper) {
 				case Constants.OPER_ADD : {
+					User currentUser = (User) getRequest().getSession().getAttribute(Constants.KEY_USER);
 					String firstName = parser.getStringParameter(Constants.KEY_FIRST_NAME);
 					String lastName = parser.getStringParameter(Constants.KEY_LAST_NAME);
 					String  email = parser.getStringParameter(Constants.KEY_EMAIL);
@@ -52,32 +52,32 @@ public class EditUserCommand extends AbstractWebCommand {
 					Role role = (Role) propDAO.getProp(PropertyType.ROLE, Constants.DEFAULT_ROLE_ID);
 					user.setRole(role);
 					result = userDAO.insertUser(user);
-					
+
 					logger.debug("Inserted user  = " + user);
 					logger.debug("Inserted user with id = " + result);
-					
-					if (result > 0) {
+
+					if (result > 0 && currentUser == null) {
 						getRequest().getSession().setAttribute(Constants.KEY_USER, userDAO.getUser(result));
 					}
 					break;
 				}
 				case Constants.OPER_EDIT : {
-					User user = (User) getRequest().getSession().getAttribute(Constants.KEY_USER);					
+					User user = (User) getRequest().getSession().getAttribute(Constants.KEY_USER);
 					PermissionInspector.checkPermission(user, this.getClass().getSimpleName());
-					
+
 					long id = Long.parseLong(parser.getStringParameter(Constants.KEY_ID));
 					String firstName = parser.getStringParameter(Constants.KEY_FIRST_NAME);
 					String lastName = parser.getStringParameter(Constants.KEY_LAST_NAME);
 					String  email = parser.getStringParameter(Constants.KEY_EMAIL);
 					String  password = parser.getStringParameter(Constants.KEY_PASSWORD);
-					
+
 					User updateUser = new User();
 					updateUser.setId(id);
 					updateUser.setFirstName(firstName);
 					updateUser.setLastName(lastName);
 					updateUser.setEmail(email);
 					updateUser.setPassword(password);
-										
+
 					if (PermissionInspector.checkPermission(user, "ChangeUserRole")) {
 						long roleId = Long.parseLong(parser.getStringParameter(Constants.KEY_ROLE_ID));
 						PropDAO propDAO = DAOFactory.getDAO(PropDAO.class);
@@ -86,9 +86,9 @@ public class EditUserCommand extends AbstractWebCommand {
 					} else {
 						updateUser.setRole(user.getRole());
 					}
-						
+
 					result = userDAO.updateUser(updateUser);
-					if (result > 0) {
+					if (result > 0 && !user.getRole().getName().equals(Constants.ROLE_ADMIN)) {
 						getRequest().getSession().removeAttribute(Constants.KEY_USER);
 						getRequest().getSession().setAttribute(Constants.KEY_USER, updateUser);
 					}
@@ -103,7 +103,7 @@ public class EditUserCommand extends AbstractWebCommand {
 					break;
 				}
 			}
-							
+
 			out.print(Constants.URL_MAIN);
 		} catch (DaoException e) {
 			e.printStackTrace();
@@ -118,7 +118,7 @@ public class EditUserCommand extends AbstractWebCommand {
 			out.flush();
 			out.close();
 		}
-		
+
 	}
-		
+
 }
