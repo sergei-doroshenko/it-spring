@@ -1,8 +1,7 @@
-6823298@gmail.com
-ajolie@gmail.com
-jlo@gmail.com
-
-
-password for all users
-111
-    
+ ID FIRST_NAME LAST_NAME  EMAIL           PASSWORD ROLE_ID
+ -- ---------- ---------- --------------- -------- -------
+  1 Sergei     Doroshenko admin@gmail.com 111            1
+  2 Tim        Tom        tim@gmail.com   111            2
+  3 Ivan       Ivanov     ivan@gmail.com  111            2
+  4 Rom        Amazon     rom@gmail.com   111            2
+  5 Dan        Brown      dan@gmail.com   111            2
