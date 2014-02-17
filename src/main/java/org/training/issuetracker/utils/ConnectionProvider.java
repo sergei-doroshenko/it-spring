@@ -2,6 +2,7 @@ package org.training.issuetracker.utils;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -60,6 +61,38 @@ public class ConnectionProvider {
 					e.printStackTrace();
 				}
 			}
+		}
+	}
+	
+	public void closeAll(Connection connection, Statement statement, ResultSet resultSet) {
+		try {
+			if (resultSet != null) {
+				resultSet.close();
+			}
+			if (statement != null) {
+				statement.close();
+			}
+			if (connection != null) {
+				connection.close();
+			}
+		} catch (SQLException e) {
+            System.err.println("Can't close connection." + e);
+		}
+	}
+
+	public void closeAll(Connection connection, PreparedStatement prepStatement, ResultSet resultSet) {
+		try {
+			if (resultSet != null) {
+				resultSet.close();
+			}
+			if (prepStatement != null) {
+				prepStatement.close();
+			}
+			if (connection != null) {
+				connection.close();
+			}
+		} catch (SQLException e) {
+            System.err.println("Can't close connection." + e);
 		}
 	}
 }

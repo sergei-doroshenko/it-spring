@@ -68,4 +68,46 @@ public class ProjectImplXML implements ProjectDAO {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public long insertProject(Project project) throws DaoException {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public long updateProject(Project project) throws DaoException {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public long deleteProject(long id) throws DaoException {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public long insertBuild(Build build) throws DaoException {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public long updateBuild(Build build) throws DaoException {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public long deleteBuild(long id) throws DaoException {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public List<Project> getProjectsList() throws DaoException {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
