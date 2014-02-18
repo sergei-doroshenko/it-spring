@@ -9,7 +9,8 @@
        http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
 
 	<context:component-scan base-package="org.training.issuetracker.controllers" />
-
+	<context:component-scan base-package="org.training.issuetracker.data" />
+	
 	<mvc:annotation-driven />
 	<mvc:default-servlet-handler />
 
@@ -29,7 +30,7 @@
 	
 	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 	    <property name="driverClassName" value="org.apache.derby.jdbc.EmbeddedDriver" />
-	    <property name="url" value="jdbc:derby:WEB-INF/classes/db/issuetrackerDB" />
+	    <property name="url" value="jdbc:derby:classpath:db/issuetrackerDB" />
 	    <property name="username" value="admin"/>
 	    <property name="password" value="111"/>
   	</bean>
@@ -51,6 +52,6 @@
         </property>
     </bean>
 		
-  	<bean id="userDAO" class="org.training.issuetracker.data.db.UserImplDB"/>
+  	<bean id="userDAO" class="org.training.issuetracker.data.hiber.UserImplHiber"/>
 		
 </beans>

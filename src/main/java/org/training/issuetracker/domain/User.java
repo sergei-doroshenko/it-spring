@@ -30,7 +30,7 @@ public class User {//extends AbstractPersistentObj
 	private String email;
 	
 	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name="FK_ROLE_ID")
+	@JoinColumn(name="ROLE_ID")
 	private Role role;
 	
 	@Column(name="PASSWORD")

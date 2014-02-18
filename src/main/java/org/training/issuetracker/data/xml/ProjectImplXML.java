@@ -110,4 +110,10 @@ public class ProjectImplXML implements ProjectDAO {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public List<Build> getBuildsList() throws DaoException {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
