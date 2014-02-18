@@ -34,10 +34,13 @@ public class WebCommandFactory {
 		commandMap.put(Constants.COMMAND_VIEW_USERS_LIST, new ViewUsersListCommand(request, response));
 		commandMap.put(Constants.COMMAND_ADD_USER, new EditUserCommand(request, response));
 		commandMap.put(Constants.COMMAND_EDIT_USER, new EditUserCommand(request, response));
-		commandMap.put(Constants.COMMAND_GET_PROJECT_BUILDS, new GetProjectBuildsCommand(request, response));		
+		commandMap.put(Constants.COMMAND_GET_PROJECT_BUILDS, new GetProjectBuildsCommand(request, response));
 		commandMap.put(Constants.COMMAND_EDIT_PROP, new EditPropCommand(request, response));
 		commandMap.put(Constants.COMMAND_VIEW_PROP_LIST, new ViewPropListCommand(request, response));
 		commandMap.put(Constants.COMMAND_VIEW_PROJECTS_LIST, new ViewProjectsListCommand(request, response));
+		commandMap.put(Constants.COMMAND_EDIT_PROJECT, new EditProjectCommand(request, response));
+		commandMap.put(Constants.COMMAND_VIEW_BUILDS_LIST, new ViewBuildsListCommand(request, response));
+		commandMap.put(Constants.COMMAND_EDIT_BUILD, new EditBuildCommand(request, response));
 	}
 
 	/**Method for call specific command object.

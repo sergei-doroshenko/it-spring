@@ -139,30 +139,39 @@ public final class Constants {
 
 	/** Constants string literal for edit user info command  */
 	public static final String COMMAND_EDIT_USER = "edit_user";
-	
+
 	/** Constants string literal for insert user command  */
 	public static final String COMMAND_ADD_USER = "adduser";
-	
+
 	/** Constants string literal for delete user command  */
 	public static final String COMMAND_DELETE_USER = "deleteuser";
 	/** Constants string literal for view users list command  */
 	public static final String COMMAND_VIEW_USERS_LIST = "users_list";
-	
+
 	/** Constants string literal for edit user info command  */
 	public static final String COMMAND_LOCALE = "locale";
 
 	/** Constants string literal for edit user info command  */
 	public static final String COMMAND_GET_PROJECT_BUILDS = "get_project_builds";
-	
+
 	/** Constants string literal for view prop list command  */
 	public static final String COMMAND_VIEW_PROP_LIST = "prop_list";
-	
+
 	/** Constants string literal for edit prop command  */
 	public static final String COMMAND_EDIT_PROP = "edit_prop";
-	
+
 	/** Constants string literal for view projects list command  */
 	public static final String COMMAND_VIEW_PROJECTS_LIST = "projects_list";
-	
+
+	/** Constants string literal for edit project command  */
+	public static final String COMMAND_EDIT_PROJECT = "edit_project";
+
+	/** Constants string literal for view builds list command  */
+	public static final String COMMAND_VIEW_BUILDS_LIST = "builds_list";
+
+	/** Constants string literal for edit build command  */
+	public static final String COMMAND_EDIT_BUILD = "edit_build";
+
 	/** Constants string literal for submitissue-url  */
 	public static final String URL_MAIN_COMMAND = "/issuetracker/Main.do?command=";
 
@@ -214,25 +223,25 @@ public final class Constants {
 	 *  Contains string literal for command parameter.
 	 */
 	public static final String KEY_COMMAND = "command";
-	
+
 	/** String literal for oper parameter */
 	public static final String KEY_OPERATION = "oper";
-	
+
 	/** String literal for name parameter */
 	public static final String KEY_NAME = "name";
-	
+
 	/** String literal for first name parameter */
 	public static final String KEY_FIRST_NAME = "first_name";
-	
+
 	/** String literal for last name parameter */
 	public static final String KEY_LAST_NAME = "last_name";
-	
+
 	/** String literal for last name parameter */
 	public static final String KEY_EMAIL = "email";
-	
+
 	/** String literal for role id parameter */
 	public static final String KEY_ROLE_ID = "role";
-	
+
 	/** String literal for backurl */
 	public static final String KEY_BACK_URL = "backurl";
 
@@ -241,10 +250,10 @@ public final class Constants {
 
 	/** String literal for request parameter type */
 	public static final String KEY_TYPE = "type";
-	
+
 	/** String literal for request parameter prop */
 	public static final String KEY_PROP = "prop";
-	
+
 	/** String literal for request parameter priority */
 	public static final String KEY_PRIORITY = "priority";
 
@@ -268,27 +277,33 @@ public final class Constants {
 
 	/** String literal for request parameter description */
 	public static final String KEY_DESCRIPTION = "description";
-	
+
 	/** String literal for request parameter page */
 	public static final String KEY_PAGE = "page";
-	
+
 	/** String literal for request parameter rows */
 	public static final String KEY_ROWS = "rows";
-	
+
+	/** String literal for request parameter manager */
+	public static final String KEY_MANAGER_ID = "manager";
+
+	/** String literal for request parameter project Id */
+	public static final String KEY_PROJECT_ID = "projectId";
+
 //**************** OPERATIONS **********************************************
 	/** Constants string literal for parameter oper: add. */
 	public static final String OPER_ADD = "add";
-	
+
 	/** Constants string literal for parameter oper: edit. */
 	public static final String OPER_EDIT = "edit";
-	
+
 	/** Constants string literal for parameter oper: delete. */
 	public static final String OPER_DELETE = "del";
 
 //************************ ROLES *****************************************
 	/** Constants string literal for role - user. */
 	public static final String ROLE_USER = "USER";
-	
+
 	/** Constants string literal for default role - user id=2. */
 	public static final long DEFAULT_ROLE_ID = 2;
 
@@ -316,7 +331,7 @@ public final class Constants {
     /**Text of error message occurred when login or password are wrong.
      *
      */
-    
+
     public static final String LOGIN_OR_PASSWORD_WRONG = "check login and password!";
     /**Error message cased by wrong e-mail input.
      *
@@ -325,7 +340,7 @@ public final class Constants {
 
     /**errorMessage string literal.
      */
-    public static final String ERROR_FIND_USER = "User not found!";
+    public static final String ERROR_FIND_USER = "No such user! Check login or password!";
 
     /**errorMessage string literal.
      */

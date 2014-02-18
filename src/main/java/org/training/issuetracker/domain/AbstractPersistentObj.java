@@ -2,13 +2,23 @@ package org.training.issuetracker.domain;
 
 import javax.json.Json;
 import javax.json.JsonObject;
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
 
 /**Abstract class for all persist objects.
  * @author Sergei_Doroshenko
  *
  */
+@MappedSuperclass
 public abstract class AbstractPersistentObj implements PersistentObj {
+	@Id
+    @Column(name="ID")
+    @GeneratedValue
 	private long id;
+	
+	@Column(name="NAME")
 	private String name;
 
 	/**Default constructor.

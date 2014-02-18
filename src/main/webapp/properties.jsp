@@ -72,6 +72,7 @@
 				createPrioritiesTable();
 				createTypesTable();
 				createProjectsTable();
+				createBuildsTable();
 				bindLongin();
 				$('#en-loc').click(function(ev) {
 					changeLocaleUrl (ev);

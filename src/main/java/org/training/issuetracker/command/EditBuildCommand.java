@@ -7,22 +7,19 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.log4j.Logger;
 import org.training.issuetracker.constants.Constants;
-import org.training.issuetracker.data.db.PropImplDB.PropertyType;
-import org.training.issuetracker.domain.Status;
+import org.training.issuetracker.domain.Build;
 import org.training.issuetracker.domain.User;
 import org.training.issuetracker.domain.DAO.DAOFactory;
-import org.training.issuetracker.domain.DAO.PropDAO;
+import org.training.issuetracker.domain.DAO.ProjectDAO;
 import org.training.issuetracker.exceptions.DaoException;
 import org.training.issuetracker.exceptions.ParameterNotFoundException;
 import org.training.issuetracker.security.PermissionInspector;
 import org.training.issuetracker.utils.ParameterParser;
 
-public class EditPropCommand extends AbstractWebCommand {
-	private final Logger logger = Logger.getLogger("org.training.issuetracker.command");
+public class EditBuildCommand extends AbstractWebCommand {
 
-	public EditPropCommand(HttpServletRequest request, HttpServletResponse response) {
+	public EditBuildCommand(HttpServletRequest request, HttpServletResponse response) {
 		super(request, response);
 	}
 
@@ -33,32 +30,39 @@ public class EditPropCommand extends AbstractWebCommand {
 		User user = (User) getRequest().getSession().getAttribute(Constants.KEY_USER);
 		PermissionInspector.checkPermission(user, this.getClass().getSimpleName());
 
-		PropDAO propDAO = DAOFactory.getDAO(PropDAO.class);
+		ProjectDAO buildDAO = DAOFactory.getDAO(ProjectDAO.class);
 		try {
 			String oper = parser.getStringParameter(Constants.KEY_OPERATION);
-			String prop = parser.getStringParameter(Constants.KEY_PROP);
-			PropertyType propType = PropertyType.valueOf(prop);
+
 			long result = 0;
 			switch (oper) {
 				case Constants.OPER_ADD : {
 					String name = parser.getStringParameter(Constants.KEY_NAME);
-					Status status = new Status();
-					status.setName(name);
-					result = propDAO.insertProp(propType, status);
+					long projectId = parser.getLongParameter(Constants.KEY_PROJECT_ID);
+
+					Build build = new Build();
+					build.setName(name);
+					build.setProjectId(projectId);
+
+					result = buildDAO.insertBuild(build);
 					break;
 				}
 				case Constants.OPER_EDIT : {
-					long id = Long.parseLong(parser.getStringParameter(Constants.KEY_ID));
 					String name = parser.getStringParameter(Constants.KEY_NAME);
-					Status status = new Status();
-					status.setId(id);
-					status.setName(name);
-					result = propDAO.updateProp(propType, status);
+					long projectId = parser.getLongParameter(Constants.KEY_PROJECT_ID);
+					long buildId = parser.getLongParameter(Constants.KEY_ID);
+
+					Build build = new Build();
+					build.setId(buildId);
+					build.setName(name);
+					build.setProjectId(projectId);
+
+					result = buildDAO.updateBuild(build);
 					break;
 				}
 				case Constants.OPER_DELETE : {
 					long id = Long.parseLong(parser.getStringParameter(Constants.KEY_ID));
-					result = propDAO.deleteProp(propType, id);
+					result = buildDAO.deleteBuild(id);
 					break;
 				}
 				default : {
@@ -76,7 +80,5 @@ public class EditPropCommand extends AbstractWebCommand {
 			out.close();
 		}
 	}
-
-
 
 }
