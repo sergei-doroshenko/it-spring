@@ -29,15 +29,15 @@ public class UserImplDB implements UserDAO {
 	public UserImplDB() {
 		super();
 		
-		try {
-			Localizer localizer = LocalizerFactory.getLocalizer(new Locale("en", "EN"));
-			this.errors = localizer.getBundle("errors");
-			logger.debug(errors.getString("issue.err.null"));
-			
-		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//		try {
+//			Localizer localizer = LocalizerFactory.getLocalizer(new Locale("en", "EN"));
+//			this.errors = localizer.getBundle("errors");
+//			logger.debug(errors.getString("issue.err.null"));
+//			
+//		} catch (MalformedURLException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 
 	}
 	

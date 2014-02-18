@@ -28,8 +28,9 @@ var jsonHandler = {
 
 function createIssueTable() {
     $("#list").jqGrid({
-        url: "Main.do",
-        postData: {	command: 'issuelist' },
+        //url: "Main.do",
+    	url: "issuelist",
+        //postData: {	command: 'issuelist' },
 		mtype: "GET",
         datatype: "json",
         jsonReader : jsonHandler,

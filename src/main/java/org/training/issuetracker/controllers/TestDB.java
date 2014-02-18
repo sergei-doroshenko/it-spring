@@ -21,7 +21,7 @@ import org.training.issuetracker.utils.ConnectionManager;
  * Servlet implementation class Test
  */
 @WebServlet("/Test.do")
-public class Test extends HttpServlet {
+public class TestDB extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**

@@ -4,22 +4,63 @@ import java.sql.Date;
 
 import javax.json.Json;
 import javax.json.JsonObject;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.Table;
 
-import com.google.gson.Gson;
-
+@Entity
+@Table(name="ISSUES")
 public class Issue extends AbstractPersistentObj {
+	@Column(name="CREATE_DATE")
 	private Date createDate;
+	
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name="FK_CREATE_BY")
 	private User createBy;
+	
+	@Column(name="MODIFY_DATE")
 	private Date modifyDate;
+	
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name="FK_MODIFIED_BY")
 	private User modifyBy;
+	
+	@Column(name="SUMMARY")
 	private String summary;
+	
+	@Column(name="DESCRIPTION")
 	private String description;
+	
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name="FK_STATUS_ID")
 	private Status status;
+	
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name="FK_RESOLUTION_ID")
 	private Resolution resolution;
+	
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name="FK_TYPE_ID")
 	private Type type;
+	
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name="FK_PRIORITY_ID")
 	private Priority priority;
+	
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name="FK_ISSUE_PROJECT_ID")
 	private Project project;
+	
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name="FK_BUILD_ID")
 	private Build build;
+	
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name="FK_ASSIGNEE_BY")
 	private User assignee;
 
 	public Issue() { }

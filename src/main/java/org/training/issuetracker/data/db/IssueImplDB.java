@@ -217,6 +217,7 @@ public class IssueImplDB implements IssueDAO {
 
 	@Override
 	public List<Issue> getIssueList(User user) throws DaoException {
+		
 		List<Issue> list = new ArrayList<Issue>();
 		PreparedStatement select = null;
 		ResultSet rs = null;

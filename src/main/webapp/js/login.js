@@ -31,8 +31,9 @@ function bindLongin() {
 	    };
                 
         var jqxhr = $.ajax({
-                url: 'Main.do',
-                data: formdata,
+                //url: 'Main.do',
+                url: 'user',
+        		data: formdata,
                 dataType: 'text',
                 type: 'post',
                 success: function (data) {
