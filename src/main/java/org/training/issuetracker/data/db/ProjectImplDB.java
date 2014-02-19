@@ -24,30 +24,30 @@ public class ProjectImplDB implements ProjectDAO {
 
 	private static final String SQL_SELECT_FORM_LIST =
 			"SELECT PROJECTS.ID AS project_id,"
-			+ "PROJECTS.PROJECT_NAME AS project_name "
+			+ "PROJECTS.NAME AS project_name "
 			+ "FROM PROJECTS";
 
 	private static final String SQL_SELECT_PROJECTS_LIST =
 			"SELECT PROJECTS.ID AS project_id,"
-			+ "PROJECTS.PROJECT_NAME AS project_name,"
+			+ "PROJECTS.NAME AS project_name,"
 			+ "PROJECTS.DESCRIPTION AS project_description,"
 			+ "PROJECTS.MANAGER AS project_manager_id,"
 			+ "USERS.FIRST_NAME AS project_manager_first_name,"
 			+ "USERS.LAST_NAME AS project_manager_last_name,"
 			+ "USERS.EMAIL AS project_manager_email, USERS.PASSWORD AS project_manager_password,"
-			+ "ROLES.ID AS project_manager_role_id, ROLES.RL_NAME AS project_manager_role_name "
+			+ "ROLES.ID AS project_manager_role_id, ROLES.NAME AS project_manager_role_name "
 			+ "FROM PROJECTS "
 			+ "LEFT JOIN USERS ON PROJECTS.MANAGER = USERS.ID "
 			+ "LEFT JOIN ROLES ON USERS.ROLE_ID = ROLES.ID";
 
 	private static final String SQL_SELECT_PROJECT =
 			"SELECT PROJECTS.ID AS project_id,"
-			+ "PROJECTS.PROJECT_NAME AS project_name "
+			+ "PROJECTS.NAME AS project_name "
 			+ "FROM PROJECTS "
 			+ "WHERE PROJECTS.ID = ?";
 
 	private static final String SQL_INSERT_PROJECT =
-			"INSERT INTO PROJECTS (PROJECT_NAME, DESCRIPTION, MANAGER) "
+			"INSERT INTO PROJECTS (NAME, DESCRIPTION, MANAGER) "
 			+ "VALUES (?, ?, ?)";
 
 	private static final int INSERT_PROJECT_NAME_IND = 1;
@@ -58,7 +58,7 @@ public class ProjectImplDB implements ProjectDAO {
 
 	private static final String SQL_UPDATE_PROJECT =
 			"UPDATE PROJECTS SET "
-			+ "PROJECTS.PROJECT_NAME = ?,"
+			+ "PROJECTS.NAME = ?,"
 			+ "PROJECTS.DESCRIPTION = ?,"
 			+ "PROJECTS.MANAGER = ? "
 			+ "WHERE PROJECTS.ID = ?";
@@ -78,20 +78,20 @@ public class ProjectImplDB implements ProjectDAO {
 
 	private static final String SQL_SELECT_PROJECT_BUILDS =
 			"SELECT BUILDS.ID AS build_id,"
-			+ "BUILDS.BL_NAME AS build_name,"
+			+ "BUILDS.NAME AS build_name,"
 			+ "BUILDS.PROJECT_ID AS project_id "
 			+ "FROM BUILDS "
 			+ "WHERE BUILDS.PROJECT_ID = ?";
 
 	private static final String SQL_SELECT_BUILDS_LIST =
 			"SELECT BUILDS.ID AS build_id,"
-			+ "BUILDS.BL_NAME AS build_name,"
+			+ "BUILDS.NAME AS build_name,"
 			+ "BUILDS.PROJECT_ID AS project_id "
 			+ "FROM BUILDS";
 
 	private static final String SQL_SELECT_BUILD =
 			"SELECT BUILDS.ID AS build_id,"
-			+ "BUILDS.BL_NAME AS build_name,"
+			+ "BUILDS.NAME AS build_name,"
 			+ "BUILDS.PROJECT_ID AS project_id "
 			+ "FROM BUILDS "
 			+ "WHERE BUILDS.ID = ?";
@@ -100,7 +100,7 @@ public class ProjectImplDB implements ProjectDAO {
 
 	private static final int BUILD_ID_INDEX = 1;
 
-	private static final String SQL_INSERT_BUILD = "INSERT INTO BUILDS (BL_NAME, PROJECT_ID) VALUES (?, ?)";
+	private static final String SQL_INSERT_BUILD = "INSERT INTO BUILDS (NAME, PROJECT_ID) VALUES (?, ?)";
 
 	private static final int INSERT_BUILD_NAME_IND = 1;
 
@@ -108,7 +108,7 @@ public class ProjectImplDB implements ProjectDAO {
 
 	private static final String SQL_UPDATE_BUILD =
 			"UPDATE BUILDS SET "
-			+ "BUILDS.BL_NAME = ?,"
+			+ "BUILDS.NAME = ?,"
 			+ "BUILDS.PROJECT_ID = ? "
 			+ "WHERE BUILDS.ID = ?";
 

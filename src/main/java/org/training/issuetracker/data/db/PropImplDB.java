@@ -26,88 +26,88 @@ public class PropImplDB implements PropDAO {
 
 	private static final String SQL_SELECT_STATUSES_LIST =
 			"SELECT STATUSES.ID AS id,"
-			+ "STATUSES.ST_NAME AS name "
+			+ "STATUSES.NAME AS name "
 			+ "FROM STATUSES";
 
 	private static final String SQL_SELECT_RESOLUTIONS_LIST =
 			"SELECT RESOLUTIONS.ID AS id,"
-			+ "RESOLUTIONS.RES_NAME AS name "
+			+ "RESOLUTIONS.NAME AS name "
 			+ "FROM RESOLUTIONS";
 
 	private static final String SQL_SELECT_PRIORITIES_LIST =
 			"SELECT PRIORITIES.ID AS id,"
-			+ "PRIORITIES.PR_NAME AS name "
+			+ "PRIORITIES.NAME AS name "
 			+ "FROM PRIORITIES";
 
 	private static final String SQL_SELECT_TYPES_LIST =
 			"SELECT TYPES.ID AS id,"
-			+ "TYPES.TP_NAME AS name "
+			+ "TYPES.NAME AS name "
 			+ "FROM TYPES";
 	
 	private static final String SQL_SELECT_ROLES_LIST = 
 			"SELECT ROLES.ID AS id,"
-			+ "ROLES.RL_NAME AS name "
+			+ "ROLES.NAME AS name "
 			+ "FROM ROLES";
 			
 			
 	private static final String SQL_SELECT_STATUS =
 			"SELECT STATUSES.ID AS id,"
-			+ "STATUSES.ST_NAME AS name "
+			+ "STATUSES.NAME AS name "
 			+ "FROM STATUSES "
 			+ "WHERE STATUSES.ID = ?";
 
 	private static final String SQL_SELECT_RESOLUTION =
 			"SELECT RESOLUTIONS.ID AS id,"
-			+ "RESOLUTIONS.RES_NAME AS name "
+			+ "RESOLUTIONS.NAME AS name "
 			+ "FROM RESOLUTIONS "
 			+ "WHERE RESOLUTIONS.ID = ?";
 
 	private static final String SQL_SELECT_PRIORITY =
 			"SELECT PRIORITIES.ID AS id,"
-			+ "PRIORITIES.PR_NAME AS name "
+			+ "PRIORITIES.NAME AS name "
 			+ "FROM PRIORITIES "
 			+ "WHERE PRIORITIES.ID = ?";
 
 	private static final String SQL_SELECT_TYPE =
 			"SELECT TYPES.ID AS id,"
-			+ "TYPES.TP_NAME AS name "
+			+ "TYPES.NAME AS name "
 			+ "FROM TYPES "
 			+ "WHERE TYPES.ID = ?";
 	
 	private static final String SQL_SELECT_ROLE =
 			"SELECT ROLES.ID AS id,"
-			+ "ROLES.RL_NAME AS name "
+			+ "ROLES.NAME AS name "
 			+ "FROM ROLES "
 			+ "WHERE ROLES.ID = ?";
 
 	private static final int SELECT_PROP_INDEX = 1;
 	
-	private static final String SQL_INSERT_STATUS = "INSERT INTO STATUSES (ST_NAME) VALUES (?)";
+	private static final String SQL_INSERT_STATUS = "INSERT INTO STATUSES (NAME) VALUES (?)";
 	
-	private static final String SQL_INSERT_RESOLUTION = "INSERT INTO RESOLUTIONS (RES_NAME) VALUES (?)";
+	private static final String SQL_INSERT_RESOLUTION = "INSERT INTO RESOLUTIONS (NAME) VALUES (?)";
 	
-	private static final String SQL_INSERT_PRIORITY = "INSERT INTO PRIORITIES (PR_NAME) VALUES (?)";
+	private static final String SQL_INSERT_PRIORITY = "INSERT INTO PRIORITIES (NAME) VALUES (?)";
 	
-	private static final String SQL_INSERT_TYPE = "INSERT INTO TYPES (TP_NAME) VALUES (?)";
+	private static final String SQL_INSERT_TYPE = "INSERT INTO TYPES (NAME) VALUES (?)";
 	
-	private static final String SQL_INSERT_ROLE = "INSERT INTO ROLES (RL_NAME) VALUES (?)";
+	private static final String SQL_INSERT_ROLE = "INSERT INTO ROLES (NAME) VALUES (?)";
 	
 	private static final int INSERT_PROP_INDEX = 1;
 	
 	private static final String SQL_UPDATE_STATUS = 
-			"UPDATE STATUSES SET STATUSES.ST_NAME = ? WHERE STATUSES.ID = ?";
+			"UPDATE STATUSES SET STATUSES.NAME = ? WHERE STATUSES.ID = ?";
 	
 	private static final String SQL_UPDATE_RESOLUTION = 
-			"UPDATE RESOLUTIONS SET RESOLUTIONS.RES_NAME = ? WHERE RESOLUTIONS.ID = ?";
+			"UPDATE RESOLUTIONS SET RESOLUTIONS.NAME = ? WHERE RESOLUTIONS.ID = ?";
 	
 	private static final String SQL_UPDATE_PRIORITY = 
-			"UPDATE PRIORITIES SET PRIORITIES.PR_NAME = ? WHERE PRIORITIES.ID = ?";
+			"UPDATE PRIORITIES SET PRIORITIES.NAME = ? WHERE PRIORITIES.ID = ?";
 	
 	private static final String SQL_UPDATE_TYPE = 
-			"UPDATE TYPES SET TYPES.TP_NAME = ? WHERE TYPES.ID = ?";
+			"UPDATE TYPES SET TYPES.NAME = ? WHERE TYPES.ID = ?";
 	
 	private static final String SQL_UPDATE_ROLE = 
-			"UPDATE ROLES SET ROLES.RL_NAME = ? WHERE ROLES.ID = ?";
+			"UPDATE ROLES SET ROLES.NAME = ? WHERE ROLES.ID = ?";
 	
 	private static final int UPDATE_PROP_NAME_IND = 1;
 	

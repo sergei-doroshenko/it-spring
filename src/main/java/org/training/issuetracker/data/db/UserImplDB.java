@@ -46,7 +46,7 @@ public class UserImplDB implements UserDAO {
 			+ "USERS.FIRST_NAME AS user_first_name,"
 			+ "USERS.LAST_NAME AS user_last_name,"
 			+ "USERS.EMAIL AS user_login, USERS.PASSWORD AS user_password,"
-			+ "ROLES.ID AS role_id, ROLES.RL_NAME AS role_name "
+			+ "ROLES.ID AS role_id, ROLES.NAME AS role_name "
 			+ "FROM USERS "
 			+ "LEFT JOIN ROLES ON USERS.ROLE_ID = ROLES.ID "
 			+ "WHERE USERS.EMAIL = ?"
@@ -61,7 +61,7 @@ public class UserImplDB implements UserDAO {
 			+ "USERS.FIRST_NAME AS user_first_name,"
 			+ "USERS.LAST_NAME AS user_last_name,"
 			+ "USERS.EMAIL AS user_login, USERS.PASSWORD AS user_password,"
-			+ "ROLES.ID AS role_id, ROLES.RL_NAME AS role_name "
+			+ "ROLES.ID AS role_id, ROLES.NAME AS role_name "
 			+ "FROM USERS "
 			+ "LEFT JOIN ROLES ON USERS.ROLE_ID = ROLES.ID "
 			+ "WHERE USERS.ID = ?";
@@ -73,7 +73,7 @@ public class UserImplDB implements UserDAO {
 			+ "USERS.FIRST_NAME AS user_first_name,"
 			+ "USERS.LAST_NAME AS user_last_name,"
 			+ "USERS.EMAIL AS user_login, USERS.PASSWORD AS user_password,"
-			+ "ROLES.ID AS role_id, ROLES.RL_NAME AS role_name "
+			+ "ROLES.ID AS role_id, ROLES.NAME AS role_name "
 			+ "FROM USERS "
 			+ "LEFT JOIN ROLES ON USERS.ROLE_ID = ROLES.ID";
 	
