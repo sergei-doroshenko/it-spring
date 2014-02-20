@@ -9,6 +9,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
@@ -21,20 +22,7 @@ public class UserImplHiber implements UserDAO {
 	private Logger logger = Logger.getLogger(getClass().getCanonicalName());
 	
 	@Autowired
-	@Resource(name="sessionFactory")
-	private SessionFactory sessionFactory;
-	
-//	public void setSessionFactory(SessionFactory sessionFactory) {
-//        this.sessionFactory = sessionFactory;
-//    }
-	
 	private HibernateTemplate hibernateTemplate;
-
-	public void setSessionFactory(SessionFactory sessionFactory) 
-    {
-		this.hibernateTemplate = new HibernateTemplate(sessionFactory);
-	}
-	
 	
 	@Override
 	public List<User> getUsersList() throws DaoException {
@@ -44,48 +32,31 @@ public class UserImplHiber implements UserDAO {
 	@Override
 	public User getUser(String login, String password) throws DaoException {
 		
-		
-		
-		
-//		Session session = sessionFactory.openSession();
-//		Query query = session.createQuery("from User where email=? and password=?");
-//		query.setParameter(0, login);
-//		query.setParameter(1, password);
-//		
-//		User user = (User) query.uniqueResult();
-//		logger.debug("User query result = " + user);
-//		return user;
-//		return (User) this.sessionFactory.getCurrentSession().createQuery("from USERS where USERS.EMAIL=? and USERS.PASSWORD=?")
-//				.setParameter(0, login).setParameter(1, password)
-//				.list();
-//		return null;
-		HibernateTemplate ht = new HibernateTemplate(this.sessionFactory);
-	   return (User) ht.find("from User where email=? and password=?",login, password).get(0);
-	   
-		
+	   return (User) DataAccessUtils.requiredUniqueResult(hibernateTemplate.find("from User where email=? and password=?",login, password));
+
 	}
 
 	@Override
 	public User getUser(long id) throws DaoException {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return (User) hibernateTemplate.get(User.class, id);
 	}
 
 	@Override
 	public long insertUser(User user) throws DaoException {
-		// TODO Auto-generated method stub
-		return 0;
+		
+		return (Long) hibernateTemplate.save(user);
 	}
 
 	@Override
-	public long updateUser(User user) throws DaoException {
-		// TODO Auto-generated method stub
-		return 0;
+	public void updateUser(User user) throws DaoException {
+		
+		hibernateTemplate.update(user);
 	}
 
 	@Override
-	public long deleteUser(long id) throws DaoException {
-		// TODO Auto-generated method stub
-		return 0;
+	public void deleteUser(long id) throws DaoException {
+		
+		hibernateTemplate.delete(hibernateTemplate.get("User", id));
 	}
 }

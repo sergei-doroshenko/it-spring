@@ -26,8 +26,6 @@
 		<property name="resolver" ref="resolver" />
 	</bean>
 	
-	<bean id="issueDAO" class="org.training.issuetracker.data.db.IssueImplDB" />
-	
 	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 	    <property name="driverClassName" value="org.apache.derby.jdbc.EmbeddedDriver" />
 	    <property name="url" value="jdbc:derby:classpath:db/issuetrackerDB" />
@@ -35,14 +33,14 @@
 	    <property name="password" value="111"/>
   	</bean>
 	
-	<bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
         <property name="dataSource" ref="dataSource" />
-        <property name="configLocation">
-            <value>classpath:hibernate.cfg.xml</value>
-        </property>
-        <property name="configurationClass">
-            <value>org.hibernate.cfg.AnnotationConfiguration</value>
-        </property>
+        <property name="annotatedClasses">
+			<list>
+				<value>org.training.issuetracker.domain.User</value>
+				<value>org.training.issuetracker.domain.Role</value>
+			</list>
+		</property>
         <property name="hibernateProperties">
             <props>
                 <prop key="hibernate.dialect">org.hibernate.dialect.DerbyDialect</prop>
@@ -51,7 +49,12 @@
             </props>
         </property>
     </bean>
-		
+    
+    <bean id="hibernateTemplate" class="org.springframework.orm.hibernate3.HibernateTemplate">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+    
+	<bean id="issueDAO" class="org.training.issuetracker.data.db.IssueImplDB" />	
   	<bean id="userDAO" class="org.training.issuetracker.data.hiber.UserImplHiber"/>
 		
 </beans>

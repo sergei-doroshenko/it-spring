@@ -257,7 +257,7 @@ public class UserImplDB implements UserDAO {
 	}
 
 	@Override
-	public long updateUser(User user) throws DaoException {
+	public void updateUser(User user) throws DaoException {
 		PreparedStatement st = null;
 
 		try {
@@ -270,7 +270,7 @@ public class UserImplDB implements UserDAO {
 			st.setLong(UPDATE_USER_ROLE_ID_IND, user.getRole().getId());
 			st.setLong(UPDATE_USER_ID_IND, user.getId());
 						
-			return st.executeUpdate();
+			st.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new DaoException(Constants.ERROR_SOURCE, e);
@@ -281,7 +281,7 @@ public class UserImplDB implements UserDAO {
 	}
 
 	@Override
-	public long deleteUser(long id) throws DaoException {
+	public void deleteUser(long id) throws DaoException {
 		PreparedStatement st = null;
 
 		try {
@@ -289,7 +289,7 @@ public class UserImplDB implements UserDAO {
 			st = connection.prepareStatement(SQL_DELETE_USER);
 			st.setLong(DELETE_USER_ID_IND, id);
 
-			return st.executeUpdate();
+			st.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new DaoException(Constants.ERROR_SOURCE, e);

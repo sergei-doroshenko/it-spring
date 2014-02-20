@@ -42,7 +42,6 @@ public class User {//extends AbstractPersistentObj
 			String email, Role role, String password) {
 		super();
 		this.id = id;
-		
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;

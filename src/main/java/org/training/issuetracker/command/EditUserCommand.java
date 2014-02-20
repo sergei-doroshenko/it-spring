@@ -87,7 +87,7 @@ public class EditUserCommand extends AbstractWebCommand {
 						updateUser.setRole(user.getRole());
 					}
 
-					result = userDAO.updateUser(updateUser);
+					userDAO.updateUser(updateUser);
 					if (result > 0 && !user.getRole().getName().equals(Constants.ROLE_ADMIN)) {
 						getRequest().getSession().removeAttribute(Constants.KEY_USER);
 						getRequest().getSession().setAttribute(Constants.KEY_USER, updateUser);
@@ -96,7 +96,7 @@ public class EditUserCommand extends AbstractWebCommand {
 				}
 				case Constants.OPER_DELETE : {
 					long id = Long.parseLong(parser.getStringParameter(Constants.KEY_ID));
-					result = userDAO.deleteUser(id);
+					userDAO.deleteUser(id);
 					break;
 				}
 				default : {

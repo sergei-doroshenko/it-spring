@@ -80,14 +80,12 @@ public class UserImplXML implements UserDAO {
 	}
 
 	@Override
-	public long updateUser(User user) throws DaoException {
-		// TODO Auto-generated method stub
-		return 0;
+	public void updateUser(User user) throws DaoException {
+		
 	}
 
 	@Override
-	public long deleteUser(long id) throws DaoException {
-		// TODO Auto-generated method stub
-		return 0;
+	public void deleteUser(long id) throws DaoException {
+		
 	}
 }

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.training.issuetracker.domain.Issue;
 import org.training.issuetracker.domain.User;
 import org.training.issuetracker.domain.DAO.IssueDAO;
@@ -14,6 +15,7 @@ public class IssueImplHiber implements IssueDAO {
 	@Autowired
 	private SessionFactory sessionFactory;
 	
+//	private HibernateTemplate hibernateTemplate;
 	@Override
 	public List<Issue> getIssueList(User user) throws DaoException {
 		return this.sessionFactory.getCurrentSession().createQuery("from ISSUES").list();

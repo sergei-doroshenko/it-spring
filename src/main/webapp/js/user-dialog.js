@@ -74,7 +74,7 @@ function builUserForm() {
 	    	  };
 	    	  
 	    	 $.ajax({
-              url: 'Main.do',
+              url: 'user',
               data: formdata,
               dataType: 'text',
               type: 'post',
@@ -133,16 +133,17 @@ function buildUserView () {
       buttons: {
         'Edit': function() {
         	var formdata = {
-		        'command' : $('#view-user-command').val(),
+		        //'command' : $('#view-user-command').val(),
 		        'id' : $('#user-id').val()
 	    	};
         	
         	$.ajax({
-                url: 'Main.do',
+                url: 'user',
                 data: formdata,
                 dataType: 'json',
-                type: 'post',
+                type: 'get',
                 success: function (data) {
+                	alert('hello');
                 	$('#dialog-form').dialog('open');                	
                 	$('#first_name').val(data.firstName);
                 	$('#last_name').val(data.lastName);
