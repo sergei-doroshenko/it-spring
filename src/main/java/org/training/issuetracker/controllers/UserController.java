@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.training.issuetracker.constants.Constants;
 import org.training.issuetracker.data.db.PropImplDB.PropertyType;
+import org.training.issuetracker.data.db.UserImplDB;
 import org.training.issuetracker.domain.Role;
 import org.training.issuetracker.domain.User;
 import org.training.issuetracker.domain.DAO.DAOFactory;
@@ -59,6 +60,7 @@ public class UserController {
 			@ModelAttribute(Constants.KEY_USER) User currentUser, HttpSession session) throws DaoException {
 		
 		User user = new User ();
+		
 		user.setFirstName(firstName);
 		user.setLastName(lastName);
 		user.setEmail(email);
@@ -66,6 +68,8 @@ public class UserController {
 		PropDAO propDAO = DAOFactory.getDAO(PropDAO.class);
 		Role role = (Role) propDAO.getProp(PropertyType.ROLE, Constants.DEFAULT_ROLE_ID);
 		user.setRole(role);
+//		UserDAO luserDAO = DAOFactory.getDAO(UserDAO.class);
+		logger.info("User = " + user + "/" + userDAO);
 		userDAO.insertUser(user);
 		
 		if (currentUser == null) {
