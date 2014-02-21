@@ -7,26 +7,33 @@ import javax.json.JsonObject;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 @Entity
 @Table(name="ISSUES")
-public class Issue extends AbstractPersistentObj {
+public class Issue {
+	@Id
+    @Column(name="ID", unique = true, nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+	private long id;
+	
 	@Column(name="CREATE_DATE")
 	private Date createDate;
 	
 	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name="FK_CREATE_BY")
+	@JoinColumn(name="CREATE_BY")
 	private User createBy;
 	
 	@Column(name="MODIFY_DATE")
 	private Date modifyDate;
 	
 	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name="FK_MODIFIED_BY")
+	@JoinColumn(name="MODIFIED_BY")
 	private User modifyBy;
 	
 	@Column(name="SUMMARY")
@@ -36,34 +43,42 @@ public class Issue extends AbstractPersistentObj {
 	private String description;
 	
 	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name="FK_STATUS_ID")
+	@JoinColumn(name="STATUS_ID")
 	private Status status;
 	
 	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name="FK_RESOLUTION_ID")
+	@JoinColumn(name="RESOLUTION_ID")
 	private Resolution resolution;
 	
 	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name="FK_TYPE_ID")
+	@JoinColumn(name="TYPE_ID")
 	private Type type;
 	
 	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name="FK_PRIORITY_ID")
+	@JoinColumn(name="PRIORITY_ID")
 	private Priority priority;
 	
 	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name="FK_ISSUE_PROJECT_ID")
+	@JoinColumn(name="PROJECT_ID")
 	private Project project;
 	
 	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name="FK_BUILD_ID")
+	@JoinColumn(name="BUILD_ID")
 	private Build build;
 	
 	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name="FK_ASSIGNEE_BY")
+	@JoinColumn(name="ASSIGNEE_ID")
 	private User assignee;
 
 	public Issue() { }
+		
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
 
 	public Date getCreateDate() {
 		return createDate;
@@ -204,7 +219,7 @@ public class Issue extends AbstractPersistentObj {
 //	
 	public JsonObject toJsonForTable () {
 		JsonObject issueJson = Json.createObjectBuilder()
-					.add("id", getId())
+					.add("id", id)
 					.add("priority", getPriority().getName())
 					.add("assignee", getAssignee().toString())
 					.add("type", getType().getName())
@@ -216,7 +231,7 @@ public class Issue extends AbstractPersistentObj {
 
 	public JsonObject toJsonObj () {
 		JsonObject issueJson = Json.createObjectBuilder()
-							.add("id", getId())
+							.add("id", id)
 							.add("createdate", getCreateDate().toString())
 							.add("createby", getCreateBy().toString())
 							.add("modifydate", getModifyDate().toString())
@@ -252,7 +267,7 @@ public class Issue extends AbstractPersistentObj {
 	@Override
 	public String toString() {
 		JsonObject issueJson = Json.createObjectBuilder()
-				.add("id", getId())
+				.add("id", id)
 				.add("priority", getPriority().getName())
 				.add("assignee", assignee.getFirstName() + " " + assignee.getLastName())
 				.add("type", type.getName())

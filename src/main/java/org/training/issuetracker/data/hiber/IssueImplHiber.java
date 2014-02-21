@@ -13,12 +13,11 @@ import org.training.issuetracker.exceptions.DaoException;
 public class IssueImplHiber implements IssueDAO {
 	
 	@Autowired
-	private SessionFactory sessionFactory;
+	private HibernateTemplate hibernateTemplate;
 	
-//	private HibernateTemplate hibernateTemplate;
 	@Override
-	public List<Issue> getIssueList(User user) throws DaoException {
-		return this.sessionFactory.getCurrentSession().createQuery("from ISSUES").list();
+	public List getIssueList(User user) throws DaoException {
+		return hibernateTemplate.find("from Issue");
 	}
 
 	@Override

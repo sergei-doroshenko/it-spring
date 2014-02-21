@@ -28,7 +28,6 @@ public class IssueHandler extends DefaultHandler {
 			long id = Long.parseLong(attributes.getValue(ID_ATTR_INDEX));
 			String name = attributes.getValue(NAME_ATTR_INDEX);
 			currIssue.setId(id);
-			currIssue.setName(name);
 		}
 
 		if (!qName.equals("p:issue") && !qName.equals("p:issues")) {
