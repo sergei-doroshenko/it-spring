@@ -49,7 +49,7 @@ public class AttchmentImplDB implements AttachmentDAO {
 		PreparedStatement select = null;
 		ResultSet rs = null;
 		try {
-			connection = ConnectionProvider.getConnection();
+			connection = null;//ConnectionProvider.getConnection();
 			select = connection.prepareStatement(SQL_SELECT_ATTCH_LIST);
 			select.setLong(ISSUE_ID_INDEX, issueId);
 			rs = select.executeQuery();
@@ -82,7 +82,7 @@ public class AttchmentImplDB implements AttachmentDAO {
 		logger.debug("Attachment = " + attachment.getUrl());
 		PreparedStatement insert = null;
 		try {
-			connection = ConnectionProvider.getConnection();
+			connection = null;//ConnectionProvider.getConnection();
 			insert = connection.prepareStatement(SQL_INSERT_ATTCH);
 			insert.setLong(1, attachment.getIssueId());
 			insert.setDate(2, attachment.getCreateDate());

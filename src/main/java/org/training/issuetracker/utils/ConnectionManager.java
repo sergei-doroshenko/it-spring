@@ -15,14 +15,14 @@ import org.training.issuetracker.constants.Constants;
 
 public class ConnectionManager {
 	/* the default framework is embedded*/
-	public static String resourceRealPath = Constants.getRealPath() + "WEB-INF\\classes\\db\\";
-	private final Logger logger = Logger.getLogger("ConnectionManager");
-	private static final String DB_DRIVER = "org.apache.derby.jdbc.EmbeddedDriver";
-	private static final String DB_URI = "jdbc:derby:";
+//	public static String resourceRealPath = Constants.getRealPath() + "WEB-INF\\classes\\db\\";
+//	private final Logger logger = Logger.getLogger("ConnectionManager");
+//	private static final String DB_DRIVER = "org.apache.derby.jdbc.EmbeddedDriver";
+//	private static final String DB_URI = "jdbc:derby:";
 	//private static final String DB_DRIVER = "org.apache.derby.jdbc.ClientDriver";
 	//private static final String DB_URI = "jdbc:derby://localhost:1527/";
-	private static final String DB_NAME = resourceRealPath + "issuetrackerDB";
-	private static final String DB_PROPERTIES = Constants.getRealPath() + "WEB-INF\\classes\\db\\derby.properties";
+//	private static final String DB_NAME = resourceRealPath + "issuetrackerDB";
+//	private static final String DB_PROPERTIES = Constants.getRealPath() + "WEB-INF\\classes\\db\\derby.properties";
 	//private static final String DB_NAME = "D://Java_Training_Workspace//DerbyProject//derbyDB";
 	private Connection connection;
 
@@ -30,24 +30,24 @@ public class ConnectionManager {
 		super();
 	}
 
-	public Connection getConnection() {
-		loadDriver();
-		Properties props = new Properties();
-
-		try {
-			props.load(new FileInputStream(DB_PROPERTIES));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-		try {
-			connection = DriverManager.getConnection(DB_URI + DB_NAME  + ";create=true", props);
-			//connection = DriverManager.getConnection(DB_URI + DB_NAME);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return connection;
-	}
+//	public Connection getConnection() {
+//		loadDriver();
+//		Properties props = new Properties();
+//
+//		try {
+//			props.load(new FileInputStream(DB_PROPERTIES));
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
+//
+//		try {
+//			connection = DriverManager.getConnection(DB_URI + DB_NAME  + ";create=true", props);
+//			//connection = DriverManager.getConnection(DB_URI + DB_NAME);
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		}
+//		return connection;
+//	}
 
 
 	private void loadDriver() {
@@ -60,16 +60,16 @@ public class ConnectionManager {
          *  In an embedded environment, any static Derby system properties
          *  must be set before loading the driver to take effect.
          */
-        try {
-            Class.forName(DB_DRIVER).newInstance();
-        } catch (ClassNotFoundException cnfe) {
-        	cnfe.printStackTrace(System.err);
-            logger.error(cnfe.getMessage());
-        } catch (InstantiationException ie) {
-            ie.printStackTrace(System.err);
-        } catch (IllegalAccessException iae) {
-            iae.printStackTrace(System.err);
-        }
+//        try {
+//            Class.forName(DB_DRIVER).newInstance();
+//        } catch (ClassNotFoundException cnfe) {
+//        	cnfe.printStackTrace(System.err);
+//            logger.error(cnfe.getMessage());
+//        } catch (InstantiationException ie) {
+//            ie.printStackTrace(System.err);
+//        } catch (IllegalAccessException iae) {
+//            iae.printStackTrace(System.err);
+//        }
     }
 
 	public void closeResultSets(ResultSet... args){

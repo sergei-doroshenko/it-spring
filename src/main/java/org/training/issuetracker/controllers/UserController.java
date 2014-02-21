@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.UnsatisfiedServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -33,6 +35,9 @@ public class UserController {
 	
 	@Autowired
 	private UserDAO userDAO;
+	
+	@Autowired
+	private PropDAO propDAO;
 	
 	@RequestMapping(method = RequestMethod.POST, params={"login", "password"}, produces="application/json")
 	public @ResponseBody String login(@RequestParam(Constants.KEY_LOGIN) String login, 
@@ -65,10 +70,10 @@ public class UserController {
 		user.setLastName(lastName);
 		user.setEmail(email);
 		user.setPassword(password);
-		PropDAO propDAO = DAOFactory.getDAO(PropDAO.class);
+		
 		Role role = (Role) propDAO.getProp(PropertyType.ROLE, Constants.DEFAULT_ROLE_ID);
 		user.setRole(role);
-//		UserDAO luserDAO = DAOFactory.getDAO(UserDAO.class);
+
 		logger.info("User = " + user + "/" + userDAO);
 		userDAO.insertUser(user);
 		
