@@ -2,8 +2,15 @@ package org.training.issuetracker.domain;
 
 import javax.json.Json;
 import javax.json.JsonObject;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
+@Entity
+@Table(name="BUILDS")
 public class Build extends AbstractPersistentObj {
+	
+	@Column(name="PROJECT_ID")
 	private long projectId;
 
 	public Build() { }
@@ -12,7 +19,7 @@ public class Build extends AbstractPersistentObj {
 		super(id, name);
 		this.projectId = projectId;
 	}
-
+	
 	public long getProjectId() {
 		return projectId;
 	}

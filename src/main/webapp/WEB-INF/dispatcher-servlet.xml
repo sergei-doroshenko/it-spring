@@ -2,7 +2,9 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
     xmlns:context="http://www.springframework.org/schema/context"
     xmlns:security="http://www.springframework.org/schema/security"
-    xmlns:mvc="http://www.springframework.org/schema/mvc"
+    xmlns:mvc="http://www.springframework.org/schema/mvc" 
+    xmlns:tx="http://www.springframework.org/schema/tx" 
+    xmlns:aop="http://www.springframework.org/schema/aop" 
     xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
        http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.0.3.xsd
@@ -13,7 +15,9 @@
 	
 	<mvc:annotation-driven />
 	<mvc:default-servlet-handler />
-
+	
+	<!-- tx:annotation-driven transaction-manager="txManager" /-->
+	
 	<bean id="internalResourceViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="viewClass" value="org.springframework.web.servlet.view.JstlView" />
 		<property name="prefix" value="/WEB-INF/views/" />
@@ -26,9 +30,14 @@
 		<property name="resolver" ref="resolver" />
 	</bean>
 	
-	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+	<!-- bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource"-->
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">	
 	    <property name="driverClassName" value="org.apache.derby.jdbc.EmbeddedDriver" />
 	    <property name="url" value="jdbc:derby:classpath:db/issuetrackerDB" />
+<<<<<<< HEAD
+=======
+	    <!-- property name="url" value="jdbc:derby:issuetrackerDB" /-->
+>>>>>>> branch 'master' of https://github.com/mzubok/issuetracker_sergei_doroshenko.git
 	    <!-- property name="url" value="jdbc:derby:D:\git\issuetracker_sergei_doroshenko\target\classes\db\issuetrackerDB"/-->
 	    <property name="username" value="admin"/>
 	    <property name="password" value="111"/>
@@ -38,8 +47,15 @@
         <property name="dataSource" ref="dataSource" />
         <property name="annotatedClasses">
 			<list>
+				<value>org.training.issuetracker.domain.Issue</value>
 				<value>org.training.issuetracker.domain.User</value>
 				<value>org.training.issuetracker.domain.Role</value>
+				<value>org.training.issuetracker.domain.Build</value>
+				<value>org.training.issuetracker.domain.Priority</value>
+				<value>org.training.issuetracker.domain.Project</value>
+				<value>org.training.issuetracker.domain.Resolution</value>
+				<value>org.training.issuetracker.domain.Status</value>
+				<value>org.training.issuetracker.domain.Type</value>
 			</list>
 		</property>
 		
@@ -57,7 +73,13 @@
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
     
-	<bean id="issueDAO" class="org.training.issuetracker.data.db.IssueImplDB" />	
+    
+    <bean id="txManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+	    <property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+    
+	<bean id="issueDAO" class="org.training.issuetracker.data.hiber.IssueImplHiber" />	
   	<bean id="userDAO" class="org.training.issuetracker.data.hiber.UserImplHiber"/>
+	<bean id="propDAO" class="org.training.issuetracker.data.hiber.PropImplHiber"/>
 		
 </beans>

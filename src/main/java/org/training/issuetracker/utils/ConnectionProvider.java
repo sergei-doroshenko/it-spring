@@ -10,21 +10,21 @@ import org.apache.derby.jdbc.EmbeddedDataSource;
 import org.training.issuetracker.constants.Constants;
 
 public class ConnectionProvider {
-	private static EmbeddedDataSource ds;
+//	private static EmbeddedDataSource ds;
 
-	static {
-		ds = new EmbeddedDataSource();
-		ds.setDatabaseName(Constants.getRealPath() + "WEB-INF\\classes\\db\\issuetrackerDB");
-		ds.setUser("admin");
-		ds.setPassword("111");
-	}
+//	static {
+//		ds = new EmbeddedDataSource();
+//		ds.setDatabaseName(Constants.getRealPath() + "WEB-INF\\classes\\db\\issuetrackerDB");
+//		ds.setUser("admin");
+//		ds.setPassword("111");
+//	}
 
-	/**Method for getting connection.
-	 * @return Connection.
-	 * @throws SQLException.
-	 */
+//	/**Method for getting connection.
+//	 * @return Connection.
+//	 * @throws SQLException.
+//	 */
 	public static Connection getConnection() throws SQLException {
-		return ds.getConnection();
+		return null;//ds.getConnection();
 	}
 
 	public static void closeConnection(Connection cn){

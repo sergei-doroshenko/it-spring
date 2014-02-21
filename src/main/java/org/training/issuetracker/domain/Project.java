@@ -2,9 +2,21 @@ package org.training.issuetracker.domain;
 
 import javax.json.Json;
 import javax.json.JsonObject;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
+@Entity
+@Table(name="PROJECTS")
 public class Project extends AbstractPersistentObj {
+	@Column(name="DESCRIPTION")
 	private String description;
+	
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name="MANAGER")
 	private User manager;
 
 	public Project() { }
