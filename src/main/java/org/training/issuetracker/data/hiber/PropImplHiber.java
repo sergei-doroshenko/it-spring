@@ -107,11 +107,11 @@ public class PropImplHiber implements PropDAO {
 	}
 
 	@Override
-	public long updateProp(PropertyType prop, AbstractPersistentObj propObject)
+	public void updateProp(PropertyType prop, AbstractPersistentObj propObject)
 			throws DaoException {
 		
 		hibernateTemplate.update(propObject);
-		return 0;
+		
 	}
 
 	@Override
