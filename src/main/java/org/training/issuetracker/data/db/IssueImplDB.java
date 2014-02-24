@@ -158,7 +158,7 @@ public class IssueImplDB implements IssueDAO {
 	private Connection connection;
 
 	@Override
-	public Issue getIssue(long id) throws DaoException {
+	public Issue getIssueById(long id) throws DaoException {
 		Issue issue = new Issue();
 		PreparedStatement selectIssue = null;
 		ResultSet rs = null;

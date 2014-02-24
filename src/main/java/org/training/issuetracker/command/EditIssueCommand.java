@@ -75,7 +75,7 @@ public class EditIssueCommand extends AbstractWebCommand {
 				logger.debug("issue id = " + id);
 
 				IssueDAO dao = DAOFactory.getDAO(IssueDAO.class);
-				Issue issue = dao.getIssue(id);
+				Issue issue = dao.getIssueById(id);
 				getRequest().setAttribute(Constants.ISSUE, issue);
 
 				List<AbstractPersistentObj> resolutions = propDAO.getPropList(PropertyType.RESOLUTION);

@@ -64,7 +64,7 @@ public class IssueImplXML implements IssueDAO {
 	}
 
 	@Override
-	public Issue getIssue(long id) throws DaoException {
+	public Issue getIssueById(long id) throws DaoException {
 		// TODO Auto-generated method stub
 		return null;
 	}

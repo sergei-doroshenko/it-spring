@@ -10,7 +10,7 @@ public interface IssueDAO {
 
 	List <Issue> getIssueList (User user) throws DaoException;
 
-	Issue getIssue(long id) throws DaoException;
+	Issue getIssueById(long id) throws DaoException;
 
 	boolean isId (long id) throws DaoException;
 

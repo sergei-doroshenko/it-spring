@@ -112,7 +112,7 @@ public class FileUploadDownloadController extends HttpServlet {
 			long issueId = parser.getLongParameter(Constants.KEY_ID);
 
 			IssueDAO issueDAO = DAOFactory.getDAO(IssueDAO.class);
-			Issue issue = issueDAO.getIssue(issueId);
+			Issue issue = issueDAO.getIssueById(issueId);
 
 			if (issue == null) {
 				return;

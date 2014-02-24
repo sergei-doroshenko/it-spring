@@ -21,9 +21,9 @@ public class IssueImplHiber implements IssueDAO {
 	}
 
 	@Override
-	public Issue getIssue(long id) throws DaoException {
-		// TODO Auto-generated method stub
-		return null;
+	public Issue getIssueById(long id) throws DaoException {
+		
+		return hibernateTemplate.get(Issue.class, id);
 	}
 
 	@Override

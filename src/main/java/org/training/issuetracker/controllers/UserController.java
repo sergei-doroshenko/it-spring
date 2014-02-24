@@ -7,8 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.UnsatisfiedServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -18,10 +16,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.training.issuetracker.constants.Constants;
 import org.training.issuetracker.data.db.PropImplDB.PropertyType;
-import org.training.issuetracker.data.db.UserImplDB;
 import org.training.issuetracker.domain.Role;
 import org.training.issuetracker.domain.User;
-import org.training.issuetracker.domain.DAO.DAOFactory;
 import org.training.issuetracker.domain.DAO.PropDAO;
 import org.training.issuetracker.domain.DAO.UserDAO;
 import org.training.issuetracker.exceptions.DaoException;
@@ -62,7 +58,7 @@ public class UserController {
 			produces="application/json")
 	public @ResponseBody String addUser(@RequestParam(Constants.KEY_FIRST_NAME) String firstName, @RequestParam(Constants.KEY_LAST_NAME) String lastName, 
 			@RequestParam(Constants.KEY_EMAIL) String email, @RequestParam(Constants.KEY_PASSWORD) String password, 
-			@ModelAttribute(Constants.KEY_USER) User currentUser, HttpSession session) throws DaoException {
+			HttpSession session) throws DaoException {
 		
 		User user = new User ();
 		
@@ -74,8 +70,9 @@ public class UserController {
 		Role role = (Role) propDAO.getProp(PropertyType.ROLE, Constants.DEFAULT_ROLE_ID);
 		user.setRole(role);
 
-		logger.info("User = " + user + "/" + userDAO);
 		userDAO.insertUser(user);
+				
+		User currentUser = (User) session.getAttribute(Constants.KEY_USER);
 		
 		if (currentUser == null) {
 			session.setAttribute(Constants.KEY_USER, user);

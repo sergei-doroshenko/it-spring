@@ -48,7 +48,7 @@ public class ViewIssueCommand extends AbstractWebCommand {
 			long id = parser.getLongParameter(Constants.KEY_ID);
 			IssueDAO dao = DAOFactory.getDAO(IssueDAO.class);
 
-			Issue issue = dao.getIssue(id);
+			Issue issue = dao.getIssueById(id);
 
 			HttpSession session = getRequest().getSession();
 

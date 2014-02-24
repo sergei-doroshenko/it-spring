@@ -1,6 +1,6 @@
 var issue_names = ["Id", "Priority", "Assignee", "Type", "Status", "Summary"];
 
-var issue_rowLink = { baseLinkUrl: '/issuetracker/Main.do', addParam: '&command=issue'};
+var issue_rowLink = { baseLinkUrl: 'issue'};//'/issuetracker/Main.do', addParam: '&command=issue'
 
 var issue_model = [
              { name: "id", index: 'id', width: 55, formatter:'showlink', formatoptions: issue_rowLink},
@@ -29,7 +29,7 @@ var jsonHandler = {
 function createIssueTable() {
     $("#list").jqGrid({
         //url: "Main.do",
-    	url: "issuelist",
+    	url: "issue/list",
         //postData: {	command: 'issuelist' },
 		mtype: "GET",
         datatype: "json",
