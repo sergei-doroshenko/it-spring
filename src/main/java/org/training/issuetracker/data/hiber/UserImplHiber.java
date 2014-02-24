@@ -25,8 +25,8 @@ public class UserImplHiber implements UserDAO {
 	private HibernateTemplate hibernateTemplate;
 	
 	@Override
-	public List<User> getUsersList() throws DaoException {
-		return null;
+	public List getUsersList() throws DaoException {
+		return hibernateTemplate.find("from User");
 	}
 
 	@Override

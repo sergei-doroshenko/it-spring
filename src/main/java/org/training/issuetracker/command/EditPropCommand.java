@@ -53,12 +53,12 @@ public class EditPropCommand extends AbstractWebCommand {
 					Status status = new Status();
 					status.setId(id);
 					status.setName(name);
-					result = propDAO.updateProp(propType, status);
+					propDAO.updateProp(propType, status);
 					break;
 				}
 				case Constants.OPER_DELETE : {
 					long id = Long.parseLong(parser.getStringParameter(Constants.KEY_ID));
-					result = propDAO.deleteProp(propType, id);
+					propDAO.deleteProp(propType, id);
 					break;
 				}
 				default : {

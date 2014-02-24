@@ -54,33 +54,8 @@ public class PropImplHiber implements PropDAO {
 	}
 	
 	private String getPropEntityName(PropertyType prop) {
-		String entityName = null;
-		switch (prop) {
-			case STATUS : {
-				entityName = Status.class.getCanonicalName();
-				break;
-			}
-			case RESOLUTION : {
-				entityName = Resolution.class.getCanonicalName();
-				break;
-			}
-			case PRIORITY : {
-				entityName = Priority.class.getCanonicalName();
-				break;
-			}
-			case TYPE : {
-				entityName = Type.class.getCanonicalName();
-				break;
-			}
-			case ROLE : {
-				entityName = Role.class.getCanonicalName();
-			}
-			default : {
-				break;
-			}
-		}
 		
-		return entityName;
+		return getPropClass(prop).getCanonicalName();
 	}
 	
 	@Override
@@ -95,8 +70,7 @@ public class PropImplHiber implements PropDAO {
 	public AbstractPersistentObj getProp(PropertyType prop, long id)
 			throws DaoException {
 		
-		String entityName = getPropClass(prop).getCanonicalName();
-		return (AbstractPersistentObj) hibernateTemplate.get(entityName, id);
+		return (AbstractPersistentObj) hibernateTemplate.get(getPropEntityName(prop), id);
 	}
 
 	@Override
@@ -115,9 +89,9 @@ public class PropImplHiber implements PropDAO {
 	}
 
 	@Override
-	public long deleteProp(PropertyType prop, long id) throws DaoException {
-		// TODO Auto-generated method stub
-		return 0;
+	public void deleteProp(PropertyType prop, long id) throws DaoException {
+		
+		hibernateTemplate.delete(hibernateTemplate.get(getPropEntityName(prop), id));
 	}
 
 }

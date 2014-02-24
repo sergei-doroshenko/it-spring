@@ -1,3 +1,7 @@
+var prop_url = "prop";
+var user_url = 'user';
+var edit_url = "\edit";
+
 var jsonHandlerProp = {
         root: "rows",
         page: "page",
@@ -16,11 +20,11 @@ function handleLoadError (jqXHR, textStatus, errorThrown) {
 }
 
 function createStatusesTable() {
+	var send_data = {type: 'STATUS'};
     $("#statuses-table").jqGrid({
-        url: "Main.do",
-        editurl: 'Main.do',
-        postData: {	command: 'prop_list',
-        	prop: 'STATUS'},
+        url: prop_url,
+        editurl: prop_url + edit_url,
+        postData: send_data,
 		mtype: "GET",
         datatype: "json",
         jsonReader : jsonHandlerProp,
@@ -41,23 +45,21 @@ function createStatusesTable() {
 		loadError: handleLoadError
     });
     
-    var edit_data = {command: 'edit_prop', prop: 'STATUS'};
-    
     $("#statuses-table").jqGrid('navGrid', '#statuses-pager',{view:false, del:true, search:false}, //
-    		{closeAfterEdit: true, editData: edit_data}, // use default settings for edit
-    		{closeAfterAdd: true, editData: edit_data}, // use default settings for add
-    		{closeAfterDelete: true, delData: edit_data},  // delete instead that del:false we need this
+    		{closeAfterEdit: true, editData: send_data}, // use default settings for edit
+    		{closeAfterAdd: true, editData: send_data}, // use default settings for add
+    		{closeAfterDelete: true, delData: send_data},  // delete instead that del:false we need this
     		{multipleSearch : true}, // enable the advanced searching
     		{closeOnEscape:true} /* allow the view dialog to be closed when user press ESC key*/
     		);
 }
 
 function createResolutionsTable() {
+	var send_data = {type: 'RESOLUTION'};
     $("#resolutions-table").jqGrid({
-        url: "Main.do",
-        editurl: 'Main.do',
-        postData: {	command: 'prop_list',
-        	prop: 'RESOLUTION'},
+        url: prop_url,
+        editurl: prop_url + edit_url,
+        postData: send_data,
 		mtype: "GET",
         datatype: "json",
         jsonReader : jsonHandlerProp,
@@ -78,23 +80,21 @@ function createResolutionsTable() {
 		loadError: handleLoadError
     });
     
-    var edit_data = {command: 'edit_prop', prop: 'RESOLUTION'};
-    
     $("#resolutions-table").jqGrid('navGrid', '#resolutions-pager',{view:false, del:true, search:false}, //
-    		{closeAfterEdit: true, editData: edit_data}, // use default settings for edit
-    		{closeAfterAdd: true, editData: edit_data}, // use default settings for add
-    		{closeAfterDelete: true, delData: edit_data},  // delete instead that del:false we need this
+    		{closeAfterEdit: true, editData: send_data}, // use default settings for edit
+    		{closeAfterAdd: true, editData: send_data}, // use default settings for add
+    		{closeAfterDelete: true, delData: send_data},  // delete instead that del:false we need this
     		{multipleSearch : true}, // enable the advanced searching
     		{closeOnEscape:true} /* allow the view dialog to be closed when user press ESC key*/
     		);
 }
 
 function createPrioritiesTable() {
+	var send_data = {type: 'PRIORITY'};
     $("#priority-table").jqGrid({
-        url: "Main.do",
-        editurl: 'Main.do',
-        postData: {	command: 'prop_list',
-        	prop: 'PRIORITY'},
+        url: prop_url,
+        editurl: prop_url + edit_url,
+        postData: send_data,
 		mtype: "GET",
         datatype: "json",
         jsonReader : jsonHandlerProp,
@@ -115,23 +115,21 @@ function createPrioritiesTable() {
 		loadError: handleLoadError
     });
     
-    var edit_data = {command: 'edit_prop', prop: 'PRIORITY'};
-    
     $("#priority-table").jqGrid('navGrid', '#priority-pager',{view:false, del:true, search:false}, //
-    		{closeAfterEdit: true, editData: edit_data}, // use default settings for edit
-    		{closeAfterAdd: true, editData: edit_data}, // use default settings for add
-    		{closeAfterDelete: true, delData: edit_data},  // delete instead that del:false we need this
+    		{closeAfterEdit: true, editData: send_data}, // use default settings for edit
+    		{closeAfterAdd: true, editData: send_data}, // use default settings for add
+    		{closeAfterDelete: true, delData: send_data},  // delete instead that del:false we need this
     		{multipleSearch : true}, // enable the advanced searching
     		{closeOnEscape:true} /* allow the view dialog to be closed when user press ESC key*/
     		);
 }
 
 function createTypesTable() {
+	var send_data = {type: 'TYPE'};
     $("#types-table").jqGrid({
-        url: "Main.do",
-        editurl: 'Main.do',
-        postData: {	command: 'prop_list',
-        	prop: 'TYPE'},
+        url: prop_url,
+        editurl: prop_url + edit_url,
+        postData: send_data,
 		mtype: "GET",
         datatype: "json",
         jsonReader : jsonHandlerProp,
@@ -152,23 +150,23 @@ function createTypesTable() {
 		loadError: handleLoadError
     });
     
-    var edit_data = {command: 'edit_prop', prop: 'TYPE'};
+    var edit_data = {prop: 'TYPE'};
     
     $("#types-table").jqGrid('navGrid', '#types-pager',{view:false, del:true, search:false}, //
-    		{closeAfterEdit: true, editData: edit_data}, // use default settings for edit
-    		{closeAfterAdd: true, editData: edit_data}, // use default settings for add
-    		{closeAfterDelete: true, delData: edit_data},  // delete instead that del:false we need this
+    		{closeAfterEdit: true, editData: send_data}, // use default settings for edit
+    		{closeAfterAdd: true, editData: send_data}, // use default settings for add
+    		{closeAfterDelete: true, delData: send_data},  // delete instead that del:false we need this
     		{multipleSearch : true}, // enable the advanced searching
     		{closeOnEscape:true} /* allow the view dialog to be closed when user press ESC key*/
     		);
 }
 
 function createRolesTable() {
+	var send_data = {type: 'ROLE'};
     $("#roles-table").jqGrid({
-        url: "Main.do",
-        editurl: 'Main.do',
-        postData: {	command: 'prop_list',
-        	prop: 'ROLE'},
+        url: prop_url,
+        editurl: prop_url + edit_url,
+        postData: send_data,
 		mtype: "GET",
         datatype: "json",
         jsonReader : jsonHandlerProp,
@@ -189,12 +187,10 @@ function createRolesTable() {
 		loadError: handleLoadError
     });
     
-    var edit_data = {command: 'edit_prop', prop: 'ROLE'};
-    
     $("#roles-table").jqGrid('navGrid', '#roles-pager',{view:false, del:true, search:false}, //
-    		{closeAfterEdit: true, editData: edit_data}, // use default settings for edit
-    		{closeAfterAdd: true, editData: edit_data}, // use default settings for add
-    		{closeAfterDelete: true, delData: edit_data},  // delete instead that del:false we need this
+    		{closeAfterEdit: true, editData: send_data}, // use default settings for edit
+    		{closeAfterAdd: true, editData: send_data}, // use default settings for add
+    		{closeAfterDelete: true, delData: send_data},  // delete instead that del:false we need this
     		{multipleSearch : true}, // enable the advanced searching
     		{closeOnEscape:true} /* allow the view dialog to be closed when user press ESC key*/
     		);
@@ -309,7 +305,6 @@ function createBuildsTable() {
     		);
 }
 
-
 var jsonHandlerUsers = {
     root: "rows",
     page: "page",
@@ -327,9 +322,8 @@ var jsonHandlerUsers = {
 
 function createUsersTable() {
     $("#users-table").jqGrid({
-        url: "Main.do",
-        editurl: 'Main.do?command=edit_user',
-        postData: {	command: 'users_list' },
+        url: user_url,
+        editurl: edit_url,
 		mtype: "GET",
         datatype: "json",
         jsonReader : jsonHandlerUsers,

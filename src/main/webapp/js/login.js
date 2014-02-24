@@ -25,7 +25,7 @@ function bindLongin() {
 	$('#auth-form').submit(function () {
         
         var formdata = {
-	        'command' : $('#login-command').val(),
+	        //'command' : $('#login-command').val(),
 	        'login': $('#login').val(),
 	        'password' : $('#password').val()
 	    };
@@ -37,13 +37,7 @@ function bindLongin() {
                 dataType: 'text',
                 type: 'post',
                 success: function (data) {
-                        //console.log('data=' + data);
-                        //handleUserData(data);
-                        //console.log('Status: ' + jqxhr.getAllResponseHeaders());
-                        //alert('Status: ' + jqxhr.getAllResponseHeaders());
-                        //handleUserOnLoad();
-                		//alert('Request succes!');
-                		//alert('Jump to url: ' + getMainUrl());
+                       
                         window.location.href = data;
                 },
                 error:  handleError
@@ -85,7 +79,7 @@ function bindEditIssueForm() {
 	$('#edit-issue-form').submit(function () {
         
         var post_data = {
-	        'command' : $('#update-command').val(),
+	        //'command' : $('#update-command').val(),
 	        'id' : $('#id').val(),
 	        'type': $('#type').val(),
 	        'priority' : $('#priority').val(),
@@ -99,7 +93,7 @@ function bindEditIssueForm() {
 	    };
     
         $.ajax({
-            url: 'Main.do',
+            url: 'issue\edit',
             data: post_data,
             dataType: 'text',
             type: 'post',
@@ -116,7 +110,7 @@ function bindNewIssueForm() {
 	$('#new-issue-form').submit(function () {
         
         var post_data = {
-	        'command' : $('#insert-command').val(),
+	        //'command' : $('#insert-command').val(),
 	        'type': $('#type').val(),
 	        'priority' : $('#priority').val(),
 	        'project' : $('#project').val(),
@@ -127,7 +121,7 @@ function bindNewIssueForm() {
 	    };
     
         $.ajax({
-            url: 'Main.do',
+            url: 'issue\add',
             data: post_data,
             dataType: 'text',
             type: 'post',
@@ -143,12 +137,12 @@ function bindNewIssueForm() {
 function executeDeleteIssue() {
         
         var post_data = {
-	        'command' : $('#delete-command').val(),
+	        //'command' : $('#delete-command').val(),
 	        'id' : $('#id').val()
 	    };
     
         $.ajax({
-            url: 'Main.do',
+            url: 'issue\del',
             data: post_data,
             dataType: 'text',
             type: 'post',

@@ -16,6 +16,6 @@ public interface PropDAO {
 	
 	void updateProp (PropertyType prop, AbstractPersistentObj propObject) throws DaoException;
 	
-	long deleteProp (PropertyType prop, long id) throws DaoException;
+	void deleteProp (PropertyType prop, long id) throws DaoException;
  
 }

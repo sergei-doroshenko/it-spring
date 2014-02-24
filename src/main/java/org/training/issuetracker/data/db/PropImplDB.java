@@ -415,7 +415,7 @@ public class PropImplDB implements PropDAO {
 	}
 
 	@Override
-	public long updateProp(PropertyType prop, AbstractPersistentObj propObject)
+	public void updateProp(PropertyType prop, AbstractPersistentObj propObject)
 			throws DaoException {
 		
 		PreparedStatement st = null;
@@ -426,7 +426,7 @@ public class PropImplDB implements PropDAO {
 			st.setString(UPDATE_PROP_NAME_IND, propObject.getName());
 			st.setLong(UPDATE_PROP_ID_IND, propObject.getId());
 						
-			return st.executeUpdate();
+//			return st.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new DaoException(e.getMessage(), e);
@@ -437,7 +437,7 @@ public class PropImplDB implements PropDAO {
 	}
 
 	@Override
-	public long deleteProp(PropertyType prop, long id) throws DaoException {
+	public void deleteProp(PropertyType prop, long id) throws DaoException {
 		
 		PreparedStatement st = null;
 
@@ -446,7 +446,7 @@ public class PropImplDB implements PropDAO {
 			st = connection.prepareStatement(getDeletePropQuery(prop));
 			st.setLong(DELETE_PROP_ID_IND, id);
 
-			return st.executeUpdate();
+//			return st.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new DaoException(e.getLocalizedMessage());

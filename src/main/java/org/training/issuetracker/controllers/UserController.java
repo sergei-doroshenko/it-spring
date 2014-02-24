@@ -1,5 +1,7 @@
 package org.training.issuetracker.controllers;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
@@ -21,6 +23,7 @@ import org.training.issuetracker.domain.User;
 import org.training.issuetracker.domain.DAO.PropDAO;
 import org.training.issuetracker.domain.DAO.UserDAO;
 import org.training.issuetracker.exceptions.DaoException;
+import org.training.issuetracker.utils.JqGridData;
 
 import flexjson.JSONSerializer;
 
@@ -36,7 +39,7 @@ public class UserController {
 	private PropDAO propDAO;
 	
 	@RequestMapping(method = RequestMethod.POST, params={"login", "password"}, produces="application/json")
-	public @ResponseBody String login(@RequestParam(Constants.KEY_LOGIN) String login, 
+	public @ResponseBody String getUserByLogin(@RequestParam(Constants.KEY_LOGIN) String login, 
 			@RequestParam(Constants.KEY_PASSWORD) String password, HttpSession session) throws DaoException {
 		
 		User user = userDAO.getUser(login, password);
@@ -47,14 +50,26 @@ public class UserController {
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, params="id", produces="application/json")
-	public @ResponseBody String getUser(@RequestParam(Constants.KEY_ID) long id, @ModelAttribute(Constants.KEY_USER) User currentUser) throws DaoException {
+	public @ResponseBody String getUserById(@RequestParam(Constants.KEY_ID) long id, @ModelAttribute(Constants.KEY_USER) User currentUser) throws DaoException {
 		
 		User user = userDAO.getUser(id);
 		String json = new JSONSerializer().exclude("*.password").serialize(user);
 		return json;
 	}
 	
-	@RequestMapping(method = RequestMethod.POST, params={Constants.KEY_FIRST_NAME, Constants.KEY_LAST_NAME, Constants.KEY_EMAIL, Constants.KEY_PASSWORD},
+	@RequestMapping(method = RequestMethod.GET, produces="application/json")
+	public @ResponseBody String getUsersList(@RequestParam("page") int page, @RequestParam("rows") int rows) throws DaoException {		
+		
+		List<User> users = userDAO.getUsersList();
+		
+		int records = users.size();
+		int total = records/rows;			
+		JqGridData<User> data = new JqGridData<>(total, page, records, users);
+		String json = data.getJsonString();
+		return json;
+	}
+	
+	@RequestMapping(value="/edit", method = RequestMethod.POST, params={Constants.KEY_FIRST_NAME, Constants.KEY_LAST_NAME, Constants.KEY_EMAIL, Constants.KEY_PASSWORD},
 			produces="application/json")
 	public @ResponseBody String addUser(@RequestParam(Constants.KEY_FIRST_NAME) String firstName, @RequestParam(Constants.KEY_LAST_NAME) String lastName, 
 			@RequestParam(Constants.KEY_EMAIL) String email, @RequestParam(Constants.KEY_PASSWORD) String password, 
