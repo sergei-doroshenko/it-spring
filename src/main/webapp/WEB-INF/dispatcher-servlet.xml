@@ -59,5 +59,7 @@
 	<bean id="issueDAO" class="org.training.issuetracker.data.hiber.IssueImplHiber" />	
   	<bean id="userDAO" class="org.training.issuetracker.data.hiber.UserImplHiber"/>
 	<bean id="propDAO" class="org.training.issuetracker.data.hiber.PropImplHiber"/>
+	<bean id="projectDAO" class="org.training.issuetracker.data.hiber.ProjectImplHiber"/>
+	<bean id="buildDAO" class="org.training.issuetracker.data.hiber.BuildImplHiber"/>
 		
 </beans>

@@ -2,7 +2,6 @@ package org.training.issuetracker.domain;
 
 import javax.json.Json;
 import javax.json.JsonObject;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -30,7 +29,7 @@ public class User {//extends AbstractPersistentObj
 	@Column(name="EMAIL")
 	private String email;
 	
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne()
 	@JoinColumn(name="ROLE_ID")
 	private Role role;
 	

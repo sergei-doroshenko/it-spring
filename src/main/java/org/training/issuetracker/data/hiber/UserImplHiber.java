@@ -57,6 +57,6 @@ public class UserImplHiber implements UserDAO {
 	@Override
 	public void deleteUser(long id) throws DaoException {
 		
-		hibernateTemplate.delete(hibernateTemplate.get("User", id));
+		hibernateTemplate.delete(hibernateTemplate.get(User.class, id));
 	}
 }

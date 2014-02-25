@@ -9,10 +9,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.training.issuetracker.data.db.PropImplDB.PropertyType;
 import org.training.issuetracker.domain.AbstractPersistentObj;
-import org.training.issuetracker.domain.Issue;
 import org.training.issuetracker.domain.DAO.PropDAO;
+import org.training.issuetracker.domain.DAO.PropDAO.PropertyType;
 import org.training.issuetracker.exceptions.DaoException;
 import org.training.issuetracker.utils.JqGridData;
 

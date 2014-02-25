@@ -24,7 +24,7 @@ import org.training.issuetracker.domain.Attachment;
 import org.training.issuetracker.domain.Issue;
 import org.training.issuetracker.domain.User;
 import org.training.issuetracker.domain.DAO.AttachmentDAO;
-import org.training.issuetracker.domain.DAO.DAOFactory;
+
 import org.training.issuetracker.domain.DAO.IssueDAO;
 import org.training.issuetracker.exceptions.DaoException;
 import org.training.issuetracker.exceptions.ParameterNotFoundException;
@@ -42,7 +42,9 @@ import org.training.issuetracker.utils.ParameterParser;
 public class FileUploadDownloadController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private final Logger logger = Logger.getLogger("org.training.issuetracker.controllers");
-
+	
+	private AttachmentDAO attachmentDAO;
+	private IssueDAO issueDAO;
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
@@ -111,7 +113,6 @@ public class FileUploadDownloadController extends HttpServlet {
 		try {
 			long issueId = parser.getLongParameter(Constants.KEY_ID);
 
-			IssueDAO issueDAO = DAOFactory.getDAO(IssueDAO.class);
 			Issue issue = issueDAO.getIssueById(issueId);
 
 			if (issue == null) {
@@ -134,7 +135,7 @@ public class FileUploadDownloadController extends HttpServlet {
 
 
 	        logger.info("Upload File Directory="+fileUploadDir.getAbsolutePath());
-	        AttachmentDAO dao = DAOFactory.getDAO(AttachmentDAO.class);
+	       
 
 	        //Get all the parts from request and write it to the file on server
 	        for (Part part : request.getParts()) {
@@ -147,7 +148,7 @@ public class FileUploadDownloadController extends HttpServlet {
 	        	attch.setIssueId(issueId);
 	        	attch.setUrl(fileName);
 
-				dao.addAttchment(attch);
+				attachmentDAO.addAttchment(attch);
 				part.write(uploadFilePath + File.separator + fileName);
 
 	        }

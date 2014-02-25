@@ -8,12 +8,10 @@ import javax.net.ssl.SSLEngineResult.Status;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate3.HibernateTemplate;
-import org.training.issuetracker.data.db.PropImplDB.PropertyType;
 import org.training.issuetracker.domain.AbstractPersistentObj;
 import org.training.issuetracker.domain.Priority;
 import org.training.issuetracker.domain.Resolution;
 import org.training.issuetracker.domain.Role;
-import org.training.issuetracker.domain.User;
 import org.training.issuetracker.domain.DAO.PropDAO;
 import org.training.issuetracker.exceptions.DaoException;
 

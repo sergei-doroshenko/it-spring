@@ -41,13 +41,9 @@ function getProjectBuilds (id) {
 	select.empty();
 	
 	if (id) {
-		var sdata = {
-	        'command': $('#get-builds-command').val(),
-	        'id': id
-	    };
-                      
+		
         var jqxhr = $.ajax({
-                url: 'Main.do',
+                url: 'build/project/' + id,
                 data: sdata,
                 dataType: 'json',
                 type: 'get',

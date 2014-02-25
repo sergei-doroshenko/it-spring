@@ -1,6 +1,8 @@
 var prop_url = "prop";
 var user_url = 'user';
-var edit_url = "\edit";
+var project_url = 'project';
+var buil_url = 'build';
+var edit_url = '/edit';
 
 var jsonHandlerProp = {
         root: "rows",
@@ -198,9 +200,8 @@ function createRolesTable() {
 
 function createProjectsTable() {
     $("#projects-table").jqGrid({
-        url: "Main.do",
-        editurl: 'Main.do',
-        postData: {	command: 'projects_list'},
+        url: project_url,
+        editurl: project_url + edit_url,
 		mtype: "GET",
         datatype: "json",
         jsonReader : {
@@ -217,7 +218,7 @@ function createProjectsTable() {
             	},
             id: "id"
         },
-        colNames: ["Id", "Name", "Description", "Manager"],
+        colNames: ["Id", "Name", "Description", "Manager ID"],
         colModel: [
                    { name: "id", index: 'id', width: 50},
                    { name: "name", index: 'name', width: 150, editable: true, editoptions:{size:"20",maxlength:"30"}},
@@ -236,12 +237,10 @@ function createProjectsTable() {
 		loadError: handleLoadError
     });
     
-    var edit_data = {command: 'edit_project'};
-    
     $("#projects-table").jqGrid('navGrid', '#projects-pager',{view:false, del:true, search:false}, //
-    		{closeAfterEdit: true, editData: edit_data}, // use default settings for edit
-    		{closeAfterAdd: true, editData: edit_data}, // use default settings for add
-    		{closeAfterDelete: true, delData: edit_data},  // delete instead that del:false we need this
+    		{closeAfterEdit: true}, // use default settings for edit
+    		{closeAfterAdd: true}, // use default settings for add
+    		{closeAfterDelete: true},  // delete instead that del:false we need this
     		{multipleSearch : true}, // enable the advanced searching
     		{closeOnEscape:true} /* allow the view dialog to be closed when user press ESC key*/
     		);
@@ -264,14 +263,12 @@ function getProjectsOptions(elem) {
       },
       error:  handleLoadError
     });
-    
 }
 
 function createBuildsTable() {
     $("#builds-table").jqGrid({
-        url: "Main.do",
-        editurl: 'Main.do',
-        postData: {	command: 'builds_list'},
+        url: buil_url,
+        editurl: buil_url + edit_url,
 		mtype: "GET",
         datatype: "json",
         jsonReader : jsonHandlerProp,
@@ -294,12 +291,10 @@ function createBuildsTable() {
 		loadError: handleLoadError
     });
     
-    var edit_data = {command: 'edit_build'};
-    
     $("#builds-table").jqGrid('navGrid', '#builds-pager',{view:false, del:true, search:false}, //
-    		{closeAfterEdit: true, editData: edit_data}, // use default settings for edit
-    		{closeAfterAdd: true, editData: edit_data}, // use default settings for add
-    		{closeAfterDelete: true, delData: edit_data},  // delete instead that del:false we need this
+    		{closeAfterEdit: true}, // use default settings for edit
+    		{closeAfterAdd: true}, // use default settings for add
+    		{closeAfterDelete: true},  // delete instead that del:false we need this
     		{multipleSearch : true}, // enable the advanced searching
     		{closeOnEscape:true} /* allow the view dialog to be closed when user press ESC key*/
     		);
@@ -323,7 +318,7 @@ var jsonHandlerUsers = {
 function createUsersTable() {
     $("#users-table").jqGrid({
         url: user_url,
-        editurl: edit_url,
+        editurl: user_url + edit_url,
 		mtype: "GET",
         datatype: "json",
         jsonReader : jsonHandlerUsers,

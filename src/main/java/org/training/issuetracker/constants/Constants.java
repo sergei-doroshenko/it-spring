@@ -32,7 +32,7 @@ public final class Constants {
     public static final String RESOURCE_I18N_PATHS = "WEB-INF\\classes\\i18n\\";
 
     /**url part of jsp pages folder.*/
-    public static final  String URL_PREFIX = "/WEB-INF/jsp";
+    public static final  String URL_PREFIX = "/WEB-INF/views";
 
     /** Constants string literal for page-url of view-issue.jsp */
 	public static final String URL_VIEW_ISSUE = URL_PREFIX + "/view-issue.jsp";
@@ -48,9 +48,6 @@ public final class Constants {
 
 	/** Constants string literal for page-fragment-url of header.jsp */
 	public static final String URL_HEADER = URL_PREFIX + "/header.jsp";
-
-	/** Constants string literal for page-fragment-url of header.jsp */
-	public static final String URL_HEADER_SIMPLE = URL_PREFIX + "/header-simple.jsp";
 
 	/** Constants string literal for page-fragment-url of header.jsp */
 	public static final String URL_MENU_TOP = URL_PREFIX + "/menu_top.jsp";
@@ -132,7 +129,7 @@ public final class Constants {
 	public static final String COMMAND_LOGIN = "login";
 
 	/** Constants string literal for logout command  */
-	public static final String COMMAND_LOGOUT = "logout";
+	public static final String COMMAND_LOGOUT = "user/logout";
 
 	/** Constants string literal for view user info command  */
 	public static final String COMMAND_VIEW_USER = "viewuser";
@@ -179,7 +176,7 @@ public final class Constants {
 	public static final String URL_MAIN_DO = "Main.do";
 
 	/** Constants string literal for submitissue-url  */
-	public static final String URL_LOGOUT_COMMAND = URL_MAIN_COMMAND + COMMAND_LOGOUT;
+	public static final String URL_LOGOUT_COMMAND = "user/logout";
 
 	/** Constants string literal for submitissue-url  */
 	public static final String URL_SAVEISSUE_COMMAND = URL_MAIN_COMMAND + COMMAND_UPDATE_ISSUE;

@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.view.RedirectView;
 import org.training.issuetracker.constants.Constants;
-import org.training.issuetracker.data.db.PropImplDB.PropertyType;
 import org.training.issuetracker.domain.Role;
 import org.training.issuetracker.domain.User;
 import org.training.issuetracker.domain.DAO.PropDAO;
@@ -38,7 +38,7 @@ public class UserController {
 	@Autowired
 	private PropDAO propDAO;
 	
-	@RequestMapping(method = RequestMethod.POST, params={"login", "password"}, produces="application/json")
+	@RequestMapping(value = "/login", method = RequestMethod.POST, params={"login", "password"}, produces="application/json")
 	public @ResponseBody String getUserByLogin(@RequestParam(Constants.KEY_LOGIN) String login, 
 			@RequestParam(Constants.KEY_PASSWORD) String password, HttpSession session) throws DaoException {
 		
@@ -49,11 +49,19 @@ public class UserController {
 		return "";
 	}
 	
+	@RequestMapping(value = "/logout", method = RequestMethod.GET, produces="application/json")
+	public RedirectView loguot(HttpSession session) {
+		
+		session.removeAttribute(Constants.KEY_USER);
+		session.invalidate();
+		return new RedirectView("/index.jsp", true);
+	}
+	
 	@RequestMapping(method = RequestMethod.GET, params="id", produces="application/json")
 	public @ResponseBody String getUserById(@RequestParam(Constants.KEY_ID) long id, @ModelAttribute(Constants.KEY_USER) User currentUser) throws DaoException {
 		
 		User user = userDAO.getUser(id);
-		String json = new JSONSerializer().exclude("*.password").serialize(user);
+		String json = new JSONSerializer().exclude("*.password", "*.class").serialize(user);
 		return json;
 	}
 	
@@ -69,11 +77,11 @@ public class UserController {
 		return json;
 	}
 	
-	@RequestMapping(value="/edit", method = RequestMethod.POST, params={Constants.KEY_FIRST_NAME, Constants.KEY_LAST_NAME, Constants.KEY_EMAIL, Constants.KEY_PASSWORD},
-			produces="application/json")
+	@RequestMapping(value="/edit", method = RequestMethod.POST, params={"oper=add", Constants.KEY_FIRST_NAME, 
+			Constants.KEY_LAST_NAME, Constants.KEY_EMAIL, Constants.KEY_PASSWORD, Constants.KEY_ROLE_ID}, produces="application/json")
 	public @ResponseBody String addUser(@RequestParam(Constants.KEY_FIRST_NAME) String firstName, @RequestParam(Constants.KEY_LAST_NAME) String lastName, 
 			@RequestParam(Constants.KEY_EMAIL) String email, @RequestParam(Constants.KEY_PASSWORD) String password, 
-			HttpSession session) throws DaoException {
+			@RequestParam(Constants.KEY_ROLE_ID) long roleId, HttpSession session) throws DaoException {
 		
 		User user = new User ();
 		
@@ -82,7 +90,7 @@ public class UserController {
 		user.setEmail(email);
 		user.setPassword(password);
 		
-		Role role = (Role) propDAO.getProp(PropertyType.ROLE, Constants.DEFAULT_ROLE_ID);
+		Role role = (Role) propDAO.getProp(org.training.issuetracker.domain.DAO.PropDAO.PropertyType.ROLE, Constants.DEFAULT_ROLE_ID);
 		user.setRole(role);
 
 		userDAO.insertUser(user);
@@ -93,6 +101,47 @@ public class UserController {
 			session.setAttribute(Constants.KEY_USER, user);
 		}
 		
+		return "";
+	}
+	
+	@RequestMapping(value="/edit", method = RequestMethod.POST, params={"oper=edit", Constants.KEY_ID, Constants.KEY_FIRST_NAME, 
+			Constants.KEY_LAST_NAME, Constants.KEY_EMAIL, Constants.KEY_PASSWORD, Constants.KEY_ROLE_ID}, produces="application/json")
+	public @ResponseBody String editUser(@RequestParam(Constants.KEY_ID) long id, @RequestParam(Constants.KEY_FIRST_NAME) String firstName, 
+			@RequestParam(Constants.KEY_LAST_NAME) String lastName, @RequestParam(Constants.KEY_EMAIL) String email, 
+			@RequestParam(Constants.KEY_PASSWORD) String password, @RequestParam(Constants.KEY_ROLE_ID) long roleId, 
+			HttpSession session) throws DaoException {
+		
+		User user = new User ();
+		user.setId(id);
+		user.setFirstName(firstName);
+		user.setLastName(lastName);
+		user.setEmail(email);
+		user.setPassword(password);
+		
+		if(roleId == 0) {
+			roleId = Constants.DEFAULT_ROLE_ID;
+		}
+		
+		Role role = (Role) propDAO.getProp(org.training.issuetracker.domain.DAO.PropDAO.PropertyType.ROLE, roleId);
+		user.setRole(role);
+
+		userDAO.updateUser(user);
+				
+		User currentUser = (User) session.getAttribute(Constants.KEY_USER);
+		
+		if (!currentUser.getRole().getName().equals(Constants.ROLE_ADMIN)) {
+			session.removeAttribute(Constants.KEY_USER);
+			session.setAttribute(Constants.KEY_USER, user);
+		}
+		
+		return "";
+	}
+	
+	@RequestMapping(value="/edit", method = RequestMethod.POST, params={"oper=del", Constants.KEY_ID}, produces="application/json")
+	public @ResponseBody String deleteUser(@RequestParam(Constants.KEY_ID) long id) throws DaoException {
+		
+		userDAO.deleteUser(id);
+				
 		return "";
 	}
 	

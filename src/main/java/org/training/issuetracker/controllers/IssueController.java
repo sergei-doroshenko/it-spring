@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -45,14 +46,10 @@ public class IssueController {
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, params="id")
-	public String getIssueById (@RequestParam(Constants.KEY_ID) long id, 
-			@ModelAttribute(Constants.KEY_USER) User currentUser, HttpSession session) throws DaoException {
+	public String viewIssue (@RequestParam(Constants.KEY_ID) long id, ModelMap model) throws DaoException {
 		
-		if (currentUser.getId() > 0) {
-			session.setAttribute(Constants.ISSUE, issueDAO.getIssueById(id));
-		}
-		
-		return "edit-issue";
+		model.addAttribute(Constants.ISSUE, issueDAO.getIssueById(id));
+		return "view-issue";
 	}
 	
 	@ExceptionHandler(DaoException.class)

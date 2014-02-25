@@ -25,14 +25,12 @@ function bindLongin() {
 	$('#auth-form').submit(function () {
         
         var formdata = {
-	        //'command' : $('#login-command').val(),
-	        'login': $('#login').val(),
+        	'login': $('#login').val(),
 	        'password' : $('#password').val()
 	    };
                 
         var jqxhr = $.ajax({
-                //url: 'Main.do',
-                url: 'user',
+                url: 'user/login',
         		data: formdata,
                 dataType: 'text',
                 type: 'post',
@@ -79,8 +77,7 @@ function bindEditIssueForm() {
 	$('#edit-issue-form').submit(function () {
         
         var post_data = {
-	        //'command' : $('#update-command').val(),
-	        'id' : $('#id').val(),
+        	'id' : $('#id').val(),
 	        'type': $('#type').val(),
 	        'priority' : $('#priority').val(),
 	        'status' : $('#status').val(),
@@ -110,8 +107,7 @@ function bindNewIssueForm() {
 	$('#new-issue-form').submit(function () {
         
         var post_data = {
-	        //'command' : $('#insert-command').val(),
-	        'type': $('#type').val(),
+        	'type': $('#type').val(),
 	        'priority' : $('#priority').val(),
 	        'project' : $('#project').val(),
 	        'projectbuild' : $('#projectbuild').val(),
@@ -137,8 +133,7 @@ function bindNewIssueForm() {
 function executeDeleteIssue() {
         
         var post_data = {
-	        //'command' : $('#delete-command').val(),
-	        'id' : $('#id').val()
+        	'id' : $('#id').val()
 	    };
     
         $.ajax({

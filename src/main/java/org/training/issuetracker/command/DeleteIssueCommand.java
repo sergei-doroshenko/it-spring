@@ -11,7 +11,6 @@ import javax.ws.rs.core.MediaType;
 import org.apache.log4j.Logger;
 import org.training.issuetracker.constants.Constants;
 import org.training.issuetracker.domain.User;
-import org.training.issuetracker.domain.DAO.DAOFactory;
 import org.training.issuetracker.domain.DAO.IssueDAO;
 import org.training.issuetracker.exceptions.DaoException;
 import org.training.issuetracker.exceptions.ParameterNotFoundException;
@@ -19,7 +18,8 @@ import org.training.issuetracker.utils.ParameterParser;
 
 public class DeleteIssueCommand extends AbstractWebCommand {
 	private final Logger logger = Logger.getLogger("org.training.issuetracker.command");
-
+	private IssueDAO dao;
+	
 	public DeleteIssueCommand(HttpServletRequest request, HttpServletResponse response) {
 		super(request, response);
 	}
@@ -40,7 +40,6 @@ public class DeleteIssueCommand extends AbstractWebCommand {
 
 			long id = parser.getLongParameter(Constants.KEY_ID);
 
-			IssueDAO dao = DAOFactory.getDAO(IssueDAO.class);
 			long result = dao.deleteIssue(id);
 
 			logger.debug("Inserted issue with id = " + result);

@@ -25,7 +25,7 @@ public class Issue {
 	@Column(name="CREATE_DATE")
 	private Date createDate;
 	
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne()
 	@JoinColumn(name="CREATE_BY")
 	private User createBy;
 	
@@ -42,31 +42,31 @@ public class Issue {
 	@Column(name="DESCRIPTION")
 	private String description;
 	
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne()
 	@JoinColumn(name="STATUS_ID")
 	private Status status;
 	
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne()
 	@JoinColumn(name="RESOLUTION_ID")
 	private Resolution resolution;
 	
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne()
 	@JoinColumn(name="TYPE_ID")
 	private Type type;
 	
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne()
 	@JoinColumn(name="PRIORITY_ID")
 	private Priority priority;
 	
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne()
 	@JoinColumn(name="PROJECT_ID")
 	private Project project;
 	
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne()
 	@JoinColumn(name="BUILD_ID")
 	private Build build;
 	
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne()
 	@JoinColumn(name="ASSIGNEE_ID")
 	private User assignee;
 
