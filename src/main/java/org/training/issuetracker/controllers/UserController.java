@@ -74,7 +74,7 @@ public class UserController {
 		
 		List<User> users = userDAO.getUsersList(page, rows, sidx, sord);
 		
-		int total = records/rows;			
+		int total = (int) Math.round(records/rows) + 1;			
 		JqGridData<User> data = new JqGridData<>(total, page, records, users);
 		String json = data.getJsonString();
 		return json;

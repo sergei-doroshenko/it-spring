@@ -39,7 +39,7 @@ public class PropController {
 		
 		List<AbstractPersistentObj> propList = propDAO.getPropList(propType, page, rows, sidx, sord);
 		
-		int total = records/rows;		
+		int total = rows;		
 		JqGridData<AbstractPersistentObj> data = new JqGridData<AbstractPersistentObj>(total, page, records, propList);
 		String json = data.getJsonString();
 			

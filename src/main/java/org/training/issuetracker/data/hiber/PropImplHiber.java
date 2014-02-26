@@ -29,16 +29,15 @@ public class PropImplHiber implements PropDAO {
 	@Override
 	public int getPropRecordsCount(PropertyType prop) throws DaoException {
 		String entityName = prop.getEntitiName();
-		logger.debug("Records count ================================================= " + DataAccessUtils.intResult(hibernateTemplate.find("select count(*) from " + entityName)));
 		return DataAccessUtils.intResult(hibernateTemplate.find("select count(*) from " + entityName));
 	}
 
 	@Override
 	public List getPropList(PropertyType prop, int page, int rows, String sidx, String sord) throws DaoException {
 		
-		DetachedCriteria criteria = DetachedCriteria.forClass(User.class);
+		DetachedCriteria criteria = DetachedCriteria.forClass(prop.getPropClass());
 		
-		int firstResult = (page -1) * rows;
+		int firstResult = (page - 1) * rows;
 		
 		List result = hibernateTemplate.findByCriteria(criteria, firstResult, rows);
 		return result;

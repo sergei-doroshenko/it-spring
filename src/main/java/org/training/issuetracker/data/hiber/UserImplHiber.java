@@ -36,7 +36,7 @@ public class UserImplHiber implements UserDAO {
 		
 		DetachedCriteria criteria = DetachedCriteria.forClass(User.class);
 		
-		int firstResult = page * rows - rows;
+		int firstResult = (page - 1) * rows;
 		
 		List result = hibernateTemplate.findByCriteria(criteria, firstResult, rows);
 //		Session session = sessionFactory.openSession();

@@ -330,7 +330,7 @@ function createUsersTable() {
                    { name: "role", index: 'role', width: 50, editable: true, editoptions:{size:"20",maxlength:"30"}}
                ],
         pager: "#users-pager",
-        rowNum: 10,
+        rowNum: 2,
         sortname: "id",
         sortorder: "desc",
         viewrecords: true,
