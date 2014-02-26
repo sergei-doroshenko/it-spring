@@ -35,7 +35,12 @@ public abstract class AbstractPersistentObj implements PersistentObj {
 		this.id = id;
 		this.name = name;
 	}
-
+	
+	public AbstractPersistentObj(String name) {
+		super();
+		this.name = name;
+	}
+	
 	@Override
 	public long getId() {
 		return id;

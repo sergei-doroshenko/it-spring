@@ -1,18 +1,21 @@
 package org.training.issuetracker.data.hiber;
 
-import java.awt.Window.Type;
+import java.util.Collections;
 import java.util.List;
 
-import javax.net.ssl.SSLEngineResult.Status;
-
 import org.apache.log4j.Logger;
+import org.hibernate.Criteria;
+import org.hibernate.Session;
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.training.issuetracker.domain.AbstractPersistentObj;
-import org.training.issuetracker.domain.Priority;
-import org.training.issuetracker.domain.Resolution;
-import org.training.issuetracker.domain.Role;
+import org.training.issuetracker.domain.User;
 import org.training.issuetracker.domain.DAO.PropDAO;
+import org.training.issuetracker.domain.DAO.PropertyType;
 import org.training.issuetracker.exceptions.DaoException;
 
 public class PropImplHiber implements PropDAO {
@@ -21,54 +24,31 @@ public class PropImplHiber implements PropDAO {
 	@Autowired
 	private HibernateTemplate hibernateTemplate;
 	
-	private Class<?> getPropClass(PropertyType prop) {
-		Class<?> cl = null;
-		switch (prop) {
-			case STATUS : {
-				cl = Status.class;
-				break;
-			}
-			case RESOLUTION : {
-				cl = Resolution.class;
-				break;
-			}
-			case PRIORITY : {
-				cl = Priority.class;
-				break;
-			}
-			case TYPE : {
-				cl = Type.class;
-				break;
-			}
-			case ROLE : {
-				cl = Role.class;
-			}
-			default : {
-				break;
-			}
-		}
-		
-		return cl;
-	}
 	
-	private String getPropEntityName(PropertyType prop) {
-		
-		return getPropClass(prop).getCanonicalName();
-	}
 	
 	@Override
-	public List getPropList(PropertyType prop)
-			throws DaoException {
-		
-		String className = getPropClass(prop).getSimpleName();
-		return hibernateTemplate.find("from " + className);
+	public int getPropRecordsCount(PropertyType prop) throws DaoException {
+		String entityName = prop.getEntitiName();
+		logger.debug("Records count ================================================= " + DataAccessUtils.intResult(hibernateTemplate.find("select count(*) from " + entityName)));
+		return DataAccessUtils.intResult(hibernateTemplate.find("select count(*) from " + entityName));
 	}
-	
+
+	@Override
+	public List getPropList(PropertyType prop, int page, int rows, String sidx, String sord) throws DaoException {
+		
+		DetachedCriteria criteria = DetachedCriteria.forClass(User.class);
+		
+		int firstResult = (page -1) * rows;
+		
+		List result = hibernateTemplate.findByCriteria(criteria, firstResult, rows);
+		return result;
+	}
+
 	@Override
 	public AbstractPersistentObj getProp(PropertyType prop, long id)
 			throws DaoException {
 		
-		return (AbstractPersistentObj) hibernateTemplate.get(getPropEntityName(prop), id);
+		return (AbstractPersistentObj) hibernateTemplate.get(prop.getEntitiName(), id);
 	}
 
 	@Override
@@ -89,7 +69,7 @@ public class PropImplHiber implements PropDAO {
 	@Override
 	public void deleteProp(PropertyType prop, long id) throws DaoException {
 		
-		hibernateTemplate.delete(hibernateTemplate.get(getPropEntityName(prop), id));
+		hibernateTemplate.delete(hibernateTemplate.get(prop.getEntitiName(), id));
 	}
 
 }

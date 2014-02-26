@@ -1,13 +1,16 @@
 package org.training.issuetracker.data.hiber;
 
+import java.util.Collections;
 import java.util.List;
 
 import javax.annotation.Resource;
 
 import org.apache.log4j.Logger;
+import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.DetachedCriteria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
@@ -24,7 +27,34 @@ public class UserImplHiber implements UserDAO {
 	@Autowired
 	private HibernateTemplate hibernateTemplate;
 	
+	@Autowired
+	private SessionFactory sessionFactory;
+	
 	@Override
+	public List<User> getUsersList(int page, int rows, String sidx, String sord)
+			throws DaoException {
+		
+		DetachedCriteria criteria = DetachedCriteria.forClass(User.class);
+		
+		int firstResult = page * rows - rows;
+		
+		List result = hibernateTemplate.findByCriteria(criteria, firstResult, rows);
+//		Session session = sessionFactory.openSession();
+//		Criteria cr = session.createCriteria(User.class);
+//		int maxResult = 2;
+//		cr.setMaxResults(maxResult);
+//		List<User> result = cr.list();
+//		session.close();
+		return Collections.checkedList(result, User.class);
+	}
+
+	@Override
+	public int getUserRecordsCount() throws DaoException {
+		
+		return DataAccessUtils.intResult(hibernateTemplate.find("select count(*) from User"));
+	}
+
+	
 	public List getUsersList() throws DaoException {
 		return hibernateTemplate.find("from User");
 	}
@@ -39,7 +69,7 @@ public class UserImplHiber implements UserDAO {
 	@Override
 	public User getUser(long id) throws DaoException {
 		
-		return (User) hibernateTemplate.get(User.class, id);
+		return hibernateTemplate.get(User.class, id);
 	}
 
 	@Override

@@ -24,6 +24,7 @@ import org.training.issuetracker.domain.DAO.PropDAO;
 import org.training.issuetracker.domain.DAO.UserDAO;
 import org.training.issuetracker.exceptions.DaoException;
 import org.training.issuetracker.utils.JqGridData;
+import org.training.issuetracker.domain.DAO.PropertyType;
 
 import flexjson.JSONSerializer;
 
@@ -66,11 +67,13 @@ public class UserController {
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, produces="application/json")
-	public @ResponseBody String getUsersList(@RequestParam("page") int page, @RequestParam("rows") int rows) throws DaoException {		
+	public @ResponseBody String getUsersList(@RequestParam("rows") int rows, @RequestParam("page") int page,
+			@RequestParam("sidx") String sidx, @RequestParam("sord") String sord) throws DaoException {		
 		
-		List<User> users = userDAO.getUsersList();
+		int records = userDAO.getUserRecordsCount();
 		
-		int records = users.size();
+		List<User> users = userDAO.getUsersList(page, rows, sidx, sord);
+		
 		int total = records/rows;			
 		JqGridData<User> data = new JqGridData<>(total, page, records, users);
 		String json = data.getJsonString();
@@ -90,7 +93,7 @@ public class UserController {
 		user.setEmail(email);
 		user.setPassword(password);
 		
-		Role role = (Role) propDAO.getProp(org.training.issuetracker.domain.DAO.PropDAO.PropertyType.ROLE, Constants.DEFAULT_ROLE_ID);
+		Role role = (Role) propDAO.getProp(PropertyType.ROLE, Constants.DEFAULT_ROLE_ID);
 		user.setRole(role);
 
 		userDAO.insertUser(user);
@@ -122,7 +125,7 @@ public class UserController {
 			roleId = Constants.DEFAULT_ROLE_ID;
 		}
 		
-		Role role = (Role) propDAO.getProp(org.training.issuetracker.domain.DAO.PropDAO.PropertyType.ROLE, roleId);
+		Role role = (Role) propDAO.getProp(PropertyType.ROLE, roleId);
 		user.setRole(role);
 
 		userDAO.updateUser(user);

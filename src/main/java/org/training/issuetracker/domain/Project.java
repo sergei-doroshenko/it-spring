@@ -15,7 +15,7 @@ public class Project extends AbstractPersistentObj {
 	@Column(name="DESCRIPTION")
 	private String description;
 	
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne()
 	@JoinColumn(name="MANAGER")
 	private User manager;
 

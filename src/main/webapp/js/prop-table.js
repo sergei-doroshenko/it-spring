@@ -36,7 +36,7 @@ function createStatusesTable() {
                    { name: "name", index: 'name', width: 200, editable: true, editoptions:{size:"20",maxlength:"30"}}             
                ],
         pager: "#statuses-pager",
-        rowNum: 10,
+        rowNum: 5,
         sortname: "id",
         sortorder: "desc",
         viewrecords: true,
@@ -71,7 +71,7 @@ function createResolutionsTable() {
                    { name: "name", index: 'name', width: 200, editable: true, editoptions:{size:"20",maxlength:"30"}}             
                ],
         pager: "#resolutions-pager",
-        rowNum: 10,
+        rowNum: 5,
         sortname: "id",
         sortorder: "desc",
         viewrecords: true,
@@ -106,7 +106,7 @@ function createPrioritiesTable() {
                    { name: "name", index: 'name', width: 200, editable: true, editoptions:{size:"20",maxlength:"30"}}             
                ],
         pager: "#priority-pager",
-        rowNum: 10,
+        rowNum: 5,
         sortname: "id",
         sortorder: "desc",
         viewrecords: true,
@@ -141,7 +141,7 @@ function createTypesTable() {
                    { name: "name", index: 'name', width: 200, editable: true, editoptions:{size:"20",maxlength:"30"}}             
                ],
         pager: "#types-pager",
-        rowNum: 10,
+        rowNum: 2,
         sortname: "id",
         sortorder: "desc",
         viewrecords: true,
@@ -151,8 +151,6 @@ function createTypesTable() {
         height: 100,
 		loadError: handleLoadError
     });
-    
-    var edit_data = {prop: 'TYPE'};
     
     $("#types-table").jqGrid('navGrid', '#types-pager',{view:false, del:true, search:false}, //
     		{closeAfterEdit: true, editData: send_data}, // use default settings for edit
@@ -226,7 +224,7 @@ function createProjectsTable() {
                    { name: "manager", index: 'manager', width: 200, editable: true, editoptions:{size:"20",maxlength:"30"}}
                ],
         pager: "#projects-pager",
-        rowNum: 10,
+        rowNum: 5,
         sortname: "id",
         sortorder: "desc",
         viewrecords: true,
@@ -280,7 +278,7 @@ function createBuildsTable() {
                    //edittype:"select", editoptions: { dataInit: function(elem){getProjectsOptions(elem);}} , editrules:{required:true}        
                ],  
         pager: "#builds-pager",
-        rowNum: 10,
+        rowNum: 3,
         sortname: "id",
         sortorder: "desc",
         viewrecords: true,
