@@ -141,7 +141,7 @@ function createTypesTable() {
                    { name: "name", index: 'name', width: 200, editable: true, editoptions:{size:"20",maxlength:"30"}}             
                ],
         pager: "#types-pager",
-        rowNum: 2,
+        rowNum: 5,
         sortname: "id",
         sortorder: "desc",
         viewrecords: true,
@@ -320,11 +320,11 @@ function createUsersTable() {
 		mtype: "GET",
         datatype: "json",
         jsonReader : jsonHandlerUsers,
-        colNames: ["Id", "First Name", "Last Name", "E-Mail", "Password", "Role"],
+        colNames: ["Id", "First Name", "Last Name", "E-Mail", "Password", "RoleId"],
         colModel: [
                    { name: "id", index: 'id', width: 50},
-                   { name: "first_name", index: 'first_name', width: 150, editable: true, editoptions:{size:"20",maxlength:"30"}},
-                   { name: "last_name", index: 'last_name', width: 150, editable: true, editoptions:{size:"20",maxlength:"30"}},
+                   { name: "firstName", index: 'first_name', width: 150, editable: true, editoptions:{size:"20",maxlength:"30"}},
+                   { name: "lastName", index: 'last_name', width: 150, editable: true, editoptions:{size:"20",maxlength:"30"}},
                    { name: "email", index: 'email', width: 150, editable: true, editoptions:{size:"20",maxlength:"30"}},
                    { name: "password", index: 'password', width: 150, editable: true, editoptions:{size:"20",maxlength:"30"}},
                    { name: "role", index: 'role', width: 50, editable: true, editoptions:{size:"20",maxlength:"30"}}

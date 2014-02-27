@@ -7,8 +7,10 @@ import org.training.issuetracker.domain.User;
 import org.training.issuetracker.exceptions.DaoException;
 
 public interface IssueDAO {
-
-	List <Issue> getIssueList (User user) throws DaoException;
+	
+	int getIssueRecordsCount() throws DaoException;
+	
+	List <Issue> getIssueList (User user, int page, int rows, String sidx, String sord) throws DaoException;
 
 	Issue getIssueById(long id) throws DaoException;
 

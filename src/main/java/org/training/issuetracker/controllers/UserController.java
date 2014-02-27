@@ -3,14 +3,18 @@ package org.training.issuetracker.controllers;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.UnsatisfiedServletRequestParameterException;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -24,6 +28,7 @@ import org.training.issuetracker.domain.DAO.PropDAO;
 import org.training.issuetracker.domain.DAO.UserDAO;
 import org.training.issuetracker.exceptions.DaoException;
 import org.training.issuetracker.utils.JqGridData;
+import org.training.issuetracker.validation.UserValidator;
 import org.training.issuetracker.domain.DAO.PropertyType;
 
 import flexjson.JSONSerializer;
@@ -38,6 +43,14 @@ public class UserController {
 	
 	@Autowired
 	private PropDAO propDAO;
+	
+	@Autowired
+	private UserValidator userValidator;
+	
+	@InitBinder  
+    private void initBinder(WebDataBinder binder) {  
+        binder.setValidator(userValidator);  
+    } 
 	
 	@RequestMapping(value = "/login", method = RequestMethod.POST, params={"login", "password"}, produces="application/json")
 	public @ResponseBody String getUserByLogin(@RequestParam(Constants.KEY_LOGIN) String login, 
@@ -74,18 +87,31 @@ public class UserController {
 		
 		List<User> users = userDAO.getUsersList(page, rows, sidx, sord);
 		
-		int total = (int) Math.round(records/rows) + 1;			
+		int total = (int) Math.ceil((double)records/(double)rows);			
 		JqGridData<User> data = new JqGridData<>(total, page, records, users);
 		String json = data.getJsonString();
 		return json;
 	}
 	
+	
+	
 	@RequestMapping(value="/edit", method = RequestMethod.POST, params={"oper=add", Constants.KEY_FIRST_NAME, 
 			Constants.KEY_LAST_NAME, Constants.KEY_EMAIL, Constants.KEY_PASSWORD, Constants.KEY_ROLE_ID}, produces="application/json")
-	public @ResponseBody String addUser(@RequestParam(Constants.KEY_FIRST_NAME) String firstName, @RequestParam(Constants.KEY_LAST_NAME) String lastName, 
-			@RequestParam(Constants.KEY_EMAIL) String email, @RequestParam(Constants.KEY_PASSWORD) String password, 
-			@RequestParam(Constants.KEY_ROLE_ID) long roleId, HttpSession session) throws DaoException {
+//	public @ResponseBody String addUser(@RequestParam(Constants.KEY_FIRST_NAME) String firstName, @RequestParam(Constants.KEY_LAST_NAME) String lastName, 
+//			@RequestParam(Constants.KEY_EMAIL) String email, @RequestParam(Constants.KEY_PASSWORD) String password, 
+//			@RequestParam(Constants.KEY_ROLE_ID) long roleId, HttpSession session) throws DaoException {
+	public @ResponseBody String addUser(String firstName, String lastName, 
+			String email, String password, 
+			long role, HttpSession session) throws DaoException {
+	
+	
+//	@RequestMapping(value="/edit", method = RequestMethod.POST, params={"oper=add"}, produces="application/json")
+//	public @ResponseBody String addUser(@ModelAttribute User user, HttpSession session) throws DaoException {	
 		
+//		if(bindingResult.hasErrors()){
+//			logger.debug("=============================================== Error ============================================");
+//			return "index.jsp";
+//		}
 		User user = new User ();
 		
 		user.setFirstName(firstName);
@@ -93,9 +119,9 @@ public class UserController {
 		user.setEmail(email);
 		user.setPassword(password);
 		
-		Role role = (Role) propDAO.getProp(PropertyType.ROLE, Constants.DEFAULT_ROLE_ID);
-		user.setRole(role);
-
+		Role tempRole = (Role) propDAO.getProp(PropertyType.ROLE, Constants.DEFAULT_ROLE_ID);
+		user.setRole(tempRole);
+		
 		userDAO.insertUser(user);
 				
 		User currentUser = (User) session.getAttribute(Constants.KEY_USER);
@@ -147,6 +173,8 @@ public class UserController {
 				
 		return "";
 	}
+	
+	
 	
 	@ExceptionHandler(DaoException.class)
 	public ResponseEntity<String> handleDaoException(DaoException ex) {

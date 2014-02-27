@@ -4,7 +4,7 @@ var issue_rowLink = { baseLinkUrl: 'issue'};//'/issuetracker/Main.do', addParam:
 
 var issue_model = [
              { name: "id", index: 'id', width: 55, formatter:'showlink', formatoptions: issue_rowLink},
-             { name: "priority", index: 'property', width: 100, formatter: colorFormatter},
+             { name: "priority", index: 'priority', width: 100, formatter: colorFormatter},
              { name: "assignee", index: 'assignee', width: 100},
              { name: "type", index: 'type', width: 100},
              { name: "status", index: 'status', width: 100},
@@ -28,19 +28,18 @@ var jsonHandler = {
 
 function createIssueTable() {
     $("#list").jqGrid({
-        //url: "Main.do",
     	url: "issue/list",
-        //postData: {	command: 'issuelist' },
+//        postData: sendData,
 		mtype: "GET",
         datatype: "json",
         jsonReader : jsonHandler,
         colNames: issue_names,
         colModel: issue_model,
         pager: "#pager",
-        rowNum: 10,
-        rowList: [10, 20, 30],
+        rowNum: 5,
+        rowList: [5, 10, 15],
         sortname: "id",
-        sortorder: "desc",
+        sortorder: "asc",
         viewrecords: true,
         gridview: true,
         autoencode: true,
@@ -56,13 +55,27 @@ function createIssueTable() {
         //loadComplete: handleLoadComplete
     });
     
-    $('#list').jqGrid('navGrid', '#pager',{view:false, del:false, search:true, add: false, edit: false}, //
+    $('#list').jqGrid('navGrid', '#pager',{view:false, del:false, search:false, add: false, edit: false}, //
     		{closeAfterEdit: true}, // use default settings for edit
     		{closeAfterAdd: true}, // use default settings for add
     		{closeAfterDelete: true},  // delete instead that del:false we need this
-    		{multipleSearch : true}, // enable the advanced searching
+    		{multipleSearch : true, // enable the advanced searching
+    			multipleGroup:true, // searching using subgroups
+    	        showQuery: true // show preview of search query
+    		}, 
     		{closeOnEscape:true} /* allow the view dialog to be closed when user press ESC key*/
-    		);
+    		).jqGrid('navButtonAdd',"#pager",{// My custom button
+				caption:'Search...', 
+				buttonicon:'ui-icon-search', 
+				onClickButton: function(){ 
+					alert('Search query: ');
+					$('#list').jqGrid('setGridParam', { postData:{command: 'search'}});
+					$('#list').trigger('reloadGrid',[{page:1}]);
+				}, 
+				position:"last",
+				title:"",
+				cursor: "pointer"
+    		});
 }
 
 function colorFormatter (cellvalue, options, rowObject) {

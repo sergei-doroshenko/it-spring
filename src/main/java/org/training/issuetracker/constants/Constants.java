@@ -228,10 +228,10 @@ public final class Constants {
 	public static final String KEY_NAME = "name";
 
 	/** String literal for first name parameter */
-	public static final String KEY_FIRST_NAME = "first_name";
+	public static final String KEY_FIRST_NAME = "firstName";
 
 	/** String literal for last name parameter */
-	public static final String KEY_LAST_NAME = "last_name";
+	public static final String KEY_LAST_NAME = "lastName";
 
 	/** String literal for last name parameter */
 	public static final String KEY_EMAIL = "email";

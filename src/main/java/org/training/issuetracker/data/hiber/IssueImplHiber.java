@@ -1,9 +1,12 @@
 package org.training.issuetracker.data.hiber;
 
+import java.util.Collections;
 import java.util.List;
 
-import org.hibernate.SessionFactory;
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Order;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.training.issuetracker.domain.Issue;
 import org.training.issuetracker.domain.User;
@@ -15,9 +18,28 @@ public class IssueImplHiber implements IssueDAO {
 	@Autowired
 	private HibernateTemplate hibernateTemplate;
 	
+	
+	
 	@Override
-	public List getIssueList(User user) throws DaoException {
-		return hibernateTemplate.find("from Issue");
+	public int getIssueRecordsCount() throws DaoException {
+		
+		return DataAccessUtils.intResult(hibernateTemplate.find("select count(*) from Issue"));
+	}
+
+	@Override
+	public List getIssueList(User user, int page, int rows, String sidx, String sord) throws DaoException {
+		
+		DetachedCriteria criteria = DetachedCriteria.forClass(Issue.class);
+		int firstResult = (page - 1) * rows;
+		
+		if (sord.equals("asc")) {
+			criteria.addOrder(Order.asc(sidx));
+		} else {
+			criteria.addOrder(Order.desc(sidx));
+		}
+		
+		List result = hibernateTemplate.findByCriteria(criteria, firstResult, rows);
+		return Collections.checkedList(result, Issue.class);
 	}
 
 	@Override

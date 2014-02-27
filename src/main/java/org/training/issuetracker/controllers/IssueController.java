@@ -32,15 +32,17 @@ public class IssueController {
 	private IssueDAO issueDAO;
 	
 	@RequestMapping(value="/list", method = RequestMethod.GET, produces="application/json")
-	public @ResponseBody String getIssueList (@RequestParam("page") int page, @RequestParam("rows") int rows) throws DaoException {
+	public @ResponseBody String getIssueList (@RequestParam("rows") int rows, @RequestParam("page") int page,
+			@RequestParam("sidx") String sidx, @RequestParam("sord") String sord) throws DaoException {
 		
-		List<Issue> issueList = issueDAO.getIssueList(null);
-		logger.debug("Spring issue List = " + issueList);
-		int records = issueList.size();
-		int total = records/rows;
-		JqGridData<Issue> data = new JqGridData<Issue>(total, page, records, issueList);
+		int records = issueDAO.getIssueRecordsCount();
+		
+		List<Issue> issues = issueDAO.getIssueList(null, page, rows, sidx, sord);
+		
+		int total = (int) Math.ceil((double)records/(double)rows);
+		
+		JqGridData<Issue> data = new JqGridData<Issue>(total, page, records, issues);
 		String json = data.getJsonString();
-		logger.debug("Spring issuelist json = " + json);
 			
 		return json;
 	}

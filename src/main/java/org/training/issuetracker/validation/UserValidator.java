@@ -1,10 +1,12 @@
 package org.training.issuetracker.validation;
 
+import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 import org.training.issuetracker.domain.User;
 
+@Component
 public class UserValidator implements Validator {
 
 	@Override
