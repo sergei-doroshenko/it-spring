@@ -1,9 +1,10 @@
 package org.training.issuetracker.controllers;
 
+import java.beans.PropertyEditorSupport;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.UnsatisfiedServletRequestParameterException;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -25,11 +27,11 @@ import org.training.issuetracker.constants.Constants;
 import org.training.issuetracker.domain.Role;
 import org.training.issuetracker.domain.User;
 import org.training.issuetracker.domain.DAO.PropDAO;
+import org.training.issuetracker.domain.DAO.PropertyType;
 import org.training.issuetracker.domain.DAO.UserDAO;
 import org.training.issuetracker.exceptions.DaoException;
 import org.training.issuetracker.utils.JqGridData;
 import org.training.issuetracker.validation.UserValidator;
-import org.training.issuetracker.domain.DAO.PropertyType;
 
 import flexjson.JSONSerializer;
 
@@ -47,9 +49,39 @@ public class UserController {
 	@Autowired
 	private UserValidator userValidator;
 	
+	private class LongEditor extends PropertyEditorSupport {
+
+		@Override
+		public void setAsText(String arg) throws IllegalArgumentException {
+			long result = 0;
+			if (!arg.equals("_empty")) {
+				result = Long.parseLong(arg);
+			}
+			setValue(result);
+		}
+	}
+	
+	private class RoleEditor extends PropertyEditorSupport {
+		
+		@Override
+		public void setAsText(String arg) throws IllegalArgumentException {
+			Role tempRole = null;
+			try {
+				tempRole = (Role) propDAO.getProp(PropertyType.ROLE, Constants.DEFAULT_ROLE_ID);
+			} catch (DaoException e) {
+				
+				e.printStackTrace();
+			}
+			setValue(tempRole);
+		}
+	}
+	
 	@InitBinder  
     private void initBinder(WebDataBinder binder) {  
-        binder.setValidator(userValidator);  
+        binder.setValidator(userValidator);
+        
+        binder.registerCustomEditor(Long.class, "id", new LongEditor());
+        binder.registerCustomEditor(Role.class, "role", new RoleEditor()); 
     } 
 	
 	@RequestMapping(value = "/login", method = RequestMethod.POST, params={"login", "password"}, produces="application/json")
@@ -95,32 +127,39 @@ public class UserController {
 	
 	
 	
-	@RequestMapping(value="/edit", method = RequestMethod.POST, params={"oper=add", Constants.KEY_FIRST_NAME, 
-			Constants.KEY_LAST_NAME, Constants.KEY_EMAIL, Constants.KEY_PASSWORD, Constants.KEY_ROLE_ID}, produces="application/json")
+//	@RequestMapping(value="/edit", method = RequestMethod.POST, params={"oper=add", Constants.KEY_FIRST_NAME, 
+//			Constants.KEY_LAST_NAME, Constants.KEY_EMAIL, Constants.KEY_PASSWORD, Constants.KEY_ROLE_ID}, produces="application/json")
 //	public @ResponseBody String addUser(@RequestParam(Constants.KEY_FIRST_NAME) String firstName, @RequestParam(Constants.KEY_LAST_NAME) String lastName, 
 //			@RequestParam(Constants.KEY_EMAIL) String email, @RequestParam(Constants.KEY_PASSWORD) String password, 
 //			@RequestParam(Constants.KEY_ROLE_ID) long roleId, HttpSession session) throws DaoException {
-	public @ResponseBody String addUser(String firstName, String lastName, 
-			String email, String password, 
-			long role, HttpSession session) throws DaoException {
-	
+//	public @ResponseBody String addUser(String firstName, String lastName, 
+//			String email, String password, 
+//			long role, HttpSession session) throws DaoException {
+//	
+	@RequestMapping(value="/edit", method = RequestMethod.POST, params={"oper=add"}, produces="application/json")
+	public @ResponseBody String addUser(@ModelAttribute User user, BindingResult bindingResult, HttpSession session) throws DaoException {
+		
 	
 //	@RequestMapping(value="/edit", method = RequestMethod.POST, params={"oper=add"}, produces="application/json")
 //	public @ResponseBody String addUser(@ModelAttribute User user, HttpSession session) throws DaoException {	
 		
-//		if(bindingResult.hasErrors()){
-//			logger.debug("=============================================== Error ============================================");
-//			return "index.jsp";
-//		}
-		User user = new User ();
-		
-		user.setFirstName(firstName);
-		user.setLastName(lastName);
-		user.setEmail(email);
-		user.setPassword(password);
-		
-		Role tempRole = (Role) propDAO.getProp(PropertyType.ROLE, Constants.DEFAULT_ROLE_ID);
-		user.setRole(tempRole);
+		if(bindingResult.hasErrors()){
+			Iterator<FieldError> it = bindingResult.getFieldErrors().iterator();
+			while(it.hasNext()) {
+				FieldError err = it.next();
+				System.out.println(err.getField() + " " + err.getRejectedValue() + " " + err.getDefaultMessage());
+			}
+			return bindingResult.getFieldErrors().toString();
+		}
+//		User user = new User ();
+//		
+//		user.setFirstName(firstName);
+//		user.setLastName(lastName);
+//		user.setEmail(email);
+//		user.setPassword(password);
+//		
+//		Role tempRole = (Role) propDAO.getProp(PropertyType.ROLE, Constants.DEFAULT_ROLE_ID);
+//		user.setRole(tempRole);
 		
 		userDAO.insertUser(user);
 				

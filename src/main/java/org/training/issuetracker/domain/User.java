@@ -23,17 +23,17 @@ public class User {//extends AbstractPersistentObj
 	private long id;
 	
 	@Column(name="FIRST_NAME")
-	@Size(min=3,max=20,message="First name must be between 3 and 20 characters long.")
-	@Pattern(regexp="^[a-zA-Z0-9]+$", message="First name must be alphanumeric with nospaces")
+//	@Size(min=3,max=20,message="First name must be between 3 and 20 characters long.")
+//	@Pattern(regexp="^[a-zA-Z0-9]+$", message="First name must be alphanumeric with nospaces")
 	private String firstName;
 	
 	@Column(name="LAST_NAME")
-	@Size(min=3,max=20,message="Last name must be between 3 and 20 characters long.")
-	@Pattern(regexp="^[a-zA-Z0-9]+$", message="Last name must be alphanumeric with nospaces")
+//	@Size(min=3,max=20,message="Last name must be between 3 and 20 characters long.")
+//	@Pattern(regexp="^[a-zA-Z0-9]+$", message="Last name must be alphanumeric with nospaces")
 	private String lastName;
 	
 	@Column(name="EMAIL")
-	@Pattern(regexp="[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}", message="Invalid email address.")
+//	@Pattern(regexp="[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}", message="Invalid email address.")
 	private String email;
 	
 	@OneToOne()
@@ -41,7 +41,7 @@ public class User {//extends AbstractPersistentObj
 	private Role role;
 	
 	@Column(name="PASSWORD")
-	@Size(min=6,max=20, message="The password must be at least 6 characters long.")
+//	@Size(min=6,max=20, message="The password must be at least 6 characters long.")
 	private String password;
 
 	public User() { }
