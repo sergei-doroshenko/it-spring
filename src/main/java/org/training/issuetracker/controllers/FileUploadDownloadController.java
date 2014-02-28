@@ -24,13 +24,10 @@ import org.training.issuetracker.domain.Attachment;
 import org.training.issuetracker.domain.Issue;
 import org.training.issuetracker.domain.User;
 import org.training.issuetracker.domain.DAO.AttachmentDAO;
-
 import org.training.issuetracker.domain.DAO.IssueDAO;
 import org.training.issuetracker.exceptions.DaoException;
-import org.training.issuetracker.exceptions.ParameterNotFoundException;
 import org.training.issuetracker.i18n.Localizer;
 import org.training.issuetracker.i18n.LocalizerFactory;
-import org.training.issuetracker.utils.ParameterParser;
 
 /**
  * Servlet implementation class FileUploadController
@@ -107,11 +104,11 @@ public class FileUploadDownloadController extends HttpServlet {
 		ResourceBundle bundle = localizer.getBundle("errors");
 		logger.debug(bundle.getString("issue.err.null"));
 
-		ParameterParser parser = new ParameterParser(request);
+		
 		String fileName = null;
 
 		try {
-			long issueId = parser.getLongParameter(Constants.KEY_ID);
+			long issueId = Long.parseLong(request.getParameter(Constants.KEY_ID));
 
 			Issue issue = issueDAO.getIssueById(issueId);
 
@@ -157,10 +154,6 @@ public class FileUploadDownloadController extends HttpServlet {
 	        request.setAttribute(Constants.ISSUE, issue);
 	        getServletContext().getRequestDispatcher(Constants.URL_EDIT_ISSUE).forward(request, response);
 
-		} catch (ParameterNotFoundException e) {
-
-			e.printStackTrace();
-			getServletContext().getRequestDispatcher(Constants.URL_ERROR).forward(request, response);
 		} catch (DaoException e) {
 			e.printStackTrace();
 			request.setAttribute("errormessage", fileName + " File upload fail!");

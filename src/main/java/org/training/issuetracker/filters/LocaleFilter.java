@@ -55,16 +55,6 @@ public class LocaleFilter implements Filter {
 			locale = (Locale) session.getAttribute(Constants.KEY_LOCALE);
 			logger.debug("Set locale " + locale.getLanguage() + " " + locale.getDisplayLanguage());
 
-
-//			logger.debug(
-//					httpRequest.getContextPath() + " 2 "
-//					+ httpRequest.getServletPath() + " 3"
-//					+ httpRequest.getRequestURI() + " 4 "
-//					+ httpRequest.getRequestURL() + " 5 "
-//					+ httpRequest.getQueryString()
-//
-//					);
-
 			chain.doFilter(request, response);
 		} else {
 			chain.doFilter(request, response);

@@ -17,29 +17,12 @@ public class IssueSessionListener implements HttpSessionListener {
 	@Override
 	public void sessionCreated(HttpSessionEvent se) {
 		HttpSession session = se.getSession();
-//		Localizer localizer = null;
-//		try {
-//			localizer = LocalizerFactory.getLocalizer(Constants.DEFAULT_LANGUAGE);
-//		} catch (MalformedURLException e) {
-//
-//			e.printStackTrace();
-//		}		
-//
-//		Map<String, String> map;
-//		try {
-//			map = localizer.getValuesMap();
-//			session.setAttribute("map", map);
-//		} catch (UnsupportedEncodingException e) {
-//
-//			e.printStackTrace();
-//		}	
-//		logger.debug("Set localizer " + localizer.getClass().getSimpleName());
 		logger.info("Created session; Id = " + session.getId());
 	}
 
 	@Override
 	public void sessionDestroyed(HttpSessionEvent se) {
-		logger.info("Created destroyed; Id = " + se.getSession().getId());
+		logger.info("Destroyed session; Id = " + se.getSession().getId());
 	}
 
 }

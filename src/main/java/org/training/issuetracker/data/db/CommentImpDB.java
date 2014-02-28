@@ -12,7 +12,6 @@ import org.training.issuetracker.domain.Comment;
 import org.training.issuetracker.domain.User;
 import org.training.issuetracker.domain.DAO.CommentDAO;
 import org.training.issuetracker.exceptions.DaoException;
-import org.training.issuetracker.utils.ConnectionProvider;
 
 public class CommentImpDB implements CommentDAO {
 	private Connection connection;
@@ -23,7 +22,7 @@ public class CommentImpDB implements CommentDAO {
 		PreparedStatement select = null;
 		ResultSet rs = null;
 		try {
-			connection = ConnectionProvider.getConnection();
+			
 			select = connection.prepareStatement(SQL_SELECT_COMMENTS_LIST);
 			select.setLong(ISSUE_ID_INDEX, issueId);
 			rs = select.executeQuery();
@@ -45,10 +44,7 @@ public class CommentImpDB implements CommentDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new DaoException(Constants.ERROR_SOURCE, e);
-		} finally {
-			ConnectionProvider.closeConnection(connection);
-			ConnectionProvider.closePrepStatemnts(select);
-		}
+		} 
 
 	}
 

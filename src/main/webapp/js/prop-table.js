@@ -323,14 +323,14 @@ function createUsersTable() {
         colNames: ["Id", "First Name", "Last Name", "E-Mail", "Password", "RoleId"],
         colModel: [
                    { name: "id", index: 'id', width: 50},
-                   { name: "firstName", index: 'first_name', width: 150, editable: true, editoptions:{size:"20",maxlength:"30"}},
-                   { name: "lastName", index: 'last_name', width: 150, editable: true, editoptions:{size:"20",maxlength:"30"}},
+                   { name: "firstName", index: 'firstName', width: 150, editable: true, editoptions:{size:"20",maxlength:"30"}},
+                   { name: "lastName", index: 'lastName', width: 150, editable: true, editoptions:{size:"20",maxlength:"30"}},
                    { name: "email", index: 'email', width: 150, editable: true, editoptions:{size:"20",maxlength:"30"}},
                    { name: "password", index: 'password', width: 150, editable: true, editoptions:{size:"20",maxlength:"30"}},
                    { name: "role", index: 'role', width: 50, editable: true, editoptions:{size:"20",maxlength:"30"}}
                ],
         pager: "#users-pager",
-        rowNum: 2,
+        rowNum: 3,
         sortname: "id",
         sortorder: "desc",
         viewrecords: true,
@@ -347,5 +347,23 @@ function createUsersTable() {
     		{closeAfterDelete: true},  // delete instead that del:false we need this
     		{multipleSearch : true}, // enable the advanced searching
     		{closeOnEscape:true} /* allow the view dialog to be closed when user press ESC key*/
-    		);
+    );
+    
+    var myErrorTextFormat = function (data) {
+    	var message = null;
+    	try {
+    		var responseText = JSON.parse(data.responseText);
+    		for (var i = 0, l = responseText.length; i < l; i++) {
+    			message += responseText[i].defaultMessage + '\r\n';
+    		}
+    	} catch (DataNotFoundEcxeption) {
+    		message = "";
+    	}
+    	return message;
+    };
+    
+    jQuery.extend(jQuery.jgrid.edit, {
+    	errorTextFormat: myErrorTextFormat
+    });
+    
 }

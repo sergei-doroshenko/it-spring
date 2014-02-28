@@ -11,6 +11,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
@@ -20,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.training.issuetracker.domain.User;
 import org.training.issuetracker.domain.DAO.UserDAO;
 import org.training.issuetracker.exceptions.DaoException;
+import org.training.issuetracker.utils.SearchFilterParams;
 
 public class UserImplHiber implements UserDAO {
 	private Logger logger = Logger.getLogger(getClass().getCanonicalName());
@@ -27,24 +29,24 @@ public class UserImplHiber implements UserDAO {
 	@Autowired
 	private HibernateTemplate hibernateTemplate;
 	
-	@Autowired
-	private SessionFactory sessionFactory;
-	
 	@Override
-	public List<User> getUsersList(int page, int rows, String sidx, String sord)
+	public List<User> getUsersList(SearchFilterParams params)
 			throws DaoException {
 		
 		DetachedCriteria criteria = DetachedCriteria.forClass(User.class);
-		
+		int page = params.getPage();
+		int rows = params.getRows();
 		int firstResult = (page - 1) * rows;
+		String sord = params.getSord();
+		
+		if (sord.equals(SearchFilterParams.ASC)) {
+			criteria.addOrder(Order.asc(params.getSidx()));
+		} else {
+			criteria.addOrder(Order.desc(params.getSidx()));
+		}
 		
 		List result = hibernateTemplate.findByCriteria(criteria, firstResult, rows);
-//		Session session = sessionFactory.openSession();
-//		Criteria cr = session.createCriteria(User.class);
-//		int maxResult = 2;
-//		cr.setMaxResults(maxResult);
-//		List<User> result = cr.list();
-//		session.close();
+
 		return Collections.checkedList(result, User.class);
 	}
 

@@ -13,7 +13,6 @@ import org.training.issuetracker.domain.Attachment;
 import org.training.issuetracker.domain.User;
 import org.training.issuetracker.domain.DAO.AttachmentDAO;
 import org.training.issuetracker.exceptions.DaoException;
-import org.training.issuetracker.utils.ConnectionProvider;
 
 public class AttchmentImplDB implements AttachmentDAO {
 	private final Logger logger = Logger.getLogger("org.training.issuetracker.data");
@@ -70,10 +69,7 @@ public class AttchmentImplDB implements AttachmentDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new DaoException(Constants.ERROR_SOURCE, e);
-		} finally {
-			ConnectionProvider.closeConnection(connection);
-			ConnectionProvider.closePrepStatemnts(select);
-		}
+		} 
 
 	}
 
@@ -94,11 +90,7 @@ public class AttchmentImplDB implements AttachmentDAO {
 
 			e.printStackTrace();
 			throw new DaoException(Constants.ERROR_SOURCE, e);
-		} finally {
-			ConnectionProvider.closeConnection(connection);
-			ConnectionProvider.closePrepStatemnts(insert);
-		}
-
+		} 
 	}
 
 	@Override

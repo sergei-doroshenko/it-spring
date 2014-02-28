@@ -58,6 +58,15 @@
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
     
+    <bean id="errorMessageSource" 
+    	class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+    	<property name="basename" value="WEB-INF/validation.properties"/>
+    </bean>
+    
+    <bean class="org.springframework.validation.beanvalidation.MethodValidationPostProcessor">
+    	
+    </bean>
+    
     <!-- bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean"/-->
     
 	<bean id="issueDAO" class="org.training.issuetracker.data.hiber.IssueImplHiber" />	
