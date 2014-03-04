@@ -13,18 +13,18 @@ import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotBlank;
 
-@NotBlank
-@Size(min = 6)
-@Pattern(regexp="[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}")
+//@NotBlank
+//@Size(min = 6)
+//@Pattern(regexp="[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}")
 @Target(ElementType.PARAMETER)
 // specifies where this validation can be used (Field, Method, Parameter etc)
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-@Constraint(validatedBy = {})
-@ReportAsSingleViolation
+@Constraint(validatedBy=EmailValidator.class)
+//@ReportAsSingleViolation
 // specifies if any of the validation fails, it will be reported as single validation
 
-public @interface Email {
+public @interface CheckEmail {
 	
 	/**
      * This is the key to message will  be looked in validation.properties for validation
@@ -32,7 +32,7 @@ public @interface Email {
      * 
      * @return the string
      */
-    String message() default "{invalid.email}";
+    String message() default "{email.invalid}";
  
     Class[] groups() default {};
  

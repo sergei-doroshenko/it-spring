@@ -1,8 +1,11 @@
 package org.training.issuetracker.validation;
 
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
@@ -11,6 +14,9 @@ import org.training.issuetracker.domain.User;
 
 @Component
 public class UserValidator implements Validator {
+	
+	@Autowired
+	private MessageSource messageSource;
 	
 	@Override
 	public boolean supports(Class<?> cl) {
@@ -21,11 +27,16 @@ public class UserValidator implements Validator {
 	@Override
 	public void validate(Object obj, Errors err) {
 				
-		ValidationUtils.rejectIfEmpty(err, "firstName", "firstName.empty", "First name can't be empty!");
-		ValidationUtils.rejectIfEmpty(err, "lastName", "lastName.empty", "Last name can't be empty!");
-		ValidationUtils.rejectIfEmpty(err, "email", "email.empty", "Email name can't be empty!");
-		ValidationUtils.rejectIfEmpty(err, "password", "password.empty", "Password name can't be empty!");
-				
+//		ValidationUtils.rejectIfEmpty(err, "firstName", "firstName.empty", "First name can't be empty!");
+//		ValidationUtils.rejectIfEmpty(err, "lastName", "lastName.empty", "Last name can't be empty!");
+//		ValidationUtils.rejectIfEmpty(err, "email", "email.empty", "Email name can't be empty!");
+//		ValidationUtils.rejectIfEmpty(err, "password", "password.empty", "Password name can't be empty!");
+		
+		ValidationUtils.rejectIfEmpty(err, "firstName", "firstName.empty", messageSource.getMessage("firstName.empty", null, Locale.getDefault()));
+		ValidationUtils.rejectIfEmpty(err, "lastName", "lastName.empty");
+		ValidationUtils.rejectIfEmpty(err, "email", "email.empty");
+		ValidationUtils.rejectIfEmpty(err, "password", "password.empty");
+		
 		User user = (User) obj;
 		
 		if (user.getFirstName().length() < 2) {

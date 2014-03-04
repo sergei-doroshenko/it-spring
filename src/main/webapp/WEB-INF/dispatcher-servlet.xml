@@ -58,15 +58,11 @@
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
     
-    <bean id="errorMessageSource" 
+    <bean id="messageSource" 
     	class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
-    	<property name="basename" value="WEB-INF/validation.properties"/>
+    	<property name="basename" value="WEB-INF/messages"/>
     </bean>
-    
-    <bean class="org.springframework.validation.beanvalidation.MethodValidationPostProcessor">
-    	
-    </bean>
-    
+    	       
     <!-- bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean"/-->
     
 	<bean id="issueDAO" class="org.training.issuetracker.data.hiber.IssueImplHiber" />	
@@ -74,5 +70,6 @@
 	<bean id="propDAO" class="org.training.issuetracker.data.hiber.PropImplHiber"/>
 	<bean id="projectDAO" class="org.training.issuetracker.data.hiber.ProjectImplHiber"/>
 	<bean id="buildDAO" class="org.training.issuetracker.data.hiber.BuildImplHiber"/>
+	<!-- bean class="org.springframework.validation.beanvalidation.MethodValidationPostProcessor"/-->
 		
 </beans>

@@ -13,8 +13,11 @@ import javax.persistence.Table;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
+import org.training.issuetracker.validation.CheckUser;
+
 @Entity
 @Table(name="USERS")
+//@CheckUser
 public class User {//extends AbstractPersistentObj 
 	
 	@Id

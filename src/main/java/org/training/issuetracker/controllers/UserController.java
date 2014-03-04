@@ -2,15 +2,14 @@ package org.training.issuetracker.controllers;
 
 import java.beans.PropertyEditorSupport;
 import java.util.List;
-import java.util.Set;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.ConstraintViolation;
-import javax.validation.Valid;
 import javax.validation.ConstraintViolationException;
+import javax.validation.Valid;
+import javax.validation.Validator;
 
 import org.apache.log4j.Logger;
-import org.springframework.beans.MethodInvocationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,10 +24,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 import org.training.issuetracker.constants.Constants;
+import org.training.issuetracker.data.hiber.PropImplHiber;
 import org.training.issuetracker.domain.Role;
 import org.training.issuetracker.domain.User;
 import org.training.issuetracker.domain.DAO.PropDAO;
@@ -37,8 +35,9 @@ import org.training.issuetracker.domain.DAO.UserDAO;
 import org.training.issuetracker.exceptions.DaoException;
 import org.training.issuetracker.utils.JqGridData;
 import org.training.issuetracker.utils.SearchFilterParams;
-import org.training.issuetracker.validation.Email;
+import org.training.issuetracker.validation.CheckEmail;
 import org.training.issuetracker.validation.EmailValidator;
+import org.training.issuetracker.validation.EmailValidator2;
 import org.training.issuetracker.validation.UserValidator;
 
 import flexjson.JSONSerializer;
@@ -58,11 +57,14 @@ public class UserController {
 	@Autowired
 	private UserValidator userValidator;
 	
-	@Autowired
-	private EmailValidator emailValidator;
+//	@Autowired
+//	private EmailValidator2 emailValidator;
+	
+//	@Autowired
+//	private Validator validator;
 	
 	private class LongEditor extends PropertyEditorSupport {
-
+		
 		@Override
 		public void setAsText(String arg) throws IllegalArgumentException {
 			long result = 0;
@@ -78,17 +80,20 @@ public class UserController {
 		@Override
 		public void setAsText(String arg) throws IllegalArgumentException {
 			long roleId = Constants.DEFAULT_ROLE_ID;
+			propDAO = new PropImplHiber();
 			
 			if (!arg.isEmpty()) {
 				roleId = Long.parseLong(arg);
 			}
-			
+
 			Role tempRole = null;
 			try {
 				tempRole = (Role) propDAO.getProp(PropertyType.ROLE, roleId);
 			} catch (DaoException e) {
+				e.printStackTrace();
 				throw new IllegalArgumentException("No such role!");
 			}
+			
 			setValue(tempRole);
 		}
 	}
@@ -100,13 +105,8 @@ public class UserController {
         binder.registerCustomEditor(Role.class, "role", new RoleEditor()); 
     } 
 	
-	@InitBinder("login")
-	private void initBider(WebDataBinder binder) {
-		binder.setValidator(emailValidator);
-	}
-	
 	@RequestMapping(value = "/login", method = RequestMethod.POST, params={"login", "password"}, produces="application/json")
-	public @ResponseBody String getUserByLogin(@Email @RequestParam(Constants.KEY_LOGIN)String login,  
+	public @ResponseBody String getUserByLogin( @RequestParam(Constants.KEY_LOGIN)String login,  
 			@RequestParam(Constants.KEY_PASSWORD) String password, HttpSession session) throws DaoException {
 		
 		User user = userDAO.getUser(login, password);
@@ -166,6 +166,7 @@ public class UserController {
 					.serialize(bindingResult.getFieldErrors());
 			return new ResponseEntity<String>(json, HttpStatus.BAD_REQUEST);
 		}
+		
 		
 		userDAO.insertUser(user);
 				

@@ -25,7 +25,7 @@ public enum PropertyType {
 		return instanse;
 	}
 	
-	public String getEntitiName () {
+	public String getEntityName () {
 		return getPropClass().getCanonicalName();
 	}
 }

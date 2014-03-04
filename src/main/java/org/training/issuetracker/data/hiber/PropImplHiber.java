@@ -1,19 +1,13 @@
 package org.training.issuetracker.data.hiber;
 
-import java.util.Collections;
 import java.util.List;
 
 import org.apache.log4j.Logger;
-import org.hibernate.Criteria;
-import org.hibernate.Session;
 import org.hibernate.criterion.DetachedCriteria;
-import org.hibernate.criterion.Order;
-import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.training.issuetracker.domain.AbstractPersistentObj;
-import org.training.issuetracker.domain.User;
 import org.training.issuetracker.domain.DAO.PropDAO;
 import org.training.issuetracker.domain.DAO.PropertyType;
 import org.training.issuetracker.exceptions.DaoException;
@@ -28,7 +22,7 @@ public class PropImplHiber implements PropDAO {
 	
 	@Override
 	public int getPropRecordsCount(PropertyType prop) throws DaoException {
-		String entityName = prop.getEntitiName();
+		String entityName = prop.getEntityName();
 		return DataAccessUtils.intResult(hibernateTemplate.find("select count(*) from " + entityName));
 	}
 
@@ -47,7 +41,7 @@ public class PropImplHiber implements PropDAO {
 	public AbstractPersistentObj getProp(PropertyType prop, long id)
 			throws DaoException {
 		
-		return (AbstractPersistentObj) hibernateTemplate.get(prop.getEntitiName(), id);
+		return (AbstractPersistentObj) hibernateTemplate.get(prop.getEntityName(), id);
 	}
 
 	@Override
@@ -68,7 +62,7 @@ public class PropImplHiber implements PropDAO {
 	@Override
 	public void deleteProp(PropertyType prop, long id) throws DaoException {
 		
-		hibernateTemplate.delete(hibernateTemplate.get(prop.getEntitiName(), id));
+		hibernateTemplate.delete(hibernateTemplate.get(prop.getEntityName(), id));
 	}
 
 }
