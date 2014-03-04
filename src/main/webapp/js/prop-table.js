@@ -21,6 +21,19 @@ function handleLoadError (jqXHR, textStatus, errorThrown) {
       alert('HTTP message body (jqXHR.responseText): ' + '\n' + jqXHR.responseText);
 }
 
+var myErrorTextFormat = function (data) {
+	var message = 'Errors! ';
+	try {
+		var responseText = JSON.parse(data.responseText);
+		for (var i = 0, l = responseText.length; i < l; i++) {
+			message += responseText[i].defaultMessage + '\r\n';
+		}
+	} catch (DataNotFoundEcxeption) {
+		message = "";
+	}
+	return message;
+};
+
 function createStatusesTable() {
 	var send_data = {type: 'STATUS'};
     $("#statuses-table").jqGrid({
@@ -38,7 +51,7 @@ function createStatusesTable() {
         pager: "#statuses-pager",
         rowNum: 5,
         sortname: "id",
-        sortorder: "desc",
+        sortorder: "asc",
         viewrecords: true,
         gridview: true,
         autoencode: true,
@@ -73,7 +86,7 @@ function createResolutionsTable() {
         pager: "#resolutions-pager",
         rowNum: 5,
         sortname: "id",
-        sortorder: "desc",
+        sortorder: "asc",
         viewrecords: true,
         gridview: true,
         autoencode: true,
@@ -108,7 +121,7 @@ function createPrioritiesTable() {
         pager: "#priority-pager",
         rowNum: 5,
         sortname: "id",
-        sortorder: "desc",
+        sortorder: "asc",
         viewrecords: true,
         gridview: true,
         autoencode: true,
@@ -143,7 +156,7 @@ function createTypesTable() {
         pager: "#types-pager",
         rowNum: 5,
         sortname: "id",
-        sortorder: "desc",
+        sortorder: "asc",
         viewrecords: true,
         gridview: true,
         autoencode: true,
@@ -178,7 +191,7 @@ function createRolesTable() {
         pager: "#roles-pager",
         rowNum: 10,
         sortname: "id",
-        sortorder: "desc",
+        sortorder: "asc",
         viewrecords: true,
         gridview: true,
         autoencode: true,
@@ -210,23 +223,23 @@ function createProjectsTable() {
             repeatitems: true,
             cell: function(obj) {
             	var manager = JSON.parse(obj.manager);
-            	var manager_name = manager.id + ' - ' + manager.first_name + ' ' + manager.last_name;
+            	var manager_name = manager.firstName + ' ' + manager.lastName;
             	obj.manager = manager_name;
             	return obj;
             	},
             id: "id"
         },
-        colNames: ["Id", "Name", "Description", "Manager ID"],
+        colNames: ["Id", "Name", "Description", "Manager"],
         colModel: [
                    { name: "id", index: 'id', width: 50},
                    { name: "name", index: 'name', width: 150, editable: true, editoptions:{size:"20",maxlength:"30"}},
                    { name: "description", index: 'description', width: 300, editable: true, editoptions:{size:"20",maxlength:"30"}},
-                   { name: "manager", index: 'manager', width: 200, editable: true, editoptions:{size:"20",maxlength:"30"}}
+                   { name: "manager", index: 'manager', width: 200, editable: true, edittype:"select", editoptions: {dataUrl: 'user/options'}, editrules:{required:true}}
                ],
         pager: "#projects-pager",
         rowNum: 5,
         sortname: "id",
-        sortorder: "desc",
+        sortorder: "asc",
         viewrecords: true,
         gridview: true,
         autoencode: true,
@@ -241,26 +254,7 @@ function createProjectsTable() {
     		{closeAfterDelete: true},  // delete instead that del:false we need this
     		{multipleSearch : true}, // enable the advanced searching
     		{closeOnEscape:true} /* allow the view dialog to be closed when user press ESC key*/
-    		);
-}
-
-//projects_options = {value: "1:Data Storage;2:Green World;"};
-function getProjectsOptions(elem) {
-	var res_data;
-	var str = '';
-	$.ajax({
-      url: 'Main.do',
-      dataType: 'json',
-      data: {command: 'projects_list', page: 1, rows: 10},
-      type: 'get',
-      success: function (data) {
-          $(elem).empty();
-          for (var i = 0, l = data.rows.length; i < l; i++) {
-          	$(elem).append("<option value='" + data.rows[i].id + "'>" + data.rows[i].name + "</option>");	
-		   }
-      },
-      error:  handleLoadError
-    });
+    );
 }
 
 function createBuildsTable() {
@@ -270,17 +264,16 @@ function createBuildsTable() {
 		mtype: "GET",
         datatype: "json",
         jsonReader : jsonHandlerProp,
-        colNames: ["Id", "Name", "Project Id"],
+        colNames: ["Id", "Name", "Project"],
         colModel: [
                    { name: "id", index: 'id', width: 50},
-                   { name: "name", index: 'name', width: 200, editable: true, editoptions:{size:"20",maxlength:"30"}},
-                   { name: "projectId", index: 'projectId', width: 70, editable: true, editoptions:{size:"20",maxlength:"30"}} 
-                   //edittype:"select", editoptions: { dataInit: function(elem){getProjectsOptions(elem);}} , editrules:{required:true}        
+                   { name: "name", index: 'name', width: 100, editable: true, editoptions:{size:"20",maxlength:"30"}},
+                   { name: "project", index: 'project', width: 200, editable: true, edittype:"select", editoptions: {dataUrl: 'project/options'}, editrules:{required:true}}
                ],  
         pager: "#builds-pager",
-        rowNum: 3,
+        rowNum: 4,
         sortname: "id",
-        sortorder: "desc",
+        sortorder: "asc",
         viewrecords: true,
         gridview: true,
         autoencode: true,
@@ -296,6 +289,10 @@ function createBuildsTable() {
     		{multipleSearch : true}, // enable the advanced searching
     		{closeOnEscape:true} /* allow the view dialog to be closed when user press ESC key*/
     		);
+    
+    jQuery.extend(jQuery.jgrid.edit, {
+    	errorTextFormat: myErrorTextFormat
+    });
 }
 
 var jsonHandlerUsers = {
@@ -306,8 +303,7 @@ var jsonHandlerUsers = {
     repeatitems: true,
     cell: function(obj) {
     	var role = JSON.parse(obj.role);
-    	var role_id = role.id;
-    	obj.role = role_id;
+    	obj.role = role.name;
     	return obj;
     	},
     id: "id"
@@ -320,19 +316,19 @@ function createUsersTable() {
 		mtype: "GET",
         datatype: "json",
         jsonReader : jsonHandlerUsers,
-        colNames: ["Id", "First Name", "Last Name", "E-Mail", "Password", "RoleId"],
+        colNames: ["Id", "First Name", "Last Name", "E-Mail", "Password", "Role"],
         colModel: [
                    { name: "id", index: 'id', width: 50},
                    { name: "firstName", index: 'firstName', width: 150, editable: true, editoptions:{size:"20",maxlength:"30"}},
                    { name: "lastName", index: 'lastName', width: 150, editable: true, editoptions:{size:"20",maxlength:"30"}},
                    { name: "email", index: 'email', width: 150, editable: true, editoptions:{size:"20",maxlength:"30"}},
-                   { name: "password", index: 'password', width: 150, editable: true, editoptions:{size:"20",maxlength:"30"}},
-                   { name: "role", index: 'role', width: 50, editable: true, editoptions:{size:"20",maxlength:"30"}}
+                   { name: "password", index: 'password', width: 100, editable: true, editoptions:{size:"20",maxlength:"30"}},
+                   { name: "role", index: 'role', width: 100, editable: true, edittype:"select", editoptions: {dataUrl: 'prop/options/ROLE'}, }
                ],
         pager: "#users-pager",
-        rowNum: 3,
+        rowNum: 10,
         sortname: "id",
-        sortorder: "desc",
+        sortorder: "asc",
         viewrecords: true,
         gridview: true,
         autoencode: true,
@@ -348,20 +344,7 @@ function createUsersTable() {
     		{multipleSearch : true}, // enable the advanced searching
     		{closeOnEscape:true} /* allow the view dialog to be closed when user press ESC key*/
     );
-    
-    var myErrorTextFormat = function (data) {
-    	var message = null;
-    	try {
-    		var responseText = JSON.parse(data.responseText);
-    		for (var i = 0, l = responseText.length; i < l; i++) {
-    			message += responseText[i].defaultMessage + '\r\n';
-    		}
-    	} catch (DataNotFoundEcxeption) {
-    		message = "";
-    	}
-    	return message;
-    };
-    
+        
     jQuery.extend(jQuery.jgrid.edit, {
     	errorTextFormat: myErrorTextFormat
     });

@@ -1,6 +1,6 @@
 var issue_names = ["Id", "Priority", "Assignee", "Type", "Status", "Summary"];
 
-var issue_rowLink = { baseLinkUrl: 'issue'};//'/issuetracker/Main.do', addParam: '&command=issue'
+var issue_rowLink = { baseLinkUrl: 'issue'};
 
 var issue_model = [
              { name: "id", index: 'id', width: 55, formatter:'showlink', formatoptions: issue_rowLink},
@@ -29,7 +29,6 @@ var jsonHandler = {
 function createIssueTable() {
     $("#list").jqGrid({
     	url: "issue/list",
-//        postData: sendData,
 		mtype: "GET",
         datatype: "json",
         jsonReader : jsonHandler,
@@ -68,7 +67,10 @@ function createIssueTable() {
 				caption:'Search...', 
 				buttonicon:'ui-icon-search', 
 				onClickButton: function(){ 
-					alert('Search query: ');
+					$('#searc-form').removeClass('hidden-block');
+					$('#search-button').click(function (){
+						$('#searc-form').addClass('hidden-block');
+					});
 					$('#list').jqGrid('setGridParam', { postData:{command: 'search'}});
 					$('#list').trigger('reloadGrid',[{page:1}]);
 				}, 

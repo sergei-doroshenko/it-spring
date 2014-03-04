@@ -2,20 +2,44 @@ package org.training.issuetracker.domain;
 
 import java.sql.Date;
 
-public class Attachment extends AbstractPersistentObj {
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="ATTACHMENTS")
+public class Attachment {
+	
+	@Id
+    @Column(name="ID")
+    @GeneratedValue
+	private long id;
+	
+	@Column(name="ISSUE_ID")
 	private long issueId;
+	
+	@Column(name="CREATE_DATE")
 	private Date createDate;
+	
+	@OneToOne()
+	@JoinColumn(name="CREATE_BY")
 	private User createBy;
-	private String url;
+	
+	@Column(name="FILE_NAME")
+	private String fileName;
 
 	public Attachment() { }
 
-	public Attachment(long issueId, Date createDate, User createBy, String url) {
+	public Attachment(long issueId, Date createDate, User createBy, String fileName) {
 		super();
 		this.issueId = issueId;
 		this.createDate = createDate;
 		this.createBy = createBy;
-		this.url = url;
+		this.fileName = fileName;
 	}
 
 	public long getIssueId() {
@@ -42,12 +66,12 @@ public class Attachment extends AbstractPersistentObj {
 		this.createBy = createBy;
 	}
 
-	public String getUrl() {
-		return url;
+	public String getFileName() {
+		return fileName;
 	}
 
-	public void setUrl(String url) {
-		this.url = url;
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
 	}
 
 }

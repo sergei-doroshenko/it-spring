@@ -8,7 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -16,12 +16,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.training.issuetracker.constants.Constants;
 import org.training.issuetracker.domain.AbstractPersistentObj;
 import org.training.issuetracker.domain.Project;
-import org.training.issuetracker.domain.Role;
-import org.training.issuetracker.domain.User;
 import org.training.issuetracker.domain.DAO.PropDAO;
 import org.training.issuetracker.domain.DAO.PropertyType;
 import org.training.issuetracker.exceptions.DaoException;
 import org.training.issuetracker.utils.JqGridData;
+import org.training.issuetracker.utils.SearchFilterParams;
 
 @Controller
 @RequestMapping("/prop")
@@ -31,21 +30,37 @@ public class PropController {
 	@Autowired
 	private PropDAO propDAO;
 	
-	@RequestMapping(method = RequestMethod.GET, produces="application/json")
-	public @ResponseBody String getPropList (@RequestParam("rows") int rows, @RequestParam("page") int page,
-			@RequestParam("sidx") String sidx, @RequestParam("sord") String sord,
+	@RequestMapping(method = RequestMethod.GET, params="_search", produces="application/json")
+	public @ResponseBody String getPropList (SearchFilterParams params,
 			@RequestParam("type") String type) throws DaoException {
 		
 		PropertyType propType = PropertyType.valueOf(type);
 		int records = propDAO.getPropRecordsCount(propType);
 		
-		List<AbstractPersistentObj> propList = propDAO.getPropList(propType, page, rows, sidx, sord);
+		List<AbstractPersistentObj> propList = propDAO.getPropList(propType, params);
 		
-		int total = rows;		
-		JqGridData<AbstractPersistentObj> data = new JqGridData<AbstractPersistentObj>(total, page, records, propList);
+		int total = (int) Math.ceil((double)records/(double) params.getRows());
+		
+		JqGridData<AbstractPersistentObj> data = new JqGridData<AbstractPersistentObj>(total, params.getPage(), records, propList);
 		String json = data.getJsonString();
 			
 		return json;
+	}
+	
+	/**This method return project options for select html block.
+	 * @return html tags <select> with <options>
+	 * @throws DaoException
+	 */
+	@RequestMapping(value="/options/{type}", method = RequestMethod.GET, produces="text/plain")
+	public @ResponseBody String getPropOptions(@PathVariable String type) throws DaoException {
+		PropertyType propType = PropertyType.valueOf(type);
+		String options = "<select>";
+		List<AbstractPersistentObj> properties = propDAO.getProjectsList(propType);
+		for (AbstractPersistentObj property : properties) {
+			options += "<option value=" + property.getId() + ">" + property.getName() + "</option>";
+		}
+		options += "</select>";
+		return options;
 	}
 	
 	@RequestMapping(value="/edit", method = RequestMethod.POST, params={"oper=add", Constants.KEY_NAME}, produces="application/json")

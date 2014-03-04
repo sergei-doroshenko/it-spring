@@ -14,9 +14,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.training.issuetracker.constants.Constants;
 import org.training.issuetracker.domain.Build;
+import org.training.issuetracker.domain.Project;
 import org.training.issuetracker.domain.DAO.BuildDAO;
+import org.training.issuetracker.domain.DAO.ProjectDAO;
 import org.training.issuetracker.exceptions.DaoException;
 import org.training.issuetracker.utils.JqGridData;
+import org.training.issuetracker.utils.SearchFilterParams;
 
 import flexjson.JSONSerializer;
 
@@ -27,13 +30,17 @@ public class BuildController {
 	@Autowired
 	private BuildDAO buildDAO;
 	
-	@RequestMapping(method = RequestMethod.GET, produces="application/json")
-	public @ResponseBody String getBuildsList(@RequestParam("page") int page, @RequestParam("rows") int rows) throws DaoException {
+	@Autowired
+	private ProjectDAO projectDAO;
+	
+	@RequestMapping(method = RequestMethod.GET, params="_search", produces="application/json")
+	public @ResponseBody String getBuildsList(SearchFilterParams params) throws DaoException {
+		int records = buildDAO.getBuildsRecordsCount();
 		
-		List<Build> builds = buildDAO.getBuildsList();
-		int records = builds.size();
-		int total = records/rows;			
-		JqGridData<Build> data = new JqGridData<>(total, page, records, builds);
+		List<Build> builds = buildDAO.getBuildsList(params);
+		
+		int total = (int) Math.ceil((double)records/(double) params.getRows());			
+		JqGridData<Build> data = new JqGridData<>(total, params.getPage(), records, builds);
 		String json = data.getJsonString();
 		return json;
 	}
@@ -53,7 +60,8 @@ public class BuildController {
 		
 		Build build = new Build();
 		build.setName(name);
-		build.setProjectId(projectId);
+		Project project = projectDAO.getProject(projectId);
+		build.setProject(project);
 		
 		buildDAO.insertBuild(build);
 		
@@ -68,7 +76,8 @@ public class BuildController {
 		Build build = new Build();
 		build.setId(id);
 		build.setName(name);
-		build.setProjectId(projectId);
+		Project project = projectDAO.getProject(projectId);
+		build.setProject(project);
 		buildDAO.updateBuild(build);
 		
 		return "";

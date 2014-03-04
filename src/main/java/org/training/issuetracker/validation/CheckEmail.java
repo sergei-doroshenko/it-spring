@@ -20,7 +20,7 @@ import org.hibernate.validator.constraints.NotBlank;
 // specifies where this validation can be used (Field, Method, Parameter etc)
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-@Constraint(validatedBy=EmailValidator.class)
+@Constraint(validatedBy=EmailConstraintValidator.class)
 //@ReportAsSingleViolation
 // specifies if any of the validation fails, it will be reported as single validation
 

@@ -7,7 +7,6 @@ import javax.servlet.http.HttpSession;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 import javax.validation.Valid;
-import javax.validation.Validator;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +25,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.view.RedirectView;
 import org.training.issuetracker.constants.Constants;
-import org.training.issuetracker.data.hiber.PropImplHiber;
+import org.training.issuetracker.domain.Project;
 import org.training.issuetracker.domain.Role;
 import org.training.issuetracker.domain.User;
 import org.training.issuetracker.domain.DAO.PropDAO;
@@ -35,9 +34,6 @@ import org.training.issuetracker.domain.DAO.UserDAO;
 import org.training.issuetracker.exceptions.DaoException;
 import org.training.issuetracker.utils.JqGridData;
 import org.training.issuetracker.utils.SearchFilterParams;
-import org.training.issuetracker.validation.CheckEmail;
-import org.training.issuetracker.validation.EmailValidator;
-import org.training.issuetracker.validation.EmailValidator2;
 import org.training.issuetracker.validation.UserValidator;
 
 import flexjson.JSONSerializer;
@@ -57,12 +53,6 @@ public class UserController {
 	@Autowired
 	private UserValidator userValidator;
 	
-//	@Autowired
-//	private EmailValidator2 emailValidator;
-	
-//	@Autowired
-//	private Validator validator;
-	
 	private class LongEditor extends PropertyEditorSupport {
 		
 		@Override
@@ -80,7 +70,6 @@ public class UserController {
 		@Override
 		public void setAsText(String arg) throws IllegalArgumentException {
 			long roleId = Constants.DEFAULT_ROLE_ID;
-			propDAO = new PropImplHiber();
 			
 			if (!arg.isEmpty()) {
 				roleId = Long.parseLong(arg);
@@ -106,7 +95,7 @@ public class UserController {
     } 
 	
 	@RequestMapping(value = "/login", method = RequestMethod.POST, params={"login", "password"}, produces="application/json")
-	public @ResponseBody String getUserByLogin( @RequestParam(Constants.KEY_LOGIN)String login,  
+	public @ResponseBody String getUserByLogin(@RequestParam(Constants.KEY_LOGIN)String login,  
 			@RequestParam(Constants.KEY_PASSWORD) String password, HttpSession session) throws DaoException {
 		
 		User user = userDAO.getUser(login, password);
@@ -131,9 +120,7 @@ public class UserController {
 		return json;
 	}
 	
-	@RequestMapping(method = RequestMethod.GET, produces="application/json")
-//	public @ResponseBody String getUsersList(@RequestParam("rows") int rows, @RequestParam("page") int page,
-//			@RequestParam("sidx") String sidx, @RequestParam("sord") String sord) throws DaoException {			
+	@RequestMapping(method = RequestMethod.GET, params="_search", produces="application/json")		
 	public @ResponseBody String getUsersList(SearchFilterParams params) throws DaoException {		
 		
 		int records = userDAO.getUserRecordsCount();
@@ -146,19 +133,25 @@ public class UserController {
 		return json;
 	}
 	
-//	@RequestMapping(value="/edit", method = RequestMethod.POST, params={"oper=add", Constants.KEY_FIRST_NAME, 
-//			Constants.KEY_LAST_NAME, Constants.KEY_EMAIL, Constants.KEY_PASSWORD, Constants.KEY_ROLE_ID}, produces="application/json")
-//	public @ResponseBody String addUser(@RequestParam(Constants.KEY_FIRST_NAME) String firstName, @RequestParam(Constants.KEY_LAST_NAME) String lastName, 
-//			@RequestParam(Constants.KEY_EMAIL) String email, @RequestParam(Constants.KEY_PASSWORD) String password, 
-//			@RequestParam(Constants.KEY_ROLE_ID) long roleId, HttpSession session) throws DaoException {
-//	public @ResponseBody String addUser(String firstName, String lastName, 
-//			String email, String password, 
-//			long role, HttpSession session) throws DaoException {
-//	@RequestMapping(value="/edit", method = RequestMethod.POST, params={"oper=add"}, produces="application/json")
-//	public @ResponseBody String addUser(@ModelAttribute User user, HttpSession session) throws DaoException {
+	/**This method return users options for select html block.
+	 * for table - jqgrid.
+	 * @return html tags <select> with <options>
+	 * @throws DaoException
+	 */
+	@RequestMapping(value="/options", method = RequestMethod.GET, produces="text/plain")
+	public @ResponseBody String getUsersOptions() throws DaoException {
+		String options = "<select>";
+		List<User> users = userDAO.getUsersList();
+		
+		for (User user : users) {
+			options += "<option value=" + user.getId() + ">" + user.getFirstName() 
+					+ " " + user.getLastName() + "</option>";
+		}
+		options += "</select>";
+		return options;
+	}
 	
 	@RequestMapping(value="/edit", method = RequestMethod.POST, params={"oper=add"}, produces="application/json")
-//	public @ResponseBody String addUser(@Valid User user, BindingResult bindingResult, HttpSession session) throws DaoException {
 	public ResponseEntity<String> addUser(@Valid User user, BindingResult bindingResult, HttpSession session) throws DaoException {
 		
 		if(bindingResult.hasErrors()){
@@ -181,26 +174,8 @@ public class UserController {
 	
 	@RequestMapping(value="/edit", method = RequestMethod.POST, params={"oper=edit", Constants.KEY_ID, Constants.KEY_FIRST_NAME, 
 			Constants.KEY_LAST_NAME, Constants.KEY_EMAIL, Constants.KEY_PASSWORD, Constants.KEY_ROLE_ID}, produces="application/json")
-//	public @ResponseBody String editUser(@RequestParam(Constants.KEY_ID) long id, @RequestParam(Constants.KEY_FIRST_NAME) String firstName, 
-//			@RequestParam(Constants.KEY_LAST_NAME) String lastName, @RequestParam(Constants.KEY_EMAIL) String email, 
-//			@RequestParam(Constants.KEY_PASSWORD) String password, @RequestParam(Constants.KEY_ROLE_ID) long roleId, 
-//			HttpSession session) throws DaoException {
 	public ResponseEntity<String> editUser(@Valid User user, BindingResult bindingResult,	HttpSession session) throws DaoException {
 		
-//		User user = new User ();
-//		user.setId(id);
-//		user.setFirstName(firstName);
-//		user.setLastName(lastName);
-//		user.setEmail(email);
-//		user.setPassword(password);
-//		
-//		if(roleId == 0) {
-//			roleId = Constants.DEFAULT_ROLE_ID;
-//		}
-//		
-//		Role role = (Role) propDAO.getProp(PropertyType.ROLE, roleId);
-//		user.setRole(role);
-
 		if(bindingResult.hasErrors()){
 			String json = new JSONSerializer().exclude("*.class", "bindingFailure", "code", "objectName", "rejectedValue")
 					.serialize(bindingResult.getFieldErrors());

@@ -364,6 +364,25 @@ div#users-contain table td, div#users-contain table th {
 }
 
 .builds-table-container {
-	width: 300x;
+	width: 500x;
 	height: 200px;
 }
+
+.search-container {
+    font-family:Trebuchet MS,Tahoma,Verdana,Arial,sans-serif;
+    font-size:1.1em;
+    border:1px solid #ddd;
+    background:#eee url(images/ui-bg_highlight-soft_100_eeeeee_1x100.png) 50% top repeat-x;
+    color:#333;
+    border-radius:4px;
+    width: 300px;
+    height: 200px;
+    z-index: 950;
+    overflow: hidden;
+    top: 104px;
+    left: 37px;
+    display: hidden;
+    position: absolute;
+    padding: .2em;
+    overflow:visible;
+ }

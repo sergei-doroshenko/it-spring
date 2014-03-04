@@ -26,25 +26,20 @@ public class UserValidator implements Validator {
 
 	@Override
 	public void validate(Object obj, Errors err) {
-				
-//		ValidationUtils.rejectIfEmpty(err, "firstName", "firstName.empty", "First name can't be empty!");
-//		ValidationUtils.rejectIfEmpty(err, "lastName", "lastName.empty", "Last name can't be empty!");
-//		ValidationUtils.rejectIfEmpty(err, "email", "email.empty", "Email name can't be empty!");
-//		ValidationUtils.rejectIfEmpty(err, "password", "password.empty", "Password name can't be empty!");
-		
-		ValidationUtils.rejectIfEmpty(err, "firstName", "firstName.empty", messageSource.getMessage("firstName.empty", null, Locale.getDefault()));
-		ValidationUtils.rejectIfEmpty(err, "lastName", "lastName.empty");
-		ValidationUtils.rejectIfEmpty(err, "email", "email.empty");
-		ValidationUtils.rejectIfEmpty(err, "password", "password.empty");
+						
+		ValidationUtils.rejectIfEmpty(err, "firstName", "firstName.empty", messageSource.getMessage("user.firstName.empty", null, Locale.getDefault()));
+		ValidationUtils.rejectIfEmpty(err, "lastName", "lastName.empty", messageSource.getMessage("user.lastName.empty", null, Locale.getDefault()));
+		ValidationUtils.rejectIfEmpty(err, "email", "email.empty", messageSource.getMessage("user.email.empty", null, Locale.getDefault()));
+		ValidationUtils.rejectIfEmpty(err, "password", "password.empty", messageSource.getMessage("user.password.empty", null, Locale.getDefault()));
 		
 		User user = (User) obj;
 		
 		if (user.getFirstName().length() < 2) {
-			err.rejectValue("firstName", "firstName.too.short", "First name must be between 1 and 20 characters long.");
+			err.rejectValue("firstName", "firstName.too.short",  messageSource.getMessage("user.firstName.too.short", null, Locale.getDefault()));
 		} else if (user.getLastName().length() < 3) {
-			err.rejectValue("lastName", "lastName.too.short", "Last name can't be less than 3");
+			err.rejectValue("lastName", "lastName.too.short", messageSource.getMessage("user.lastName.too.short", null, Locale.getDefault()));
 		} else if (user.getPassword().length() < 3) {
-			err.rejectValue("password", "password.wrong", "Password can't be less than 3");
+			err.rejectValue("password", "password.too.short", messageSource.getMessage("user.password.too.short", null, Locale.getDefault()));
 		}
 		
 		validateEmail(user.getEmail(), err);

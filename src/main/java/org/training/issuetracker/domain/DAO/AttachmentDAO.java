@@ -9,8 +9,12 @@ public interface AttachmentDAO {
 
 	List<Attachment> getAttachmentsList(long issueId) throws DaoException;
 
-	void addAttchment(Attachment attchment) throws DaoException;
+	Attachment getAttchment(long id) throws DaoException;
+	
+	long insertAttachment(Attachment attchment) throws DaoException;
 
-	Attachment getAttchment(long attchmentId) throws DaoException;
+	void deleteAttachment(long id) throws DaoException;
+
+	
 
 }

@@ -40,4 +40,8 @@ VALUES
 ('2014-01-15', 2, '2014-01-17', 3, 'Bag in Data Base', 'Data Base do not auto-populete date of creation field', 
 3, 1, 2, 1, 3, 4);
 
-
+INSERT INTO COMMENTS (ISSUE_ID, CREATE_DATE, CREATE_BY, COMMENT)
+VALUES
+(1, CURRENT_DATE, 4, 'This is my first test comment. Hello, everybody!'),
+(2, CURRENT_DATE, 3, 'This is my second test comment. Hello, everybody!'),
+(3, CURRENT_DATE, 5, 'Don''t write spam into comments. Please.');

@@ -11,7 +11,7 @@ import javax.validation.Constraint;
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-@Constraint(validatedBy=UserValidator2.class)
+@Constraint(validatedBy=UserConstraintValidator.class)
 public @interface CheckUser {
 	String message() default "{user.invalid}";
 	 

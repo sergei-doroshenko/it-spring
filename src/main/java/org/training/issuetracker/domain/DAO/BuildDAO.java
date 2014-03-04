@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.training.issuetracker.domain.Build;
 import org.training.issuetracker.exceptions.DaoException;
+import org.training.issuetracker.utils.SearchFilterParams;
 
 public interface BuildDAO {
 
@@ -18,5 +19,9 @@ public interface BuildDAO {
 	void updateBuild (Build build) throws DaoException;
 
 	void deleteBuild (long id) throws DaoException;
+
+	int getBuildsRecordsCount() throws DaoException;
+
+	List<Build> getBuildsList(SearchFilterParams params) throws DaoException;
 
 }

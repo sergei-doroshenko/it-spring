@@ -9,6 +9,8 @@ import org.training.issuetracker.utils.SearchFilterParams;
 public interface UserDAO {
 	
 	List<User> getUsersList(SearchFilterParams params) throws DaoException;
+	
+	List<User> getUsersList() throws DaoException;
 
 	int getUserRecordsCount() throws DaoException;
 

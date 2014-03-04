@@ -152,7 +152,8 @@
                 	  window.location.href = '/issuetracker/Main.do?command=submitissue';
                   });
                   $('#edit-button').bind().on('click', function(){
-                	  window.location.href = '/issuetracker/Main.do?command=editissue&id='+ getParameterByName('id');
+                	  var url = window.location.pathname + '/edit/'+ getParameterByName('id');
+                	  window.location.href = '/issuetracker/issue/edit/'+ getParameterByName('id');
                   });
                   $('#delete-button').bind().on('click', function(){
                 	  executeDeleteIssue();

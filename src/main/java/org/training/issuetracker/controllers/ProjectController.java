@@ -20,6 +20,8 @@ import org.training.issuetracker.domain.DAO.UserDAO;
 import org.training.issuetracker.exceptions.DaoException;
 import org.training.issuetracker.utils.JqGridData;
 
+import flexjson.JSONSerializer;
+
 @Controller
 @RequestMapping("/project")
 public class ProjectController {
@@ -31,7 +33,7 @@ public class ProjectController {
 	@Autowired
 	private UserDAO userDAO;
 	
-	@RequestMapping(method = RequestMethod.GET, produces="application/json")
+	@RequestMapping(method = RequestMethod.GET,  params="_search", produces="application/json")
 	public @ResponseBody String getProjectsList(@RequestParam("page") int page, @RequestParam("rows") int rows) throws DaoException {
 		
 		List<Project> projects = projectDAO.getProjectsList();
@@ -40,6 +42,21 @@ public class ProjectController {
 		JqGridData<Project> data = new JqGridData<>(total, page, records, projects);
 		String json = data.getJsonString();
 		return json;
+	}
+	
+	/**This method return project options for select html block.
+	 * @return html tags <select> with <options>
+	 * @throws DaoException
+	 */
+	@RequestMapping(value="/options", method = RequestMethod.GET, produces="text/plain")
+	public @ResponseBody String getProjectsOptions() throws DaoException {
+		String options = "<select>";
+		List<Project> projects = projectDAO.getProjectsList();
+		for (Project project : projects) {
+			options += "<option value=" + project.getId() + ">" + project.getName() + "</option>";
+		}
+		options += "</select>";
+		return options;
 	}
 	
 	@RequestMapping(value="/edit", method = RequestMethod.POST, params={"oper=add", Constants.KEY_NAME, 

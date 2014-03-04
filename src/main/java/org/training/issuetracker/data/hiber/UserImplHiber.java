@@ -46,49 +46,41 @@ public class UserImplHiber implements UserDAO {
 		}
 		
 		List result = hibernateTemplate.findByCriteria(criteria, firstResult, rows);
-
 		return Collections.checkedList(result, User.class);
 	}
 
 	@Override
 	public int getUserRecordsCount() throws DaoException {
-		
 		return DataAccessUtils.intResult(hibernateTemplate.find("select count(*) from User"));
 	}
 
-	
 	public List getUsersList() throws DaoException {
 		return hibernateTemplate.find("from User");
 	}
 
 	@Override
 	public User getUser(String login, String password) throws DaoException {
-		
 	   return (User) DataAccessUtils.requiredUniqueResult(hibernateTemplate.find("from User where email=? and password=?",login, password));
 
 	}
 
 	@Override
 	public User getUser(long id) throws DaoException {
-		
 		return hibernateTemplate.get(User.class, id);
 	}
 
 	@Override
 	public long insertUser(User user) throws DaoException {
-		
 		return (Long) hibernateTemplate.save(user);
 	}
 
 	@Override
 	public void updateUser(User user) throws DaoException {
-		
 		hibernateTemplate.update(user);
 	}
 
 	@Override
 	public void deleteUser(long id) throws DaoException {
-		
-		hibernateTemplate.delete(hibernateTemplate.get(User.class, id));
+		hibernateTemplate.delete(getUser(id));
 	}
 }

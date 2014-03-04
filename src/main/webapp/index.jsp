@@ -46,6 +46,11 @@
 				</div><!--end issue-table-->
 				
 			</div><!--end content-->
+			<div id="searc-form" class="search-container hidden-block"> 
+    			<a id="search-button" class="fm-button ui-state-default ui-corner-all fm-button-icon-right ui-reset">
+    				<span class="ui-icon ui-icon-search"></span>Find
+    			</a>	
+			</div>
 			<div class="footer">
 				<jsp:include page="${constants.URL_FOOTER}"></jsp:include>
 			</div><!--end footer-->

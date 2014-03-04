@@ -1,13 +1,19 @@
 package org.training.issuetracker.data.hiber;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Order;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.training.issuetracker.domain.Build;
+import org.training.issuetracker.domain.User;
 import org.training.issuetracker.domain.DAO.BuildDAO;
 import org.training.issuetracker.exceptions.DaoException;
+import org.training.issuetracker.utils.SearchFilterParams;
 
 public class BuildImplHiber implements BuildDAO {
 	private Logger logger = Logger.getLogger(getClass().getCanonicalName());
@@ -49,6 +55,33 @@ public class BuildImplHiber implements BuildDAO {
 	public void deleteBuild(long id) throws DaoException {
 		
 		hibernateTemplate.delete(hibernateTemplate.get(Build.class, id));
+	}
+
+	@Override
+	public int getBuildsRecordsCount() throws DaoException {
+		
+		return DataAccessUtils.intResult(hibernateTemplate.find("select count(*) from Build"));
+	}
+
+	@Override
+	public List<Build> getBuildsList(SearchFilterParams params)
+			throws DaoException {
+		
+		DetachedCriteria criteria = DetachedCriteria.forClass(Build.class);
+		int page = params.getPage();
+		int rows = params.getRows();
+		int firstResult = (page - 1) * rows;
+		String sord = params.getSord();
+		
+		if (sord.equals(SearchFilterParams.ASC)) {
+			criteria.addOrder(Order.asc(params.getSidx()));
+		} else {
+			criteria.addOrder(Order.desc(params.getSidx()));
+		}
+		
+		List result = hibernateTemplate.findByCriteria(criteria, firstResult, rows);
+
+		return Collections.checkedList(result, Build.class);
 	}
 
 }

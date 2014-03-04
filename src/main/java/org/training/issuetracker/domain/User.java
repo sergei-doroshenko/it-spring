@@ -17,7 +17,6 @@ import org.training.issuetracker.validation.CheckUser;
 
 @Entity
 @Table(name="USERS")
-//@CheckUser
 public class User {//extends AbstractPersistentObj 
 	
 	@Id

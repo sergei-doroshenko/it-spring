@@ -19,6 +19,10 @@ import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
 import org.apache.log4j.Logger;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.training.issuetracker.constants.Constants;
 import org.training.issuetracker.domain.Attachment;
 import org.training.issuetracker.domain.Issue;
@@ -26,29 +30,14 @@ import org.training.issuetracker.domain.User;
 import org.training.issuetracker.domain.DAO.AttachmentDAO;
 import org.training.issuetracker.domain.DAO.IssueDAO;
 import org.training.issuetracker.exceptions.DaoException;
-import org.training.issuetracker.i18n.Localizer;
-import org.training.issuetracker.i18n.LocalizerFactory;
 
-/**
- * Servlet implementation class FileUploadController
- */
-@WebServlet(value = "/FileUploadDownload.do")
-@MultipartConfig(fileSizeThreshold=1024*1024*10,    // 10 MB
-				maxFileSize=1024*1024*50,          // 50 MB
-				maxRequestSize=1024*1024*100)      // 100 MB
-public class FileUploadDownloadController extends HttpServlet {
-	private static final long serialVersionUID = 1L;
-	private final Logger logger = Logger.getLogger("org.training.issuetracker.controllers");
+@Controller
+@RequestMapping("/attachment")
+public class AttachmentController {
+	private Logger logger = Logger.getLogger(getClass().getCanonicalName());
 	
-	private AttachmentDAO attachmentDAO;
-	private IssueDAO issueDAO;
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-	@Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-		String fileName = request.getParameter("fileName");
+	@RequestMapping(value="/{fileName}", method = RequestMethod.GET, params="_search", produces="application/json")
+	public void getAttachment(@PathVariable String fileName) throws ServletException, IOException {
 
 		if(fileName == null || fileName.equals("")) {
 			throw new ServletException("File Name can't be null or empty");
@@ -91,17 +80,13 @@ public class FileUploadDownloadController extends HttpServlet {
 
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	@Override
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	
+	public void getAttachment(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		Locale locale = (Locale) session.getAttribute(Constants.KEY_LOCALE);
-		Localizer localizer = LocalizerFactory.getLocalizer(locale);
 		logger.info(request.getLocale().getLanguage());
 
-		ResourceBundle bundle = localizer.getBundle("errors");
+		ResourceBundle bundle = ResourceBundle.getBundle("messages", locale);
 		logger.debug(bundle.getString("issue.err.null"));
 
 		

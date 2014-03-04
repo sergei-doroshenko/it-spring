@@ -143,7 +143,6 @@ function buildUserView () {
                 dataType: 'json',
                 type: 'get',
                 success: function (data) {
-                	alert('hello');
                 	$('#dialog-form').dialog('open');                	
                 	$('#first_name').val(data.firstName);
                 	$('#last_name').val(data.lastName);

@@ -4,9 +4,15 @@ import java.util.List;
 
 import org.training.issuetracker.domain.DAO.PropertyType;
 import org.training.issuetracker.domain.AbstractPersistentObj;
+import org.training.issuetracker.domain.Project;
 import org.training.issuetracker.exceptions.DaoException;
+import org.training.issuetracker.utils.SearchFilterParams;
 
 public interface PropDAO {
+	
+	int getPropRecordsCount(PropertyType propType) throws DaoException;
+
+	List<AbstractPersistentObj> getPropList(PropertyType prop, SearchFilterParams params) throws DaoException;
 
 	AbstractPersistentObj getProp(PropertyType prop, long id) throws DaoException;
 	
@@ -16,8 +22,6 @@ public interface PropDAO {
 	
 	void deleteProp (PropertyType prop, long id) throws DaoException;
 
-	List<AbstractPersistentObj> getPropList(PropertyType propType, int page, int rows, String sidx, String sord) throws DaoException;
-
-	int getPropRecordsCount(PropertyType propType) throws DaoException;
+	List<AbstractPersistentObj> getProjectsList(PropertyType prop) throws DaoException;
 	
 }

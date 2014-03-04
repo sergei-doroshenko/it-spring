@@ -22,11 +22,10 @@ import org.training.issuetracker.domain.DAO.CommentDAO;
 import org.training.issuetracker.domain.DAO.IssueDAO;
 import org.training.issuetracker.domain.DAO.ProjectDAO;
 import org.training.issuetracker.domain.DAO.PropDAO;
+import org.training.issuetracker.domain.DAO.PropertyType;
 import org.training.issuetracker.domain.DAO.UserDAO;
 import org.training.issuetracker.exceptions.DaoException;
 import org.training.issuetracker.exceptions.ParameterNotFoundException;
-import org.training.issuetracker.utils.ParameterParser;
-import org.training.issuetracker.domain.DAO.PropDAO.PropertyType;
 
 public class EditIssueCommand extends AbstractWebCommand {
 	private final Logger logger = Logger.getLogger("org.training.issuetracker.command");
@@ -45,8 +44,6 @@ public class EditIssueCommand extends AbstractWebCommand {
 	@Override
 	public void execute() throws IOException, ServletException {
 
-		ParameterParser parser = new ParameterParser(getRequest());
-
 		User user = (User) getRequest().getSession().getAttribute(Constants.KEY_USER);
 
 		if (user == null) {
@@ -54,11 +51,11 @@ public class EditIssueCommand extends AbstractWebCommand {
 		}
 
 		try {
-			String commandName = parser.getStringParameter(Constants.KEY_COMMAND);
+			String commandName = getRequest().getParameter(Constants.KEY_COMMAND);
 			logger.debug("command = " + commandName);
 
 			
-			List<AbstractPersistentObj> statuses = propDAO.getPropList(PropertyType.STATUS);
+			List<AbstractPersistentObj> statuses = propDAO.getPropList(prop, params)(PropertyType.STATUS);
 
 			getRequest().setAttribute(Constants.STATUSES, statuses);
 

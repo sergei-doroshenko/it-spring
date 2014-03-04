@@ -2,10 +2,34 @@ package org.training.issuetracker.domain;
 
 import java.sql.Date;
 
-public class Comment extends AbstractPersistentObj {
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="COMMENTS")
+public class Comment {
+	
+	@Id
+    @Column(name="ID")
+    @GeneratedValue
+	private long id;
+	
+	@Column(name="ISSUE_ID")
 	private long issueId;
+	
+	@Column(name="CREATE_DATE")
 	private Date createDate;
+	
+	@OneToOne()
+	@JoinColumn(name="CREATE_BY")
 	private User createBy;
+	
+	@Column(name="COMMENT")
 	private String comment;
 
 	public Comment() { }

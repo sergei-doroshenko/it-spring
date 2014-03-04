@@ -10,22 +10,18 @@ import javax.ws.rs.core.MediaType;
 
 import org.apache.log4j.Logger;
 import org.training.issuetracker.constants.Constants;
-import org.training.issuetracker.data.db.PropImplDB.PropertyType;
 import org.training.issuetracker.domain.Issue;
 import org.training.issuetracker.domain.Priority;
 import org.training.issuetracker.domain.Status;
 import org.training.issuetracker.domain.Type;
 import org.training.issuetracker.domain.User;
-import org.training.issuetracker.domain.DAO.DAOFactory;
 import org.training.issuetracker.domain.DAO.IssueDAO;
 import org.training.issuetracker.domain.DAO.ProjectDAO;
 import org.training.issuetracker.domain.DAO.PropDAO;
+import org.training.issuetracker.domain.DAO.PropertyType;
 import org.training.issuetracker.domain.DAO.UserDAO;
 import org.training.issuetracker.exceptions.DaoException;
 import org.training.issuetracker.exceptions.ParameterNotFoundException;
-import org.training.issuetracker.utils.ParameterInspector;
-import org.training.issuetracker.utils.ParameterParser;
-import org.training.issuetracker.utils.UrlCreator;
 
 public class InsertIssueCommand extends AbstractWebCommand {
 	Logger logger = Logger.getLogger("org.training.issuetracker.command");
@@ -38,7 +34,6 @@ public class InsertIssueCommand extends AbstractWebCommand {
 	public void execute() throws IOException, ServletException {
 		getResponse().setContentType(MediaType.TEXT_PLAIN);
 		PrintWriter out = getResponse().getWriter();
-		ParameterParser parser = new ParameterParser(getRequest());
 
 		User user = (User) getRequest().getSession().getAttribute(Constants.KEY_USER);
 

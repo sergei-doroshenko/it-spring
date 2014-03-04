@@ -27,20 +27,17 @@
 	
 	<context:property-placeholder location="classpath:db/h2-mem.properties"/>
 	
-
 	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">		        
 	    <property name="driverClassName" value="${jdbc.driverClassName}" />
 	    <property name="url" value="${jdbc.url}" />
 	    <property name="username" value="${jdbc.username}"/>
 	    <property name="password" value="${jdbc.password}"/>
 	</bean>
-
  
 	<jdbc:initialize-database data-source="dataSource" ignore-failures="ALL">
 		<jdbc:script location="classpath:db/schema.sql"/>
     	<jdbc:script location="classpath:db/test-data.sql"/>
 	</jdbc:initialize-database>
-
 
 	<bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
         <property name="dataSource" ref="dataSource" />
@@ -60,16 +57,18 @@
     
     <bean id="messageSource" 
     	class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
-    	<property name="basename" value="WEB-INF/messages"/>
+    	<property name="basename" value="classpath:i18n/messages"/>
     </bean>
     	       
     <!-- bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean"/-->
+    <!-- bean class="org.springframework.validation.beanvalidation.MethodValidationPostProcessor"/-->
     
 	<bean id="issueDAO" class="org.training.issuetracker.data.hiber.IssueImplHiber" />	
   	<bean id="userDAO" class="org.training.issuetracker.data.hiber.UserImplHiber"/>
 	<bean id="propDAO" class="org.training.issuetracker.data.hiber.PropImplHiber"/>
 	<bean id="projectDAO" class="org.training.issuetracker.data.hiber.ProjectImplHiber"/>
 	<bean id="buildDAO" class="org.training.issuetracker.data.hiber.BuildImplHiber"/>
-	<!-- bean class="org.springframework.validation.beanvalidation.MethodValidationPostProcessor"/-->
+	<bean id="commentDAO" class="org.training.issuetracker.data.hiber.CommentImplHiber"/>
+	<bean id="attachmentDAO" class="org.training.issuetracker.data.hiber.AttachmentImplHiber"/>
 		
 </beans>

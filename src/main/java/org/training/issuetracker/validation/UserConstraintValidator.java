@@ -9,7 +9,7 @@ import org.training.issuetracker.domain.User;
 import org.training.issuetracker.domain.DAO.PropDAO;
 import org.training.issuetracker.domain.DAO.PropertyType;
 
-public class UserValidator2 implements ConstraintValidator<CheckUser, User>{
+public class UserConstraintValidator implements ConstraintValidator<CheckUser, User>{
 	
 	@Autowired
 	private PropDAO propDAO;

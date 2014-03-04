@@ -4,6 +4,7 @@ import java.sql.Date;
 
 import javax.json.Json;
 import javax.json.JsonObject;
+import javax.json.JsonValue;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,6 +14,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import flexjson.JSONSerializer;
 
 @Entity
 @Table(name="ISSUES")
@@ -244,7 +247,7 @@ public class Issue {
 							)
 							.add("type", getType().getName())
 							.add("priority", getPriority().getName())
-							.add("project", getBuild().getProjectId())
+							.add("project", getBuild().getProject().getDescription())
 							.add("projectbuild", getBuild().getName())
 							.add("assignee", getAssignee().toString())
 						.build();
@@ -264,17 +267,21 @@ public class Issue {
 //				+ ", assignee=" + assignee.getFirstName() + "]";
 //	}
 	
+	public String getFullName(User user) {
+		return user.getFirstName() + " " + user.getLastName();
+	}
+	
 	@Override
 	public String toString() {
 		JsonObject issueJson = Json.createObjectBuilder()
 				.add("id", id)
 				.add("priority", getPriority().getName())
-				.add("assignee", assignee.getFirstName() + " " + assignee.getLastName())
+				.add("assignee", getFullName(assignee))
 				.add("type", type.getName())
 				.add("status", status.getName())
 				.add("summary", summary)
 				.build();
 		return issueJson.toString();
 	}
-
+	
 }

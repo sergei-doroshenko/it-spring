@@ -285,7 +285,7 @@ public final class Constants {
 	public static final String KEY_MANAGER_ID = "manager";
 
 	/** String literal for request parameter project Id */
-	public static final String KEY_PROJECT_ID = "projectId";
+	public static final String KEY_PROJECT_ID = "project";
 
 //**************** OPERATIONS **********************************************
 	/** Constants string literal for parameter oper: add. */

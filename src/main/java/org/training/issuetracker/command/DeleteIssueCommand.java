@@ -14,7 +14,6 @@ import org.training.issuetracker.domain.User;
 import org.training.issuetracker.domain.DAO.IssueDAO;
 import org.training.issuetracker.exceptions.DaoException;
 import org.training.issuetracker.exceptions.ParameterNotFoundException;
-import org.training.issuetracker.utils.ParameterParser;
 
 public class DeleteIssueCommand extends AbstractWebCommand {
 	private final Logger logger = Logger.getLogger("org.training.issuetracker.command");
@@ -28,7 +27,7 @@ public class DeleteIssueCommand extends AbstractWebCommand {
 	public void execute() throws IOException, ServletException {
 		getResponse().setContentType(MediaType.TEXT_PLAIN);
 		PrintWriter out = getResponse().getWriter();
-		ParameterParser parser = new ParameterParser(getRequest());
+		
 
 		User user = (User) getRequest().getSession().getAttribute(Constants.KEY_USER);
 
@@ -38,7 +37,7 @@ public class DeleteIssueCommand extends AbstractWebCommand {
 
 		try {
 
-			long id = parser.getLongParameter(Constants.KEY_ID);
+			long id = Long.parseLong(getRequest().getParameter(Constants.KEY_ID));
 
 			long result = dao.deleteIssue(id);
 
@@ -55,7 +54,7 @@ public class DeleteIssueCommand extends AbstractWebCommand {
 			out.print(e.getMessage());
 			getResponse().setStatus(HttpServletResponse.SC_BAD_REQUEST);
 
-		} catch (ParameterNotFoundException | NumberFormatException e) {
+		} catch (NumberFormatException e) {
 			out.print(e.getMessage());
 			getResponse().setStatus(HttpServletResponse.SC_BAD_REQUEST);
 
