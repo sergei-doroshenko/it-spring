@@ -2,7 +2,6 @@ package org.training.issuetracker.domain;
 
 import javax.json.Json;
 import javax.json.JsonObject;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;

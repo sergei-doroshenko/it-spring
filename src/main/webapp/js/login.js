@@ -83,14 +83,14 @@ function bindEditIssueForm() {
 	        'status' : $('#status').val(),
 	        'resolution' : $('#resolution').val(),
 	        'project' : $('#project').val(),
-	        'projectbuild' : $('#projectbuild').val(),
+	        'build' : $('#projectbuild').val(),
 	        'summary' : $('#summary').val(),
 	        'description' : $('#description').val(),
 	        'assignee' : $('#assignee').val()
 	    };
     
         $.ajax({
-            url: '\save',
+            url: '\\issuetracker\\issue\\update',
             data: post_data,
             dataType: 'text',
             type: 'post',
@@ -118,12 +118,12 @@ function bindNewIssueForm() {
 	    };
     
         $.ajax({
-            url: '\add',
+            url: '\\issuetracker\\issue\\',
             data: post_data,
             dataType: 'text',
             type: 'post',
             success: function (data) {
-        		window.location.href = data;
+        		window.location.href = '/issuetracker/';
             },
             error:  handleIssueError
         });
@@ -138,10 +138,10 @@ function executeDeleteIssue() {
 	    };
     
         $.ajax({
-            url: '\del',
+            url: '\\issuetracker\\issue\\' + $('#id').val(),
             data: post_data,
             dataType: 'text',
-            type: 'post',
+            type: 'delete',
             success: function (data) {
         		window.location.href = data;
             },

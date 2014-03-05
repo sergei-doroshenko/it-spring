@@ -13,7 +13,9 @@ public interface PropDAO {
 	int getPropRecordsCount(PropertyType propType) throws DaoException;
 
 	List<AbstractPersistentObj> getPropList(PropertyType prop, SearchFilterParams params) throws DaoException;
-
+	
+	List<AbstractPersistentObj> getPropList(PropertyType prop) throws DaoException;
+	
 	AbstractPersistentObj getProp(PropertyType prop, long id) throws DaoException;
 	
 	long insertProp (PropertyType prop, AbstractPersistentObj propObject) throws DaoException;
@@ -21,7 +23,5 @@ public interface PropDAO {
 	void updateProp (PropertyType prop, AbstractPersistentObj propObject) throws DaoException;
 	
 	void deleteProp (PropertyType prop, long id) throws DaoException;
-
-	List<AbstractPersistentObj> getProjectsList(PropertyType prop) throws DaoException;
 	
 }

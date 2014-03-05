@@ -39,24 +39,22 @@ function getParameterByName(name) {
 function getProjectBuilds (id) {
 	var select = $('#projectbuild');
 	select.empty();
-	
 	if (id) {
-		
+//		var url = window.location.pathname + '/build/project/' + id;
+		var url = '/issuetracker/build/project/' + id;
         var jqxhr = $.ajax({
-                url: 'build/project/' + id,
-                data: sdata,
-                dataType: 'json',
-                type: 'get',
-                success: function (data) {
-                        		
-            		for (var i = 0, l = data.length; i < l; i++) {
-            			select.append('<option value="' + data[i].id+ '">' + data[i].name + '</option>');
-					}
-                },
-                error:  handleError
+            url: url,
+            dataType: 'json',
+            type: 'get',
+            success: function (data) {
+                    		
+        		for (var i = 0, l = data.length; i < l; i++) {
+        			select.append('<option value="' + data[i].id+ '">' + data[i].name + '</option>');
+				}
+            },
+            error:  handleError
         });
 	}
-	
     return false;
 }
 

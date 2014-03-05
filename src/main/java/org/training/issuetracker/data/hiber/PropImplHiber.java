@@ -50,7 +50,7 @@ public class PropImplHiber implements PropDAO {
 	}
 	
 	@Override
-	public List<AbstractPersistentObj> getProjectsList(PropertyType prop) throws DaoException {
+	public List<AbstractPersistentObj> getPropList(PropertyType prop) throws DaoException {
 		List result = hibernateTemplate.find("from " + prop.getEntityName());
 		return Collections.checkedList(result, AbstractPersistentObj.class);
 	}

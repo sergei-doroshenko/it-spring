@@ -16,7 +16,7 @@
 	<context:component-scan base-package="org.training.issuetracker.data" />
 	<context:component-scan base-package="org.training.issuetracker.validation" />
 	
-	<mvc:annotation-driven />
+	<mvc:annotation-driven conversion-service="conversionService"/>
 	<mvc:default-servlet-handler />
 	
 	<bean id="internalResourceViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
@@ -59,6 +59,20 @@
     	class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
     	<property name="basename" value="classpath:i18n/messages"/>
     </bean>
+    
+    <bean id="conversionService" class="org.springframework.context.support.ConversionServiceFactoryBean">
+	    <property name="converters">
+	        <list>
+	            <bean class="org.training.issuetracker.converters.BuildConverter"/>
+	            <bean class="org.training.issuetracker.converters.PriorityConverter"/>
+	            <bean class="org.training.issuetracker.converters.ProjectConverter"/>
+	            <bean class="org.training.issuetracker.converters.ResolutionConverter"/>
+	            <bean class="org.training.issuetracker.converters.StatusConverter"/>
+	            <bean class="org.training.issuetracker.converters.TypeConverter"/>
+	            <bean class="org.training.issuetracker.converters.UserConverter"/>
+	        </list>
+	    </property>
+	</bean>
     	       
     <!-- bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean"/-->
     <!-- bean class="org.springframework.validation.beanvalidation.MethodValidationPostProcessor"/-->

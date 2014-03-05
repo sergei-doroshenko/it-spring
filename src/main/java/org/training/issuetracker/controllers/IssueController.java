@@ -1,24 +1,42 @@
 package org.training.issuetracker.controllers;
 
+import java.beans.PropertyEditorSupport;
+import java.util.Calendar;
+import java.sql.Date;
 import java.util.List;
+
+import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.convert.ConversionService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.view.RedirectView;
 import org.training.issuetracker.constants.Constants;
 import org.training.issuetracker.domain.Issue;
+import org.training.issuetracker.domain.Project;
+import org.training.issuetracker.domain.Role;
+import org.training.issuetracker.domain.Type;
+import org.training.issuetracker.domain.User;
 import org.training.issuetracker.domain.DAO.AttachmentDAO;
+import org.training.issuetracker.domain.DAO.BuildDAO;
 import org.training.issuetracker.domain.DAO.CommentDAO;
 import org.training.issuetracker.domain.DAO.IssueDAO;
+import org.training.issuetracker.domain.DAO.ProjectDAO;
+import org.training.issuetracker.domain.DAO.PropDAO;
+import org.training.issuetracker.domain.DAO.PropertyType;
+import org.training.issuetracker.domain.DAO.UserDAO;
 import org.training.issuetracker.exceptions.DaoException;
 import org.training.issuetracker.utils.JqGridData;
 import org.training.issuetracker.utils.SearchFilterParams;
@@ -32,10 +50,95 @@ public class IssueController {
 	private IssueDAO issueDAO;
 	
 	@Autowired
+	private UserDAO userDAO;
+	
+	@Autowired
+	private PropDAO propDAO;
+	
+	@Autowired
+	private ProjectDAO projectDAO;
+	
+	@Autowired
+	private BuildDAO buildDAO;
+	
+	@Autowired
 	private CommentDAO commentDAO;
 	
 	@Autowired
 	private AttachmentDAO attachmentDAO;
+	
+	@Autowired
+	private ConversionService conversionService;
+	
+//	private class ProjectEditor extends PropertyEditorSupport {
+//		@Override
+//		public void setAsText(String arg) throws IllegalArgumentException {
+//			
+//			if (!arg.isEmpty()) {
+//				throw new IllegalArgumentException ("No project argument!");
+//			}
+//
+//			long id = Long.parseLong(arg);
+//			Project project = null;
+//			try {
+//				project = (Project) projectDAO.getProject(id);
+//			} catch (DaoException e) {
+//				e.printStackTrace();
+//				throw new IllegalArgumentException("No such project!");
+//			}
+//			
+//			setValue(project);
+//		}
+//	}
+//	
+//	private class BuildEditor extends PropertyEditorSupport {
+//		
+//		@Override
+//		public void setAsText(String arg) throws IllegalArgumentException {
+//						
+//			if (!arg.isEmpty()) {
+//				throw new IllegalArgumentException ("No project argument!");
+//			}
+//
+//			long id = Long.parseLong(arg);
+//			Build build = null;
+//			try {
+//				type = (Type) propDAO.getProp(PropertyType.TYPE, id);
+//			} catch (DaoException e) {
+//				e.printStackTrace();
+//				throw new IllegalArgumentException("No such role!");
+//			}
+//			setValue(type);
+//		}
+//	}
+//	
+//	private class TypeEditor extends PropertyEditorSupport {
+//		
+//		@Override
+//		public void setAsText(String arg) throws IllegalArgumentException {
+//						
+//			if (!arg.isEmpty()) {
+//				throw new IllegalArgumentException ("No project argument!");
+//			}
+//
+//			long id = Long.parseLong(arg);
+//			Type type = null;
+//			try {
+//				type = (Type) propDAO.getProp(PropertyType.TYPE, id);
+//			} catch (DaoException e) {
+//				e.printStackTrace();
+//				throw new IllegalArgumentException("No such role!");
+//			}
+//			setValue(type);
+//		}
+//	}
+//	
+//	@InitBinder()//"issue"
+//    private void initBinder(WebDataBinder binder) {
+//		binder.setConversionService(conversionService);
+//        binder.registerCustomEditor(Project.class, "project", new ProjectEditor());
+//        binder.registerCustomEditor(Type.class, "type", new TypeEditor());
+//    } 
 	
 	@RequestMapping(value="/list", method = RequestMethod.GET, params="_search", produces="application/json")
 	public @ResponseBody String getIssueList (SearchFilterParams params) throws DaoException {
@@ -64,30 +167,48 @@ public class IssueController {
 	@RequestMapping(value="/edit", params="id", method = RequestMethod.GET)
 	public String editIssue (@RequestParam long id, ModelMap model) throws DaoException {
 		
-		model.addAttribute(Constants.ISSUE, issueDAO.getIssueById(id));
+		Issue issue = issueDAO.getIssueById(id);
+		model.addAttribute(Constants.ISSUE, issue);
+		model.addAttribute(Constants.PROJECTS, projectDAO.getProjectsList());
+		long projectId =  issue.getProject().getId();
+		model.addAttribute(Constants.BUILDS, buildDAO.getProjectBuilds(projectId));
+		model.addAttribute(Constants.TYPES, propDAO.getPropList(PropertyType.TYPE));
+		model.addAttribute(Constants.PRIORITIES, propDAO.getPropList(PropertyType.PRIORITY));
+		model.addAttribute(Constants.RESOLUTIONS, propDAO.getPropList(PropertyType.RESOLUTION));
+		model.addAttribute(Constants.STATUSES, propDAO.getPropList(PropertyType.STATUS));
+		model.addAttribute(Constants.ASSIGNEES, userDAO.getUsersList());
 		model.addAttribute(Constants.COMMENTS, commentDAO.getCommentsList(id));
 		model.addAttribute(Constants.ATTACHMENTS, attachmentDAO.getAttachmentsList(id));
 		return "edit-issue";
 	}
 	
-	@RequestMapping(value="/save", method = RequestMethod.POST)
-	public @ResponseBody String saveIssue (@RequestParam long id, ModelMap model) throws DaoException {
+	@RequestMapping(value="update", method = RequestMethod.POST)//value="/update",
+	public @ResponseBody String updateIssue (Issue issue, 
+			@RequestParam("id") long issueId, HttpSession session) throws DaoException {
 		
-//		long id = issue.getId();
-//		if (id == 0) {
-//			id = issueDAO.insertIssue(issue); 
-//		} else {
-//			issueDAO.updateIssue(issue);
-//		}	
-//		model.addAttribute(Constants.ISSUE, issue);
-		
-		return "";
+		logger.warn("Issue ------------------------------------" + issue);
+		long id = issue.getId();
+		Issue oldIssue = (Issue) issueDAO.getIssueById(id);
+		issue.setCreateDate(oldIssue.getCreateDate());
+		issue.setCreateBy(oldIssue.getCreateBy());
+		issue.setModifyDate(new Date(Calendar.getInstance().getTimeInMillis()));
+		User currentUser = (User) session.getAttribute(Constants.KEY_USER);
+		issue.setModifyBy(currentUser);
+		issueDAO.updateIssue(issue);
+		return "/issuetracker/issue?id=" + id;
 	}
 	
-	@RequestMapping(value="/delete/{id}", method = RequestMethod.GET)
-	public String deleteIssue (@PathVariable long id, ModelMap model) throws DaoException {
+	@RequestMapping(method = RequestMethod.POST)//value="/add",
+	public @ResponseBody String addIssue (Issue issue, ModelMap model) throws DaoException {
+		
+		long id = issueDAO.insertIssue(issue);		
+		return "/issuetracker/issue?id=" + id;
+	}
+	
+	@RequestMapping(value="/{id}", method = RequestMethod.DELETE)
+	public RedirectView deleteIssue (@PathVariable long id, ModelMap model) throws DaoException {
 		issueDAO.deleteIssue(id);
-		return "edit-issue";
+		return new RedirectView("/index.jsp", true);
 	}
 	
 	@ExceptionHandler(DaoException.class)

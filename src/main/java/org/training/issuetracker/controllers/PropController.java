@@ -55,7 +55,7 @@ public class PropController {
 	public @ResponseBody String getPropOptions(@PathVariable String type) throws DaoException {
 		PropertyType propType = PropertyType.valueOf(type);
 		String options = "<select>";
-		List<AbstractPersistentObj> properties = propDAO.getProjectsList(propType);
+		List<AbstractPersistentObj> properties = propDAO.getPropList(propType);
 		for (AbstractPersistentObj property : properties) {
 			options += "<option value=" + property.getId() + ">" + property.getName() + "</option>";
 		}

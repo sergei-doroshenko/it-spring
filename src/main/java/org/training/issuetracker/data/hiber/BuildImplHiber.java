@@ -23,46 +23,9 @@ public class BuildImplHiber implements BuildDAO {
 
 	@Override
 	public List getBuildsList() throws DaoException {
-		
 		return hibernateTemplate.find("from Build");
 	}
-
-	@Override
-	public List getProjectBuilds(long id) throws DaoException {
-		
-		return hibernateTemplate.find("from Build where projectId=?", id);
-	}
-
-	@Override
-	public Build getBuild(long id) throws DaoException {
-		
-		return (Build) hibernateTemplate.get(Build.class, id);
-	}
-
-	@Override
-	public long insertBuild(Build build) throws DaoException {
-		
-		return (Long) hibernateTemplate.save(build);
-	}
-
-	@Override
-	public void updateBuild(Build build) throws DaoException {
-		
-		hibernateTemplate.update(build);
-	}
-
-	@Override
-	public void deleteBuild(long id) throws DaoException {
-		
-		hibernateTemplate.delete(hibernateTemplate.get(Build.class, id));
-	}
-
-	@Override
-	public int getBuildsRecordsCount() throws DaoException {
-		
-		return DataAccessUtils.intResult(hibernateTemplate.find("select count(*) from Build"));
-	}
-
+	
 	@Override
 	public List<Build> getBuildsList(SearchFilterParams params)
 			throws DaoException {
@@ -83,5 +46,35 @@ public class BuildImplHiber implements BuildDAO {
 
 		return Collections.checkedList(result, Build.class);
 	}
+	
+	@Override
+	public List getProjectBuilds(long id) throws DaoException {
+		List result = hibernateTemplate.find("from Build where project.id=?", id); 
+		return Collections.checkedList(result, Build.class);
+	}
 
+	@Override
+	public Build getBuild(long id) throws DaoException {
+		return (Build) hibernateTemplate.get(Build.class, id);
+	}
+
+	@Override
+	public long insertBuild(Build build) throws DaoException {
+		return (Long) hibernateTemplate.save(build);
+	}
+
+	@Override
+	public void updateBuild(Build build) throws DaoException {
+		hibernateTemplate.update(build);
+	}
+
+	@Override
+	public void deleteBuild(long id) throws DaoException {
+		hibernateTemplate.delete(hibernateTemplate.get(Build.class, id));
+	}
+
+	@Override
+	public int getBuildsRecordsCount() throws DaoException {
+		return DataAccessUtils.intResult(hibernateTemplate.find("select count(*) from Build"));
+	}
 }
