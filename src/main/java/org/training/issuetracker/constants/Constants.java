@@ -176,7 +176,7 @@ public final class Constants {
 	public static final String URL_MAIN_DO = "Main.do";
 
 	/** Constants string literal for submitissue-url  */
-	public static final String URL_LOGOUT_COMMAND = "user/logout";
+	public static final String URL_LOGOUT_COMMAND = "/issuetracker/user/logout";
 
 	/** Constants string literal for submitissue-url  */
 	public static final String URL_SAVEISSUE_COMMAND = URL_MAIN_COMMAND + COMMAND_UPDATE_ISSUE;

@@ -152,8 +152,8 @@
                 	  window.location.href = '/issuetracker/Main.do?command=submitissue';
                   });
                   $('#edit-button').bind().on('click', function(){
-                	  var url = window.location.pathname + '/edit/'+ getParameterByName('id');
-                	  window.location.href = '/issuetracker/issue/edit/'+ getParameterByName('id');
+                	  var url = window.location.pathname + '/edit?id='+ getParameterByName('id');
+                	  window.location.href = url;
                   });
                   $('#delete-button').bind().on('click', function(){
                 	  executeDeleteIssue();

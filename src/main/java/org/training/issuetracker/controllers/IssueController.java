@@ -61,12 +61,32 @@ public class IssueController {
 		return "view-issue";
 	}
 	
-	@RequestMapping(value="/edit/{id}", method = RequestMethod.GET)
-	public String editIssue (@PathVariable long id, ModelMap model) throws DaoException {
+	@RequestMapping(value="/edit", params="id", method = RequestMethod.GET)
+	public String editIssue (@RequestParam long id, ModelMap model) throws DaoException {
 		
 		model.addAttribute(Constants.ISSUE, issueDAO.getIssueById(id));
 		model.addAttribute(Constants.COMMENTS, commentDAO.getCommentsList(id));
 		model.addAttribute(Constants.ATTACHMENTS, attachmentDAO.getAttachmentsList(id));
+		return "edit-issue";
+	}
+	
+	@RequestMapping(value="/save", method = RequestMethod.POST)
+	public @ResponseBody String saveIssue (@RequestParam long id, ModelMap model) throws DaoException {
+		
+//		long id = issue.getId();
+//		if (id == 0) {
+//			id = issueDAO.insertIssue(issue); 
+//		} else {
+//			issueDAO.updateIssue(issue);
+//		}	
+//		model.addAttribute(Constants.ISSUE, issue);
+		
+		return "";
+	}
+	
+	@RequestMapping(value="/delete/{id}", method = RequestMethod.GET)
+	public String deleteIssue (@PathVariable long id, ModelMap model) throws DaoException {
+		issueDAO.deleteIssue(id);
 		return "edit-issue";
 	}
 	

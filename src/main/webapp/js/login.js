@@ -90,12 +90,13 @@ function bindEditIssueForm() {
 	    };
     
         $.ajax({
-            url: 'issue\edit',
+            url: '\save',
             data: post_data,
             dataType: 'text',
             type: 'post',
             success: function (data) {
-        		window.location.href = data;
+//        		window.location.href = data;
+            	window.location.href = '/issuetracker/issue?id=1';
             },
             error:  handleIssueError
         });
@@ -117,7 +118,7 @@ function bindNewIssueForm() {
 	    };
     
         $.ajax({
-            url: 'issue\add',
+            url: '\add',
             data: post_data,
             dataType: 'text',
             type: 'post',
@@ -137,7 +138,7 @@ function executeDeleteIssue() {
 	    };
     
         $.ajax({
-            url: 'issue\del',
+            url: '\del',
             data: post_data,
             dataType: 'text',
             type: 'post',
