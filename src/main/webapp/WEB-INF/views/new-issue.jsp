@@ -134,5 +134,8 @@
                  <jsp:include page="${constants.URL_FOOTER}"></jsp:include>
              </div><!--end footer-->
         </div><!--end page-wrapper-->
+        <script type="text/javascript">
+        	$('#createdate').text(getCurrentDate ());
+        </script>
      </body>
 </html>

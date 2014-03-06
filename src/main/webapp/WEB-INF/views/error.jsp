@@ -33,6 +33,7 @@
              </div><!-- end menu-bar -->
              <div class="content">
 	    		<p><span>Sorry, an error occurred.</span></p>
+	    		<c:out value="${error}"/>
 				<% if(exception != null) {%>
 				          
 		            <p>Here is the exception stack trace<span>(only during the learning process)</span>: </p>
@@ -42,19 +43,6 @@
              <div class="footer">
                  <jsp:include page="${constants.URL_FOOTER}"></jsp:include>
              </div><!--end footer-->
-             <script type="text/javascript">
-           		$( document ).ready(function () {
-           			bindLongin();
-           			builUserForm();
-    				buildUserView ();
-           			$('#en-loc').click(function(ev) {
-           				changeLocaleUrl (ev);
-           			});
-           			$('#ru-loc').click(function(ev) {
-           				changeLocaleUrl (ev);
-           			});
-           		});
-           	</script>
         </div><!--end page-wrapper-->
 	</body>
 </html>

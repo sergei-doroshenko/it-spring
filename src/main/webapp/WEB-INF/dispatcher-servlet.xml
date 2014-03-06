@@ -73,6 +73,8 @@
 	        </list>
 	    </property>
 	</bean>
+    
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
     	       
     <!-- bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean"/-->
     <!-- bean class="org.springframework.validation.beanvalidation.MethodValidationPostProcessor"/-->

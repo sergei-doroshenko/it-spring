@@ -154,7 +154,7 @@
 				                  <c:if test="${!empty issue}">
 					                  <div class="upload-block">
 					                  		<p>${uploadmessage}</p>
-					                  		<form id="file-upload-form" action="FileUploadDownload.do?id=${issue.id}" 
+					                  		<form id="file-upload-form" action="../attachment/${issue.id}" 
 					                  								method="post" enctype="multipart/form-data">
 												Select File:<input id="button-attachment" class="button-attachment" type="file" name="file"/>
 												<br>
