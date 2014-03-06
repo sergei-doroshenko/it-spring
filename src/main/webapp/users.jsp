@@ -22,10 +22,9 @@
 		<script type="text/javascript" src="js/i18n/grid.locale-en.js"> </script>
 		<script type="text/javascript" src="js/jquery.jqGrid.min.js"> </script>
 		<script type="text/javascript" src="js/jquery.cookie.js"> </script>
-        <script type="text/javascript" src="js/jquery.form.js"> </script>
-        <script type="text/javascript" src="js/user-dialog.js"> </script>	
-		<script type="text/javascript" src="js/issue-tracker-main.js"> </script>
-		<script type="text/javascript" src="js/prop-table.js"> </script>
+        <script type="text/javascript" src="js/jquery.form.js"> </script>	
+		<script type="text/javascript" src="js/issuetracker-main.js"> </script>
+		<script type="text/javascript" src="js/issuetracker-tables.js"> </script>
      </head>
 	<body>
 	
@@ -52,19 +51,19 @@
         </div><!--end page-wrapper-->
         <script type="text/javascript">
 			$(document).ready(function () {
-				builUserForm();
-				buildUserView();
+				//builUserForm();
+				//buildUserView();
 				createUsersTable();
 				createRolesTable();
-				$('#en-loc').click(function(ev) {
-					changeLocaleUrl (ev);
-				});
-				$('#ru-loc').click(function(ev) {
-					changeLocaleUrl (ev);
-				});
-				$('#view-user').click(function() {
-			        $('#dialog-confirm').dialog('open');
-			    });
+				//$('#en-loc').click(function(ev) {
+				//	changeLocaleUrl (ev);
+				//});
+				//$('#ru-loc').click(function(ev) {
+				//	changeLocaleUrl (ev);
+				//});
+				//$('#view-user').click(function() {
+			     //   $('#dialog-confirm').dialog('open');
+			    //});
 			});
 		</script> 	
 	</body>

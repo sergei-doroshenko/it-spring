@@ -12,11 +12,16 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 		<title>Error page</title>
-		<link rel="stylesheet" type="text/css" media="screen" href="css/default.css" />
-        <script type="text/javascript" src="js/jquery-1.9.0.min.js"> </script>
-        <script type="text/javascript" src="js/jquery.cookie.js"> </script>
-        <script type="text/javascript" src="js/issue-tracker-main.js"> </script>
-        <script type="text/javascript" src="js/login.js"> </script>
+		<link rel="stylesheet" type="text/css" media="screen" href="/issuetracker/css/ui-lightness/jquery-ui.css" />
+        <link rel="stylesheet" type="text/css" media="screen" href="/issuetracker/css/ui-lightness/jquery.ui.theme.css" />
+        <link rel="stylesheet" type="text/css" media="screen" href="/issuetracker/css/ui-lightness/jquery-ui-1.10.4.custom.css" />
+		<link rel="stylesheet" type="text/css" media="screen" href="/issuetracker/css/default.css" />        
+		
+		<script type="text/javascript" src="/issuetracker/js/jquery-1.9.0.min.js"> </script>		
+		<script type="text/javascript" src="/issuetracker/js/jquery-ui-1.10.4.custom.min.js"> </script>
+		<script type="text/javascript" src="/issuetracker/js/jquery.cookie.js"> </script>
+        <script type="text/javascript" src="/issuetracker/js/jquery.form.js"> </script>
+		<script type="text/javascript" src="/issuetracker/js/issuetracker-main.js"> </script>
 	</head>
 	<body>
 		<div class="page-wrapper">

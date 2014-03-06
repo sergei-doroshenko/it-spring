@@ -12,13 +12,14 @@
 		<link rel="stylesheet" type="text/css" media="screen" href="css/ui.jqgrid.css" />
 		<link rel="stylesheet" type="text/css" media="screen" href="css/default.css" />
 				
-		<script type="text/javascript" src="js/jquery-1.9.0.min.js"> </script>
+		<script type="text/javascript" src="js/jquery-1.9.0.min.js"> </script>		
+		<script type="text/javascript" src="js/jquery-ui-1.10.4.custom.min.js"> </script>
 		<script type="text/javascript" src="js/i18n/grid.locale-en.js"> </script>
 		<script type="text/javascript" src="js/jquery.jqGrid.min.js"> </script>
 		<script type="text/javascript" src="js/jquery.cookie.js"> </script>
-		<script type="text/javascript" src="js/issue-tracker-main.js"> </script>
-		<script type="text/javascript" src="js/login.js"> </script>
-		<script type="text/javascript" src="js/prop-table.js"> </script>
+        <script type="text/javascript" src="js/jquery.form.js"> </script>
+		<script type="text/javascript" src="js/issuetracker-main.js"> </script>
+		<script type="text/javascript" src="js/issuetracker-tables.js"> </script>
 		
 		<!-- i18n -->
 		<fmt:requestEncoding value="UTF-8" />
@@ -73,13 +74,13 @@
 				createTypesTable();
 				createProjectsTable();
 				createBuildsTable();
-				bindLongin();
-				$('#en-loc').click(function(ev) {
-					changeLocaleUrl (ev);
-				});
-				$('#ru-loc').click(function(ev) {
-					changeLocaleUrl (ev);
-				});
+				///bindLongin();
+				//$('#en-loc').click(function(ev) {
+					//changeLocaleUrl (ev);
+				//});
+				//$('#ru-loc').click(function(ev) {
+					//changeLocaleUrl (ev);
+				//});
 			});
 		</script>
 	</body>

@@ -83,7 +83,7 @@ public final class Constants {
 	public static final String URL_DETAILS = "details.jsp";
 
 	/** Constants string literal for page-url of index.jsp */
-	public static final String URL_MAIN = "index.jsp";
+	public static final String URL_MAIN = "/issuetracker/index.jsp";
 
 	/** Constants string literal for page-url of search.jsp */
 	public static final String URL_SEARCH = "search.jsp";
@@ -111,7 +111,7 @@ public final class Constants {
 	public static final String COMMAND_VIEW_ISSUE = "issue";
 
 	/** Constants string literal for submit issue command */
-	public static final String COMMAND_SUBMIT_ISSUE = "submitissue";
+	public static final String COMMAND_SUBMIT_ISSUE = "/issuetracker/issue/new";
 
 	/** Constants string literal for edit issue command */
 	public static final String COMMAND_EDIT_ISSUE = "editissue";
@@ -170,7 +170,7 @@ public final class Constants {
 	public static final String COMMAND_EDIT_BUILD = "edit_build";
 
 	/** Constants string literal for submitissue-url  */
-	public static final String URL_MAIN_COMMAND = "/issuetracker/Main.do?command=";
+	public static final String URL_MAIN_COMMAND = "/issuetracker/index.jsp";
 
 	/** Constants string literal for Main.do-url  */
 	public static final String URL_MAIN_DO = "Main.do";

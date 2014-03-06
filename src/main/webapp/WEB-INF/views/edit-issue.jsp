@@ -14,18 +14,13 @@
         <link rel="stylesheet" type="text/css" media="screen" href="/issuetracker/css/ui-lightness/jquery-ui.css" />
         <link rel="stylesheet" type="text/css" media="screen" href="/issuetracker/css/ui-lightness/jquery.ui.theme.css" />
         <link rel="stylesheet" type="text/css" media="screen" href="/issuetracker/css/ui-lightness/jquery-ui-1.10.4.custom.css" />
-		<link rel="stylesheet" type="text/css" media="screen" href="/issuetracker/css/ui.jqgrid.css" />
 		<link rel="stylesheet" type="text/css" media="screen" href="/issuetracker/css/default.css" />        
 		
 		<script type="text/javascript" src="/issuetracker/js/jquery-1.9.0.min.js"> </script>		
 		<script type="text/javascript" src="/issuetracker/js/jquery-ui-1.10.4.custom.min.js"> </script>
-		<script type="text/javascript" src="/issuetracker/js/i18n/grid.locale-en.js"> </script>
-		<script type="text/javascript" src="/issuetracker/js/jquery.jqGrid.min.js"> </script>
 		<script type="text/javascript" src="/issuetracker/js/jquery.cookie.js"> </script>
         <script type="text/javascript" src="/issuetracker/js/jquery.form.js"> </script>
-        <script type="text/javascript" src="/issuetracker/js/user-dialog.js"> </script>	
-		<script type="text/javascript" src="/issuetracker/js/issue-tracker-main.js"> </script>
-		<script type="text/javascript" src="/issuetracker/js/login.js"> </script>
+		<script type="text/javascript" src="/issuetracker/js/issuetracker-main.js"> </script>
      </head>
      <body>  	
         <div class="page-wrapper">
@@ -42,7 +37,7 @@
 				 		<div id="error-issue"></div>
 				       <div class="obj-fields">
 				       		<form id="edit-issue-form">
-				       			<input id="update-command" name="command" type="hidden" value="${constants.COMMAND_UPDATE_ISSUE}"/>	
+				       			<input id="save-command" name="command" type="hidden" value="${constants.COMMAND_UPDATE_ISSUE}"/>	
 				       			<table>
 				                   <tr>
 				                       <td class="detail-col-name">
@@ -190,33 +185,5 @@
                  <jsp:include page="${constants.URL_FOOTER}"></jsp:include>
              </div><!--end footer-->
         </div><!--end page-wrapper-->
-        <script type="text/javascript">
-             $( document ).ready(function () {
-            	  builUserForm();
- 				  buildUserView ();
-                  bindEditIssueForm();
-                  $('#save-button').bind().on('click', function(){
-                	  $('#edit-issue-form').submit();
-                  });               
-                  $('#cancel-button').bind().on('click', function(){
-                	  window.history.back();
-                  });
-                  //$('.description').attr('readonly','readonly');
-                  $('#en-loc').click(function(ev) {
-              			changeLocaleUrl (ev);
-           		  });
-	              $('#ru-loc').click(function(ev) {
-	              		changeLocaleUrl (ev);
-	              });
-	              $('#view-user').click(function() {
-				        $('#dialog-confirm').dialog('open');
-				  });
-	              $('#modifydate').text(getCurrentDate ());
-	              $('#project').change(function() {
-	            	  var id = $('#project').val();
-	            	  getProjectBuilds (id);
-	              });
-             });
-        </script>
      </body>
 </html>

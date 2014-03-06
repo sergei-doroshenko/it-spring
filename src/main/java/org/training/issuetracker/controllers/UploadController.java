@@ -33,7 +33,7 @@ import org.training.issuetracker.exceptions.DaoException;
 
 @Controller
 @RequestMapping("/attachment")
-public class AttachmentController {
+public class UploadController {
 	private Logger logger = Logger.getLogger(getClass().getCanonicalName());
 	
 	@RequestMapping(value="/{fileName}", method = RequestMethod.GET, params="_search", produces="application/json")

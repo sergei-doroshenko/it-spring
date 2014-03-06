@@ -20,3 +20,19 @@
 		</c:choose>
     </div>
 </div>
+<script type="text/javascript">
+      $( document ).ready(function () {
+           $('#new-button').bind().on('click', function(){
+        	   var url = window.location.pathname + '/new';
+          	  window.location.href = url;
+           });
+           $('#edit-button').bind().on('click', function(){
+         	  var url = window.location.pathname + '/edit?id='+ getParameterByName('id');
+         	  window.location.href = url;
+           });
+           $('#delete-button').bind().on('click', function(){
+         	  executeDeleteIssue();
+           });
+           $('.description').attr('readonly','readonly');
+      });
+</script>

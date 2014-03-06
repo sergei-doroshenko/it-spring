@@ -82,3 +82,19 @@
      	</c:choose>
      </form>
 </div><!--end user-info-->
+<script type="text/javascript">
+	$( document ).ready(function () {
+		builUserForm();
+		buildUserView ();
+		bindLongin();       
+		$('#en-loc').click(function(ev) {
+			changeLocaleUrl (ev);
+		});
+		$('#ru-loc').click(function(ev) {
+			changeLocaleUrl (ev);
+		});
+		$('#view-user').click(function() {
+			$('#dialog-confirm').dialog('open');
+		});
+	});
+</script>

@@ -11,24 +11,18 @@
      <head>
         <meta charset="UTF-8">
         <title>Issue submit page</title>
-        <link rel="stylesheet" type="text/css" media="screen" href="css/ui-lightness/jquery-ui.css" />
-        <link rel="stylesheet" type="text/css" media="screen" href="css/ui-lightness/jquery.ui.theme.css" />
-        <link rel="stylesheet" type="text/css" media="screen" href="css/ui-lightness/jquery-ui-1.10.4.custom.css" />
-		<link rel="stylesheet" type="text/css" media="screen" href="css/ui.jqgrid.css" />
-		<link rel="stylesheet" type="text/css" media="screen" href="css/default.css" />        
+        <link rel="stylesheet" type="text/css" media="screen" href="/issuetracker/css/ui-lightness/jquery-ui.css" />
+        <link rel="stylesheet" type="text/css" media="screen" href="/issuetracker/css/ui-lightness/jquery.ui.theme.css" />
+        <link rel="stylesheet" type="text/css" media="screen" href="/issuetracker/css/ui-lightness/jquery-ui-1.10.4.custom.css" />
+		<link rel="stylesheet" type="text/css" media="screen" href="/issuetracker/css/default.css" />        
 		
-		<script type="text/javascript" src="js/jquery-1.9.0.min.js"> </script>		
-		<script type="text/javascript" src="js/jquery-ui-1.10.4.custom.min.js"> </script>
-		<script type="text/javascript" src="js/i18n/grid.locale-en.js"> </script>
-		<script type="text/javascript" src="js/jquery.jqGrid.min.js"> </script>
-		<script type="text/javascript" src="js/jquery.cookie.js"> </script>
-        <script type="text/javascript" src="js/jquery.form.js"> </script>
-        <script type="text/javascript" src="js/user-dialog.js"> </script>	
-		<script type="text/javascript" src="js/issue-tracker-main.js"> </script>
-		<script type="text/javascript" src="js/login.js"> </script>
+		<script type="text/javascript" src="/issuetracker/js/jquery-1.9.0.min.js"> </script>		
+		<script type="text/javascript" src="/issuetracker/js/jquery-ui-1.10.4.custom.min.js"> </script>
+		<script type="text/javascript" src="/issuetracker/js/jquery.cookie.js"> </script>
+        <script type="text/javascript" src="/issuetracker/js/jquery.form.js"> </script>
+		<script type="text/javascript" src="/issuetracker/js/issuetracker-main.js"> </script>
      </head>
      <body>
-     	
         <div class="page-wrapper">
              <div class="header">
                 <jsp:include page="${constants.URL_HEADER}"/>
@@ -43,8 +37,7 @@
 				 		<div id="error-issue"></div>
 				       <div class="obj-fields">
 				       		<form id="new-issue-form" >
-				       			<input id="insert-command" name="command" type="hidden" value="${constants.COMMAND_INSERT_ISSUE}"/>	
-				       			<table>
+				       			<input id="save-command" name="command" type="hidden" value="${constants.COMMAND_INSERT_ISSUE}"/><table>
 				                   <tr>
 				                       <td class="detail-col-name"><fmt:message key="page.issue.createdate" bundle="${lang}"/></td>
 				                       <td class="detail-col-value">                           
@@ -141,32 +134,5 @@
                  <jsp:include page="${constants.URL_FOOTER}"></jsp:include>
              </div><!--end footer-->
         </div><!--end page-wrapper-->
-        <script type="text/javascript">
-             $( document ).ready(function () {
-                  builUserForm();
-  				  buildUserView ();
-                  bindNewIssueForm();
-                  $('#save-button').bind().on('click', function(){
-                	  $('#new-issue-form').submit();
-                  }); 
-                  $('#en-loc').click(function(ev) {
-              		changeLocaleUrl (ev);
-              	  });
-	              $('#ru-loc').click(function(ev) {
-	              		changeLocaleUrl (ev);
-	              });
-	              $('#view-user').click(function() {
-				        $('#dialog-confirm').dialog('open');
-				  });
-	              $('#createdate').text(getCurrentDate ());	              
-	              $('#project').change(function() {
-	            	  var id = $('#project').val();
-	            	  getProjectBuilds (id);
-	              });
-	              $('#assignee').change(function() {
-	            	  $('#status').val(3);
-	              });		  
-             });
-        </script>
      </body>
 </html>

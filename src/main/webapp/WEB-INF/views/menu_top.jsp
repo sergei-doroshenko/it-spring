@@ -12,9 +12,9 @@
 	<li class="menu-obj-item"><a href="${constants.URL_MAIN}"><fmt:message key="main" bundle="${lang}"/></a></li>
 	<c:choose>
 		<c:when test="${(user.role.name eq constants.ROLE_USER) or (user.role.name eq constants.ROLE_ADMIN)}">
-			<li class="menu-obj-item"><a href="${constants.URL_MAIN_COMMAND}${constants.COMMAND_SUBMIT_ISSUE}"><fmt:message key="submitissue" bundle="${lang}"/></a></li>
+			<li class="menu-obj-item"><a href="${constants.COMMAND_SUBMIT_ISSUE}"><fmt:message key="submitissue" bundle="${lang}"/></a></li>
 			<c:if test="${user.role.name eq constants.ROLE_ADMIN}">
-				<li class="menu-obj-item"><a href="view-user.jsp"><fmt:message key="admin.users" bundle="${lang}"/></a></li>
+				<li class="menu-obj-item"><a href="users.jsp"><fmt:message key="admin.users" bundle="${lang}"/></a></li>
 				<li class="menu-obj-item"><a href="properties.jsp"><fmt:message key="admin.properties" bundle="${lang}"/></a></li>
 			</c:if>
 		</c:when>

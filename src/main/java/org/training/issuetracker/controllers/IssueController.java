@@ -1,8 +1,7 @@
 package org.training.issuetracker.controllers;
 
-import java.beans.PropertyEditorSupport;
-import java.util.Calendar;
 import java.sql.Date;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -14,9 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -25,9 +22,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.view.RedirectView;
 import org.training.issuetracker.constants.Constants;
 import org.training.issuetracker.domain.Issue;
-import org.training.issuetracker.domain.Project;
-import org.training.issuetracker.domain.Role;
-import org.training.issuetracker.domain.Type;
+import org.training.issuetracker.domain.Status;
 import org.training.issuetracker.domain.User;
 import org.training.issuetracker.domain.DAO.AttachmentDAO;
 import org.training.issuetracker.domain.DAO.BuildDAO;
@@ -91,48 +86,6 @@ public class IssueController {
 //		}
 //	}
 //	
-//	private class BuildEditor extends PropertyEditorSupport {
-//		
-//		@Override
-//		public void setAsText(String arg) throws IllegalArgumentException {
-//						
-//			if (!arg.isEmpty()) {
-//				throw new IllegalArgumentException ("No project argument!");
-//			}
-//
-//			long id = Long.parseLong(arg);
-//			Build build = null;
-//			try {
-//				type = (Type) propDAO.getProp(PropertyType.TYPE, id);
-//			} catch (DaoException e) {
-//				e.printStackTrace();
-//				throw new IllegalArgumentException("No such role!");
-//			}
-//			setValue(type);
-//		}
-//	}
-//	
-//	private class TypeEditor extends PropertyEditorSupport {
-//		
-//		@Override
-//		public void setAsText(String arg) throws IllegalArgumentException {
-//						
-//			if (!arg.isEmpty()) {
-//				throw new IllegalArgumentException ("No project argument!");
-//			}
-//
-//			long id = Long.parseLong(arg);
-//			Type type = null;
-//			try {
-//				type = (Type) propDAO.getProp(PropertyType.TYPE, id);
-//			} catch (DaoException e) {
-//				e.printStackTrace();
-//				throw new IllegalArgumentException("No such role!");
-//			}
-//			setValue(type);
-//		}
-//	}
-//	
 //	@InitBinder()//"issue"
 //    private void initBinder(WebDataBinder binder) {
 //		binder.setConversionService(conversionService);
@@ -164,6 +117,19 @@ public class IssueController {
 		return "view-issue";
 	}
 	
+	@RequestMapping(value="/new", method = RequestMethod.GET)
+	public String newIssue (ModelMap model) throws DaoException {
+		
+		model.addAttribute(Constants.PROJECTS, projectDAO.getProjectsList());
+		model.addAttribute(Constants.TYPES, propDAO.getPropList(PropertyType.TYPE));
+		model.addAttribute(Constants.PRIORITIES, propDAO.getPropList(PropertyType.PRIORITY));
+		model.addAttribute(Constants.RESOLUTIONS, propDAO.getPropList(PropertyType.RESOLUTION));
+		model.addAttribute(Constants.STATUSES, propDAO.getPropList(PropertyType.STATUS));
+		model.addAttribute(Constants.ASSIGNEES, userDAO.getUsersList());
+		
+		return "new-issue";
+	}
+	
 	@RequestMapping(value="/edit", params="id", method = RequestMethod.GET)
 	public String editIssue (@RequestParam long id, ModelMap model) throws DaoException {
 		
@@ -182,11 +148,9 @@ public class IssueController {
 		return "edit-issue";
 	}
 	
-	@RequestMapping(value="update", method = RequestMethod.POST)//value="/update",
-	public @ResponseBody String updateIssue (Issue issue, 
-			@RequestParam("id") long issueId, HttpSession session) throws DaoException {
+	@RequestMapping(value="/update", method = RequestMethod.POST)
+	public @ResponseBody String updateIssue (Issue issue, HttpSession session) throws DaoException {
 		
-		logger.warn("Issue ------------------------------------" + issue);
 		long id = issue.getId();
 		Issue oldIssue = (Issue) issueDAO.getIssueById(id);
 		issue.setCreateDate(oldIssue.getCreateDate());
@@ -195,20 +159,26 @@ public class IssueController {
 		User currentUser = (User) session.getAttribute(Constants.KEY_USER);
 		issue.setModifyBy(currentUser);
 		issueDAO.updateIssue(issue);
+		
 		return "/issuetracker/issue?id=" + id;
 	}
 	
-	@RequestMapping(method = RequestMethod.POST)//value="/add",
-	public @ResponseBody String addIssue (Issue issue, ModelMap model) throws DaoException {
+	@RequestMapping(value="/add", method = RequestMethod.POST)
+	public @ResponseBody String addIssue (Issue issue, HttpSession session) throws DaoException {
 		
-		long id = issueDAO.insertIssue(issue);		
+		issue.setCreateDate(new Date(Calendar.getInstance().getTimeInMillis()));
+		User currentUser = (User) session.getAttribute(Constants.KEY_USER);
+		issue.setCreateBy(currentUser);
+		issue.setStatus((Status) propDAO.getProp(PropertyType.STATUS, 1)); 
+		long id = issueDAO.insertIssue(issue);
+		
 		return "/issuetracker/issue?id=" + id;
 	}
 	
 	@RequestMapping(value="/{id}", method = RequestMethod.DELETE)
-	public RedirectView deleteIssue (@PathVariable long id, ModelMap model) throws DaoException {
+	public @ResponseBody String deleteIssue (@PathVariable long id, ModelMap model) throws DaoException {
 		issueDAO.deleteIssue(id);
-		return new RedirectView("/index.jsp", true);
+		return "/issuetracker/index.jsp";
 	}
 	
 	@ExceptionHandler(DaoException.class)

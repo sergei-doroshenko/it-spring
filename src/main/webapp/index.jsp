@@ -25,10 +25,8 @@
 		<script type="text/javascript" src="js/jquery.jqGrid.min.js"> </script>
 		<script type="text/javascript" src="js/jquery.cookie.js"> </script>
         <script type="text/javascript" src="js/jquery.form.js"> </script>
-        <script type="text/javascript" src="js/user-dialog.js"> </script>	
-		<script type="text/javascript" src="js/issue-tracker-main.js"> </script>
-		<script type="text/javascript" src="js/login.js"> </script>
-		<script type="text/javascript" src="js/table.js"> </script>
+		<script type="text/javascript" src="js/issuetracker-main.js"> </script>
+		<script type="text/javascript" src="js/issuetracker-tables.js"> </script>
 	</head>
 	<body>
 		<div class="page-wrapper">

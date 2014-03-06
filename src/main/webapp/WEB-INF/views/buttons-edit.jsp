@@ -16,3 +16,24 @@
 		</c:choose>
     </div>
 </div>
+<script type="text/javascript">
+	$( document ).ready(function () {
+		bindNewIssueForm();
+		bindEditIssueForm();
+		$('#save-button').bind().on('click', function(){
+			if ($('#save-command').val() == 'update_issue') {
+				$('#edit-issue-form').submit();	
+			} else {
+				$('#new-issue-form').submit();
+			}
+		});               
+		$('#cancel-button').bind().on('click', function(){
+			window.history.back();
+		});
+		$('#modifydate').text(getCurrentDate ());
+		$('#project').change(function() {
+			var id = $('#project').val();
+			getProjectBuilds (id);
+		});
+	});
+</script>
