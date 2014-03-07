@@ -195,7 +195,12 @@ public final class Constants {
 	public static final String URL_EDIT_USER_COMMAND = URL_MAIN_COMMAND + COMMAND_EDIT_USER;
 
 	public static final String URL_DOWNLOAD_COMMAND = "/issuetracker/attachment";//FileUploadDownload.do?fileName=
-
+	
+	public static final String URL_ATTCH_DEL_COMMAND = "/issuetracker/attachment/del";
+	
+	public static final String URL_COMMENT_DEL_COMMAND = "/issuetracker/comment/del";
+	
+	
 //************* Parameters Keys *****************************************************
     /**String literal for id parameter.
      */

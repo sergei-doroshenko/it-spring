@@ -40,4 +40,9 @@ public class CommentImplHiber implements CommentDAO {
 		hibernateTemplate.delete(hibernateTemplate.get(Comment.class, id));
 	}
 
+	@Override
+	public void deleteIssueComments(long issueId) throws DaoException {
+		hibernateTemplate.deleteAll(getCommentsList(issueId));
+	}
+
 }

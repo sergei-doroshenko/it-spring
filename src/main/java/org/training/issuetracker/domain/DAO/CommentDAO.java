@@ -3,7 +3,6 @@ package org.training.issuetracker.domain.DAO;
 import java.util.List;
 
 import org.training.issuetracker.domain.Comment;
-import org.training.issuetracker.domain.User;
 import org.training.issuetracker.exceptions.DaoException;
 
 public interface CommentDAO {
@@ -17,5 +16,7 @@ public interface CommentDAO {
 	void updateComment(Comment comment) throws DaoException;
 	
 	void deleteComment(long id) throws DaoException;
+	
+	void deleteIssueComments(long issueId) throws DaoException;
 
 }

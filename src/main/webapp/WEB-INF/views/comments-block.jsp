@@ -10,7 +10,12 @@
 <c:forEach var="comment" items="${requestScope[constants.COMMENTS]}">
 	<div class="comment-block">
 		<div class="comment-value">${comment.comment}</div>
+		<c:if test="${user.role.name eq constants.ROLE_ADMIN}">
+				<a href="${constants.URL_COMMENT_DEL_COMMAND}${constants.ROOT_PATH}${issue.id}${constants.ROOT_PATH}${comment.id}" class="download-link">-del- </a>
+			</c:if>
 		<div class="comment-create-date">${comment.createDate}</div>
-		<div class="comment-create-by">${comment.createBy.firstName} ${comment.createBy.lastName}</div>
+		<div class="comment-create-by">
+			<c:out value="${comment.createBy.firstName} ${comment.createBy.lastName}"/>
+		</div>
 	</div>
 </c:forEach>

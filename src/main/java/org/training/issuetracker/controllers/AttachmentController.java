@@ -3,6 +3,7 @@ package org.training.issuetracker.controllers;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -32,7 +33,7 @@ import org.training.issuetracker.domain.DAO.IssueDAO;
 import org.training.issuetracker.exceptions.DaoException;
 
 @Controller
-@MultipartConfig
+//@MultipartConfig
 @RequestMapping("/attachment")
 public class AttachmentController {
 	private Logger logger = Logger.getLogger(getClass().getCanonicalName());
@@ -84,27 +85,17 @@ public class AttachmentController {
             return new RedirectView("/issuetracker/index.jsp", false);
         }
 
-        return new RedirectView("/issuetracker/issue/edit?id=" + id, false);//"WEB-INF/views
+        return new RedirectView("/issuetracker/issue/edit?id=" + id, false);
 	}
 	
-	@RequestMapping(value="/{issueId}/{fileName}.{fileExt}", method = RequestMethod.GET)
-	public RedirectView getAttachment (@PathVariable long issueId,
-			@PathVariable String fileName, @PathVariable String fileExt, OutputStream out) throws DaoException, IOException, ServletException {	
-
-		if(fileName == null || fileName.equals("")) {
-			throw new ServletException("File Name can't be null or empty");
-		}
+	@RequestMapping(value="/{attachmentId}", method = RequestMethod.GET)
+	public RedirectView getAttachment (@PathVariable long attachmentId, OutputStream out) throws DaoException, IOException {	
 		
-		String path = Constants.getRealPath() + Constants.URL_UPLOAD_DIR + File.separator
-				+  issueId + File.separator + fileName + "." + fileExt;
-		logger.warn("File ---------------------------------------------------------------" + path);
-		File file = new File(path);
+		Attachment attachment = attachmentDAO.getAttchment(attachmentId);
 		
-		if(!file.exists()) {
-			throw new ServletException("File doesn't exists on server.");
-		}
+		long issueId = attachment.getIssueId();
 		
-		InputStream fis = new FileInputStream(file);
+		InputStream fis = new FileInputStream(attachment.getFile());
 		
 		byte[] bufferData = new byte[1024];
 		int read=0;
@@ -118,6 +109,21 @@ public class AttachmentController {
 		fis.close();
 		
         return new RedirectView("/issuetracker/issue/edit?id=" + issueId, false);
+	}
+	
+	@RequestMapping(value="/del/{attachmentId}", method = RequestMethod.GET)
+	public RedirectView removeAttachment(@PathVariable long attachmentId) throws DaoException, FileNotFoundException {
+		
+		Attachment attachment = attachmentDAO.getAttchment(attachmentId);
+		
+		long issueId = attachment.getIssueId();
+		
+		File file = attachment.getFile();
+		file.delete();
+		
+		attachmentDAO.deleteAttachment(attachmentId);
+		
+		return new RedirectView("/issuetracker/issue/edit?id=" + issueId, false);
 	}
 	
     @ExceptionHandler(DaoException.class)

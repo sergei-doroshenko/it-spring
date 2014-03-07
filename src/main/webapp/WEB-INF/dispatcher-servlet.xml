@@ -70,6 +70,7 @@
 	            <bean class="org.training.issuetracker.converters.StatusConverter"/>
 	            <bean class="org.training.issuetracker.converters.TypeConverter"/>
 	            <bean class="org.training.issuetracker.converters.UserConverter"/>
+	            <bean class="org.training.issuetracker.converters.AttachmentConverter"/>
 	        </list>
 	    </property>
 	</bean>

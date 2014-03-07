@@ -400,4 +400,19 @@ function handleIssueError (response, status, err) {
 		sessionTimedOut();
 	}
 }
-
+//***************************************** COMMENTS **************************************************
+function sendComment() {
+	var post_data = {'text' : $('#comment').val()};
+	
+	$.ajax({
+        url: '\\issuetracker\\comment\\' + $('#id').val(),
+        data: {text: $('#comment').val()},
+        dataType: 'text',
+        type: 'post',
+        success: function (data) {
+        	window.location.href = data;
+        },
+        error:  handleIssueError
+    });
+    return false;
+}

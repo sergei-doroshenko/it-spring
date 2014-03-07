@@ -35,7 +35,7 @@ public class Issue {
 	@Column(name="MODIFY_DATE")
 	private Date modifyDate;
 	
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne()
 	@JoinColumn(name="MODIFIED_BY")
 	private User modifyBy;
 	

@@ -185,5 +185,9 @@
                  <jsp:include page="${constants.URL_FOOTER}"></jsp:include>
              </div><!--end footer-->
         </div><!--end page-wrapper-->
+        <script type="text/javascript">
+	        //$('#add-comment').bind().on('click', sendComment);
+        	$('#add-comment').click(sendComment);
+        </script>
      </body>
 </html>

@@ -36,4 +36,10 @@ public class AttachmentImplHiber implements AttachmentDAO {
 		hibernateTemplate.delete(hibernateTemplate.get(Attachment.class, id));
 	}
 
+	@Override
+	public void deleteIssueAttachments(long issueId) throws DaoException {
+		hibernateTemplate.deleteAll(getAttachmentsList(issueId));
+		
+	}
+
 }

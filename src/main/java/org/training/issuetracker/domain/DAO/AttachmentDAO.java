@@ -15,6 +15,6 @@ public interface AttachmentDAO {
 
 	void deleteAttachment(long id) throws DaoException;
 
-	
+	void deleteIssueAttachments(long issueId) throws DaoException;
 
 }

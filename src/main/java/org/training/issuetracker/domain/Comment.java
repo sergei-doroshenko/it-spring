@@ -41,6 +41,14 @@ public class Comment {
 		this.createBy = createBy;
 		this.comment = comment;
 	}
+	
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
 
 	public long getIssueId() {
 		return issueId;

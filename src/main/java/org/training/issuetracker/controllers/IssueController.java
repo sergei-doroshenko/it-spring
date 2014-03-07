@@ -1,14 +1,16 @@
 package org.training.issuetracker.controllers;
 
+import java.io.File;
+import java.io.IOException;
 import java.sql.Date;
 import java.util.Calendar;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.convert.ConversionService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -61,36 +63,8 @@ public class IssueController {
 	@Autowired
 	private AttachmentDAO attachmentDAO;
 	
-	@Autowired
-	private ConversionService conversionService;
-	
-//	private class ProjectEditor extends PropertyEditorSupport {
-//		@Override
-//		public void setAsText(String arg) throws IllegalArgumentException {
-//			
-//			if (!arg.isEmpty()) {
-//				throw new IllegalArgumentException ("No project argument!");
-//			}
-//
-//			long id = Long.parseLong(arg);
-//			Project project = null;
-//			try {
-//				project = (Project) projectDAO.getProject(id);
-//			} catch (DaoException e) {
-//				e.printStackTrace();
-//				throw new IllegalArgumentException("No such project!");
-//			}
-//			
-//			setValue(project);
-//		}
-//	}
-//	
-//	@InitBinder()//"issue"
-//    private void initBinder(WebDataBinder binder) {
-//		binder.setConversionService(conversionService);
-//        binder.registerCustomEditor(Project.class, "project", new ProjectEditor());
-//        binder.registerCustomEditor(Type.class, "type", new TypeEditor());
-//    } 
+//	@Autowired
+//	private ConversionService conversionService;
 	
 	@RequestMapping(value="/list", method = RequestMethod.GET, params="_search", produces="application/json")
 	public @ResponseBody String getIssueList (SearchFilterParams params) throws DaoException {
@@ -175,7 +149,17 @@ public class IssueController {
 	}
 	
 	@RequestMapping(value="/{id}", method = RequestMethod.DELETE)
-	public @ResponseBody String deleteIssue (@PathVariable long id, ModelMap model) throws DaoException {
+	public @ResponseBody String deleteIssue (@PathVariable long id, ModelMap model) throws DaoException, IOException {
+		
+		attachmentDAO.deleteIssueAttachments(id);
+		String uploadFilePath = Constants.getRealPath() + File.separator
+        		+ Constants.URL_UPLOAD_DIR + File.separator + id;
+		
+		File fileUploadDir = new File(uploadFilePath);
+
+		FileUtils.deleteDirectory(fileUploadDir);
+		commentDAO.deleteIssueComments(id);
+		
 		issueDAO.deleteIssue(id);
 		return "/issuetracker/index.jsp";
 	}
