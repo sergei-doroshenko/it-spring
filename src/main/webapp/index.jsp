@@ -55,22 +55,7 @@
 		</div><!--end page-wrapper-->		
 		<script type="text/javascript">
 			$(document).ready(function () {
-				builUserForm();
-				buildUserView ();
 				createIssueTable();
-				bindLongin();
-				$('#en-loc').click(function(ev) {
-					changeLocaleUrl (ev);
-				});
-				$('#ru-loc').click(function(ev) {
-					changeLocaleUrl (ev);
-				});
-				$('#add-user').click(function() {
-			        $('#dialog-form').dialog('open');
-			    });
-				$('#view-user').click(function() {
-			        $('#dialog-confirm').dialog('open');
-			    });
 			});
 		</script>
 	</body>

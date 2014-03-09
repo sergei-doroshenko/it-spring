@@ -85,28 +85,28 @@ function getMainUrl() {
 
 //**************************************** Login ***************************************************
 
-function bindLongin() {
-	$('#auth-form').submit(function () {
-        
-        var formdata = {
-        	'login': $('#login').val(),
-	        'password' : $('#password').val()
-	    };
-                
-        var jqxhr = $.ajax({
-                url: 'user/login',
-        		data: formdata,
-                dataType: 'text',
-                type: 'post',
-                success: function (data) {
-                       
-                        window.location.href = data;
-                },
-                error:  handleError
-        });
-        return false;
-	});	
-}
+//function bindLongin() {
+//	$('#auth-form').submit(function () {
+//        
+//        var formdata = {
+//        	'login': $('#login').val(),
+//	        'password' : $('#password').val()
+//	    };
+//                
+//        var jqxhr = $.ajax({
+//                url: 'user/login',
+//        		data: formdata,
+//                dataType: 'text',
+//                type: 'post',
+//                success: function (data) {
+//                       
+//                        window.location.href = data;
+//                },
+//                error:  handleError
+//        });
+//        return false;
+//	});	
+//}
 
 function showRequest(formData, jqForm, options) {
 	var queryString = $.param(formData);

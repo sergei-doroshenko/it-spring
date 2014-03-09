@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <!-- i18n -->
 <fmt:requestEncoding value="UTF-8" />
 <fmt:setLocale value="${sessionScope[constants.KEY_LOCALE]}"/>
@@ -34,20 +35,18 @@
 </div><!-- End of user dialog form -->
 <div id="user-info" class="user-info">
 	<div id="error"></div>
-     <form id="auth-form">
+	<div class="username"> 
+	    <security:authorize access="isAuthenticated()">
+	    	Welcome, 
+	        <strong><security:authentication property="principal.username"/></strong>
+	        <strong><security:authentication property="authorities"/></strong>
+	    </security:authorize>
+	</div>
+     <form id="auth-form" method='POST' action='issuetracker/j_spring_security_check'>
      	<input id="login-command" name="command" type="hidden" value="${constants.COMMAND_LOGIN}"/>
      	<c:choose>
-     		<c:when test="${empty user}">
-     			<label><fmt:message key="user.name" bundle="${lang}"/></label>
-	        	<input name="login" id="login" class="login" type="text" value="<fmt:message key="user.entername" bundle="${lang}"/>"/>
-	        	<label><fmt:message key="user.password" bundle="${lang}"/></label>
-	        	<input name="password" id="password" class="password" type="password">
-	        	<input id="authsubmit" class="authsubmit" type="submit" value="<fmt:message key="user.login" bundle="${lang}"/>" />
-	        	<span id="add-user" class="logout">Sing in</span>
-	        	<input id="oper" name="oper" type="hidden" value="${constants.OPER_ADD}"/>
-	        	<input id="send-command" name="command" type="hidden" value="${constants.COMMAND_ADD_USER}"/>
-     		</c:when>
-     		<c:otherwise>
+     		<c:when test="isAuthenticated()">${empty user}
+     			<c:out value="${principal.username}"/>
      			<span id="view-user" class="logout"><c:out value="${user.firstName}  ${user.lastName}"/></span>
 	      		<a class="logout" href="${constants.URL_LOGOUT_COMMAND}"><fmt:message key="user.logout" bundle="${lang}"/></a>
 	      		<input id="oper" name="oper" type="hidden" value="${constants.OPER_EDIT}"/>
@@ -78,6 +77,18 @@
 						<span id="user-role"><c:out value="${user.role.name}"/></span>
 					</p>
 				</div><!-- End of user dialog -->
+     		</c:when>
+     		<c:otherwise>
+     			<label><fmt:message key="user.name" bundle="${lang}"/></label>
+	        	<input name='j_username' id="login" class="login" type="text" value="<fmt:message key="user.entername" bundle="${lang}"/>"/>
+	        	<label><fmt:message key="user.password" bundle="${lang}"/></label>
+	        	<input name='j_password' id="password" class="password" type="password">
+	        	<input id="remember_me" name="_spring_security_remember_me" type="checkbox"/>
+	        	<label for="remember_me" class="inline"><fmt:message key="user.remember" bundle="${lang}"/></label>
+	        	<input id="authsubmit" class="authsubmit" type="submit" value="<fmt:message key="user.login" bundle="${lang}"/>" />
+	        	<span id="add-user" class="logout"><fmt:message key="user.signin" bundle="${lang}"/></span>
+	        	<input id="oper" name="oper" type="hidden" value="${constants.OPER_ADD}"/>
+	        	<input id="send-command" name="command" type="hidden" value="${constants.COMMAND_ADD_USER}"/>
      		</c:otherwise>
      	</c:choose>
      </form>
@@ -85,16 +96,18 @@
 <script type="text/javascript">
 	$( document ).ready(function () {
 		builUserForm();
-		buildUserView ();
-		bindLongin();       
+		buildUserView ();       
 		$('#en-loc').click(function(ev) {
 			changeLocaleUrl (ev);
 		});
 		$('#ru-loc').click(function(ev) {
 			changeLocaleUrl (ev);
 		});
+		$('#add-user').click(function() {
+	        $('#dialog-form').dialog('open');
+	    });
 		$('#view-user').click(function() {
-			$('#dialog-confirm').dialog('open');
-		});
+	        $('#dialog-confirm').dialog('open');
+	    });
 	});
 </script>

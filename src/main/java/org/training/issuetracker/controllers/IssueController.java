@@ -13,6 +13,8 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -162,6 +164,12 @@ public class IssueController {
 		
 		issueDAO.deleteIssue(id);
 		return "/issuetracker/index.jsp";
+	}
+	
+	@ExceptionHandler(AccessDeniedException.class)
+	public ResponseEntity<String> handleADException(AccessDeniedException ex) {
+		ex.printStackTrace();
+		return new ResponseEntity<String>(ex.getMessage(), HttpStatus.UNAUTHORIZED);
 	}
 	
 	@ExceptionHandler(DaoException.class)

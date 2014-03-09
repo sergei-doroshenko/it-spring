@@ -12,7 +12,7 @@
        http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-3.1.xsd 
        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.1.xsd">
 	
-	<!-- import resource="security-config.xml"/-->
+	<import resource="security.xml"/>
 	
 	<context:component-scan base-package="org.training.issuetracker.controllers" />
 	<context:component-scan base-package="org.training.issuetracker.data" />
@@ -64,6 +64,8 @@
 	            SELECT email as username, password, enabled FROM USERS WHERE email=?
 	        </value>
 	    </property>
+	    select username,password,true from spitter where username=?
+			  	select username,'ROLE_SPITTER'from spitter where username=?
 	    <property name="authoritiesByUsernameQuery">
 	        <value>
 	            SELECT USERS.EMAIL AS username, 
