@@ -270,17 +270,39 @@ public class Issue {
 	public String getFullName(User user) {
 		return user.getFirstName() + " " + user.getLastName();
 	}
+//	
+//	@Override
+//	public String toString() {
+//		JsonObject issueJson = Json.createObjectBuilder()
+//				.add("id", id)
+//				.add("priority", getPriority().getName())
+//				.add("assignee", getFullName(assignee))
+//				.add("type", type.getName())
+//				.add("status", status.getName())
+//				.add("summary", summary)
+//				.build();
+//		return issueJson.toString();
+//	}
 	
 	@Override
 	public String toString() {
 		JsonObject issueJson = Json.createObjectBuilder()
 				.add("id", id)
-				.add("priority", getPriority().getName())
-				.add("assignee", getFullName(assignee))
-				.add("type", type.getName())
-				.add("status", status.getName())
+				.add("createDate", createDate.toString())
+				.add("createBy", getFullName(createBy))
+				.add("modifyDate", modifyDate.toString())
+				.add("modifyBy", getFullName(modifyBy))
 				.add("summary", summary)
-				.build();
+				.add("status", status.getName())
+				.add("resolution",
+					(null == getResolution() ? "UNRESOLVED" : resolution.getName())
+				)
+				.add("type", type.getName())
+				.add("priority", priority.getName())
+				.add("project", project.getName())
+				.add("build", build.getName())
+				.add("assignee", getFullName(assignee))
+			.build();
 		return issueJson.toString();
 	}
 	

@@ -34,7 +34,7 @@
 	</form><!-- End of user form -->
 </div><!-- End of user dialog form -->
 <div id="user-info" class="user-info">
-	<div id="error"></div>
+	<div id="error">User message: <c:out value="${usermessage}"/></div>
 	<div class="username"> 
 	    <security:authorize access="isAuthenticated()">
 	    	Welcome, 
@@ -42,11 +42,10 @@
 	        <strong><security:authentication property="authorities"/></strong>
 	    </security:authorize>
 	</div>
-     <form id="auth-form" method='POST' action='issuetracker/j_spring_security_check'>
+     <form id="auth-form" method='POST' action='j_spring_security_check'>
      	<input id="login-command" name="command" type="hidden" value="${constants.COMMAND_LOGIN}"/>
      	<c:choose>
-     		<c:when test="isAuthenticated()">${empty user}
-     			<c:out value="${principal.username}"/>
+     		<c:when test="${not empty user}">
      			<span id="view-user" class="logout"><c:out value="${user.firstName}  ${user.lastName}"/></span>
 	      		<a class="logout" href="${constants.URL_LOGOUT_COMMAND}"><fmt:message key="user.logout" bundle="${lang}"/></a>
 	      		<input id="oper" name="oper" type="hidden" value="${constants.OPER_EDIT}"/>

@@ -1,14 +1,21 @@
-var issue_names = ["Id", "Priority", "Assignee", "Type", "Status", "Summary"];
+var issue_names = ["Id", "Create Date", "Create By", "Modify Date", "Modify By", "Summary", "Status", "Resolution", "Type", "Priority", "Project", "Bild", "Assignee"];
 
 var issue_rowLink = { baseLinkUrl: 'issue'};
 
 var issue_model = [
-             { name: "id", index: 'id', width: 55, formatter:'showlink', formatoptions: issue_rowLink},
-             { name: "priority", index: 'priority', width: 100, formatter: colorFormatter},
-             { name: "assignee", index: 'assignee', width: 100},
-             { name: "type", index: 'type', width: 100},
-             { name: "status", index: 'status', width: 100},
-             { name: "summary", index: 'summary', width: 200}
+             {name: "id", index: 'id', width: 55, formatter:'showlink', formatoptions: issue_rowLink},
+             {name: "createDate", index: "createDate", width: 70},
+             {name: "createBy", index: "createBy", width: 70},
+             {name: "modifyDate", index: "modifyDate", width: 70},
+             {name: "modifyBy", index: "modifyBy", width: 70},
+             {name: "summary", index: 'summary', hidden: true, searchoptions: {searchhidden: true}},//, width: 200
+             {name: "status", index: 'status', width: 100},
+             {name: "resolution", index: "resolution", width: 70},
+             {name: "type", index: 'type', width: 100},
+             {name: "priority", index: 'priority', width: 100, formatter: colorFormatter},
+             {name: "project", index: "project", width: 100}, 
+             {name: "build", index: "build", width: 50},
+             {name: "assignee", index: 'assignee', width: 100}
          ];
 
 var jsonHandler = {
@@ -54,7 +61,7 @@ function createIssueTable() {
         //loadComplete: handleLoadComplete
     });
     
-    $('#list').jqGrid('navGrid', '#pager',{view:false, del:false, search:false, add: false, edit: false}, //
+    $('#list').jqGrid('navGrid', '#pager',{view:false, del:false, search:true, add: false, edit: false}, //
     		{closeAfterEdit: true}, // use default settings for edit
     		{closeAfterAdd: true}, // use default settings for add
     		{closeAfterDelete: true},  // delete instead that del:false we need this
@@ -63,21 +70,23 @@ function createIssueTable() {
     	        showQuery: true // show preview of search query
     		}, 
     		{closeOnEscape:true} /* allow the view dialog to be closed when user press ESC key*/
-    		).jqGrid('navButtonAdd',"#pager",{// My custom button
-				caption:'Search...', 
-				buttonicon:'ui-icon-search', 
-				onClickButton: function(){ 
-					$('#searc-form').removeClass('hidden-block');
-					$('#search-button').click(function (){
-						$('#searc-form').addClass('hidden-block');
-					});
-					$('#list').jqGrid('setGridParam', { postData:{command: 'search'}});
-					$('#list').trigger('reloadGrid',[{page:1}]);
-				}, 
-				position:"last",
-				title:"",
-				cursor: "pointer"
-    		});
+    		);
+    
+//    		.jqGrid('navButtonAdd',"#pager",{// My custom button
+//				caption:'Search...', 
+//				buttonicon:'ui-icon-search', 
+//				onClickButton: function(){ 
+//					$('#searc-form').removeClass('hidden-block');
+//					$('#search-button').click(function (){
+//						$('#searc-form').addClass('hidden-block');
+//					});
+//					$('#list').jqGrid('setGridParam', { postData:{command: 'search'}});
+//					$('#list').trigger('reloadGrid',[{page:1}]);
+//				}, 
+//				position:"last",
+//				title:"",
+//				cursor: "pointer"
+//    		});
 }
 
 function colorFormatter (cellvalue, options, rowObject) {

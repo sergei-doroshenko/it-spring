@@ -205,17 +205,17 @@ function builUserForm() {
 	      if (bValid) {
 	    	  
 	    	  var formdata = {
-		        'command' : $('#send-command').val(),
+//		        'command' : $('#send-command').val(),
 		        'oper' : $('#oper').val(),
-		        'first_name' : first_name.val(),
-		        'last_name' : last_name.val(),
+		        'firstName' : first_name.val(),
+		        'lastName' : last_name.val(),
 		        'email' : email.val(),
 		        'password' : password.val(),
 		        'id' : $('#user-id').val()
 	    	  };
 	    	  
 	    	 $.ajax({
-              url: 'user',
+              url: 'user//edit',
               data: formdata,
               dataType: 'text',
               type: 'post',

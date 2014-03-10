@@ -15,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -92,6 +93,9 @@ public class IssueController {
 		return "view-issue";
 	}
 	
+//	@PreAuthorize("hasAuthority('USER,ADMINISTRATOR')")
+	
+	@PreAuthorize("hasAnyRole('USER','ADMINISTRATOR')")
 	@RequestMapping(value="/new", method = RequestMethod.GET)
 	public String newIssue (ModelMap model) throws DaoException {
 		

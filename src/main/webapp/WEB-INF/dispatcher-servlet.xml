@@ -17,6 +17,7 @@
 	<context:component-scan base-package="org.training.issuetracker.controllers" />
 	<context:component-scan base-package="org.training.issuetracker.data" />
 	<context:component-scan base-package="org.training.issuetracker.validation" />
+	<context:component-scan base-package="org.training.issuetracker.secutity" />
 	
 	<mvc:annotation-driven conversion-service="conversionService"/>
 	<mvc:default-servlet-handler />

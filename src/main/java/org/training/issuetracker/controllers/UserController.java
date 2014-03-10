@@ -1,6 +1,7 @@
 package org.training.issuetracker.controllers;
 
 import java.beans.PropertyEditorSupport;
+import java.security.Principal;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.UnsatisfiedServletRequestParameterException;
@@ -94,23 +96,25 @@ public class UserController {
         binder.registerCustomEditor(Role.class, "role", new RoleEditor()); 
     } 
 	
-	@RequestMapping(value = "/login", method = RequestMethod.POST, params={"login", "password"}, produces="application/json")
-	public @ResponseBody String getUserByLogin(@RequestParam(Constants.KEY_LOGIN)String login,  
-			@RequestParam(Constants.KEY_PASSWORD) String password, HttpSession session) throws DaoException {
-		
-		User user = userDAO.getUser(login, password);
-		
-		session.setAttribute(Constants.KEY_USER, user);
-		return "";
-	}
+
 	
-	@RequestMapping(value = "/logout", method = RequestMethod.GET, produces="application/json")
-	public RedirectView loguot(HttpSession session) {
-		
-		session.removeAttribute(Constants.KEY_USER);
-		session.invalidate();
-		return new RedirectView("/index.jsp", true);
-	}
+//	@RequestMapping(value = "/login", method = RequestMethod.POST, params={"login", "password"}, produces="application/json")
+//	public @ResponseBody String getUserByLogin(@RequestParam(Constants.KEY_LOGIN)String login,  
+//			@RequestParam(Constants.KEY_PASSWORD) String password, HttpSession session) throws DaoException {
+//		
+//		User user = userDAO.getUser(login, password);
+//		
+//		session.setAttribute(Constants.KEY_USER, user);
+//		return "";
+//	}
+	
+//	@RequestMapping(value = "/logout", method = RequestMethod.GET, produces="application/json")
+//	public RedirectView loguot(HttpSession session) {
+//		
+//		session.removeAttribute(Constants.KEY_USER);
+//		session.invalidate();
+//		return new RedirectView("/index.jsp", true);
+//	}
 	
 	@RequestMapping(method = RequestMethod.GET, params="id", produces="application/json")
 	public @ResponseBody String getUserById(@RequestParam(Constants.KEY_ID) long id) throws DaoException {
@@ -152,7 +156,8 @@ public class UserController {
 	}
 	
 	@RequestMapping(value="/edit", method = RequestMethod.POST, params={"oper=add"}, produces="application/json")
-	public ResponseEntity<String> addUser(@Valid User user, BindingResult bindingResult, HttpSession session) throws DaoException {
+	public ResponseEntity<String> addUser(@Valid User user, BindingResult bindingResult, 
+			ModelMap model, Principal principal) throws DaoException {
 		
 		if(bindingResult.hasErrors()){
 			String json = new JSONSerializer().exclude("*.class", "bindingFailure", "code", "objectName", "rejectedValue")
@@ -160,15 +165,15 @@ public class UserController {
 			return new ResponseEntity<String>(json, HttpStatus.BAD_REQUEST);
 		}
 		
-		
-		userDAO.insertUser(user);
-				
-		User currentUser = (User) session.getAttribute(Constants.KEY_USER);
-		
-		if (currentUser == null) {
-			session.setAttribute(Constants.KEY_USER, user);
+		if(user.getRole() == null) {
+			user.setRole((Role) propDAO.getProp(PropertyType.ROLE, Constants.DEFAULT_ROLE_ID)); 
 		}
-		
+		user.setEnabled(true);
+		userDAO.insertUser(user);
+		if(principal == null) {
+			model.addAttribute("usermessage", "You succesfully registered, now - log in");
+		}
+				
 		return new ResponseEntity<String>("", HttpStatus.OK);
 	}
 	
