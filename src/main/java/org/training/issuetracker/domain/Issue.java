@@ -15,6 +15,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
+
 import flexjson.JSONSerializer;
 
 @Entity
@@ -71,6 +74,7 @@ public class Issue {
 	
 	@OneToOne()
 	@JoinColumn(name="ASSIGNEE_ID")
+	@NotFound(action=NotFoundAction.IGNORE)
 	private User assignee;
 
 	public Issue() { }
@@ -290,8 +294,8 @@ public class Issue {
 				.add("id", id)
 				.add("createDate", createDate.toString())
 				.add("createBy", getFullName(createBy))
-				.add("modifyDate", modifyDate.toString())
-				.add("modifyBy", getFullName(modifyBy))
+				.add("modifyDate", modifyDate == null ? "---" : modifyDate.toString())
+				.add("modifyBy", modifyBy == null ? "---" : getFullName(modifyBy))
 				.add("summary", summary)
 				.add("status", status.getName())
 				.add("resolution",
@@ -301,7 +305,7 @@ public class Issue {
 				.add("priority", priority.getName())
 				.add("project", project.getName())
 				.add("build", build.getName())
-				.add("assignee", getFullName(assignee))
+				.add("assignee", assignee == null ? "---" : getFullName(assignee))
 			.build();
 		return issueJson.toString();
 	}

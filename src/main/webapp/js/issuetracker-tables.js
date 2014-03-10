@@ -13,8 +13,8 @@ var issue_model = [
              {name: "resolution", index: "resolution", width: 70},
              {name: "type", index: 'type', width: 100},
              {name: "priority", index: 'priority', width: 100, formatter: colorFormatter},
-             {name: "project", index: "project", width: 100}, 
-             {name: "build", index: "build", width: 50},
+             {name: "project", index: "project", width: 150}, 
+             {name: "build", index: "build", width: 70},
              {name: "assignee", index: 'assignee', width: 100}
          ];
 

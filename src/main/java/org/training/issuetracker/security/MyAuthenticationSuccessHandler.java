@@ -40,6 +40,7 @@ public class MyAuthenticationSuccessHandler extends SimpleUrlAuthenticationSucce
 		
 		HttpSession session = request.getSession();
 		session.setAttribute(Constants.KEY_USER, user);
+		session.removeAttribute(Constants.USER_MESSAGE);
 		super.onAuthenticationSuccess(request, response, authentication);
 	}
 	

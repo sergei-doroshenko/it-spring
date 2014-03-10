@@ -129,7 +129,7 @@ public final class Constants {
 	public static final String COMMAND_LOGIN = "login";
 
 	/** Constants string literal for logout command  */
-	public static final String COMMAND_LOGOUT = "user/logout";
+	public static final String COMMAND_LOGOUT = "/logout";
 
 	/** Constants string literal for view user info command  */
 	public static final String COMMAND_VIEW_USER = "viewuser";
@@ -176,7 +176,7 @@ public final class Constants {
 	public static final String URL_MAIN_DO = "Main.do";
 
 	/** Constants string literal for submitissue-url  */
-	public static final String URL_LOGOUT_COMMAND = "/issuetracker/user/logout";
+	public static final String URL_LOGOUT_COMMAND = "/issuetracker/logout";
 
 	/** Constants string literal for submitissue-url  */
 	public static final String URL_SAVEISSUE_COMMAND = URL_MAIN_COMMAND + COMMAND_UPDATE_ISSUE;
@@ -291,7 +291,7 @@ public final class Constants {
 
 	/** String literal for request parameter project Id */
 	public static final String KEY_PROJECT_ID = "project";
-
+	
 //**************** OPERATIONS **********************************************
 	/** Constants string literal for parameter oper: add. */
 	public static final String OPER_ADD = "add";
@@ -399,7 +399,10 @@ public final class Constants {
 
 	/** String literal for entity */
 	public static final String ENTITY = "entity";
-
+	
+	/** String literal for session attributte usermessage */
+	public static final String USER_MESSAGE = "usermessage";
+	
 //****************************** OTHERS *********************************************/
 	/** String literal for NEW status */
 	public static final String STATUS_NEW = "NEW";

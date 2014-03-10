@@ -15,7 +15,9 @@
 	   <intercept-url pattern="/add*" access="hasRole('USER')"/> 
 	   <intercept-url pattern="/delete/*" access="hasRole('ADMINISTRATOR')"/> 
 	   <form-login login-page="/index.jsp" default-target-url="/index.jsp" 
-	   		authentication-success-handler-ref="myAuthenticationSuccessHandler" authentication-failure-url="/login.jsp?error=true"/> 
+	   		authentication-success-handler-ref="myAuthenticationSuccessHandler"
+	   		authentication-failure-url="/index.jsp"  
+	   		authentication-failure-handler-ref="myAuthenticationFailureHandler"/> 
 	   <logout logout-url="/logout" logout-success-url="/index.jsp"/> 
 	   <anonymous username="guest" granted-authority="GUEST"/>
 	   <session-management>
@@ -27,7 +29,9 @@
   	<beans:bean id="myAuthenticationSuccessHandler" 
   		class="org.training.issuetracker.security.MyAuthenticationSuccessHandler"/>
   		
-  	
+  	<beans:bean id="myAuthenticationFailureHandler" 
+  		class="org.training.issuetracker.security.MyAuthenticationFailureHandler">
+  	</beans:bean>
   	
 	<!-- authentication-manager> 
 	   <authentication-provider> 

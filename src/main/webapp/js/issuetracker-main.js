@@ -220,6 +220,7 @@ function builUserForm() {
               dataType: 'text',
               type: 'post',
               success: function (data) {
+            	  //$('#error').empty().append(data);
                   //window.location.href = data;
             	  window.location.reload();
               },
@@ -352,10 +353,16 @@ function bindNewIssueForm() {
 	        'project' : $('#project').val(),
 	        'build' : $('#projectbuild').val(),
 	        'summary' : $('#summary').val(),
-	        'description' : $('#description').val(),
-	        'assignee' : $('#assignee').val()
+	        'description' : $('#description').val()
+//	        'assignee' : $('#assignee').val()
 	    };
-    
+        
+        var assingnee = $('#assignee').val();
+        
+        if(assingnee != null && assingnee != '') {
+        	post_data.assignee = assingnee;
+        }
+        
         $.ajax({
             url: '\\issuetracker\\issue\\add',
             data: post_data,

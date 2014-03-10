@@ -34,7 +34,7 @@
 	</form><!-- End of user form -->
 </div><!-- End of user dialog form -->
 <div id="user-info" class="user-info">
-	<div id="error">User message: <c:out value="${usermessage}"/></div>
+	<div id="error"><c:out value="${usermessage}"/></div>
 	<div class="username"> 
 	    <security:authorize access="isAuthenticated()">
 	    	Welcome, 

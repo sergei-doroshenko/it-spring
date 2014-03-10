@@ -3,6 +3,7 @@ package org.training.issuetracker.controllers;
 import java.beans.PropertyEditorSupport;
 import java.security.Principal;
 import java.util.List;
+import java.util.Locale;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.ConstraintViolation;
@@ -11,10 +12,10 @@ import javax.validation.Valid;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.UnsatisfiedServletRequestParameterException;
@@ -25,9 +26,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.view.RedirectView;
 import org.training.issuetracker.constants.Constants;
-import org.training.issuetracker.domain.Project;
 import org.training.issuetracker.domain.Role;
 import org.training.issuetracker.domain.User;
 import org.training.issuetracker.domain.DAO.PropDAO;
@@ -54,6 +53,9 @@ public class UserController {
 	
 	@Autowired
 	private UserValidator userValidator;
+	
+	@Autowired
+	private MessageSource messageSource;
 	
 	private class LongEditor extends PropertyEditorSupport {
 		
@@ -157,7 +159,7 @@ public class UserController {
 	
 	@RequestMapping(value="/edit", method = RequestMethod.POST, params={"oper=add"}, produces="application/json")
 	public ResponseEntity<String> addUser(@Valid User user, BindingResult bindingResult, 
-			ModelMap model, Principal principal) throws DaoException {
+			Principal principal, HttpSession session, Locale locale) throws DaoException {
 		
 		if(bindingResult.hasErrors()){
 			String json = new JSONSerializer().exclude("*.class", "bindingFailure", "code", "objectName", "rejectedValue")
@@ -170,8 +172,9 @@ public class UserController {
 		}
 		user.setEnabled(true);
 		userDAO.insertUser(user);
+		
 		if(principal == null) {
-			model.addAttribute("usermessage", "You succesfully registered, now - log in");
+			session.setAttribute(Constants.USER_MESSAGE, messageSource.getMessage("user.register.success", null, locale));
 		}
 				
 		return new ResponseEntity<String>("", HttpStatus.OK);
