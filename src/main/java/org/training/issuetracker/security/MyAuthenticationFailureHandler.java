@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -25,15 +26,17 @@ public class MyAuthenticationFailureHandler extends SimpleUrlAuthenticationFailu
 			HttpServletResponse response, AuthenticationException exception)
 			throws IOException, ServletException {
 		
-		
-		
-//		HttpSession session = request.getSession();
-		
+		HttpSession session = request.getSession();
+		String errorMessage = exception.getLocalizedMessage();
 //		if(exception.getClass().isAssignableFrom(UsernameNotFoundException.class)) {
-//			request.setAttribute(Constants.USER_MESSAGE, "BAD_CREDENTIAL");
+//			errorMessage = "USER NOT FOUND";
 //		} else if (exception.getClass().isAssignableFrom(DisabledException.class)) {
-//			request.setAttribute(Constants.USER_MESSAGE, "USER_DISABLED");
+//			errorMessage = "USER_DISABLED";
+//		} else if (exception.getClass().isAssignableFrom(BadCredentialsException.class)) {
+//			errorMessage = "BAD_CREDENTIALS";
 //		}
+		
+		session.setAttribute(Constants.USER_MESSAGE, errorMessage);
 		setDefaultFailureUrl("/index.jsp");
 		super.onAuthenticationFailure(request, response, exception);
 	
