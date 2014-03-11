@@ -180,15 +180,20 @@ public class UserController {
 		return new ResponseEntity<String>("", HttpStatus.OK);
 	}
 	
-	@RequestMapping(value="/edit", method = RequestMethod.POST, params={"oper=edit", Constants.KEY_ID, Constants.KEY_FIRST_NAME, 
-			Constants.KEY_LAST_NAME, Constants.KEY_EMAIL, Constants.KEY_PASSWORD, Constants.KEY_ROLE_ID}, produces="application/json")
-	public ResponseEntity<String> editUser(@Valid User user, BindingResult bindingResult,	HttpSession session) throws DaoException {
+	@RequestMapping(value="/edit", method = RequestMethod.POST, params={"oper=edit"//, Constants.KEY_ID, Constants.KEY_FIRST_NAME, 
+			}, produces="application/json")//Constants.KEY_LAST_NAME, Constants.KEY_EMAIL, Constants.KEY_PASSWORD
+	public ResponseEntity<String> editUser(@Valid User user, BindingResult bindingResult, HttpSession session) throws DaoException {
 		
 		if(bindingResult.hasErrors()){
 			String json = new JSONSerializer().exclude("*.class", "bindingFailure", "code", "objectName", "rejectedValue")
 					.serialize(bindingResult.getFieldErrors());
 			return new ResponseEntity<String>(json, HttpStatus.BAD_REQUEST);
 		}
+		
+		if(user.getRole() == null) {
+			user.setRole((Role) propDAO.getProp(PropertyType.ROLE, Constants.DEFAULT_ROLE_ID)); 
+		}
+		user.setEnabled(true);
 		
 		userDAO.updateUser(user);
 				

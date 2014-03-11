@@ -215,7 +215,7 @@ function builUserForm() {
 	    	  };
 	    	  
 	    	 $.ajax({
-              url: 'user//edit',
+              url: 'user/edit',
               data: formdata,
               dataType: 'text',
               type: 'post',
