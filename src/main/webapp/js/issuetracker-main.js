@@ -140,6 +140,7 @@ function handleError (response, status, err) {
 //************************************************ User Forms ***********************************************
 
 function builUserForm() {
+	var user_url_tail = $('#oper').val();
 	
 	var first_name = $('#first_name'), last_name = $('#last_name'),
 	  email = $('#email'),
@@ -215,7 +216,7 @@ function builUserForm() {
 	    	  };
 	    	  
 	    	 $.ajax({
-              url: 'user/edit',
+              url: 'user/' + user_url_tail,
               data: formdata,
               dataType: 'text',
               type: 'post',

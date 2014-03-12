@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -157,8 +158,8 @@ public class UserController {
 		options += "</select>";
 		return options;
 	}
-	
-	@RequestMapping(value="/edit", method = RequestMethod.POST, params={"oper=add"}, produces="application/json")
+	//params={"oper=add"}, 
+	@RequestMapping(value="/add", method = RequestMethod.POST, produces="application/json")
 	public ResponseEntity<String> addUser(@Valid User user, BindingResult bindingResult, 
 			Principal principal, HttpSession session, Locale locale) throws DaoException {
 		
@@ -181,9 +182,8 @@ public class UserController {
 		return new ResponseEntity<String>("", HttpStatus.OK);
 	}
 	
-//	@PreAuthorize("hasAnyRole('USER','ADMINISTRATOR')")
-	@RequestMapping(value="/edit", method = RequestMethod.POST, params={"oper=edit"//, Constants.KEY_ID, Constants.KEY_FIRST_NAME, 
-			}, produces="application/json")//Constants.KEY_LAST_NAME, Constants.KEY_EMAIL, Constants.KEY_PASSWORD
+	@RequestMapping(value="/edit", method = RequestMethod.POST, //params={"oper=edit", Constants.KEY_ID, Constants.KEY_FIRST_NAME, 
+			 produces="application/json")//},Constants.KEY_LAST_NAME, Constants.KEY_EMAIL, Constants.KEY_PASSWORD
 	public ResponseEntity<String> editUser(@Valid User user, BindingResult bindingResult, HttpSession session) throws DaoException {
 		
 		if(bindingResult.hasErrors()){
@@ -208,8 +208,8 @@ public class UserController {
 		
 		return new ResponseEntity<String>("", HttpStatus.OK);
 	}
-	
-	@RequestMapping(value="/edit", method = RequestMethod.POST, params={"oper=del", Constants.KEY_ID}, produces="application/json")
+	//"oper=del", 
+	@RequestMapping(value="/del", method = RequestMethod.POST, params={Constants.KEY_ID}, produces="application/json")
 	public @ResponseBody String deleteUser(@RequestParam(Constants.KEY_ID) long id) throws DaoException {
 		
 		userDAO.deleteUser(id);

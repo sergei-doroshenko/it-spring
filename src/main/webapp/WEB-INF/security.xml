@@ -7,13 +7,14 @@
                  http://www.springframework.org/schema/security  
                  http://www.springframework.org/schema/security/spring-security-3.1.xsd"> 
  
- 	<!-- global-method-security secured-annotations="enabled" proxy-target-class="true"/-->
+ 	<!-- global-method-security pre-post-annotations="enabled" secured-annotations="enabled" proxy-target-class="true"/-->
  	<global-method-security pre-post-annotations="enabled"/>
  	
  	<http access-denied-page="/error.jsp" use-expressions="true"> 
-	   <intercept-url pattern="/index*" access="hasAnyRole('USER,GUEST,ADMINISTRATOR')"/> 
-	   <intercept-url pattern="/add*" access="hasRole('USER')"/> 
-	   <intercept-url pattern="/delete/*" access="hasRole('ADMINISTRATOR')"/> 
+	   <intercept-url pattern="/index*" access="hasAnyRole('USER,GUEST,ADMINISTRATOR')"/>
+	   <intercept-url pattern="/user/add*" access="hasAnyRole('USER,GUEST,ADMINISTRATOR')"/>
+	   <intercept-url pattern="/user/edit*" access="hasAnyRole('USER,ADMINISTRATOR')"/> 
+	   <intercept-url pattern="/user/del*" access="hasRole('ADMINISTRATOR')"/> 
 	   <form-login login-page="/index.jsp" default-target-url="/index.jsp" 
 	   		authentication-success-handler-ref="myAuthenticationSuccessHandler"
 	   		authentication-failure-url="/index.jsp"  
