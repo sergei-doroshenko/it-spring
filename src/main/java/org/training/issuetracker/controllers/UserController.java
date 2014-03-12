@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -180,6 +181,7 @@ public class UserController {
 		return new ResponseEntity<String>("", HttpStatus.OK);
 	}
 	
+//	@PreAuthorize("hasAnyRole('USER','ADMINISTRATOR')")
 	@RequestMapping(value="/edit", method = RequestMethod.POST, params={"oper=edit"//, Constants.KEY_ID, Constants.KEY_FIRST_NAME, 
 			}, produces="application/json")//Constants.KEY_LAST_NAME, Constants.KEY_EMAIL, Constants.KEY_PASSWORD
 	public ResponseEntity<String> editUser(@Valid User user, BindingResult bindingResult, HttpSession session) throws DaoException {
