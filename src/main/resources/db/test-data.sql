@@ -7,6 +7,14 @@ VALUES ('Sergei','Doroshenko', 'admin@gmail.com','111', 1),
 ('Rom', 'Amazon', 'rom@gmail.com', '111', 2),
 ('Dan', 'Brown', 'dan@gmail.com', '111', 2);
 
+INSERT INTO AUTHORITIES (USERNAME, AUTHORITY)
+VALUES
+('admin@gmail.com', 'ADMINISTRATOR'),
+('tim@gmail.com', 'USER'),
+('ivan@gmail.com', 'USER'),
+('rom@gmail.com', 'USER'),
+('dan@gmail.com', 'USER');
+
 INSERT INTO STATUSES(NAME) VALUES ('NEW'),('ASSIGNED'),('IN PROGRESS'),('RESOLVED'),('CLOSED'),('REOPENED');
 
 INSERT INTO RESOLUTIONS(NAME) VALUES ('FIXED'),('INVALID'),('WONTFIX'),('WORKFORME');

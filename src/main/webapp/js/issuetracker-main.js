@@ -138,6 +138,8 @@ function handleError (response, status, err) {
 }
 
 //************************************************ User Forms ***********************************************
+var user_form_url = 'user/edit';
+var user_view_url = 'user';
 
 function builUserForm() {
 	
@@ -205,7 +207,6 @@ function builUserForm() {
 	      if (bValid) {
 	    	  
 	    	  var formdata = {
-//		        'command' : $('#send-command').val(),
 		        'oper' : $('#oper').val(),
 		        'firstName' : first_name.val(),
 		        'lastName' : last_name.val(),
@@ -215,7 +216,7 @@ function builUserForm() {
 	    	  };
 	    	  
 	    	 $.ajax({
-              url: 'user/edit',
+              url: user_form_url,
               data: formdata,
               dataType: 'text',
               type: 'post',
@@ -264,7 +265,7 @@ function builUserForm() {
 	    allFields.val('').removeClass('ui-state-error');
 	  }
 	});
-}
+};
 
 function buildUserView () {
     $('#dialog-confirm').dialog({
@@ -279,7 +280,7 @@ function buildUserView () {
 	    	};
         	
         	$.ajax({
-                url: 'user',
+                url: user_view_url,
                 data: formdata,
                 dataType: 'json',
                 type: 'get',

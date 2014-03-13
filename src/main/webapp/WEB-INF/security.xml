@@ -10,10 +10,10 @@
  	<!-- global-method-security secured-annotations="enabled" proxy-target-class="true"/-->
  	<global-method-security pre-post-annotations="enabled"/>
  	
- 	<http access-denied-page="/error.jsp" use-expressions="true"> 
-	   <intercept-url pattern="/index*" access="hasAnyRole('USER,GUEST,ADMINISTRATOR')"/> 
-	   <intercept-url pattern="/add*" access="hasRole('USER')"/> 
-	   <intercept-url pattern="/delete/*" access="hasRole('ADMINISTRATOR')"/> 
+ 	<http access-denied-page="/error.jsp" use-expressions="true">
+ 	   <intercept-url pattern="/index*" access="hasAnyRole('USER,GUEST,ADMINISTRATOR')"/>
+	   <intercept-url pattern="/issue/edit*" access="hasAnyRole('USER,ADMINISTRATOR')"/>
+	   <!-- intercept-url pattern="\A/*/edit\?oper=del*" access="hasRole('ADMINISTRATOR')"/--> 
 	   <form-login login-page="/index.jsp" default-target-url="/index.jsp" 
 	   		authentication-success-handler-ref="myAuthenticationSuccessHandler"
 	   		authentication-failure-url="/index.jsp"  
@@ -47,7 +47,8 @@
 		<authentication-provider>
 	 	   <jdbc-user-service data-source-ref="dataSource" 
 	     	   users-by-username-query="SELECT email as username, password, enabled FROM USERS WHERE email=?"
-	      		authorities-by-username-query="SELECT USERS.EMAIL AS username, ROLES.NAME AS authority FROM USERS LEFT JOIN ROLES ON USERS.ROLE_ID = ROLES.ID WHERE USERS.EMAIL = ?" />
+	     	   authorities-by-username-query="SELECT USERS.EMAIL AS username, ROLES.NAME AS authority FROM USERS LEFT JOIN ROLES ON USERS.ROLE_ID = ROLES.ID WHERE USERS.EMAIL = ?"
+	     	   />
 	    </authentication-provider> 
 	</authentication-manager>
 

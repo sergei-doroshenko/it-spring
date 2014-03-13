@@ -71,10 +71,6 @@
 						<span class="user-view-label">E-mail </span>
 						<span id="user-email"><c:out value="${user.email}"/></span>
 					</p>
-					<p>
-						<span class="user-view-label">Role </span>
-						<span id="user-role"><c:out value="${user.role.name}"/></span>
-					</p>
 				</div><!-- End of user dialog -->
      		</c:when>
      		<c:otherwise>

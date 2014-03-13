@@ -98,6 +98,7 @@
     <bean id="conversionService" class="org.springframework.context.support.ConversionServiceFactoryBean">
 	    <property name="converters">
 	        <list>
+	            <bean class="org.training.issuetracker.converters.RoleConverter"/>
 	            <bean class="org.training.issuetracker.converters.BuildConverter"/>
 	            <bean class="org.training.issuetracker.converters.PriorityConverter"/>
 	            <bean class="org.training.issuetracker.converters.ProjectConverter"/>

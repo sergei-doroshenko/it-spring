@@ -2,9 +2,11 @@ package org.training.issuetracker.controllers;
 
 import java.beans.PropertyEditorSupport;
 import java.security.Principal;
+import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
@@ -15,6 +17,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -72,20 +79,22 @@ public class UserController {
 	private class RoleEditor extends PropertyEditorSupport {
 		
 		@Override
-		public void setAsText(String arg) throws IllegalArgumentException {
+		public void setAsText(String arg) {
 			long roleId = Constants.DEFAULT_ROLE_ID;
 			
-			if (!arg.isEmpty()) {
+			if (!arg.isEmpty() || arg == null) {
 				roleId = Long.parseLong(arg);
 			}
-
+			
 			Role tempRole = null;
 			try {
 				tempRole = (Role) propDAO.getProp(PropertyType.ROLE, roleId);
 			} catch (DaoException e) {
+				
 				e.printStackTrace();
-				throw new IllegalArgumentException("No such role!");
 			}
+			
+			logger.debug("Editor return Role -----------------------------------------------------------------------------------------------------------------" + tempRole);
 			
 			setValue(tempRole);
 		}
@@ -95,29 +104,10 @@ public class UserController {
     private void initBinder(WebDataBinder binder) {  
         binder.setValidator(userValidator);
         binder.registerCustomEditor(Long.class, "id", new LongEditor());
-        binder.registerCustomEditor(Role.class, "role", new RoleEditor()); 
+//        binder.registerCustomEditor(Role.class, "role", new RoleEditor()); 
     } 
 	
-
-	
-//	@RequestMapping(value = "/login", method = RequestMethod.POST, params={"login", "password"}, produces="application/json")
-//	public @ResponseBody String getUserByLogin(@RequestParam(Constants.KEY_LOGIN)String login,  
-//			@RequestParam(Constants.KEY_PASSWORD) String password, HttpSession session) throws DaoException {
-//		
-//		User user = userDAO.getUser(login, password);
-//		
-//		session.setAttribute(Constants.KEY_USER, user);
-//		return "";
-//	}
-	
-//	@RequestMapping(value = "/logout", method = RequestMethod.GET, produces="application/json")
-//	public RedirectView loguot(HttpSession session) {
-//		
-//		session.removeAttribute(Constants.KEY_USER);
-//		session.invalidate();
-//		return new RedirectView("/index.jsp", true);
-//	}
-	
+	@PreAuthorize("hasAnyRole('USER','ADMINISTRATOR')")
 	@RequestMapping(method = RequestMethod.GET, params="id", produces="application/json")
 	public @ResponseBody String getUserById(@RequestParam(Constants.KEY_ID) long id) throws DaoException {
 		
@@ -126,6 +116,7 @@ public class UserController {
 		return json;
 	}
 	
+	@PreAuthorize("hasRole('ADMINISTRATOR')")
 	@RequestMapping(method = RequestMethod.GET, params="_search", produces="application/json")		
 	public @ResponseBody String getUsersList(SearchFilterParams params) throws DaoException {		
 		
@@ -144,6 +135,7 @@ public class UserController {
 	 * @return html tags <select> with <options>
 	 * @throws DaoException
 	 */
+	@PreAuthorize("hasAnyRole('USER','ADMINISTRATOR')")
 	@RequestMapping(value="/options", method = RequestMethod.GET, produces="text/plain")
 	public @ResponseBody String getUsersOptions() throws DaoException {
 		String options = "<select>";
@@ -161,16 +153,25 @@ public class UserController {
 	public ResponseEntity<String> addUser(@Valid User user, BindingResult bindingResult, 
 			Principal principal, HttpSession session, Locale locale) throws DaoException {
 		
+//		if(bindingResult.hasErrors()){
+//			String json = new JSONSerializer().exclude("*.class", "bindingFailure", "code", "objectName", "rejectedValue")
+//					.serialize(bindingResult.getFieldErrors());
+//			return new ResponseEntity<String>(json, HttpStatus.BAD_REQUEST);
+//		}
+		
 		if(bindingResult.hasErrors()){
-			String json = new JSONSerializer().exclude("*.class", "bindingFailure", "code", "objectName", "rejectedValue")
+			String json = new JSONSerializer().exclude("*.class")
 					.serialize(bindingResult.getFieldErrors());
 			return new ResponseEntity<String>(json, HttpStatus.BAD_REQUEST);
 		}
 		
-		if(user.getRole() == null) {
-			user.setRole((Role) propDAO.getProp(PropertyType.ROLE, Constants.DEFAULT_ROLE_ID)); 
-		}
 		user.setEnabled(true);
+		
+		logger.info("Add Role ------------------------------------------------------------------" + user.getRole());
+		if (user.getRole() == null){
+			user.setRole((Role) propDAO.getProp(PropertyType.ROLE, Constants.DEFAULT_ROLE_ID));
+		}
+		
 		userDAO.insertUser(user);
 		
 		if(principal == null) {
@@ -180,33 +181,72 @@ public class UserController {
 		return new ResponseEntity<String>("", HttpStatus.OK);
 	}
 	
-	@RequestMapping(value="/edit", method = RequestMethod.POST, params={"oper=edit"//, Constants.KEY_ID, Constants.KEY_FIRST_NAME, 
-			}, produces="application/json")//Constants.KEY_LAST_NAME, Constants.KEY_EMAIL, Constants.KEY_PASSWORD
-	public ResponseEntity<String> editUser(@Valid User user, BindingResult bindingResult, HttpSession session) throws DaoException {
+	@PreAuthorize("hasAnyRole('USER','ADMINISTRATOR')")
+	@RequestMapping(value="/edit", method = RequestMethod.POST, params={"oper=edit"}, produces="application/json")
+	public ResponseEntity<String> editUser(@Valid User user, BindingResult bindingResult, Principal principal,
+			HttpSession session, HttpServletRequest request) throws DaoException {
+		
+		ResponseEntity<String> response = null;
 		
 		if(bindingResult.hasErrors()){
 			String json = new JSONSerializer().exclude("*.class", "bindingFailure", "code", "objectName", "rejectedValue")
 					.serialize(bindingResult.getFieldErrors());
-			return new ResponseEntity<String>(json, HttpStatus.BAD_REQUEST);
+			response = new ResponseEntity<String>(json, HttpStatus.BAD_REQUEST);
 		}
 		
-		if(user.getRole() == null) {
-			user.setRole((Role) propDAO.getProp(PropertyType.ROLE, Constants.DEFAULT_ROLE_ID)); 
-		}
-		user.setEnabled(true);
+//		final UserDetails currentDetails = (UserDetails) ((Authentication) principal).getPrincipal();
+//		SecurityContextHolderAwareRequestWrapper wrapper = new SecurityContextHolderAwareRequestWrapper(request, null);
+		//wrapper.isUserInRole(Constants.ROLE_ADMIN) ;
 		
-		userDAO.updateUser(user);
-				
-		User currentUser = (User) session.getAttribute(Constants.KEY_USER);
-		
-		if (!currentUser.getRole().getName().equals(Constants.ROLE_ADMIN)) {
+		Collection<? extends GrantedAuthority> authorities = ((Authentication) principal).getAuthorities();
+		boolean isAdmin = authorities.contains(new SimpleGrantedAuthority("ADMINISTRATOR"));
+		for (GrantedAuthority grantedAuthority : authorities) {
+		      logger.info("Role ----------------------------------------------------" + grantedAuthority);
+		    }
+		if (isRolePresent(authorities, "ADMINISTRATOR")) {
+			logger.info("Admin edit Role ------------------------------------------------------------------" + user.getRole());
+			if (user.getRole() == null){
+				user.setRole((Role) propDAO.getProp(PropertyType.ROLE, Constants.ADMIN_ROLE_ID));
+				session.removeAttribute(Constants.KEY_USER);
+				session.setAttribute(Constants.KEY_USER, user);
+			}
+			
+		} else {
+			User currentUser = (User) session.getAttribute(Constants.KEY_USER);
+			
+			if (user.getId() != currentUser.getId()) {
+				throw new AccessDeniedException("You can't change properties of another user.");
+			}
+
+			user.setRole((Role) propDAO.getProp(PropertyType.ROLE, Constants.DEFAULT_ROLE_ID));
 			session.removeAttribute(Constants.KEY_USER);
 			session.setAttribute(Constants.KEY_USER, user);
 		}
 		
-		return new ResponseEntity<String>("", HttpStatus.OK);
+		user.setEnabled(true);
+		userDAO.updateUser(user);
+//		UserDetails details = ((UserDetails) principal);
+		
+//		String userPassword = ((UserDetails) principal).getPassword();
+//		if (!userPassword.equals(user.getPassword())){
+//			response = new ResponseEntity<String>("Bad password", HttpStatus.BAD_REQUEST);
+//		}
+		
+		
+//		List<GrantedAuthority> authorities = (List<GrantedAuthority>) details.getAuthorities();
+		
+//		if (authorities.contains(Constants.ROLE_ADMIN)) {
+//			
+//		} else if (authorities.contains(Constants.ROLE_ADMIN)) {
+//			
+//			response = new ResponseEntity<String>("Bad password", HttpStatus.BAD_REQUEST);
+//		}
+					
+		response = new ResponseEntity<String>("", HttpStatus.OK); 
+		return response;
 	}
 	
+	@PreAuthorize("hasRole('ADMINISTRATOR')")
 	@RequestMapping(value="/edit", method = RequestMethod.POST, params={"oper=del", Constants.KEY_ID}, produces="application/json")
 	public @ResponseBody String deleteUser(@RequestParam(Constants.KEY_ID) long id) throws DaoException {
 		
@@ -214,6 +254,21 @@ public class UserController {
 				
 		return "";
 	}
+	
+	/**
+	   * Check if a role is present in the authorities of current user
+	   * @param authorities all authorities assigned to current user
+	   * @param role required authority
+	   * @return true if role is present in list of authorities assigned to current user, false otherwise
+	   */
+	  private boolean isRolePresent(Collection<? extends GrantedAuthority> authorities, String role) {
+	    boolean isRolePresent = false;
+	    for (GrantedAuthority grantedAuthority : authorities) {
+	      isRolePresent = grantedAuthority.getAuthority().equals(role);
+	      if (isRolePresent) break;
+	    }
+	    return isRolePresent;
+	  }
 	
 	@ExceptionHandler(DaoException.class)
 	public ResponseEntity<String> handleDaoException(DaoException ex) {

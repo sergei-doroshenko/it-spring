@@ -45,8 +45,7 @@ public class JqGridData<T> {
 	  map.put("total", total);
 	  map.put("records", records);
 	  map.put("rows", rows);
-//	  return new Gson().toJson(map);
-//	  return = gson.toJson(map);
+
 	  return JSONValue.toJSONString(map);
 	 }
 }

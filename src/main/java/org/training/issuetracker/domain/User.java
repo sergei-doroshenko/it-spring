@@ -13,7 +13,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="USERS")
-public class User {//extends AbstractPersistentObj 
+public class User {
 	
 	@Id
     @Column(name="ID", unique = true, nullable = false)
@@ -37,7 +37,7 @@ public class User {//extends AbstractPersistentObj
 	@OneToOne()
 	@JoinColumn(name="ROLE_ID")
 	private Role role;
-	
+		
 	@Column(name="PASSWORD")
 //	@Size(min=6,max=20, message="The password must be at least 6 characters long.")
 	private String password;
@@ -90,7 +90,7 @@ public class User {//extends AbstractPersistentObj
 	public void setEmail(String email) {
 		this.email = email;
 	}
-
+	
 	public Role getRole() {
 		return role;
 	}

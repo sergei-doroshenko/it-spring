@@ -308,6 +308,9 @@ public final class Constants {
 
 	/** Constants string literal for default role - user id=2. */
 	public static final long DEFAULT_ROLE_ID = 2;
+	
+	/** Constants string literal for ADMINISTRATOR role id=1. */
+	public static final long ADMIN_ROLE_ID = 1;
 
 	/** Constants string literal for role - admin. */
 	public static final String ROLE_ADMIN = "ADMINISTRATOR";
