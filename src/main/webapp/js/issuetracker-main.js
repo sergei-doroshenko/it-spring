@@ -142,6 +142,7 @@ var user_form_url = 'user/edit';
 var user_view_url = 'user';
 
 function builUserForm() {
+	var user_url_tail = $('#oper').val();
 	
 	var first_name = $('#first_name'), last_name = $('#last_name'),
 	  email = $('#email'),
@@ -216,7 +217,11 @@ function builUserForm() {
 	    	  };
 	    	  
 	    	 $.ajax({
+<<<<<<< HEAD
               url: user_form_url,
+=======
+              url: 'user/' + user_url_tail,
+>>>>>>> branch 'spring' of https://github.com/mzubok/issuetracker_sergei_doroshenko.git
               data: formdata,
               dataType: 'text',
               type: 'post',

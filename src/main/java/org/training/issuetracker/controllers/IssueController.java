@@ -94,8 +94,7 @@ public class IssueController {
 	}
 	
 //	@PreAuthorize("hasAuthority('USER,ADMINISTRATOR')")
-	
-	@PreAuthorize("hasAnyRole('USER','ADMINISTRATOR')")
+//	@PreAuthorize("hasAnyRole('USER','ADMINISTRATOR')")
 	@RequestMapping(value="/new", method = RequestMethod.GET)
 	public String newIssue (ModelMap model) throws DaoException {
 		

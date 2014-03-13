@@ -473,9 +473,9 @@ function createUsersTable() {
     });
     
     $("#users-table").jqGrid('navGrid', '#users-pager',{view:true, del:true, search:true}, //
-    		{closeAfterEdit: true}, // use default settings for edit
-    		{closeAfterAdd: true}, // use default settings for add
-    		{closeAfterDelete: true},  // delete instead that del:false we need this
+    		{url: 'user/edit', closeAfterEdit: true}, // use default settings for edit
+    		{url: 'user/add', closeAfterAdd: true}, // use default settings for add
+    		{url: 'user/del', closeAfterDelete: true},  // delete instead that del:false we need this
     		{multipleSearch : true}, // enable the advanced searching
     		{closeOnEscape:true} /* allow the view dialog to be closed when user press ESC key*/
     );
