@@ -1,0 +1,50 @@
+	<!-- work -->
+	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">		        
+	    <property name="driverClassName" value="${jdbc.driverClassName}" />
+	    <property name="url" value="${jdbc.url}" />
+	    <property name="username" value="${jdbc.username}"/>
+	    <property name="password" value="${jdbc.password}"/>
+	</bean>
+	
+	<!-- work -->
+	<jdbc:embedded-database id="dataSource" type="H2"/>
+	
+	<!-- work -->
+	<bean id="dataSource" class="org.h2.jdbcx.JdbcConnectionPool" destroy-method="dispose">
+	    <constructor-arg>
+	        <bean class="org.h2.jdbcx.JdbcDataSource">
+	            <property name="URL" value="jdbc:h2:dbname"/>
+	            <property name="user" value="user"/>
+	            <property name="password" value="111"/>
+	         </bean>
+	    </constructor-arg>
+	</bean>
+	
+	<jdbc:initialize-database data-source="dataSource" ignore-failures="ALL">
+		<jdbc:script location="classpath:db/schema.sql"/>
+    	<jdbc:script location="classpath:db/test-data.sql"/>
+	</jdbc:initialize-database>
+	
+	
+	<property name="url" value="jdbc:h2:file:h2\db;INIT=RUNSCRIPT FROM 'classpath:db/schema.sql'\;RUNSCRIPT FROM 'classpath:db/test-data.sql'"/>
+	
+	jdbc:h2:file:/home/konrad/test
+	
+	
+	<!-- not work -->
+	<bean id="dataSource" class="org.springframework.jdbc.datasource.LazyConnectionDataSourceProxy">
+	    <constructor-arg>
+	        <bean class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
+	            <property name="driverClass" value="org.h2.Driver" />
+	            <property name="url"
+	                value="jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;MODE=Oracle;TRACE_LEVEL_SYSTEM_OUT=2" />
+	        </bean>
+	    </constructor-arg>
+	</bean>
+
+	<!-- provides a H2 console to look into the db if necessary -->
+	<bean id="org.h2.tools.Server-WebServer" class="org.h2.tools.Server" 
+	    factory-method="createWebServer" depends-on="dataSource" 
+	    init-method="start" lazy-init="false">
+	    <constructor-arg value="-web,-webPort,8082" />
+	</bean>
