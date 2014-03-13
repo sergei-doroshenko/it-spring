@@ -14,6 +14,8 @@
 
  	<http access-denied-page="/error.jsp" use-expressions="true"> 
 		<intercept-url pattern="/index*" access="hasAnyRole('USER,GUEST,ADMINISTRATOR')"/>
+		<intercept-url pattern="/views/users/**" access="hasRole('ADMINISTRATOR')"/>
+		<intercept-url pattern="/views/properties/**" access="hasRole('ADMINISTRATOR')"/>
 		<intercept-url pattern="/user/del/**" access="hasRole('ADMINISTRATOR')"/>
 		<intercept-url pattern="/user/**" access="hasAnyRole('USER,GUEST,ADMINISTRATOR')"/>
 		<intercept-url pattern="/issue/**" access="hasRole('ADMINISTRATOR')" method="DELETE"/>

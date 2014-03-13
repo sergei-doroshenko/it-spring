@@ -1,4 +1,7 @@
-var issue_names = ["Id", "Create Date", "Create By", "Modify Date", "Modify By", "Summary", "Status", "Resolution", "Type", "Priority", "Project", "Bild", "Assignee"];
+var issue_names = new Array();
+issue_names['en'] = ["Id", "Create Date", "Create By", "Modify Date", "Modify By", "Summary", "Status", "Resolution", "Type", "Priority", "Project", "Bild", "Assignee"];
+issue_names['ru'] = ["Ид", "Дата Создания", "Кем Создано", "Дата Изменения", "Кем Изменено", "Кратко", "Статус", "Резолюция", "Тип", "Приоритет", "Проект", "Билд", "Исполнитель"];
+var lang = $.cookie('org.springframework.web.servlet.i18n.CookieLocaleResolver.LOCALE');
 
 var issue_rowLink = { baseLinkUrl: 'issue/view'};
 
@@ -6,7 +9,7 @@ function d (cellValue, rowId, rowData)  {
 	return '/Store/AddToCart?id=' + rowId;
 };
 
-var issue_model = [//
+var issue_model = [
              {name: "id", index: 'id', width: 55, formatter:'showlink', formatoptions: issue_rowLink},
              {name: "createDate", index: "createDate", width: 70},
              {name: "createBy", index: "createBy", width: 70},
@@ -38,12 +41,13 @@ var jsonHandler = {
     };
 
 function createIssueTable() {
+	var locale = $.cookie('org.springframework.web.servlet.i18n.CookieLocaleResolver.LOCALE');
     $("#list").jqGrid({
     	url: "issue/list",
 		mtype: "GET",
         datatype: "json",
         jsonReader : jsonHandler,
-        colNames: issue_names,
+        colNames: issue_names[locale],
         colModel: issue_model,
         pager: "#pager",
         rowNum: 5,
@@ -55,6 +59,7 @@ function createIssueTable() {
         autoencode: true,
         caption: "Issues",
         height: $(".table-container").height(),
+        scrollOffset: 0,
 		ondblClickRow: handleDoubleClick,
 		loadError: function (jqXHR, textStatus, errorThrown) {
 	        alert('HTTP status code: ' + jqXHR.status + '\n' +
@@ -200,9 +205,9 @@ function createStatusesTable() {
     });
     
     $("#statuses-table").jqGrid('navGrid', '#statuses-pager',{view:false, del:true, search:false}, //
-    		{url: 'prop/edit', closeAfterEdit: true, editData: send_data}, // use default settings for edit
-    		{url: 'prop/add', closeAfterAdd: true, editData: send_data}, // use default settings for add
-    		{url: 'prop/del', closeAfterDelete: true, delData: send_data},  // delete instead that del:false we need this
+    		{url: '/issuetracker/prop/edit', closeAfterEdit: true, editData: send_data}, // use default settings for edit
+    		{url: '/issuetracker/prop/add', closeAfterAdd: true, editData: send_data}, // use default settings for add
+    		{url: '/issuetracker/prop/del', closeAfterDelete: true, delData: send_data},  // delete instead that del:false we need this
     		{multipleSearch : true}, // enable the advanced searching
     		{closeOnEscape:true} /* allow the view dialog to be closed when user press ESC key*/
     		);
@@ -235,9 +240,9 @@ function createResolutionsTable() {
     });
     
     $("#resolutions-table").jqGrid('navGrid', '#resolutions-pager',{view:false, del:true, search:false}, //
-    		{url: 'prop/edit', closeAfterEdit: true, editData: send_data}, // use default settings for edit
-    		{url: 'prop/add', closeAfterAdd: true, editData: send_data}, // use default settings for add
-    		{url: 'prop/del', closeAfterDelete: true, delData: send_data},  // delete instead that del:false we need this
+    		{url: '/issuetracker/prop/edit', closeAfterEdit: true, editData: send_data}, // use default settings for edit
+    		{url: '/issuetracker/prop/add', closeAfterAdd: true, editData: send_data}, // use default settings for add
+    		{url: '/issuetracker/prop/del', closeAfterDelete: true, delData: send_data},  // delete instead that del:false we need this
     		{multipleSearch : true}, // enable the advanced searching
     		{closeOnEscape:true} /* allow the view dialog to be closed when user press ESC key*/
     		);
@@ -270,9 +275,9 @@ function createPrioritiesTable() {
     });
     
     $("#priority-table").jqGrid('navGrid', '#priority-pager',{view:false, del:true, search:false}, //
-    		{url: 'prop/edit', closeAfterEdit: true, editData: send_data}, // use default settings for edit
-    		{url: 'prop/add', closeAfterAdd: true, editData: send_data}, // use default settings for add
-    		{url: 'prop/del', closeAfterDelete: true, delData: send_data},  
+    		{url: '/issuetracker/prop/edit', closeAfterEdit: true, editData: send_data}, // use default settings for edit
+    		{url: '/issuetracker/prop/add', closeAfterAdd: true, editData: send_data}, // use default settings for add
+    		{url: '/issuetracker/prop/del', closeAfterDelete: true, delData: send_data},  
     		{multipleSearch : true}, // enable the advanced searching
     		{closeOnEscape:true} /* allow the view dialog to be closed when user press ESC key*/
     		);
@@ -305,9 +310,9 @@ function createTypesTable() {
     });
     
     $("#types-table").jqGrid('navGrid', '#types-pager',{view:false, del:true, search:false}, //
-    		{url: 'prop/edit', closeAfterEdit: true, editData: send_data}, // use default settings for edit
-    		{url: 'prop/add', closeAfterAdd: true, editData: send_data}, // use default settings for add
-    		{url: 'prop/del', closeAfterDelete: true, delData: send_data},  
+    		{url: '/issuetracker/prop/edit', closeAfterEdit: true, editData: send_data}, // use default settings for edit
+    		{url: '/issuetracker/prop/add', closeAfterAdd: true, editData: send_data}, // use default settings for add
+    		{url: '/issuetracker/prop/del', closeAfterDelete: true, delData: send_data},  
     		{multipleSearch : true}, // enable the advanced searching
     		{closeOnEscape:true} /* allow the view dialog to be closed when user press ESC key*/
     		);
@@ -388,9 +393,9 @@ function createProjectsTable() {
     });
     
     $("#projects-table").jqGrid('navGrid', '#projects-pager',{view:false, del:true, search:false}, //
-    		{url: 'project/edit', closeAfterEdit: true}, // use default settings for edit
-    		{url: 'project/add', closeAfterAdd: true}, // use default settings for add
-    		{url: 'project/del', closeAfterDelete: true},  // delete instead that del:false we need this
+    		{url: '/issuetracker/project/edit', closeAfterEdit: true}, // use default settings for edit
+    		{url: '/issuetracker/project/add', closeAfterAdd: true}, // use default settings for add
+    		{url: '/issuetracker/project/del', closeAfterDelete: true},  // delete instead that del:false we need this
     		{multipleSearch : true}, // enable the advanced searching
     		{closeOnEscape:true} /* allow the view dialog to be closed when user press ESC key*/
     );
@@ -422,9 +427,9 @@ function createBuildsTable() {
     });
     
     $("#builds-table").jqGrid('navGrid', '#builds-pager',{view:false, del:true, search:false}, //
-    		{url: 'build/edit', closeAfterEdit: true}, // use default settings for edit
-    		{url: 'build/add', closeAfterAdd: true}, // use default settings for add
-    		{url: 'build/del', closeAfterDelete: true},  // delete instead that del:false we need this
+    		{url: '/issuetracker/build/edit', closeAfterEdit: true}, // use default settings for edit
+    		{url: '/issuetracker/build/add', closeAfterAdd: true}, // use default settings for add
+    		{url: '/issuetracker/build/del', closeAfterDelete: true},  // delete instead that del:false we need this
     		{multipleSearch : true}, // enable the advanced searching
     		{closeOnEscape:true} /* allow the view dialog to be closed when user press ESC key*/
     		);

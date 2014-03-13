@@ -22,6 +22,7 @@
 		<script type="text/javascript" src="js/jquery-1.9.0.min.js"> </script>		
 		<script type="text/javascript" src="js/jquery-ui-1.10.4.custom.min.js"> </script>
 		<script type="text/javascript" src="js/i18n/grid.locale-en.js"> </script>
+		<script type="text/javascript" src="js/i18n/grid.locale-ru.js"> </script>
 		<script type="text/javascript" src="js/jquery.jqGrid.min.js"> </script>
 		<script type="text/javascript" src="js/jquery.cookie.js"> </script>
         <script type="text/javascript" src="js/jquery.form.js"> </script>
