@@ -10,9 +10,9 @@ if (!search) {
 
 function changeLocaleUrl (ev) {
 	
-	var expr = new RegExp("locale=\\w{1,2}");
+	var expr = new RegExp("lang=\\w{1,2}");
 	
-	var countVal = "locale="+ ev.currentTarget.innerHTML;
+	var countVal = "lang="+ ev.currentTarget.innerHTML;
 	
 	if (expr.test(str)) {
 		str = str.replace(expr, countVal);
@@ -140,6 +140,7 @@ function handleError (response, status, err) {
 //************************************************ User Forms ***********************************************
 var user_form_url = 'user/edit';
 var user_view_url = 'user';
+var user_url_tail =  $('#oper').val();
 
 function builUserForm() {
 	var user_url_tail = $('#oper').val();
@@ -217,11 +218,8 @@ function builUserForm() {
 	    	  };
 	    	  
 	    	 $.ajax({
-<<<<<<< HEAD
               url: user_form_url,
-=======
               url: 'user/' + user_url_tail,
->>>>>>> branch 'spring' of https://github.com/mzubok/issuetracker_sergei_doroshenko.git
               data: formdata,
               dataType: 'text',
               type: 'post',

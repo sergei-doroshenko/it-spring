@@ -2,9 +2,16 @@
 <%@ page import="org.training.issuetracker.domain.User" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <!-- i18n -->
+<spring:message code="issue.err.null"/>
+<c:forEach var="cookieVal" items="${cookie}">
+	<c:if test="${cookieVal.key eq  'org.springframework.web.servlet.i18n.CookieLocaleResolver.LOCALE'}">
+		<strong>Locale:</strong> <c:out value="${cookieVal.value.value}" />
+	</c:if>
+</c:forEach>
 <fmt:requestEncoding value="UTF-8" />
 <fmt:setLocale value="${sessionScope[constants.KEY_LOCALE]}"/>
 <fmt:setBundle basename="i18n.main" var="lang"/>
@@ -13,8 +20,8 @@
 	<h2>Issue Tracker</h2>
 </div><!--end logo-->
 <div id="lang">
-   	<span id="en-loc" class="button-locale">EN</span>
-	<span id="ru-loc" class="button-locale">RU</span>
+   	<span id="en-loc" class="button-locale">en</span>
+	<span id="ru-loc" class="button-locale">ru</span>
 </div>
 <div id="dialog-form" class="user-dialog hidden-block" title="User Info">
 	<p class="validateTips">All form fields are required.</p>

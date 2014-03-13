@@ -23,12 +23,10 @@
 <script type="text/javascript">
       $( document ).ready(function () {
            $('#new-button').bind().on('click', function(){
-        	   var url = window.location.pathname + '/new';
-          	  window.location.href = url;
+          	  window.location.href = '/issuetracker/issue/new';
            });
            $('#edit-button').bind().on('click', function(){
-         	  var url = window.location.pathname + '/edit?id='+ getParameterByName('id');
-         	  window.location.href = url;
+         	  window.location.href = '/issuetracker/issue/edit?id='+ getParameterByName('id');
            });
            $('#delete-button').bind().on('click', function(){
          	  executeDeleteIssue();

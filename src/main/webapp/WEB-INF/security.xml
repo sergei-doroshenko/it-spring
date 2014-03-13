@@ -13,11 +13,21 @@
 	<!-- intercept-url pattern="\A/*/edit\?oper=del*" access="hasRole('ADMINISTRATOR')"/--> 
 
  	<http access-denied-page="/error.jsp" use-expressions="true"> 
-	   <intercept-url pattern="/index*" access="hasAnyRole('USER,GUEST,ADMINISTRATOR')"/>
-	   <intercept-url pattern="/user/add*" access="hasAnyRole('USER,GUEST,ADMINISTRATOR')"/>
-	   <intercept-url pattern="/user/edit*" access="hasAnyRole('USER,ADMINISTRATOR')"/> 
-	   <intercept-url pattern="/user/del*" access="hasRole('ADMINISTRATOR')"/> 
-
+		<intercept-url pattern="/index*" access="hasAnyRole('USER,GUEST,ADMINISTRATOR')"/>
+		<intercept-url pattern="/user/del/**" access="hasRole('ADMINISTRATOR')"/>
+		<intercept-url pattern="/user/**" access="hasAnyRole('USER,GUEST,ADMINISTRATOR')"/>
+		<intercept-url pattern="/issue/**" access="hasRole('ADMINISTRATOR')" method="DELETE"/>
+		<intercept-url pattern="/issue/list/**" access="hasAnyRole('USER,GUEST,ADMINISTRATOR')"/>
+		<intercept-url pattern="/issue/view/**" access="hasAnyRole('USER,GUEST,ADMINISTRATOR')"/>
+		<intercept-url pattern="/issue/**" access="hasAnyRole('USER,ADMINISTRATOR')"/>
+		<intercept-url pattern="/build/project/*" access="hasAnyRole('USER,ADMINISTRATOR')"/>
+		<intercept-url pattern="/build/**" access="hasRole('ADMINISTRATOR')"/>
+		<intercept-url pattern="/project/**" access="hasRole('ADMINISTRATOR')"/>
+		<intercept-url pattern="/prop/**" access="hasRole('ADMINISTRATOR')"/>
+		<intercept-url pattern="/attachment/del/**" access="hasRole('ADMINISTRATOR')"/>
+		<intercept-url pattern="/attachment/**" access="hasAnyRole('USER,ADMINISTRATOR')"/>
+		<intercept-url pattern="/comment/del/**" access="hasRole('ADMINISTRATOR')"/>
+		<intercept-url pattern="/comment/**" access="hasAnyRole('USER,ADMINISTRATOR')"/>
 	   <form-login login-page="/index.jsp" default-target-url="/index.jsp" 
 	   		authentication-success-handler-ref="myAuthenticationSuccessHandler"
 	   		authentication-failure-url="/index.jsp"  
@@ -55,5 +65,5 @@
 	     	   />
 	    </authentication-provider> 
 	</authentication-manager>
-
+	
 </beans:beans>

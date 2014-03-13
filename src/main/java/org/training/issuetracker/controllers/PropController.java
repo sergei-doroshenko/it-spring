@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.training.issuetracker.constants.Constants;
 import org.training.issuetracker.domain.AbstractPersistentObj;
-import org.training.issuetracker.domain.Project;
 import org.training.issuetracker.domain.DAO.PropDAO;
 import org.training.issuetracker.domain.DAO.PropertyType;
 import org.training.issuetracker.exceptions.DaoException;
@@ -63,7 +62,7 @@ public class PropController {
 		return options;
 	}
 	
-	@RequestMapping(value="/edit", method = RequestMethod.POST, params={"oper=add", Constants.KEY_NAME}, produces="application/json")
+	@RequestMapping(value="/add", method = RequestMethod.POST, params={Constants.KEY_NAME}, produces="application/json")
 	public @ResponseBody String addProp(@RequestParam(Constants.KEY_NAME) String name, 
 			@RequestParam("type") String type) throws DaoException {
 		
@@ -75,8 +74,8 @@ public class PropController {
 		return "";
 	}
 	
-	@RequestMapping(value="/edit", method = RequestMethod.POST, params={"oper=edit", 
-			Constants.KEY_ID, Constants.KEY_NAME}, produces="application/json")
+	@RequestMapping(value="/edit", method = RequestMethod.POST, params={Constants.KEY_ID, 
+			Constants.KEY_NAME}, produces="application/json")
 	public @ResponseBody String editProject(@RequestParam(Constants.KEY_ID) long id, 
 			@RequestParam(Constants.KEY_NAME) String name, @RequestParam("type") String type) throws DaoException {
 		
@@ -89,7 +88,7 @@ public class PropController {
 		return "";
 	}
 	
-	@RequestMapping(value="/edit", method = RequestMethod.POST, params={"oper=del", Constants.KEY_ID}, produces="application/json")
+	@RequestMapping(value="/del", method = RequestMethod.POST, params={Constants.KEY_ID}, produces="application/json")
 	public @ResponseBody String deleteProject(@RequestParam(Constants.KEY_ID) long id, @RequestParam("type") String type) throws DaoException {
 		
 		propDAO.deleteProp(PropertyType.valueOf(type), id);

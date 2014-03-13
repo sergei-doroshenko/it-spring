@@ -1,8 +1,12 @@
 var issue_names = ["Id", "Create Date", "Create By", "Modify Date", "Modify By", "Summary", "Status", "Resolution", "Type", "Priority", "Project", "Bild", "Assignee"];
 
-var issue_rowLink = { baseLinkUrl: 'issue'};
+var issue_rowLink = { baseLinkUrl: 'issue/view'};
 
-var issue_model = [
+function d (cellValue, rowId, rowData)  {
+	return '/Store/AddToCart?id=' + rowId;
+};
+
+var issue_model = [//
              {name: "id", index: 'id', width: 55, formatter:'showlink', formatoptions: issue_rowLink},
              {name: "createDate", index: "createDate", width: 70},
              {name: "createBy", index: "createBy", width: 70},
@@ -66,7 +70,7 @@ function createIssueTable() {
     		{closeAfterAdd: true}, // use default settings for add
     		{closeAfterDelete: true},  // delete instead that del:false we need this
     		{multipleSearch : true, // enable the advanced searching
-    			multipleGroup:true, // searching using subgroups
+    			multipleGroup:false, // searching using subgroups
     	        showQuery: true // show preview of search query
     		}, 
     		{closeOnEscape:true} /* allow the view dialog to be closed when user press ESC key*/
@@ -133,10 +137,10 @@ function handleLoadComplete () {
 
 //***************************************** Properties Tables *****************************************
 
-var prop_url = "prop";
-var user_url = 'user';
-var project_url = 'project';
-var buil_url = 'build';
+var prop_url = "/issuetracker/prop";
+var user_url = '/issuetracker/user';
+var project_url = '/issuetracker/project';
+var buil_url = '/issuetracker/build';
 var edit_url = '/edit';
 
 var jsonHandlerProp = {
@@ -196,9 +200,9 @@ function createStatusesTable() {
     });
     
     $("#statuses-table").jqGrid('navGrid', '#statuses-pager',{view:false, del:true, search:false}, //
-    		{closeAfterEdit: true, editData: send_data}, // use default settings for edit
-    		{closeAfterAdd: true, editData: send_data}, // use default settings for add
-    		{closeAfterDelete: true, delData: send_data},  // delete instead that del:false we need this
+    		{url: 'prop/edit', closeAfterEdit: true, editData: send_data}, // use default settings for edit
+    		{url: 'prop/add', closeAfterAdd: true, editData: send_data}, // use default settings for add
+    		{url: 'prop/del', closeAfterDelete: true, delData: send_data},  // delete instead that del:false we need this
     		{multipleSearch : true}, // enable the advanced searching
     		{closeOnEscape:true} /* allow the view dialog to be closed when user press ESC key*/
     		);
@@ -231,9 +235,9 @@ function createResolutionsTable() {
     });
     
     $("#resolutions-table").jqGrid('navGrid', '#resolutions-pager',{view:false, del:true, search:false}, //
-    		{closeAfterEdit: true, editData: send_data}, // use default settings for edit
-    		{closeAfterAdd: true, editData: send_data}, // use default settings for add
-    		{closeAfterDelete: true, delData: send_data},  // delete instead that del:false we need this
+    		{url: 'prop/edit', closeAfterEdit: true, editData: send_data}, // use default settings for edit
+    		{url: 'prop/add', closeAfterAdd: true, editData: send_data}, // use default settings for add
+    		{url: 'prop/del', closeAfterDelete: true, delData: send_data},  // delete instead that del:false we need this
     		{multipleSearch : true}, // enable the advanced searching
     		{closeOnEscape:true} /* allow the view dialog to be closed when user press ESC key*/
     		);
@@ -266,9 +270,9 @@ function createPrioritiesTable() {
     });
     
     $("#priority-table").jqGrid('navGrid', '#priority-pager',{view:false, del:true, search:false}, //
-    		{closeAfterEdit: true, editData: send_data}, // use default settings for edit
-    		{closeAfterAdd: true, editData: send_data}, // use default settings for add
-    		{closeAfterDelete: true, delData: send_data},  // delete instead that del:false we need this
+    		{url: 'prop/edit', closeAfterEdit: true, editData: send_data}, // use default settings for edit
+    		{url: 'prop/add', closeAfterAdd: true, editData: send_data}, // use default settings for add
+    		{url: 'prop/del', closeAfterDelete: true, delData: send_data},  
     		{multipleSearch : true}, // enable the advanced searching
     		{closeOnEscape:true} /* allow the view dialog to be closed when user press ESC key*/
     		);
@@ -301,9 +305,9 @@ function createTypesTable() {
     });
     
     $("#types-table").jqGrid('navGrid', '#types-pager',{view:false, del:true, search:false}, //
-    		{closeAfterEdit: true, editData: send_data}, // use default settings for edit
-    		{closeAfterAdd: true, editData: send_data}, // use default settings for add
-    		{closeAfterDelete: true, delData: send_data},  // delete instead that del:false we need this
+    		{url: 'prop/edit', closeAfterEdit: true, editData: send_data}, // use default settings for edit
+    		{url: 'prop/add', closeAfterAdd: true, editData: send_data}, // use default settings for add
+    		{url: 'prop/del', closeAfterDelete: true, delData: send_data},  
     		{multipleSearch : true}, // enable the advanced searching
     		{closeOnEscape:true} /* allow the view dialog to be closed when user press ESC key*/
     		);
@@ -336,9 +340,9 @@ function createRolesTable() {
     });
     
     $("#roles-table").jqGrid('navGrid', '#roles-pager',{view:false, del:true, search:false}, //
-    		{closeAfterEdit: true, editData: send_data}, // use default settings for edit
-    		{closeAfterAdd: true, editData: send_data}, // use default settings for add
-    		{closeAfterDelete: true, delData: send_data},  // delete instead that del:false we need this
+    		{url: '/issuetracker/prop/edit', closeAfterEdit: true, editData: send_data}, // use default settings for edit
+    		{url: '/issuetracker/prop/add', closeAfterAdd: true, editData: send_data}, // use default settings for add
+    		{url: '/issuetracker/prop/del', closeAfterDelete: true, delData: send_data},  
     		{multipleSearch : true}, // enable the advanced searching
     		{closeOnEscape:true} /* allow the view dialog to be closed when user press ESC key*/
     		);
@@ -384,9 +388,9 @@ function createProjectsTable() {
     });
     
     $("#projects-table").jqGrid('navGrid', '#projects-pager',{view:false, del:true, search:false}, //
-    		{closeAfterEdit: true}, // use default settings for edit
-    		{closeAfterAdd: true}, // use default settings for add
-    		{closeAfterDelete: true},  // delete instead that del:false we need this
+    		{url: 'project/edit', closeAfterEdit: true}, // use default settings for edit
+    		{url: 'project/add', closeAfterAdd: true}, // use default settings for add
+    		{url: 'project/del', closeAfterDelete: true},  // delete instead that del:false we need this
     		{multipleSearch : true}, // enable the advanced searching
     		{closeOnEscape:true} /* allow the view dialog to be closed when user press ESC key*/
     );
@@ -418,9 +422,9 @@ function createBuildsTable() {
     });
     
     $("#builds-table").jqGrid('navGrid', '#builds-pager',{view:false, del:true, search:false}, //
-    		{closeAfterEdit: true}, // use default settings for edit
-    		{closeAfterAdd: true}, // use default settings for add
-    		{closeAfterDelete: true},  // delete instead that del:false we need this
+    		{url: 'build/edit', closeAfterEdit: true}, // use default settings for edit
+    		{url: 'build/add', closeAfterAdd: true}, // use default settings for add
+    		{url: 'build/del', closeAfterDelete: true},  // delete instead that del:false we need this
     		{multipleSearch : true}, // enable the advanced searching
     		{closeOnEscape:true} /* allow the view dialog to be closed when user press ESC key*/
     		);
@@ -458,7 +462,7 @@ function createUsersTable() {
                    { name: "lastName", index: 'lastName', width: 150, editable: true, editoptions:{size:"20",maxlength:"30"}},
                    { name: "email", index: 'email', width: 150, editable: true, editoptions:{size:"20",maxlength:"30"}},
                    { name: "password", index: 'password', width: 100, editable: true, editoptions:{size:"20",maxlength:"30"}},
-                   { name: "role", index: 'role', width: 100, editable: true, edittype:"select", editoptions: {dataUrl: 'prop/options/ROLE'}, }
+                   { name: "role", index: 'role', width: 100, editable: true, edittype:"select", editoptions: {dataUrl: '/issuetracker/prop/options/ROLE'}, }
                ],
         pager: "#users-pager",
         rowNum: 10,
@@ -473,9 +477,9 @@ function createUsersTable() {
     });
     
     $("#users-table").jqGrid('navGrid', '#users-pager',{view:true, del:true, search:true}, //
-    		{url: 'user/edit', closeAfterEdit: true}, // use default settings for edit
-    		{url: 'user/add', closeAfterAdd: true}, // use default settings for add
-    		{url: 'user/del', closeAfterDelete: true},  // delete instead that del:false we need this
+    		{url: '/issuetracker/user/edit', closeAfterEdit: true}, // use default settings for edit
+    		{url: '/issuetracker/user/add', closeAfterAdd: true}, // use default settings for add
+    		{url: '/issuetracker/user/del', closeAfterDelete: true},  // delete instead that del:false we need this
     		{multipleSearch : true}, // enable the advanced searching
     		{closeOnEscape:true} /* allow the view dialog to be closed when user press ESC key*/
     );

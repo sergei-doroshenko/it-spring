@@ -11,20 +11,20 @@
      <head>
         <meta charset="UTF-8">
         <title>Users page</title>
-        <link rel="stylesheet" type="text/css" media="screen" href="css/ui-lightness/jquery-ui.css" />
-        <link rel="stylesheet" type="text/css" media="screen" href="css/ui-lightness/jquery.ui.theme.css" />
-        <link rel="stylesheet" type="text/css" media="screen" href="css/ui-lightness/jquery-ui-1.10.4.custom.css" />
-		<link rel="stylesheet" type="text/css" media="screen" href="css/ui.jqgrid.css" />
-		<link rel="stylesheet" type="text/css" media="screen" href="css/default.css" />        
+        <link rel="stylesheet" type="text/css" media="screen" href="/issuetracker/css/ui-lightness/jquery-ui.css" />
+        <link rel="stylesheet" type="text/css" media="screen" href="/issuetracker/css/ui-lightness/jquery.ui.theme.css" />
+        <link rel="stylesheet" type="text/css" media="screen" href="/issuetracker/css/ui-lightness/jquery-ui-1.10.4.custom.css" />
+		<link rel="stylesheet" type="text/css" media="screen" href="/issuetracker/css/ui.jqgrid.css" />
+		<link rel="stylesheet" type="text/css" media="screen" href="/issuetracker/css/default.css" />        
 		
-		<script type="text/javascript" src="js/jquery-1.9.0.min.js"> </script>		
-		<script type="text/javascript" src="js/jquery-ui-1.10.4.custom.min.js"> </script>
-		<script type="text/javascript" src="js/i18n/grid.locale-en.js"> </script>
-		<script type="text/javascript" src="js/jquery.jqGrid.min.js"> </script>
-		<script type="text/javascript" src="js/jquery.cookie.js"> </script>
-        <script type="text/javascript" src="js/jquery.form.js"> </script>	
-		<script type="text/javascript" src="js/issuetracker-main.js"> </script>
-		<script type="text/javascript" src="js/issuetracker-tables.js"> </script>
+		<script type="text/javascript" src="/issuetracker/js/jquery-1.9.0.min.js"> </script>		
+		<script type="text/javascript" src="/issuetracker/js/jquery-ui-1.10.4.custom.min.js"> </script>
+		<script type="text/javascript" src="/issuetracker/js/i18n/grid.locale-ru.js"> </script>
+		<script type="text/javascript" src="/issuetracker/js/jquery.jqGrid.min.js"> </script>
+		<script type="text/javascript" src="/issuetracker/js/jquery.cookie.js"> </script>
+        <script type="text/javascript" src="/issuetracker/js/jquery.form.js"> </script>	
+		<script type="text/javascript" src="/issuetracker/js/issuetracker-main.js"> </script>
+		<script type="text/javascript" src="/issuetracker/js/issuetracker-tables.js"> </script>
      </head>
 	<body>
 	

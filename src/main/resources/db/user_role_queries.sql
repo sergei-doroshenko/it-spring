@@ -25,3 +25,11 @@ DELETE FROM USERS WHERE USERS.ID = 10;
 /***************** UPDATE USER **************************************************/
 UPDATE ROLES SET ROLES.RL_NAME = 'ADMINISTRATOR'
 WHERE ID = 1;
+
+INSERT INTO AUTHORITIES (USERNAME, AUTHORITY)
+VALUES
+('admin@gmail.com', 'ADMINISTRATOR'),
+('tim@gmail.com', 'USER'),
+('ivan@gmail.com', 'USER'),
+('rom@gmail.com', 'USER'),
+('dan@gmail.com', 'USER');

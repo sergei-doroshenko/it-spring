@@ -20,8 +20,6 @@ import org.training.issuetracker.domain.DAO.UserDAO;
 import org.training.issuetracker.exceptions.DaoException;
 import org.training.issuetracker.utils.JqGridData;
 
-import flexjson.JSONSerializer;
-
 @Controller
 @RequestMapping("/project")
 public class ProjectController {
@@ -59,7 +57,7 @@ public class ProjectController {
 		return options;
 	}
 	
-	@RequestMapping(value="/edit", method = RequestMethod.POST, params={"oper=add", Constants.KEY_NAME, 
+	@RequestMapping(value="/add", method = RequestMethod.POST, params={Constants.KEY_NAME, 
 			Constants.KEY_DESCRIPTION, Constants.KEY_MANAGER_ID}, produces="application/json")
 	public @ResponseBody String addProject(@RequestParam(Constants.KEY_NAME) String name, @RequestParam(Constants.KEY_DESCRIPTION) String description, 
 			@RequestParam(Constants.KEY_MANAGER_ID) long managerId) throws DaoException {
@@ -74,7 +72,7 @@ public class ProjectController {
 		return "";
 	}
 	
-	@RequestMapping(value="/edit", method = RequestMethod.POST, params={"oper=edit", Constants.KEY_ID, Constants.KEY_NAME, 
+	@RequestMapping(value="/edit", method = RequestMethod.POST, params={Constants.KEY_ID, Constants.KEY_NAME, 
 			Constants.KEY_DESCRIPTION, Constants.KEY_MANAGER_ID}, produces="application/json")
 	public @ResponseBody String editProject(@RequestParam(Constants.KEY_ID) long id, @RequestParam(Constants.KEY_NAME) String name, 
 			@RequestParam(Constants.KEY_DESCRIPTION) String description, @RequestParam(Constants.KEY_MANAGER_ID) long managerId) throws DaoException {
@@ -90,7 +88,7 @@ public class ProjectController {
 		return "";
 	}
 	
-	@RequestMapping(value="/edit", method = RequestMethod.POST, params={"oper=del", Constants.KEY_ID}, produces="application/json")
+	@RequestMapping(value="/del", method = RequestMethod.POST, params={Constants.KEY_ID}, produces="application/json")
 	public @ResponseBody String deleteProject(@RequestParam(Constants.KEY_ID) long id) throws DaoException {
 		
 		projectDAO.deleteProject(id);

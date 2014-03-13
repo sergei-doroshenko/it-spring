@@ -52,8 +52,8 @@ public class BuildController {
 		String json = new JSONSerializer().exclude("*.class").deepSerialize(builds);
 		return json;
 	}
-	
-	@RequestMapping(value="/edit", method = RequestMethod.POST, params={"oper=add", Constants.KEY_NAME, 
+	 
+	@RequestMapping(value="/add", method = RequestMethod.POST, params={Constants.KEY_NAME, 
 			Constants.KEY_PROJECT_ID}, produces="application/json")
 	public @ResponseBody String addBuild(@RequestParam(Constants.KEY_NAME) String name,  
 			@RequestParam(Constants.KEY_PROJECT_ID) long projectId) throws DaoException {
@@ -68,7 +68,7 @@ public class BuildController {
 		return "";
 	}
 	
-	@RequestMapping(value="/edit", method = RequestMethod.POST, params={"oper=edit", Constants.KEY_ID, Constants.KEY_NAME, 
+	@RequestMapping(value="/edit", method = RequestMethod.POST, params={Constants.KEY_ID, Constants.KEY_NAME, 
 			Constants.KEY_PROJECT_ID}, produces="application/json")
 	public @ResponseBody String editBuild(@RequestParam(Constants.KEY_ID) long id, @RequestParam(Constants.KEY_NAME) String name, 
 			@RequestParam(Constants.KEY_PROJECT_ID) long projectId) throws DaoException {
@@ -83,7 +83,7 @@ public class BuildController {
 		return "";
 	}
 	
-	@RequestMapping(value="/edit", method = RequestMethod.POST, params={"oper=del", Constants.KEY_ID}, produces="application/json")
+	@RequestMapping(value="/del", method = RequestMethod.POST, params={Constants.KEY_ID}, produces="application/json")
 	public @ResponseBody String deleteBuild(@RequestParam(Constants.KEY_ID) long id) throws DaoException {
 		
 		buildDAO.deleteBuild(id);

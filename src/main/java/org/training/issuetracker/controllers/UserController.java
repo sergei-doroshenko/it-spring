@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -97,27 +98,7 @@ public class UserController {
         binder.registerCustomEditor(Long.class, "id", new LongEditor());
         binder.registerCustomEditor(Role.class, "role", new RoleEditor()); 
     } 
-	
-
-	
-//	@RequestMapping(value = "/login", method = RequestMethod.POST, params={"login", "password"}, produces="application/json")
-//	public @ResponseBody String getUserByLogin(@RequestParam(Constants.KEY_LOGIN)String login,  
-//			@RequestParam(Constants.KEY_PASSWORD) String password, HttpSession session) throws DaoException {
-//		
-//		User user = userDAO.getUser(login, password);
-//		
-//		session.setAttribute(Constants.KEY_USER, user);
-//		return "";
-//	}
-	
-//	@RequestMapping(value = "/logout", method = RequestMethod.GET, produces="application/json")
-//	public RedirectView loguot(HttpSession session) {
-//		
-//		session.removeAttribute(Constants.KEY_USER);
-//		session.invalidate();
-//		return new RedirectView("/index.jsp", true);
-//	}
-	
+		
 	@RequestMapping(method = RequestMethod.GET, params="id", produces="application/json")
 	public @ResponseBody String getUserById(@RequestParam(Constants.KEY_ID) long id) throws DaoException {
 		
@@ -157,64 +138,66 @@ public class UserController {
 		return options;
 	}
 	
-	@RequestMapping(value="/edit", method = RequestMethod.POST, params={"oper=add"}, produces="application/json")
+	@RequestMapping(value="/add", method = RequestMethod.POST, produces="application/json")
 	public ResponseEntity<String> addUser(@Valid User user, BindingResult bindingResult, 
 			Principal principal, HttpSession session, Locale locale) throws DaoException {
-		
+
 		if(bindingResult.hasErrors()){
 			String json = new JSONSerializer().exclude("*.class", "bindingFailure", "code", "objectName", "rejectedValue")
 					.serialize(bindingResult.getFieldErrors());
 			return new ResponseEntity<String>(json, HttpStatus.BAD_REQUEST);
 		}
-		
+
 		if(user.getRole() == null) {
 			user.setRole((Role) propDAO.getProp(PropertyType.ROLE, Constants.DEFAULT_ROLE_ID)); 
 		}
 		user.setEnabled(true);
 		userDAO.insertUser(user);
-		
+
 		if(principal == null) {
 			session.setAttribute(Constants.USER_MESSAGE, messageSource.getMessage("user.register.success", null, locale));
 		}
-				
+
 		return new ResponseEntity<String>("", HttpStatus.OK);
 	}
-	
-	@RequestMapping(value="/edit", method = RequestMethod.POST, params={"oper=edit"//, Constants.KEY_ID, Constants.KEY_FIRST_NAME, 
-			}, produces="application/json")//Constants.KEY_LAST_NAME, Constants.KEY_EMAIL, Constants.KEY_PASSWORD
+
+	@RequestMapping(value="/edit", method = RequestMethod.POST, produces="application/json")
 	public ResponseEntity<String> editUser(@Valid User user, BindingResult bindingResult, HttpSession session) throws DaoException {
-		
+
 		if(bindingResult.hasErrors()){
 			String json = new JSONSerializer().exclude("*.class", "bindingFailure", "code", "objectName", "rejectedValue")
 					.serialize(bindingResult.getFieldErrors());
 			return new ResponseEntity<String>(json, HttpStatus.BAD_REQUEST);
 		}
 		
-		if(user.getRole() == null) {
-			user.setRole((Role) propDAO.getProp(PropertyType.ROLE, Constants.DEFAULT_ROLE_ID)); 
-		}
-		user.setEnabled(true);
-		
-		userDAO.updateUser(user);
-				
 		User currentUser = (User) session.getAttribute(Constants.KEY_USER);
-		
-		if (!currentUser.getRole().getName().equals(Constants.ROLE_ADMIN)) {
+		user.setEnabled(true);
+		if(user.getRole() == null) {
+			if (!currentUser.getRole().getName().equals(Constants.ROLE_ADMIN)) {
+				user.setId(currentUser.getId());
+			}
+			user.setRole(currentUser.getRole());
 			session.removeAttribute(Constants.KEY_USER);
 			session.setAttribute(Constants.KEY_USER, user);
+		} else {
+			if (!currentUser.getRole().getName().equals(Constants.ROLE_ADMIN)) {
+				throw new AccessDeniedException("You haven't permission.");
+			}
 		}
 		
+		userDAO.updateUser(user);
+
 		return new ResponseEntity<String>("", HttpStatus.OK);
 	}
 	
-	@RequestMapping(value="/edit", method = RequestMethod.POST, params={"oper=del", Constants.KEY_ID}, produces="application/json")
+	@RequestMapping(value="/del", method = RequestMethod.POST, params={Constants.KEY_ID}, produces="application/json")
 	public @ResponseBody String deleteUser(@RequestParam(Constants.KEY_ID) long id) throws DaoException {
-		
+
 		userDAO.deleteUser(id);
-				
+
 		return "";
 	}
-	
+
 	@ExceptionHandler(DaoException.class)
 	public ResponseEntity<String> handleDaoException(DaoException ex) {
 		return new ResponseEntity<String>(ex.getMessage(), HttpStatus.BAD_REQUEST);

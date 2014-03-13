@@ -84,7 +84,7 @@ public class IssueController {
 		return json;
 	}
 	
-	@RequestMapping(method = RequestMethod.GET, params="id")
+	@RequestMapping(value="/view", method = RequestMethod.GET, params="id")
 	public String viewIssue (@RequestParam(Constants.KEY_ID) long id, ModelMap model) throws DaoException {
 		
 		model.addAttribute(Constants.ISSUE, issueDAO.getIssueById(id));
@@ -138,7 +138,7 @@ public class IssueController {
 		issue.setModifyBy(currentUser);
 		issueDAO.updateIssue(issue);
 		
-		return "/issuetracker/issue?id=" + id;
+		return "/issuetracker/issue/view?id=" + id;
 	}
 	
 	@RequestMapping(value="/add", method = RequestMethod.POST)
@@ -150,7 +150,7 @@ public class IssueController {
 		issue.setStatus((Status) propDAO.getProp(PropertyType.STATUS, 1)); 
 		long id = issueDAO.insertIssue(issue);
 		
-		return "/issuetracker/issue?id=" + id;
+		return "/issuetracker/issue/view?id=" + id;
 	}
 	
 	@RequestMapping(value="/{id}", method = RequestMethod.DELETE)

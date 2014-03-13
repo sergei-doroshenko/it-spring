@@ -15,7 +15,7 @@
 		<li class="menu-obj-item"><a href="${constants.COMMAND_SUBMIT_ISSUE}"><fmt:message key="submitissue" bundle="${lang}"/></a></li>
 	</security:authorize>
 	<security:authorize access="hasRole('ADMINISTRATOR')">
-    	<li class="menu-obj-item"><a href="users.jsp"><fmt:message key="admin.users" bundle="${lang}"/></a></li>
-		<li class="menu-obj-item"><a href="properties.jsp"><fmt:message key="admin.properties" bundle="${lang}"/></a></li>
+    	<li class="menu-obj-item"><a href="/issuetracker/views/users"><fmt:message key="admin.users" bundle="${lang}"/></a></li>
+		<li class="menu-obj-item"><a href="/issuetracker/views/properties"><fmt:message key="admin.properties" bundle="${lang}"/></a></li>
     </security:authorize>
 </ul>
