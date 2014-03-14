@@ -21,7 +21,7 @@ var issue_model = [
              {name: "modifyBy", index: "modifyBy", width: 75,
             		searchrules: { "required": true}, stype: 'select', searchoptions: {sopt: ['eq', 'ne'], dataUrl: '/issuetracker/user/options'}},
              {name: "summary", index: 'summary', width: 100,
-            		searchrules: { "required": true}, searchoptions: {sopt: ['bw', 'bn', 'ew', 'en', 'cn', 'nc']}},//hidden: true, searchoptions: {searchhidden: true}, 
+            		searchrules: { "required": true}, searchoptions: {sopt: ['bw', 'ew', 'cn']}},//hidden: true, searchoptions: {searchhidden: true}, 
              {name: "status", index: 'status', width: 70,
             		searchrules: { "required": true}, stype: 'select', searchoptions: {sopt: ['eq', 'ne'], dataUrl: '/issuetracker/prop/options/STATUS'}},
              {name: "resolution", index: "resolution", width: 70,
@@ -31,9 +31,9 @@ var issue_model = [
              {name: "priority", index: 'priority', width: 70, formatter: colorFormatter,
             		searchrules: { "required": true}, stype: 'select', searchoptions: {sopt: ['eq', 'ne'], dataUrl: '/issuetracker/prop/options/PRIORITY'}},
              {name: "project", index: "project", width: 150,
-            	 searchrules: { "required": true}, searchoptions: {sopt: ['bw', 'bn', 'ew', 'en', 'cn', 'nc']}}, 
+            	 searchrules: { "required": true}, searchoptions: {sopt: ['bw', 'ew', 'cn']}}, 
              {name: "build", index: "build", width: 70,
-            	 searchrules: { "required": true}, searchoptions: {sopt: ['bw', 'bn', 'ew', 'en', 'cn', 'nc']}},
+            	 searchrules: { "required": true}, searchoptions: {sopt: ['bw', 'ew', 'cn']}},
              {name: "assignee", index: 'assignee', width: 100,
             	 searchrules: { "required": true}, stype: 'select', searchoptions: {sopt: ['eq', 'ne'], dataUrl: '/issuetracker/user/options'}}
          ];

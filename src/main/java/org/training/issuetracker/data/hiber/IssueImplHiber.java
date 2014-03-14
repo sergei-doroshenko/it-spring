@@ -10,6 +10,8 @@ import java.util.Set;
 
 import org.apache.log4j.Logger;
 import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Disjunction;
+import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,7 +57,7 @@ public class IssueImplHiber implements IssueDAO {
 	@Override
 	public List getIssueList(SearchFilterParams params) throws DaoException {
 		
-		DetachedCriteria criteria = DetachedCriteria.forClass(Issue.class);
+		DetachedCriteria criteria = DetachedCriteria.forClass(Issue.class, "issue");
 		int page = params.getPage();
 		int rows = params.getRows();
 		int firstResult = (page - 1) * rows;
@@ -96,62 +98,152 @@ public class IssueImplHiber implements IssueDAO {
 			List<SearchRule> rules = filter.getRules();
 			Map<String, Set<SearchRule>> checkedRules = checkDoubles(rules);
 			
+			//Key is field
 			for (String key : checkedRules.keySet()) {
 				Set<SearchRule> rulesSet = checkedRules.get(key);
-				boolean isNeedExpr = (rulesSet.size() > 1);
 				
-				for (SearchRule rule : rulesSet) {
-					logger.debug("Rule " + rule);
-					String field = rule.getField();
-					String data = rule.getData();
-					Object value = getSearchValue(field, data);
-					switch (rule.getOp()) {
-						case "eq" : {
-							criteria.add(Restrictions.eq(rule.getField(), value));
-							break;
-						}
-						case "ne" : {
-							criteria.add(Restrictions.ne(field, value));
-							break;
-						}
-						case "lt" : {
-							criteria.add(Restrictions.lt(field, value));
-							break;
-						}
-						case "le" : {
-							criteria.add(Restrictions.le(field, value));
-							break;
-						}
-						case "gt" : {
-							criteria.add(Restrictions.gt(field, value));
-							break;
-						}
-						case "ge" : {
-							criteria.add(Restrictions.ge(field, value));
-							break;
-						}
-						case "bw" : {
-							break;
-						}
-						case "bn" : {
-							break;
-						}
-						case "ew" : {
-							break;
-						}
-						case "en" : {
-							break;
-						}
-						case "cn" : {
-							break;
-						}
-						case "nc" : {
-							break;
-						}
-						default : {
-							break;
-						}
-					};
+				if(key.equals("project")) {
+					criteria.createAlias("issue.project", "project");
+				}
+				if(key.equals("build")) {
+					criteria.createAlias("issue.build", "build");
+				}
+				//Add OR
+				if (rulesSet.size() > 1) {
+					Disjunction disjunction = Restrictions.disjunction();
+					for (SearchRule rule : rulesSet) {
+						
+						String field = rule.getField();
+						String data = rule.getData();
+						Object value = getSearchValue(field, data);
+						switch (rule.getOp()) {
+							case "eq" : {
+								disjunction.add(Restrictions.eq(field, value));
+								break;
+							}
+							case "ne" : {
+								disjunction.add(Restrictions.ne(field, value));
+								break;
+							}
+							case "lt" : {
+								disjunction.add(Restrictions.lt(field, value));
+								break;
+							}
+							case "le" : {
+								disjunction.add(Restrictions.le(field, value));
+								break;
+							}
+							case "gt" : {
+								disjunction.add(Restrictions.gt(field, value));
+								break;
+							}
+							case "ge" : {
+								disjunction.add(Restrictions.ge(field, value));
+								break;
+							}
+							case "bw" : {
+								if(field.equals("project")) {
+									disjunction.add(Restrictions.like("project.name", (String) value, MatchMode.START));
+								} else if (field.equals("build")) {
+									disjunction.add(Restrictions.like("build.name", (String) value, MatchMode.START));
+								} else {
+									disjunction.add(Restrictions.like(field, (String) value, MatchMode.START));
+								}
+								break;
+							}
+							case "ew" : {
+								if(field.equals("project")) {
+									disjunction.add(Restrictions.like("project.name", (String) value, MatchMode.END));
+								} else if (field.equals("build")) {
+									disjunction.add(Restrictions.like("build.name", (String) value, MatchMode.END));
+								} else {
+									disjunction.add(Restrictions.like(field, (String) value, MatchMode.END));
+								}
+								break;
+							}
+							case "cn" : {
+								if(field.equals("project")) {
+									disjunction.add(Restrictions.like("project.name", (String) value, MatchMode.ANYWHERE));
+								} else if (field.equals("build")) {
+									disjunction.add(Restrictions.like("build.name", (String) value, MatchMode.ANYWHERE));
+								} else {
+									disjunction.add(Restrictions.like(field, (String) value, MatchMode.ANYWHERE));
+								}
+								break;
+							}
+							default : {
+								break;
+							}
+						};
+					}
+					criteria.add(disjunction);
+					
+				} else {
+					for (SearchRule rule : rulesSet) {
+						
+						String field = rule.getField();
+						String data = rule.getData();
+						Object value = getSearchValue(field, data);
+						switch (rule.getOp()) {
+							case "eq" : {
+								criteria.add(Restrictions.eq(rule.getField(), value));
+								break;
+							}
+							case "ne" : {
+								criteria.add(Restrictions.ne(field, value));
+								break;
+							}
+							case "lt" : {
+								criteria.add(Restrictions.lt(field, value));
+								break;
+							}
+							case "le" : {
+								criteria.add(Restrictions.le(field, value));
+								break;
+							}
+							case "gt" : {
+								criteria.add(Restrictions.gt(field, value));
+								break;
+							}
+							case "ge" : {
+								criteria.add(Restrictions.ge(field, value));
+								break;
+							}
+							case "bw" : {
+								if(field.equals("project")) {
+									criteria.add(Restrictions.like("project.name", (String) value, MatchMode.START));
+								} else if (field.equals("build")) {
+									criteria.add(Restrictions.like("build.name", (String) value, MatchMode.START));
+								} else {
+									criteria.add(Restrictions.like(field, (String) value, MatchMode.START));
+								}
+								break;
+							}
+							case "ew" : {
+								if(field.equals("project")) {
+									criteria.add(Restrictions.like("project.name", (String) value, MatchMode.END));
+								} else if (field.equals("build")) {
+									criteria.add(Restrictions.like("build.name", (String) value, MatchMode.END));
+								} else {
+									criteria.add(Restrictions.like(field, (String) value, MatchMode.END));
+								}
+								break;
+							}
+							case "cn" : {
+								if(field.equals("project")) {
+									criteria.add(Restrictions.like("project.name", (String) value, MatchMode.ANYWHERE));
+								} else if (field.equals("build")) {
+									criteria.add(Restrictions.like("build.name", (String) value, MatchMode.ANYWHERE));
+								} else {
+									criteria.add(Restrictions.like(field, (String) value, MatchMode.ANYWHERE));
+								}
+								break;
+							}
+							default : {
+								break;
+							}
+						};
+					}
 				}
 			}
 		}
@@ -160,7 +252,7 @@ public class IssueImplHiber implements IssueDAO {
 	}
 	
 	public Object getSearchValue (String field, String data) throws NumberFormatException, DaoException {
-		Object value = null;
+		Object value = data;
 		if (field.equals("id")){
 			value = Long.parseLong(data);
 		}
