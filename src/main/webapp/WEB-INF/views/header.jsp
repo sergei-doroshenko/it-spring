@@ -41,6 +41,7 @@
 	        <strong><security:authentication property="authorities"/></strong>
 	    </security:authorize>
 	</div>
+	<!-- form id="auth-form" method='POST' action='j_spring_security_check'-->
      <form id="auth-form" method='POST' action='j_spring_security_check'>
      	<input id="login-command" name="command" type="hidden" value="${constants.COMMAND_LOGIN}"/>
      	<c:choose>
@@ -80,6 +81,7 @@
 	        	<input id="remember_me" name="_spring_security_remember_me" type="checkbox"/>
 	        	<label for="remember_me" class="inline"><spring:message code="user.remember"/></label>
 	        	<input id="authsubmit" class="authsubmit" type="submit" value="<spring:message code="user.login"/>" />
+	        	<!-- input id="authsubmit" class="authsubmit" type="button" value="<spring:message code="user.login"/>" /-->
 	        	<span id="add-user" class="logout"><spring:message code="user.signin"/></span>
 	        	<input id="oper" name="oper" type="hidden" value="${constants.OPER_ADD}"/>
 	        	<input id="send-command" name="command" type="hidden" value="${constants.COMMAND_ADD_USER}"/>

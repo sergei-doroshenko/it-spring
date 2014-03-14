@@ -86,33 +86,54 @@ function getMainUrl() {
 //**************************************** Login ***************************************************
 
 //function bindLongin() {
+//	$('#auth-form').on('submit', function(event) {
+//		event.preventDefault();
+//		var formdata = $(this).serialize(); 
+//		console.log(formdata);
+//		
+//		$.ajax({
+//			url: 'j_spring_security_check',
+//			data: formdata,
+//			dataType: 'text',
+//			type: 'post',
+//			beforeSend: function(xhr) {
+//				xhr.setRequestHeader('Referer','http://localhost:8080/issuetracker/header.jsp');
+//			},
+//			success: function (data) {
+//	             window.location.reload();
+//	        },
+//	        error:  handleError
+//		});
+//		return false;
+//	});
+//	
 //	$('#auth-form').submit(function () {
 //        
 //        var formdata = {
-//        	'login': $('#login').val(),
-//	        'password' : $('#password').val()
+//        	'j_username': $('#login').val(),
+//	        'j_password' : $('#password').val()
 //	    };
 //                
 //        var jqxhr = $.ajax({
-//                url: 'user/login',
+//                url: 'j_spring_security_check',
 //        		data: formdata,
 //                dataType: 'text',
 //                type: 'post',
 //                success: function (data) {
 //                       
-//                        window.location.href = data;
+//                        window.location.reload();
 //                },
 //                error:  handleError
 //        });
 //        return false;
 //	});	
-//}
+//};
 
 function showRequest(formData, jqForm, options) {
 	var queryString = $.param(formData);
 	//alert('We send this: \n\n' + queryString + options.url);
 	return true;
-}
+};
 
 function handleError (response, status, err) {
 	// This option doesn't catch any of the error below, 
@@ -135,7 +156,7 @@ function handleError (response, status, err) {
 	if(response.status == 601){
 		sessionTimedOut();
 	}
-}
+};
 
 //************************************************ User Forms ***********************************************
 var user_form_url = 'user/edit';

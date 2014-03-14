@@ -7,6 +7,10 @@ public class SearchFilterParams {
 	private int page;
 	private String sidx;
 	private String sord;
+//	private SearchFilters filters;
+	private String filters;
+	
+	public SearchFilterParams() { }
 	
 	public int getRows() {
 		return rows;
@@ -40,6 +44,20 @@ public class SearchFilterParams {
 		this.sord = sord;
 	}
 
-	public SearchFilterParams() { }
+	public String getFilters() {
+		return filters;
+	}
+
+	public void setFilters(String filters) {
+		this.filters = filters;
+	}
+
+//	public SearchFilters getFilters() {
+//		return filters;
+//	}
+//
+//	public void setFilters(SearchFilters filters) {
+//		this.filters = filters;
+//	}
 	
 }

@@ -1,6 +1,6 @@
 var issue_names = new Array();
 issue_names['en'] = ["Id", "Create Date", "Create By", "Modify Date", "Modify By", "Summary", "Status", "Resolution", "Type", "Priority", "Project", "Bild", "Assignee"];
-issue_names['ru'] = ["Ид", "Дата Создания", "Кем Создано", "Дата Изменения", "Кем Изменено", "Кратко", "Статус", "Резолюция", "Тип", "Приоритет", "Проект", "Билд", "Исполнитель"];
+issue_names['ru'] = ["Ид", "Дата Создания", "Кем Создано", "Дата Измениения", "Кем Изменено", "Кратко", "Статус", "Резолюция", "Тип", "Приоритет", "Проект", "Билд", "Исполнитель"];
 var lang = $.cookie('org.springframework.web.servlet.i18n.CookieLocaleResolver.LOCALE');
 
 var issue_rowLink = { baseLinkUrl: 'issue/view'};
@@ -10,20 +10,37 @@ function d (cellValue, rowId, rowData)  {
 };
 
 var issue_model = [
-             {name: "id", index: 'id', width: 55, formatter:'showlink', formatoptions: issue_rowLink},
-             {name: "createDate", index: "createDate", width: 70},
-             {name: "createBy", index: "createBy", width: 70},
-             {name: "modifyDate", index: "modifyDate", width: 70},
-             {name: "modifyBy", index: "modifyBy", width: 70},
-             {name: "summary", index: 'summary', hidden: true, searchoptions: {searchhidden: true}},//, width: 200
-             {name: "status", index: 'status', width: 100},
-             {name: "resolution", index: "resolution", width: 70},
-             {name: "type", index: 'type', width: 100},
-             {name: "priority", index: 'priority', width: 100, formatter: colorFormatter},
-             {name: "project", index: "project", width: 150}, 
-             {name: "build", index: "build", width: 70},
-             {name: "assignee", index: 'assignee', width: 100}
+             {name: "id", index: 'id', width: 20, formatter:'showlink', formatoptions: issue_rowLink,
+            	 searchrules: { "required": true, "number": true, "maxValue": 100 }, searchoptions: { sopt: ['eq', 'ne', 'lt', 'le', 'gt', 'ge']} },
+             {name: "createDate", index: "createDate", width: 75, 
+            		searchrules: { "required": true, "date": true}, searchoptions: {sopt: ['eq', 'ne', 'lt', 'le', 'gt', 'ge']}},
+             {name: "createBy", index: "createBy", width: 75,
+            		searchrules: { "required": true}, stype: 'select', searchoptions: {sopt: ['eq', 'ne'], dataUrl: '/issuetracker/user/options'}},
+             {name: "modifyDate", index: "modifyDate", width: 75,
+            		searchrules: { "required": true, "date": true}, searchoptions: {sopt: ['eq', 'ne', 'lt', 'le', 'gt', 'ge']}},
+             {name: "modifyBy", index: "modifyBy", width: 75,
+            		searchrules: { "required": true}, stype: 'select', searchoptions: {sopt: ['eq', 'ne'], dataUrl: '/issuetracker/user/options'}},
+             {name: "summary", index: 'summary', width: 100,
+            		searchrules: { "required": true}, searchoptions: {sopt: ['bw', 'bn', 'ew', 'en', 'cn', 'nc']}},//hidden: true, searchoptions: {searchhidden: true}, 
+             {name: "status", index: 'status', width: 70,
+            		searchrules: { "required": true}, stype: 'select', searchoptions: {sopt: ['eq', 'ne'], dataUrl: '/issuetracker/prop/options/STATUS'}},
+             {name: "resolution", index: "resolution", width: 70,
+            		searchrules: { "required": true}, stype: 'select', searchoptions: {sopt: ['eq', 'ne'], dataUrl: '/issuetracker/prop/options/RESOLUTION'}},
+             {name: "type", index: 'type', width: 70,
+            		searchrules: { "required": true}, stype: 'select', searchoptions: {sopt: ['eq', 'ne'], dataUrl: '/issuetracker/prop/options/TYPE'}},
+             {name: "priority", index: 'priority', width: 70, formatter: colorFormatter,
+            		searchrules: { "required": true}, stype: 'select', searchoptions: {sopt: ['eq', 'ne'], dataUrl: '/issuetracker/prop/options/PRIORITY'}},
+             {name: "project", index: "project", width: 150,
+            	 searchrules: { "required": true}, searchoptions: {sopt: ['bw', 'bn', 'ew', 'en', 'cn', 'nc']}}, 
+             {name: "build", index: "build", width: 70,
+            	 searchrules: { "required": true}, searchoptions: {sopt: ['bw', 'bn', 'ew', 'en', 'cn', 'nc']}},
+             {name: "assignee", index: 'assignee', width: 100,
+            	 searchrules: { "required": true}, stype: 'select', searchoptions: {sopt: ['eq', 'ne'], dataUrl: '/issuetracker/user/options'}}
          ];
+
+var datePick = function(elem) {
+	   jQuery(elem).datepicker();
+	};
 
 var jsonHandler = {
         root: "rows",
@@ -76,8 +93,8 @@ function createIssueTable() {
     		{closeAfterDelete: true},  // delete instead that del:false we need this
     		{multipleSearch : true, // enable the advanced searching
     			multipleGroup:false, // searching using subgroups
-    	        showQuery: true // show preview of search query
-    		}, 
+    	        showQuery: true // show preview of search query  
+    		},
     		{closeOnEscape:true} /* allow the view dialog to be closed when user press ESC key*/
     		);
     

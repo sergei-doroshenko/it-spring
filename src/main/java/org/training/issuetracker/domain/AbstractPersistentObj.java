@@ -16,7 +16,7 @@ public abstract class AbstractPersistentObj implements PersistentObj {
 	@Id
     @Column(name="ID")
     @GeneratedValue
-	private long id;
+	private Long id;
 	
 	@Column(name="NAME")
 	private String name;
@@ -46,7 +46,7 @@ public abstract class AbstractPersistentObj implements PersistentObj {
 		return id;
 	}
 	@Override
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

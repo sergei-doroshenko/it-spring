@@ -25,6 +25,7 @@
 		<intercept-url pattern="/build/project/*" access="hasAnyRole('USER,ADMINISTRATOR')"/>
 		<intercept-url pattern="/build/**" access="hasRole('ADMINISTRATOR')"/>
 		<intercept-url pattern="/project/**" access="hasRole('ADMINISTRATOR')"/>
+		<intercept-url pattern="/prop/options/**" access="hasAnyRole('USER,GUEST,ADMINISTRATOR')"/>
 		<intercept-url pattern="/prop/**" access="hasRole('ADMINISTRATOR')"/>
 		<intercept-url pattern="/attachment/del/**" access="hasRole('ADMINISTRATOR')"/>
 		<intercept-url pattern="/attachment/**" access="hasAnyRole('USER,ADMINISTRATOR')"/>
