@@ -1,11 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>      
-<!-- i18n -->
-<fmt:requestEncoding value="UTF-8" />
-<fmt:setLocale value="${sessionScope[constants.KEY_LOCALE]}"/>
-<fmt:setBundle basename="i18n.main" var="lang"/>
-<!-- End of i18n --> 
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <!DOCTYPE html>
 <html>
      <head>
@@ -41,7 +36,7 @@
 				       			<table>
 				                   <tr>
 				                       <td class="detail-col-name">
-				                       		<fmt:message key="page.id" bundle="${lang}"/>
+				                       		<spring:message code="page.id"/>
 				                       </td>
 				                       <td id="issue-id" class="detail-col-value">
 				                       		<c:out value="${issue.id}"/>
@@ -49,29 +44,29 @@
 				                       </td>
 				                   </tr>
 				                   <tr>
-				                       <td class="detail-col-name"><fmt:message key="page.issue.createdate" bundle="${lang}"/></td>
+				                       <td class="detail-col-name"><spring:message code="page.issue.createdate"/></td>
 				                       <td class="detail-col-value">                           
 				                           <c:out value="${issue.createDate}"/>
 				                       </td>
-				                       <td class="detail-col-name"><fmt:message key="page.issue.createby" bundle="${lang}"/></td>
+				                       <td class="detail-col-name"><spring:message code="page.issue.createby"/></td>
 				                       <td class="detail-col-value">
 				                           <c:out  value="${issue.createBy.firstName} ${issue.createBy.lastName}"/>
 				                       </td>
 				                   </tr>
 				                   <tr>
-				                       <td class="detail-col-name"><fmt:message key="page.issue.modifydate" bundle="${lang}"/></td>
+				                       <td class="detail-col-name"><spring:message code="page.issue.modifydate"/></td>
 				                       <td class="detail-col-value">
 				                       		<span id="modifydate"></span>
 				                           <!-- input id="modifydate" class="detail-col-input" type="text" value="${issue.modifyDate}"></input-->
 				                       </td>
-				                       <td class="detail-col-name"><fmt:message key="page.issue.modifyby" bundle="${lang}"/></td>
+				                       <td class="detail-col-name"><spring:message code="page.issue.modifyby"/></td>
 				                       <td class="detail-col-value">
 				                       		<!-- input id="modifyby" name="modifyby" type="hidden" value="${user.id}"/-->
 				                           <c:out  value="${user.firstName} ${user.lastName}"/>
 				                       </td>
 				                   </tr>
 				                   <tr>
-				                       <td class="detail-col-name"><fmt:message key="page.issue.type" bundle="${lang}"/></td>
+				                       <td class="detail-col-name"><spring:message code="page.issue.type"/></td>
 				                       <td class="detail-col-value">
 				                           <select id="type" name="type" class="detail-col-select" size="1" required>
 				                               <c:forEach var="type" items="${requestScope[constants.TYPES]}">
@@ -79,7 +74,7 @@
 				                           		</c:forEach>
 				                           </select>
 				                       </td>
-				                       <td class="detail-col-name"><fmt:message key="page.issue.priority" bundle="${lang}"/></td>
+				                       <td class="detail-col-name"><spring:message code="page.issue.priority"/></td>
 				                       <td class="detail-col-value">
 				                           <select id="priority" name="priority" class="detail-col-select" size="1">
 				                               <c:forEach var="priority" items="${requestScope[constants.PRIORITIES]}">
@@ -89,7 +84,7 @@
 				                       </td>
 				                   </tr>
 				                   <tr>
-				                       <td class="detail-col-name"><fmt:message key="page.issue.status" bundle="${lang}"/></td>
+				                       <td class="detail-col-name"><spring:message code="page.issue.status"/></td>
 				                       <td class="detail-col-value">
 				                           <select id="status" name="status" class="detail-col-select" size="1">
 				                           	<c:forEach var="status" items="${requestScope[constants.STATUSES]}">
@@ -97,7 +92,7 @@
 				                           	</c:forEach>
 				                           </select>
 				                       </td>
-				                       <td class="detail-col-name"><fmt:message key="page.issue.resolution" bundle="${lang}"/></td>
+				                       <td class="detail-col-name"><spring:message code="page.issue.resolution"/></td>
 				                       <td class="detail-col-value">
 				                           <select id="resolution" name="resolution" class="detail-col-select" size="1">
 				                               <c:forEach var="resolution" items="${requestScope[constants.RESOLUTIONS]}">
@@ -107,7 +102,7 @@
 				                       </td>
 				                   </tr>
 				                   <tr>
-				                       <td class="detail-col-name"><fmt:message key="page.issue.project" bundle="${lang}"/></td>
+				                       <td class="detail-col-name"><spring:message code="page.issue.project"/></td>
 				                       <td class="detail-col-value">
 				                       		<input id="get-builds-command" name="command" type="hidden" value="${constants.COMMAND_GET_PROJECT_BUILDS}"/>
 				                           <select id="project" name="project" class="detail-col-select" size="1">
@@ -116,7 +111,7 @@
 				                           		</c:forEach>
 				                           </select>
 				                       </td>
-				                       <td class="detail-col-name"><fmt:message key="page.issue.build" bundle="${lang}"/></td>
+				                       <td class="detail-col-name"><spring:message code="page.issue.build"/></td>
 				                       <td class="detail-col-value">
 				                           <select id="projectbuild" name="projectbuild" class="detail-col-select" size="1">
 				                               <c:forEach var="build" items="${requestScope[constants.BUILDS]}">
@@ -126,7 +121,7 @@
 				                       </td>
 				                   </tr>
 				                   <tr>
-				                       <td class="detail-col-name"><fmt:message key="page.issue.assignee" bundle="${lang}"/></td>
+				                       <td class="detail-col-name"><spring:message code="page.issue.assignee"/></td>
 				                       <td class="detail-col-value" colspan="3">
 				                           <select id="assignee" name="assignee" class="detail-col-select" size="1">
 				                               <c:forEach var="assignee" items="${requestScope[constants.ASSIGNEES]}">
@@ -136,13 +131,13 @@
 				                       </td>
 				                   </tr>
 				                   <tr>
-				                       <td class="detail-col-name"><fmt:message key="page.issue.summary" bundle="${lang}"/></td>
+				                       <td class="detail-col-name"><spring:message code="page.issue.summary"/></td>
 				                           <td class="detail-col-value" colspan="3">
 				                               <input id="summary" name="summary" class="detail-col-input" type="text" value="${issue.summary}"></input>
 				                       </td>
 				                   </tr>
 				                    <tr>
-				                       <td class="detail-col-name"><fmt:message key="page.issue.description" bundle="${lang}"/></td>
+				                       <td class="detail-col-name"><spring:message code="page.issue.description"/></td>
 				                       <td class="detail-col-value" colspan="3">
 				                           <textarea id="description" name="description" class="description">${issue.description}</textarea>
 				                       </td>
@@ -150,7 +145,7 @@
 				               </table>
 				               </form>
 				               <div id="attachments-container" class="attachments-container">                         
-				                  <div class="field-label"><fmt:message key="page.issue.attachments" bundle="${lang}"/></div>
+				                  <div class="field-label"><spring:message code="page.issue.attachments"/></div>
 				                  <c:if test="${!empty issue}">
 					                  <div class="upload-block">
 					                  		<p>${uploadmessage}</p>
@@ -158,7 +153,7 @@
 					                  								method="post" enctype="multipart/form-data">
 												Select File:<input id="button-attachment" class="button-attachment" type="file" name="file"/>
 												<br>
-												<input id="button-upload" type="submit" value="<fmt:message key="button.upload" bundle="${lang}"/>">
+												<input id="button-upload" type="submit" value="<spring:message code="button.upload"/>">
 											</form>		          
 					                  </div>
 				                  </c:if>
@@ -169,13 +164,13 @@
 				       </div>
 				       <div class="com-att">
 				           <div id="comments-container" class="comments-container">
-				               <div class="field-label" ><fmt:message key="page.issue.comments" bundle="${lang}"/></div>
+				               <div class="field-label" ><spring:message code="page.issue.comments"/></div>
 				               <c:if test="${!empty issue}">
 					               <div id="comments-list" class="comments-list">
 					               		<jsp:include page="${constants.URL_COMMENTS_BLOCK}"/>
 					               </div>
 					               <textarea id="comment" class="new-comment"></textarea>
-					               <button id="add-comment"><fmt:message key="button.addcomment" bundle="${lang}"/></button>
+					               <button id="add-comment"><spring:message code="button.addcomment"/></button>
 					           </c:if>   
 				           </div><!-- comment end -->
 				       </div>

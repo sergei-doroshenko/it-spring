@@ -12,7 +12,7 @@
  
 	<!-- intercept-url pattern="\A/*/edit\?oper=del*" access="hasRole('ADMINISTRATOR')"/--> 
 
- 	<http access-denied-page="/error.jsp" use-expressions="true"> 
+ 	<http access-denied-page="/error" use-expressions="true"> 
 		<intercept-url pattern="/index*" access="hasAnyRole('USER,GUEST,ADMINISTRATOR')"/>
 		<intercept-url pattern="/views/users/**" access="hasRole('ADMINISTRATOR')"/>
 		<intercept-url pattern="/views/properties/**" access="hasRole('ADMINISTRATOR')"/>

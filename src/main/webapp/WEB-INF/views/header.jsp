@@ -6,7 +6,7 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <!-- i18n -->
-<spring:message code="issue.err.null"/>
+<spring:message code="user.message.welcom"/>
 <!-- End of i18n -->
 <div class="logo">
 	<h2>Issue Tracker</h2>

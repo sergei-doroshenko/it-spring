@@ -101,7 +101,7 @@ public class IssueImplHiber implements IssueDAO {
 			//Key is field
 			for (String key : checkedRules.keySet()) {
 				Set<SearchRule> rulesSet = checkedRules.get(key);
-				
+					
 				if(key.equals("project")) {
 					criteria.createAlias("issue.project", "project");
 				}

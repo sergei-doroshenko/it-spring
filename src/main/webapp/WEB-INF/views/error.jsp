@@ -1,12 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page isErrorPage="true" import="java.io.*"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<!-- i18n -->
-<fmt:requestEncoding value="UTF-8" />
-<fmt:setLocale value="${sessionScope[constants.KEY_LOCALE]}"/>
-<fmt:setBundle basename="i18n.main" var="lang"/>
-<!-- End of i18n -->        
 <!DOCTYPE html>
 <html>
 	<head>
@@ -34,11 +28,6 @@
              <div class="content">
 	    		<p><span>Sorry, an error occurred.</span></p>
 	    		<c:out value="${error}"/>
-				<% if(exception != null) {%>
-				          
-		            <p>Here is the exception stack trace<span>(only during the learning process)</span>: </p>
-		            
-		        <% exception.printStackTrace(new PrintWriter(out));}%>
              </div><!--end content-->
              <div class="footer">
                  <jsp:include page="${constants.URL_FOOTER}"></jsp:include>

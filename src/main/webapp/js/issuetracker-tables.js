@@ -395,7 +395,7 @@ function createProjectsTable() {
                    { name: "id", index: 'id', width: 50},
                    { name: "name", index: 'name', width: 150, editable: true, editoptions:{size:"20",maxlength:"30"}},
                    { name: "description", index: 'description', width: 300, editable: true, editoptions:{size:"20",maxlength:"30"}},
-                   { name: "manager", index: 'manager', width: 200, editable: true, edittype:"select", editoptions: {dataUrl: 'user/options'}, editrules:{required:true}}
+                   { name: "manager", index: 'manager', width: 200, editable: true, edittype:"select", editoptions: {dataUrl: '/issuetracker/user/options'}, editrules:{required:true}}
                ],
         pager: "#projects-pager",
         rowNum: 5,
@@ -429,7 +429,7 @@ function createBuildsTable() {
         colModel: [
                    { name: "id", index: 'id', width: 50},
                    { name: "name", index: 'name', width: 100, editable: true, editoptions:{size:"20",maxlength:"30"}},
-                   { name: "project", index: 'project', width: 200, editable: true, edittype:"select", editoptions: {dataUrl: 'project/options'}, editrules:{required:true}}
+                   { name: "project", index: 'project', width: 200, editable: true, edittype:"select", editoptions: {dataUrl: '/issuetracker/project/options'}, editrules:{required:true}}
                ],  
         pager: "#builds-pager",
         rowNum: 4,
