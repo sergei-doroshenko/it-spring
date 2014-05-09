@@ -69,7 +69,7 @@ public class IssueController {
 //	@Autowired
 //	private ConversionService conversionService;
 	
-	@RequestMapping(value="/list", method = RequestMethod.GET, params="_search", produces="application/json")
+	@RequestMapping(value="/list", method = RequestMethod.GET, params="_search", produces="application/json; charset=utf-8")
 	public @ResponseBody String getIssueList (SearchFilterParams params) throws DaoException {
 		
 		int records = issueDAO.getIssueRecordsCount();
