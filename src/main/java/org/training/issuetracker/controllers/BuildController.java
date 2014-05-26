@@ -33,7 +33,7 @@ public class BuildController {
 	@Autowired
 	private ProjectDAO projectDAO;
 	
-	@RequestMapping(method = RequestMethod.GET, params="_search", produces="application/json")
+	@RequestMapping(method = RequestMethod.GET, params="_search", produces="application/json; charset=utf-8")
 	public @ResponseBody String getBuildsList(SearchFilterParams params) throws DaoException {
 		int records = buildDAO.getBuildsRecordsCount();
 		
@@ -45,7 +45,7 @@ public class BuildController {
 		return json;
 	}
 	
-	@RequestMapping(value="/project/{projectId}", method = RequestMethod.GET, produces="application/json")
+	@RequestMapping(value="/project/{projectId}", method = RequestMethod.GET, produces="application/json; charset=utf-8")
 	public @ResponseBody String getBuildsByProjectId (@PathVariable long projectId) throws DaoException {
 		
 		List<Build> builds = buildDAO.getProjectBuilds(projectId);
@@ -54,7 +54,7 @@ public class BuildController {
 	}
 	 
 	@RequestMapping(value="/add", method = RequestMethod.POST, params={Constants.KEY_NAME, 
-			Constants.KEY_PROJECT_ID}, produces="application/json")
+			Constants.KEY_PROJECT_ID}, produces="application/json; charset=utf-8")
 	public @ResponseBody String addBuild(@RequestParam(Constants.KEY_NAME) String name,  
 			@RequestParam(Constants.KEY_PROJECT_ID) long projectId) throws DaoException {
 		
@@ -69,7 +69,7 @@ public class BuildController {
 	}
 	
 	@RequestMapping(value="/edit", method = RequestMethod.POST, params={Constants.KEY_ID, Constants.KEY_NAME, 
-			Constants.KEY_PROJECT_ID}, produces="application/json")
+			Constants.KEY_PROJECT_ID}, produces="application/json; charset=utf-8")
 	public @ResponseBody String editBuild(@RequestParam(Constants.KEY_ID) long id, @RequestParam(Constants.KEY_NAME) String name, 
 			@RequestParam(Constants.KEY_PROJECT_ID) long projectId) throws DaoException {
 		
@@ -83,7 +83,7 @@ public class BuildController {
 		return "";
 	}
 	
-	@RequestMapping(value="/del", method = RequestMethod.POST, params={Constants.KEY_ID}, produces="application/json")
+	@RequestMapping(value="/del", method = RequestMethod.POST, params={Constants.KEY_ID}, produces="application/json; charset=utf-8")
 	public @ResponseBody String deleteBuild(@RequestParam(Constants.KEY_ID) long id) throws DaoException {
 		
 		buildDAO.deleteBuild(id);

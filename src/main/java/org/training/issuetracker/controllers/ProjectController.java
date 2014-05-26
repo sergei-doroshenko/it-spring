@@ -31,7 +31,7 @@ public class ProjectController {
 	@Autowired
 	private UserDAO userDAO;
 	
-	@RequestMapping(method = RequestMethod.GET,  params="_search", produces="application/json")
+	@RequestMapping(method = RequestMethod.GET,  params="_search", produces="application/json; charset=utf-8; charset=utf-8; charset=utf-8")
 	public @ResponseBody String getProjectsList(@RequestParam("page") int page, @RequestParam("rows") int rows) throws DaoException {
 		
 		List<Project> projects = projectDAO.getProjectsList();
@@ -58,7 +58,7 @@ public class ProjectController {
 	}
 	
 	@RequestMapping(value="/add", method = RequestMethod.POST, params={Constants.KEY_NAME, 
-			Constants.KEY_DESCRIPTION, Constants.KEY_MANAGER_ID}, produces="application/json")
+			Constants.KEY_DESCRIPTION, Constants.KEY_MANAGER_ID}, produces="application/json; charset=utf-8; charset=utf-8; charset=utf-8")
 	public @ResponseBody String addProject(@RequestParam(Constants.KEY_NAME) String name, @RequestParam(Constants.KEY_DESCRIPTION) String description, 
 			@RequestParam(Constants.KEY_MANAGER_ID) long managerId) throws DaoException {
 		
@@ -73,7 +73,7 @@ public class ProjectController {
 	}
 	
 	@RequestMapping(value="/edit", method = RequestMethod.POST, params={Constants.KEY_ID, Constants.KEY_NAME, 
-			Constants.KEY_DESCRIPTION, Constants.KEY_MANAGER_ID}, produces="application/json")
+			Constants.KEY_DESCRIPTION, Constants.KEY_MANAGER_ID}, produces="application/json; charset=utf-8; charset=utf-8; charset=utf-8")
 	public @ResponseBody String editProject(@RequestParam(Constants.KEY_ID) long id, @RequestParam(Constants.KEY_NAME) String name, 
 			@RequestParam(Constants.KEY_DESCRIPTION) String description, @RequestParam(Constants.KEY_MANAGER_ID) long managerId) throws DaoException {
 		
@@ -88,7 +88,7 @@ public class ProjectController {
 		return "";
 	}
 	
-	@RequestMapping(value="/del", method = RequestMethod.POST, params={Constants.KEY_ID}, produces="application/json")
+	@RequestMapping(value="/del", method = RequestMethod.POST, params={Constants.KEY_ID}, produces="application/json; charset=utf-8; charset=utf-8; charset=utf-8")
 	public @ResponseBody String deleteProject(@RequestParam(Constants.KEY_ID) long id) throws DaoException {
 		
 		projectDAO.deleteProject(id);

@@ -4,7 +4,7 @@
 <c:forEach var="attch" items="${requestScope[constants.ATTACHMENTS]}">
 	<div class="attachment">
 		<c:if test="${user.role.name eq constants.ROLE_ADMIN}">
-			<a href="${constants.URL_ATTCH_DEL_COMMAND}${constants.ROOT_PATH}${attch.id}" class="download-link">del-> </a>
+			<a href="${constants.URL_ATTCH_DEL_COMMAND}${constants.ROOT_PATH}${attch.id}" class="download-link"><span>del-></span></a>
 		</c:if>
 		<a href="${constants.URL_DOWNLOAD_COMMAND}${constants.ROOT_PATH}${attch.id}" class="download-link">
 			${attch.fileName}

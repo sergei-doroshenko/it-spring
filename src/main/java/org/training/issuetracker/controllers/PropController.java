@@ -29,7 +29,7 @@ public class PropController {
 	@Autowired
 	private PropDAO propDAO;
 	
-	@RequestMapping(method = RequestMethod.GET, params="_search", produces="application/json")
+	@RequestMapping(method = RequestMethod.GET, params="_search", produces="application/json; charset=utf-8; charset=utf-8; charset=utf-8")
 	public @ResponseBody String getPropList (SearchFilterParams params,
 			@RequestParam("type") String type) throws DaoException {
 		
@@ -62,7 +62,7 @@ public class PropController {
 		return options;
 	}
 	
-	@RequestMapping(value="/add", method = RequestMethod.POST, params={Constants.KEY_NAME}, produces="application/json")
+	@RequestMapping(value="/add", method = RequestMethod.POST, params={Constants.KEY_NAME}, produces="application/json; charset=utf-8; charset=utf-8; charset=utf-8")
 	public @ResponseBody String addProp(@RequestParam(Constants.KEY_NAME) String name, 
 			@RequestParam("type") String type) throws DaoException {
 		
@@ -75,7 +75,7 @@ public class PropController {
 	}
 	
 	@RequestMapping(value="/edit", method = RequestMethod.POST, params={Constants.KEY_ID, 
-			Constants.KEY_NAME}, produces="application/json")
+			Constants.KEY_NAME}, produces="application/json; charset=utf-8; charset=utf-8; charset=utf-8")
 	public @ResponseBody String editProject(@RequestParam(Constants.KEY_ID) long id, 
 			@RequestParam(Constants.KEY_NAME) String name, @RequestParam("type") String type) throws DaoException {
 		
@@ -88,7 +88,7 @@ public class PropController {
 		return "";
 	}
 	
-	@RequestMapping(value="/del", method = RequestMethod.POST, params={Constants.KEY_ID}, produces="application/json")
+	@RequestMapping(value="/del", method = RequestMethod.POST, params={Constants.KEY_ID}, produces="application/json; charset=utf-8; charset=utf-8; charset=utf-8")
 	public @ResponseBody String deleteProject(@RequestParam(Constants.KEY_ID) long id, @RequestParam("type") String type) throws DaoException {
 		
 		propDAO.deleteProp(PropertyType.valueOf(type), id);

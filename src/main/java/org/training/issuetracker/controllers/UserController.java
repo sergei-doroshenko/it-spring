@@ -99,7 +99,7 @@ public class UserController {
         binder.registerCustomEditor(Role.class, "role", new RoleEditor()); 
     } 
 		
-	@RequestMapping(method = RequestMethod.GET, params="id", produces="application/json")
+	@RequestMapping(method = RequestMethod.GET, params="id", produces="application/json; charset=utf-8; charset=utf-8; charset=utf-8")
 	public @ResponseBody String getUserById(@RequestParam(Constants.KEY_ID) long id) throws DaoException {
 		
 		User user = userDAO.getUser(id);
@@ -107,7 +107,7 @@ public class UserController {
 		return json;
 	}
 	
-	@RequestMapping(method = RequestMethod.GET, params="_search", produces="application/json")		
+	@RequestMapping(method = RequestMethod.GET, params="_search", produces="application/json; charset=utf-8; charset=utf-8; charset=utf-8")		
 	public @ResponseBody String getUsersList(SearchFilterParams params) throws DaoException {		
 		
 		int records = userDAO.getUserRecordsCount();
@@ -138,7 +138,7 @@ public class UserController {
 		return options;
 	}
 	
-	@RequestMapping(value="/add", method = RequestMethod.POST, produces="application/json")
+	@RequestMapping(value="/add", method = RequestMethod.POST, produces="application/json; charset=utf-8; charset=utf-8; charset=utf-8")
 	public ResponseEntity<String> addUser(@Valid User user, BindingResult bindingResult, 
 			Principal principal, HttpSession session, Locale locale) throws DaoException {
 
@@ -161,7 +161,7 @@ public class UserController {
 		return new ResponseEntity<String>("", HttpStatus.OK);
 	}
 
-	@RequestMapping(value="/edit", method = RequestMethod.POST, produces="application/json")
+	@RequestMapping(value="/edit", method = RequestMethod.POST, produces="application/json; charset=utf-8; charset=utf-8; charset=utf-8")
 	public ResponseEntity<String> editUser(@Valid User user, BindingResult bindingResult, HttpSession session) throws DaoException {
 
 		if(bindingResult.hasErrors()){
@@ -190,7 +190,7 @@ public class UserController {
 		return new ResponseEntity<String>("", HttpStatus.OK);
 	}
 	
-	@RequestMapping(value="/del", method = RequestMethod.POST, params={Constants.KEY_ID}, produces="application/json")
+	@RequestMapping(value="/del", method = RequestMethod.POST, params={Constants.KEY_ID}, produces="application/json; charset=utf-8; charset=utf-8")
 	public @ResponseBody String deleteUser(@RequestParam(Constants.KEY_ID) long id) throws DaoException {
 
 		userDAO.deleteUser(id);

@@ -6,14 +6,14 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <!-- i18n -->
-<spring:message code="user.message.welcom"/>
 <!-- End of i18n -->
 <div class="logo">
-	<h2>Issue Tracker</h2>
+	<img src="<c:url value="/static/img/bug.png"/>" alt="bug"/>
+	<span class="logo-text">Bag<span style="font-style: italic">Tracer</span></span>
 </div><!--end logo-->
 <div id="lang">
-   	<span id="en-loc" class="button-locale">en</span>
-	<span id="ru-loc" class="button-locale">ru</span>
+   	<span id="en-loc" class="button-locale">en <img src="<c:url value="/static/img/en.png"/>" height="12" alt="en" width="18"></span>
+	<span id="ru-loc" class="button-locale">ru <img src="<c:url value="/static/img/ru.png"/>" height="12" alt="ru" width="18"></span>
 </div>
 <div id="dialog-form" class="user-dialog hidden-block" title="User Info">
 	<p class="validateTips"><spring:message code="user.form.message"/></p>
@@ -36,8 +36,8 @@
 	<div id="error"><c:out value="${usermessage}"/></div>
 	<div class="username"> 
 	    <security:authorize access="isAuthenticated()">
-	    	<spring:message code="user.message.welcom"/>, 
 	        <strong><security:authentication property="principal.username"/></strong>
+	        <span><spring:message code="user.message.youloginas"/></span>
 	        <strong><security:authentication property="authorities"/></strong>
 	    </security:authorize>
 	</div>
@@ -46,6 +46,7 @@
      	<input id="login-command" name="command" type="hidden" value="${constants.COMMAND_LOGIN}"/>
      	<c:choose>
      		<c:when test="${not empty user}">
+     			<spring:message code="user.message.welcom"/>,
      			<span id="view-user" class="logout"><c:out value="${user.firstName}  ${user.lastName}"/></span>
 	      		<a class="logout" href="${constants.URL_LOGOUT_COMMAND}"><spring:message code="user.logout"/></a>
 	      		<input id="oper" name="oper" type="hidden" value="${constants.OPER_EDIT}"/>

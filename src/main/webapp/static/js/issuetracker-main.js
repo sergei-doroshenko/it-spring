@@ -12,7 +12,8 @@ function changeLocaleUrl (ev) {
 	
 	var expr = new RegExp("lang=\\w{1,2}");
 	
-	var countVal = "lang="+ ev.currentTarget.innerHTML;
+	var countVal = "lang="+ ev.currentTarget.innerHTML.substring(0, 2);
+
 	
 	if (expr.test(str)) {
 		str = str.replace(expr, countVal);
@@ -21,6 +22,7 @@ function changeLocaleUrl (ev) {
 	}
 	
 	document.location.href = str;
+	
 }
 
 function getCurrentDate () {

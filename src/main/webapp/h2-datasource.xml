@@ -1,4 +1,5 @@
-	<!-- work -->
+	<!-- 
+	work 
 	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">		        
 	    <property name="driverClassName" value="${jdbc.driverClassName}" />
 	    <property name="url" value="${jdbc.url}" />
@@ -6,10 +7,10 @@
 	    <property name="password" value="${jdbc.password}"/>
 	</bean>
 	
-	<!-- work -->
+	work
 	<jdbc:embedded-database id="dataSource" type="H2"/>
 	
-	<!-- work -->
+	work
 	<bean id="dataSource" class="org.h2.jdbcx.JdbcConnectionPool" destroy-method="dispose">
 	    <constructor-arg>
 	        <bean class="org.h2.jdbcx.JdbcDataSource">
@@ -31,7 +32,7 @@
 	jdbc:h2:file:/home/konrad/test
 	
 	
-	<!-- not work -->
+	not work 
 	<bean id="dataSource" class="org.springframework.jdbc.datasource.LazyConnectionDataSourceProxy">
 	    <constructor-arg>
 	        <bean class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
@@ -42,9 +43,10 @@
 	    </constructor-arg>
 	</bean>
 
-	<!-- provides a H2 console to look into the db if necessary -->
+	provides a H2 console to look into the db if necessary 
 	<bean id="org.h2.tools.Server-WebServer" class="org.h2.tools.Server" 
 	    factory-method="createWebServer" depends-on="dataSource" 
 	    init-method="start" lazy-init="false">
 	    <constructor-arg value="-web,-webPort,8082" />
 	</bean>
+	-->

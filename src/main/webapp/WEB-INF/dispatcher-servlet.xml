@@ -20,6 +20,7 @@
 	<context:component-scan base-package="org.training.issuetracker.secutity" />
 	<context:component-scan base-package="org.training.issuetracker.utils" />
 	
+	<mvc:resources mapping="/static/**" location="/static/" />
 	<mvc:annotation-driven conversion-service="conversionService"/>
 	<mvc:default-servlet-handler />
 	
@@ -29,7 +30,7 @@
 		<property name="suffix" value=".jsp" />
 	</bean>
 	
-	<context:property-placeholder location="classpath:db/h2-mem.properties"/>
+	<context:property-placeholder location="classpath:db/h2-file.properties"/>
 	
 	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">		        
 	    <property name="driverClassName" value="${jdbc.driverClassName}" />
@@ -37,12 +38,12 @@
 	    <property name="username" value="${jdbc.username}"/>
 	    <property name="password" value="${jdbc.password}"/>
 	</bean>
-	
+	<!-- 
 	<jdbc:initialize-database data-source="dataSource" ignore-failures="ALL">
 		<jdbc:script location="classpath:db/schema.sql"/>
     	<jdbc:script location="classpath:db/test-data.sql"/>
 	</jdbc:initialize-database>
-	
+	-->
 	<bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
         <property name="dataSource" ref="dataSource" />
         <property name="packagesToScan" value="org.training.issuetracker.domain"/>
