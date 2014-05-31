@@ -6,7 +6,7 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<title>Bag Tracer</title>
-		 
+		<link rel="icon" href="<c:url value="/static/img/bug.ico"/>" type="image/x-icon">
 		<link rel="stylesheet" type="text/css" media="screen" href="<c:url value="/static/css/ui-lightness/jquery-ui.css"/>" />
 		<link rel="stylesheet" type="text/css" media="screen" href="<c:url value="/static/css/ui.jqgrid.css"/>" />
 		<link rel="stylesheet" type="text/css" media="screen" href="<c:url value="/static/css/default.css"/>" />

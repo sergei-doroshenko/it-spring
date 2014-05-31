@@ -6,6 +6,7 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 		<title>Error page</title>
+		<link rel="icon" href="<c:url value="/static/img/bug.ico"/>" type="image/x-icon">
 		<link rel="stylesheet" type="text/css" media="screen" href="<c:url value="/static/css/ui-lightness/jquery-ui.css"/>" />
         <link rel="stylesheet" type="text/css" media="screen" href="<c:url value="/static/css/ui-lightness/jquery.ui.theme.css"/>" />
         <link rel="stylesheet" type="text/css" media="screen" href="<c:url value="/static/css/ui-lightness/jquery-ui-1.10.4.custom.css"/>" />
