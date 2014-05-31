@@ -6,6 +6,7 @@ import java.sql.Date;
 import java.util.Calendar;
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.FileUtils;
@@ -37,8 +38,10 @@ import org.training.issuetracker.domain.DAO.PropDAO;
 import org.training.issuetracker.domain.DAO.PropertyType;
 import org.training.issuetracker.domain.DAO.UserDAO;
 import org.training.issuetracker.exceptions.DaoException;
+import org.training.issuetracker.utils.AjaxResponse;
 import org.training.issuetracker.utils.JqGridData;
 import org.training.issuetracker.utils.SearchFilterParams;
+import org.training.issuetracker.validation.IssueValidator;
 
 @Controller
 @RequestMapping("/issue")
@@ -66,10 +69,13 @@ public class IssueController {
 	@Autowired
 	private AttachmentDAO attachmentDAO;
 	
+	@Autowired
+	private IssueValidator issueValidator;
+	
 //	@Autowired
 //	private ConversionService conversionService;
 	
-	@RequestMapping(value="/list", method = RequestMethod.GET, params="_search", produces="application/json; charset=utf-8; charset=utf-8")
+	@RequestMapping(value="/list", method = RequestMethod.GET, params="_search", produces="application/json; charset=utf-8;")
 	public @ResponseBody String getIssueList (SearchFilterParams params) throws DaoException {
 		
 		int records = issueDAO.getIssueRecordsCount();
@@ -141,13 +147,19 @@ public class IssueController {
 		return "/issuetracker/issue/view?id=" + id;
 	}
 	
-	@RequestMapping(value="/add", method = RequestMethod.POST)
-	public @ResponseBody String addIssue (Issue issue, HttpSession session) throws DaoException {
+	@RequestMapping(value="/add", method = RequestMethod.POST, produces="text/html; charset=utf-8;")
+	public @ResponseBody String addIssue (Issue issue, HttpSession session,
+			HttpServletResponse response) throws DaoException {
 		
 		issue.setCreateDate(new Date(Calendar.getInstance().getTimeInMillis()));
 		User currentUser = (User) session.getAttribute(Constants.KEY_USER);
 		issue.setCreateBy(currentUser);
-		issue.setStatus((Status) propDAO.getProp(PropertyType.STATUS, 1)); 
+		//issue.setStatus((Status) propDAO.getProp(PropertyType.STATUS, 1));
+		String errorMessage = issueValidator.validate(issue);
+		if (errorMessage != null) {
+			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+			return errorMessage;
+		}
 		long id = issueDAO.insertIssue(issue);
 		
 		return "/issuetracker/issue/view?id=" + id;

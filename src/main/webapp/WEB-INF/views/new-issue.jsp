@@ -66,9 +66,11 @@
 				                   <tr>
 				                       <td class="detail-col-name"><spring:message code="page.issue.status"/></td>
 				                       <td class="detail-col-value">
-				                       		<select id="status" name="status" class="detail-col-select" size="1" disabled="disabled">
+				                       		<select id="status" name="status" class="detail-col-select" size="1">
 					                           	<c:forEach var="status" items="${requestScope[constants.STATUSES]}">
-					                           		<option value="${status.id}" <c:if test="${status.name eq constants.STATUS_NEW}">selected</c:if>>${status.name}</option>
+					                           		<c:if test="${(status.name eq constants.STATUS_NEW) || (status.name eq constants.STATUS_ASSIGNED)}">
+					                           			<option value="${status.id}" <c:if test="${status.name eq constants.STATUS_NEW}">selected</c:if>>${status.name}</option>
+					                           		</c:if>
 					                           	</c:forEach>
 				                           </select>
 				                       </td>

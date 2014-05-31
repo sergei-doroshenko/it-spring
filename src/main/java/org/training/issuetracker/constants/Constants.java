@@ -409,7 +409,10 @@ public final class Constants {
 //****************************** OTHERS *********************************************/
 	/** String literal for NEW status */
 	public static final String STATUS_NEW = "NEW";
-
+	
+	/** String literal for ASSIGNED status */
+	public static final String STATUS_ASSIGNED = "ASSIGNED";
+	
 	/** String literal for NEW status id */
 	public static final long DEFAULT_STATUS = 2;
 

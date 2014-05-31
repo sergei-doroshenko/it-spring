@@ -375,6 +375,7 @@ function bindNewIssueForm() {
 	$('#new-issue-form').submit(function () {
         
         var post_data = {
+        	'status': $('#status').val(),
         	'type': $('#type').val(),
 	        'priority' : $('#priority').val(),
 	        'project' : $('#project').val(),
@@ -427,7 +428,8 @@ function handleIssueError (response, status, err) {
 	
 	if(response.status == 400){
 		var errText = response.responseText;
-		$('#error-issue').empty().append('<span>').append(errText);     
+		$('#error-issue').empty().append('<span>').append(errText);
+		$('#error-issue').addClass('ui-state-error'); 
 	}
 	
 	if(response.status == 601){
