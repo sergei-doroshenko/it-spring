@@ -137,6 +137,5 @@
 	<bean id="buildDAO" class="org.training.issuetracker.data.hiber.BuildImplHiber"/>
 	<bean id="commentDAO" class="org.training.issuetracker.data.hiber.CommentImplHiber"/>
 	<bean id="attachmentDAO" class="org.training.issuetracker.data.hiber.AttachmentImplHiber"/>
-	<bean id="issueValidator" class="org.training.issuetracker.validation.IssueValidatorImpl"/>
 		
 </beans>

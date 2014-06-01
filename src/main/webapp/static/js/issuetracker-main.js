@@ -425,10 +425,20 @@ function executeDeleteIssue() {
 }
 
 function handleIssueError (response, status, err) {
+	$('#error-issue').empty();
+	$('.detail-col-value').removeClass('detail-col-value-err');
 	
 	if(response.status == 400){
 		var errText = response.responseText;
-		$('#error-issue').empty().append('<span>').append(errText);
+		var errors = JSON.parse(errText);
+		
+		errors.forEach(function(error){
+			var error_block = document.createElement('div');
+			$(error_block).append(error.defaultMessage)
+			$('#error-issue').append(error_block);
+			$('#' + error.field).parent().addClass('detail-col-value-err');
+		});
+		
 		$('#error-issue').addClass('ui-state-error'); 
 	}
 	

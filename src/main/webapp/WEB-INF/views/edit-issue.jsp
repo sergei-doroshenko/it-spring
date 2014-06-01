@@ -89,13 +89,45 @@
 				                       <td class="detail-col-value">
 				                           <select id="status" name="status" class="detail-col-select" size="1">
 				                           	<c:forEach var="status" items="${requestScope[constants.STATUSES]}">
-				                           		<option value="${status.id}" <c:if test="${status.id eq issue.status.id}">selected</c:if>>${status.name}</option>
+				                           		<c:choose>
+				                           			<c:when test="${issue.status.name eq constants.STATUS_NEW}">
+				                           				<c:if test="${(status.name eq constants.STATUS_NEW) || (status.name eq constants.STATUS_ASSIGNED)}">
+				                           					<option value="${status.id}" <c:if test="${status.id eq issue.status.id}">selected</c:if>>${status.name}</option>	
+				                           				</c:if>
+				                           			</c:when>
+				                           			<c:when test="${issue.status.name eq constants.STATUS_ASSIGNED}">
+				                           				<c:if test="${(status.name eq constants.STATUS_ASSIGNED) || (status.name eq constants.STATUS_IN_PROGRESS)}">
+				                           					<option value="${status.id}" <c:if test="${status.id eq issue.status.id}">selected</c:if>>${status.name}</option>	
+				                           				</c:if>
+				                           			</c:when>
+				                           			<c:when test="${issue.status.name eq constants.STATUS_IN_PROGRESS}">
+				                           				<c:if test="${(status.name ne constants.STATUS_IN_PROGRESS) || (status.name ne constants.STATUS_RESOLVED)}">
+				                           					<option value="${status.id}" <c:if test="${status.id eq issue.status.id}">selected</c:if>>${status.name}</option>	
+				                           				</c:if>
+				                           			</c:when>
+				                           			<c:when test="${issue.status.name eq constants.STATUS_RESOLVED}">
+				                           				<c:if test="${(status.name ne constants.STATUS_RESOLVED) || (status.name ne constants.STATUS_CLOSED)}">
+				                           					<option value="${status.id}" <c:if test="${status.id eq issue.status.id}">selected</c:if>>${status.name}</option>	
+				                           				</c:if>
+				                           			</c:when>
+				                           			<c:when test="${issue.status.name eq constants.STATUS_CLOSED}">
+				                           				<c:if test="${(status.name ne constants.STATUS_CLOSED) || (status.name ne constants.STATUS_REOPENED)}">
+				                           					<option value="${status.id}" <c:if test="${status.id eq issue.status.id}">selected</c:if>>${status.name}</option>	
+				                           				</c:if>
+				                           			</c:when>
+				                           			<c:otherwise>
+				                           				<c:if test="${(status.name eq constants.STATUS_REOPENED) || (status.name eq constants.STATUS_ASSIGNED)}">
+				                           					<option value="${status.id}" <c:if test="${status.id eq issue.status.id}">selected</c:if>>${status.name}</option>	
+				                           				</c:if>
+				                           			</c:otherwise>
+				                           		</c:choose>
 				                           	</c:forEach>
 				                           </select>
 				                       </td>
 				                       <td class="detail-col-name"><spring:message code="page.issue.resolution"/></td>
 				                       <td class="detail-col-value">
 				                           <select id="resolution" name="resolution" class="detail-col-select" size="1">
+				   
 				                               <c:forEach var="resolution" items="${requestScope[constants.RESOLUTIONS]}">
 				                           			<option value="${resolution.id}" <c:if test="${resolution.id eq issue.resolution.id}">selected</c:if>>${resolution.name}</option>
 				                           		</c:forEach>
@@ -125,6 +157,9 @@
 				                       <td class="detail-col-name"><spring:message code="page.issue.assignee"/></td>
 				                       <td class="detail-col-value" colspan="3">
 				                           <select id="assignee" name="assignee" class="detail-col-select" size="1">
+				                           		<c:if test="${empty issue.assignee}">
+				                           			<option></option>
+				                           		</c:if>
 				                               <c:forEach var="assignee" items="${requestScope[constants.ASSIGNEES]}">
 				                           			<option value="${assignee.id}" <c:if test="${assignee.id eq issue.assignee.id}">selected</c:if>>${assignee.firstName} ${assignee.lastName}</option>
 				                           		</c:forEach>

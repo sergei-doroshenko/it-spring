@@ -170,6 +170,10 @@ li.menu-obj-item a:hover {
     text-align: left;
 }
 
+.detail-col-value-err {
+    border: 2px solid red;
+}
+
 .detail-col-input {
     
 }

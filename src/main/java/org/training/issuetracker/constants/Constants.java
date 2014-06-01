@@ -413,6 +413,18 @@ public final class Constants {
 	/** String literal for ASSIGNED status */
 	public static final String STATUS_ASSIGNED = "ASSIGNED";
 	
+	/** String literal for IN PROGRESS status */
+	public static final String STATUS_IN_PROGRESS = "IN PROGRESS";
+	
+	/** String literal for RESOLVED status */
+	public static final String STATUS_RESOLVED = "RESOLVED";
+	
+	/** String literal for CLOSED status */
+	public static final String STATUS_CLOSED = "CLOSED";
+	
+	/** String literal for REOPENED  status */
+	public static final String STATUS_REOPENED = "REOPENED";
+	
 	/** String literal for NEW status id */
 	public static final long DEFAULT_STATUS = 2;
 
