@@ -198,8 +198,12 @@ public class IssueController {
 				}
 			}
 			
-			String json = new JSONSerializer().exclude("*.class", "bindingFailure", "code", "objectName", "rejectedValue")
-					.serialize(fieldValidationErrors);
+			String json = null;
+			if (fieldValidationErrors.size() > 0) {
+				json = new JSONSerializer().exclude("*.class", "bindingFailure", "code", "objectName", "rejectedValue")
+						.serialize(fieldValidationErrors);	
+			}
+			
 			return new ResponseEntity<String>(json, HttpStatus.BAD_REQUEST);
 		}
 		

@@ -130,7 +130,7 @@ li.menu-obj-item a:hover {
 
 /******************************** Content *******************/
 .content {
-    height: 500px;
+    height: 570px;
 }
 .table-container {
     height: 300px;
@@ -215,7 +215,7 @@ li.menu-obj-item a:hover {
 
 /********************************* Comments ********************************/
 .comments-container {
-    height: 550px;
+    height: 500px;
     padding-left: 10px;
     /*background-color: #BFBFFF;*/
 }
@@ -271,7 +271,7 @@ li.menu-obj-item a:hover {
 }
 
 #file-upload-form {
-    border: 1px solid red;
+    /*border: 1px solid red;*/
     text-align: left;
 }
 

@@ -349,14 +349,19 @@ function bindEditIssueForm() {
 	        'type': $('#type').val(),
 	        'priority' : $('#priority').val(),
 	        'status' : $('#status').val(),
-	        'resolution' : $('#resolution').val(),
 	        'project' : $('#project').val(),
 	        'build' : $('#projectbuild').val(),
 	        'summary' : $('#summary').val(),
 	        'description' : $('#description').val(),
 	        'assignee' : $('#assignee').val()
 	    };
-    
+        
+        var resolution = $('#resolution').val();
+        
+        if(resolution != null && resolution != '') {
+        	post_data.resolution = resolution;
+        }
+        
         $.ajax({
             url: '\\issuetracker\\issue\\update',
             data: post_data,
