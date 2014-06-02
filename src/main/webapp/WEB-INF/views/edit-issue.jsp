@@ -224,7 +224,6 @@
         	$('#status').bind().on('change', function(){
         		var status = $('#status').val();
         		if (status == '5'){
-        			alert(status);
         			$('#resolution').removeAttr('disabled');
         		}
         	});
