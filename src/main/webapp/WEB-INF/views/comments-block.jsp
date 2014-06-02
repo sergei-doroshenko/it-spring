@@ -5,7 +5,9 @@
 	<div class="comment-block">
 		<div class="comment-value">${comment.comment}</div>
 		<security:authorize access="hasRole('ADMINISTRATOR')">
-	    	<a href="${constants.URL_COMMENT_DEL_COMMAND}${constants.ROOT_PATH}${issue.id}${constants.ROOT_PATH}${comment.id}" class="download-link">-del- </a>
+	    	<a href="${constants.URL_COMMENT_DEL_COMMAND}${constants.ROOT_PATH}${issue.id}${constants.ROOT_PATH}${comment.id}" class="del-link">
+	    		<img src="<c:url value="/static/img/del.png"/>" alt="-del-" width="20" height="20">
+	    	</a>
 	    </security:authorize>
 		<div class="comment-create-date">${comment.createDate}</div>
 		<div class="comment-create-by">

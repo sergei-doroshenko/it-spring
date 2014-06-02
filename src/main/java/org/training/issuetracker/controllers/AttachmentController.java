@@ -120,7 +120,10 @@ public class AttachmentController {
 		
 		File file = attachment.getFile();
 		file.delete();
-		
+		File folder = attachment.getFolder();
+		if (folder.isDirectory() && folder.list().length == 0) {
+			folder.delete();
+		}
 		attachmentDAO.deleteAttachment(attachmentId);
 		
 		return new RedirectView("/issuetracker/issue/edit?id=" + issueId, false);

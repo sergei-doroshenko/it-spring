@@ -256,6 +256,11 @@ li.menu-obj-item a:hover {
     overflow: x-scroll;
 }
 
+.del-link {
+	text-align: left;
+	float: left;
+}
+
 /************************************ Attachments ******************************/
 
 .attachments-container {

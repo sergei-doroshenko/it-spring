@@ -98,4 +98,17 @@ public class Attachment {
 		
 		return file;
 	}
+	
+	public File getFolder() throws FileNotFoundException {
+		String path = Constants.getRealPath() + Constants.URL_UPLOAD_DIR + File.separator
+				+  issueId;
+		
+		File file = new File(path);
+		
+		if(!file.exists()) {
+			throw new FileNotFoundException ("Folder doesn't exists on server.");
+		}
+		
+		return file;
+	}
 }
