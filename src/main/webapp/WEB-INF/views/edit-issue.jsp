@@ -189,7 +189,7 @@
 					                  		<p>${uploadmessage}</p>
 					                  		<form id="file-upload-form" action="../attachment/${issue.id}" 
 					                  								method="post" enctype="multipart/form-data">
-												Select File:<input id="button-attachment" class="button-attachment" type="file" name="file"/>
+												<input id="button-attachment" class="button-attachment" type="file" name="file"/>
 												<br>
 												<input id="button-upload" type="submit" value="<spring:message code="button.upload"/>">
 											</form>		          
