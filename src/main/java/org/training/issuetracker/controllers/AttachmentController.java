@@ -8,9 +8,13 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 
 import javax.servlet.ServletException;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.annotation.MultipartConfig;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
@@ -89,7 +93,7 @@ public class AttachmentController {
 	}
 	
 	@RequestMapping(value="/{attachmentId}", method = RequestMethod.GET)
-	public RedirectView getAttachment (@PathVariable long attachmentId, OutputStream out) throws DaoException, IOException {	
+	public RedirectView getAttachment (@PathVariable long attachmentId, HttpServletResponse response) throws DaoException, IOException {//OutputStream out	
 		
 		Attachment attachment = attachmentDAO.getAttchment(attachmentId);
 		
@@ -99,7 +103,13 @@ public class AttachmentController {
 		
 		byte[] bufferData = new byte[1024];
 		int read=0;
-
+		ServletOutputStream out = response.getOutputStream();
+		
+		String fileName = URLEncoder.encode(attachment.getFileName(), "UTF-8");
+		fileName = URLDecoder.decode(fileName, "ISO8859_1");
+		response.setContentType("application/x-msdownload");            
+		response.setHeader("Content-disposition", "attachment; filename="+ fileName);
+		
 		while((read = fis.read(bufferData))!= -1){
 			out.write(bufferData, 0, read);
 		}
