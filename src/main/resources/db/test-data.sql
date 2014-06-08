@@ -3,7 +3,7 @@ INSERT INTO ROLES(NAME) VALUES ('ADMINISTRATOR'), ('USER'), ('GUEST');
 INSERT INTO USERS(FIRST_NAME, LAST_NAME, EMAIL, PASSWORD, ROLE_ID)
 VALUES ('Sergei','Doroshenko', 'admin@gmail.com','111', 1),
 ('Tim', 'Tom', 'tim@gmail.com', '111', 2),
-('Ivan', 'Ivanov', 'ivan@gmail.com', '111', 2),
+('Ivan', 'Ivanov', 'ivan@gmail.com', '$2a$10$ud0akJmSU3xcawOpwuU4fOJz.m/WN6ueTafcFp3.aXrzOpslXD5aS', 2),
 ('Rom', 'Amazon', 'rom@gmail.com', '111', 2),
 ('Dan', 'Brown', 'dan@gmail.com', '111', 2);
 

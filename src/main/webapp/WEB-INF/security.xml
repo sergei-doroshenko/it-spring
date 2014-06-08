@@ -60,13 +60,25 @@
 	   </authentication-provider> 
 	</authentication-manager-->
 	
-	<authentication-manager>
+	<authentication-manager erase-credentials="false">
 		<authentication-provider>
 	 	   <jdbc-user-service data-source-ref="dataSource" 
 	     	   users-by-username-query="SELECT email as username, password, enabled FROM USERS WHERE email=?"
 	     	   authorities-by-username-query="SELECT USERS.EMAIL AS username, ROLES.NAME AS authority FROM USERS LEFT JOIN ROLES ON USERS.ROLE_ID = ROLES.ID WHERE USERS.EMAIL = ?"
 	     	   />
+	    	<!-- 
+	    	<password-encoder hash="sha"/>
+	    	<password-encoder hash="sha-256">
+            	<salt-source user-property="username"/>
+        	</password-encoder>
+        	-->
+        	<password-encoder ref="encoder"/>
+        	
 	    </authentication-provider> 
 	</authentication-manager>
+	
+	<beans:bean id="encoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">
+    	<!-- beans:constructor-arg value="10"/ -->
+	</beans:bean>
 	
 </beans:beans>

@@ -17,6 +17,7 @@ import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 import org.training.issuetracker.domain.User;
 import org.training.issuetracker.domain.DAO.UserDAO;
@@ -28,7 +29,7 @@ public class UserImplHiber implements UserDAO {
 	
 	@Autowired
 	private HibernateTemplate hibernateTemplate;
-	
+		
 	@Override
 	public List<User> getUsersList(SearchFilterParams params)
 			throws DaoException {
@@ -60,6 +61,7 @@ public class UserImplHiber implements UserDAO {
 
 	@Override
 	public User getUser(String login, String password) throws DaoException {
+
 	   return (User) DataAccessUtils.requiredUniqueResult(hibernateTemplate.find("from User where email=? and password=?",login, password));
 
 	}
